@@ -4,7 +4,10 @@ import babel from "@rolldown/plugin-babel";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/bskcoding/", // 👈 Add this line
+
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+
   server: {
     watch: {
       // Polling avoids Windows EBUSY file watch errors on locked files
@@ -14,6 +17,7 @@ export default defineConfig({
       ignored: ["**/public/bskcoding.png", "public/bskcoding.png"],
     },
   },
+
   build: {
     chunkSizeWarningLimit: 1000,
   },
