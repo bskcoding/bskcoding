@@ -4,7 +4,7 @@ import babel from "@rolldown/plugin-babel";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/bskcoding/", // 👈 Add this line
+  base: "/", // 👈 Add this line
 
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
 
