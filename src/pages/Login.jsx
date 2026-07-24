@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginWithEmail, loginWithGoogle } from "../utils/firebaseAuth";
+import bskimg from "../assets/bskimg.svg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -70,7 +71,7 @@ function Login() {
     <div className="main-container auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <img src="/bskimg.svg" className="auth-logo" alt="BSK Coding" />
+          <img src={bskimg} className="auth-logo" alt="BSK Coding" />
           <h2 className="auth-title">Welcome to BSK CODING</h2>
           <p className="auth-subtitle">
             Sign in to continue your learning journey

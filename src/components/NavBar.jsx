@@ -4,6 +4,7 @@ import { getCurrentUser, logout } from "../utils/auth";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ChangePasswordModal from "./ChangePasswordModal";
+import bskimg from "../assets/bskimg.svg";
 
 const CURRENT_USER_KEY = "bsk_current_user";
 
@@ -78,7 +79,7 @@ function NavBar({ onOpenChangePassword }) {
             className={`nav-logo-wrapper${glowColor === "green" ? " green-glow" : ""}`}
             onClick={handleGlowClick}
           >
-            <img src="/bskimg.svg" alt="BSK Coding" className="nav-logo" />
+            <img src={bskimg} alt="BSK Coding" className="nav-logo" />
           </div>
         </NavLink>
 
