@@ -52,7 +52,7 @@ function NavBar({ onOpenChangePassword }) {
   const handleLogout = () => {
     logout();
     setUser(null);
-    navigate("/");
+    navigate("/bskcoding");
     setMenuOpen(false);
     setProfileOpen(false);
   };
@@ -94,26 +94,34 @@ function NavBar({ onOpenChangePassword }) {
         </button>
 
         <nav className={`nav-links${menuOpen ? " open" : ""}`}>
-          <NavLink to="/" end className="nav-link" onClick={closeMenu}>
+          <NavLink to="/bskcoding" end className="nav-link" onClick={closeMenu}>
             <span>Home</span>
           </NavLink>
-          <NavLink to="/about" className="nav-link" onClick={closeMenu}>
+          <NavLink
+            to="/bskcoding/about"
+            className="nav-link"
+            onClick={closeMenu}
+          >
             <span>About</span>
           </NavLink>
-          <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
+          <NavLink
+            to="/bskcoding/contact"
+            className="nav-link"
+            onClick={closeMenu}
+          >
             <span>Contact</span>
           </NavLink>
           {!user && (
             <>
               <NavLink
-                to="/login"
+                to="/bskcoding/login"
                 className="nav-link nav-link-highlight"
                 onClick={closeMenu}
               >
                 <span>Login</span>
               </NavLink>
               <NavLink
-                to="/register"
+                to="/bskcoding/register"
                 className="nav-link nav-link-cta"
                 onClick={closeMenu}
               >
@@ -155,7 +163,7 @@ function NavBar({ onOpenChangePassword }) {
                       className="profile-dropdown-item"
                       onClick={() => {
                         setProfileOpen(false);
-                        navigate("/profile");
+                        navigate("/bskcoding/profile");
                       }}
                     >
                       <span className="profile-item-icon">👤</span>
