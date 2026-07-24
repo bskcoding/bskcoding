@@ -1,24 +1,26 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 
 // https://vite.dev/config/
-export default defineConfig({
-  base: "/bskcoding/", // 👈 Add this line
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const basePath = env.VITE_BASE_PATH || "/";
 
-  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+  return {
+    base: basePath,
+    plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
 
-  server: {
-    watch: {
-      // Polling avoids Windows EBUSY file watch errors on locked files
-      usePolling: true,
-      interval: 1000,
-      // Ignore the public image that is causing EBUSY
-      ignored: ["**/public/bskcoding.png", "public/bskcoding.png"],
+    server: {
+      watch: {
+        // Polling avoids Windows EBUSY file watch errors on locked files
+        usePolling: true,
+        interval: 1000,
+      },
     },
-  },
 
-  build: {
-    chunkSizeWarningLimit: 1000,
-  },
+    build: {
+      chunkSizeWarningLimit: 1000,
+    },
+  };
 });

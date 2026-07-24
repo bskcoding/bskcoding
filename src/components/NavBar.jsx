@@ -78,11 +78,7 @@ function NavBar({ onOpenChangePassword }) {
             className={`nav-logo-wrapper${glowColor === "green" ? " green-glow" : ""}`}
             onClick={handleGlowClick}
           >
-            <img
-              src="/bskcodingimg.png"
-              alt="BSK Coding"
-              className="nav-logo"
-            />
+            <img src="/bskimg.svg" alt="BSK Coding" className="nav-logo" />
           </div>
         </NavLink>
 

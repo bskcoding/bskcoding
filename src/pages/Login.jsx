@@ -70,7 +70,7 @@ function Login() {
     <div className="main-container auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <img src="/bskcoding.png" className="auth-logo" alt="BSK Coding" />
+          <img src="/bskimg.svg" className="auth-logo" alt="BSK Coding" />
           <h2 className="auth-title">Welcome to BSK CODING</h2>
           <p className="auth-subtitle">
             Sign in to continue your learning journey

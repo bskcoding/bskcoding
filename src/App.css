@@ -136,7 +136,7 @@
   width: 72px;
   height: 72px;
   object-fit: contain;
-  filter: brightness(1.1);
+  filter: brightness(1.2) contrast(1.1);
 }
 
 .nav-brand-text {

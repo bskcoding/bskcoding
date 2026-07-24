@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
@@ -19,7 +19,7 @@ function App() {
   const [showChangePassword, setShowChangePassword] = useState(false);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="app-shell">
         <ConfigBanner />
         <div className="navbar-container">
@@ -86,7 +86,7 @@ function App() {
           onClose={() => setShowChangePassword(false)}
         />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
