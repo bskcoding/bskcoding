@@ -27,6 +27,7 @@ function App() {
         </div>
         <main className="page-container">
           <Routes>
+            {/* Root paths */}
             <Route
               path="/"
               element={
@@ -77,6 +78,59 @@ function App() {
                 </RequireAuth>
               }
             />
+
+            {/* /bskcoding prefix paths - for GitHub Pages */}
+            <Route
+              path="/bskcoding"
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/about"
+              element={
+                <RequireAuth>
+                  <About />
+                </RequireAuth>
+              }
+            />
+            <Route path="/bskcoding/login" element={<Login />} />
+            <Route path="/bskcoding/register" element={<Register />} />
+            <Route
+              path="/bskcoding/roadmap"
+              element={
+                <RequireAuth>
+                  <Roadmap90Day />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/course/:skillId"
+              element={
+                <RequireAuth>
+                  <SkillDetail />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/contact"
+              element={
+                <RequireAuth>
+                  <Contact />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/profile"
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
