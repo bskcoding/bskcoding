@@ -4,7 +4,9 @@ import { isAuthenticated } from "../utils/auth";
 export default function RequireAuth({ children }) {
   const location = useLocation();
   if (!isAuthenticated()) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return (
+      <Navigate to="/bskcoding/login" state={{ from: location }} replace />
+    );
   }
   return children;
 }
