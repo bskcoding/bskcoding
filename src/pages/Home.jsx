@@ -4,18 +4,8 @@ import { skills } from "../data/skills";
 import SkillCard from "../components/SkillCard";
 
 function Home() {
-  const [clickedSkills, setClickedSkills] = useState([]);
   const linkFor = (id) =>
-    id === "90-day-job-roadmap" ? "/roadmap" : `/course/${id}`;
-
-  const handleSkillClick = (skillId) => {
-    setClickedSkills((prev) => {
-      if (prev.includes(skillId)) {
-        return prev.filter((id) => id !== skillId);
-      }
-      return [...prev, skillId];
-    });
-  };
+    id === "90-day-job-roadmap" ? "/bskcoding/roadmap" : "#";
 
   return (
     <div className="main-container">
@@ -30,10 +20,10 @@ function Home() {
           expert-led courses, and career-ready outcomes.
         </p>
         <div className="hero-actions">
-          <Link to="/roadmap" className="cta-button primary">
+          <Link to="/bskcoding/roadmap" className="cta-button primary">
             Start Learning Path
           </Link>
-          <Link to="/about" className="cta-button secondary">
+          <Link to="/bskcoding/about" className="cta-button secondary">
             Learn More
           </Link>
         </div>
@@ -76,7 +66,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Skills Grid */}
+      {/* Skills Grid with Sub-grids */}
       <section className="skills-section">
         <h2 className="section-title">Learning Tracks</h2>
         <p className="section-subtitle">
@@ -84,17 +74,13 @@ function Home() {
         </p>
         <div className="skills-grid">
           {skills.map((skill) => {
-            const isClicked = clickedSkills.includes(skill.id);
             const linkPath = linkFor(skill.id);
             return (
-              <Link
-                key={skill.id}
-                to={linkPath}
-                className={`skill-card-link ${isClicked ? "green-glow" : ""}`}
-                onClick={() => handleSkillClick(skill.id)}
-              >
-                <SkillCard skill={skill} />
-              </Link>
+              <div key={skill.id} className="skill-card-container">
+                <Link to={linkPath} className="skill-card-link">
+                  <SkillCard skill={skill} />
+                </Link>
+              </div>
             );
           })}
         </div>

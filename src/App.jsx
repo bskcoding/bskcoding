@@ -8,7 +8,6 @@ import About from "./pages/About";
 import Roadmap90Day from "./topics/90-day-job-roadmap/Roadmap90Day";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import SkillDetail from "./pages/SkillDetail";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
@@ -27,61 +26,14 @@ function App() {
         </div>
         <main className="page-container">
           <Routes>
-            {/* Redirect / to /bskcoding */}
+            {/* Redirect root to /bskcoding */}
             <Route path="/" element={<Navigate to="/bskcoding" replace />} />
-            {/* Root paths */}
-            <Route
-              path="/bskcoding"
-              element={
-                <RequireAuth>
-                  <Home />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <RequireAuth>
-                  <About />
-                </RequireAuth>
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/roadmap"
-              element={
-                <RequireAuth>
-                  <Roadmap90Day />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/course/:skillId"
-              element={
-                <RequireAuth>
-                  <SkillDetail />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <RequireAuth>
-                  <Contact />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <RequireAuth>
-                  <Profile />
-                </RequireAuth>
-              }
-            />
 
-            {/* /bskcoding prefix paths - for GitHub Pages */}
+            {/* Public routes */}
+            <Route path="/bskcoding/login" element={<Login />} />
+            <Route path="/bskcoding/register" element={<Register />} />
+
+            {/* Protected routes */}
             <Route
               path="/bskcoding"
               element={
@@ -98,21 +50,11 @@ function App() {
                 </RequireAuth>
               }
             />
-            <Route path="/bskcoding/login" element={<Login />} />
-            <Route path="/bskcoding/register" element={<Register />} />
             <Route
               path="/bskcoding/roadmap"
               element={
                 <RequireAuth>
                   <Roadmap90Day />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/bskcoding/course/:skillId"
-              element={
-                <RequireAuth>
-                  <SkillDetail />
                 </RequireAuth>
               }
             />
@@ -133,6 +75,7 @@ function App() {
               }
             />
 
+            {/* 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

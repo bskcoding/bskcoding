@@ -6,7 +6,7 @@ export const skills = [
     color: "#3B82F6",
     progress: 85,
     description:
-      "Build robust backend systems using Java and modern JVM tooling.",
+      "Master Java fundamentals, OOP, multithreading, and advanced concepts.",
     subtopics: [
       "Java Basics & Syntax",
       "Object-Oriented Programming",
@@ -27,7 +27,7 @@ export const skills = [
     color: "#2563EB",
     progress: 78,
     description:
-      "Create resilient REST APIs and microservices with Spring Boot.",
+      "Build production-ready REST APIs and microservices with Spring Boot.",
     subtopics: [
       "Spring Core & Dependency Injection",
       "Spring MVC & REST APIs",
