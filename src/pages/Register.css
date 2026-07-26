@@ -1,0 +1,50 @@
+/* Password Requirements */
+.password-requirements {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.requirement:last-child {
+  margin-bottom: 0;
+}
+
+.requirement.valid {
+  color: #059669;
+}
+
+.check-icon {
+  font-weight: 700;
+  font-size: 1.1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.requirement.valid .check-icon {
+  background: #10b981;
+  color: white;
+}
+
+.requirement:not(.valid) .check-icon {
+  background: #f3f4f6;
+  color: #d1d5db;
+}

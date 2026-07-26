@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerWithEmail } from "../utils/firebaseAuth";
+import "./Register.css";
 
 function Register() {
   const [name, setName] = useState("");
@@ -9,9 +10,21 @@ function Register() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // Password validation checks
+  const hasMinLength = password.length >= 6;
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[^a-zA-Z0-9]/.test(password);
+  const isPasswordValid = hasMinLength && hasNumber && hasSpecialChar;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
+    // Password validation
+    if (!isPasswordValid) {
+      setError("Please meet all password requirements.");
+      return;
+    }
 
     try {
       const user = await registerWithEmail(name, email, password);
@@ -102,6 +115,24 @@ function Register() {
               required
             />
           </div>
+
+          {/* Password validation checklist - hide when all requirements met */}
+          {password && !isPasswordValid && (
+            <div className="password-requirements">
+              <div className={`requirement ${hasMinLength ? "valid" : ""}`}>
+                <span className="check-icon">{hasMinLength ? "✓" : "○"}</span>
+                <span>At least 6 characters</span>
+              </div>
+              <div className={`requirement ${hasNumber ? "valid" : ""}`}>
+                <span className="check-icon">{hasNumber ? "✓" : "○"}</span>
+                <span>At least 1 number</span>
+              </div>
+              <div className={`requirement ${hasSpecialChar ? "valid" : ""}`}>
+                <span className="check-icon">{hasSpecialChar ? "✓" : "○"}</span>
+                <span>At least 1 special character (!@#$%^&*)</span>
+              </div>
+            </div>
+          )}
 
           <button type="submit" className="register-btn">
             Register

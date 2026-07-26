@@ -49,12 +49,17 @@ function NavBar({ onOpenChangePassword }) {
     };
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    setUser(null);
-    navigate("/bskcoding");
-    setMenuOpen(false);
-    setProfileOpen(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      localStorage.removeItem(CURRENT_USER_KEY);
+      setUser(null);
+      navigate("/bskcoding/login");
+      setMenuOpen(false);
+      setProfileOpen(false);
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
   const closeMenu = () => {
