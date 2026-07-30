@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Roadmap90Day from "./topics/90-day-job-roadmap/Roadmap90Day";
 import JavaTopics from "./topics/java/JavaTopics";
+import JavaInterview from "./pages/JavaInterview";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Contact from "./pages/Contact";
@@ -64,6 +65,14 @@ function App() {
               element={
                 <RequireAuth>
                   <JavaTopics />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/java/interview"
+              element={
+                <RequireAuth>
+                  <JavaInterview />
                 </RequireAuth>
               }
             />

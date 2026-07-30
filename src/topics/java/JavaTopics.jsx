@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./JavaTopics.css";
 
 function JavaTopics() {
-  const javaColor = "#0084ff";
+  const javaColor = "t#0084ff";
 
   return (
     <div className="java-topics-page">
@@ -89,7 +89,7 @@ function JavaTopics() {
           </Link>
 
           {/* Java Interview Q&A */}
-          <Link to="/bskcoding/interview/java" className="skill-card-link">
+          <Link to="/bskcoding/java/interview" className="skill-card-link">
             <div className="skill-card" style={{ borderColor: javaColor }}>
               <div className="skill-card-top">
                 <span
