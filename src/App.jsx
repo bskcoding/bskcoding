@@ -6,6 +6,7 @@ import ConfigBanner from "./components/ConfigBanner";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Roadmap90Day from "./topics/90-day-job-roadmap/Roadmap90Day";
+import JavaTopics from "./topics/java/JavaTopics";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Contact from "./pages/Contact";
@@ -55,6 +56,14 @@ function App() {
               element={
                 <RequireAuth>
                   <Roadmap90Day />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/java"
+              element={
+                <RequireAuth>
+                  <JavaTopics />
                 </RequireAuth>
               }
             />

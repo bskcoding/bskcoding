@@ -612,8 +612,8 @@
 /* Hero Section - dark charcoal */
 .header-section {
   text-align: center;
-  padding: 80px 20px 60px;
-  margin-bottom: 60px;
+  padding: 50px 20px 30px;
+  margin-bottom: 30px;
   background: radial-gradient(
     ellipse at 50% 0%,
     var(--dark-teal) 0%,
@@ -721,72 +721,10 @@
   font-size: 0.9rem;
 }
 
-/* Stats Section - dark indigo */
-.stats-section {
-  text-align: center;
-  padding: 40px 24px;
-  background: var(--dark-indigo);
-  border-radius: 16px;
-  margin: 40px 0;
-  border: 1px solid rgba(99, 102, 241, 0.12);
-  max-width: 1200px;
-}
-
-.stats-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-h);
-  margin-bottom: 24px;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.stat-item {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.2s ease;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.stat-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-.stat-number {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #3b82f6;
-  line-height: 1;
-  margin: 0;
-}
-
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--text);
-  font-weight: 500;
-  margin: 0;
-}
-
 /* Skills Section */
 .skills-section {
   padding: 0;
-  margin-top: 60px;
+  margin-top: 30px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -845,7 +783,7 @@
   padding: 24px;
   border-radius: 22px;
   background: rgba(10, 18, 34, 0.92);
-  border: 1px solid rgba(66, 120, 255, 0.2);
+  border: 2px solid rgba(30, 58, 138, 0.6);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
@@ -859,8 +797,10 @@
 
 .skill-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(66, 133, 244, 0.25);
-  border-color: rgba(66, 120, 255, 0.4);
+  box-shadow:
+    0 12px 35px rgba(66, 133, 244, 0.25),
+    0 0 20px rgba(96, 165, 250, 0.4);
+  border-color: #60a5fa;
 }
 
 /* ── Top Section (20%) ── */
@@ -887,9 +827,10 @@
 .skill-card-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #ffffff;
   letter-spacing: -0.3px;
   text-align: center;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 /* ── Middle Section (15%) —  ─── [%] ─── ── */
@@ -916,6 +857,8 @@
   white-space: nowrap;
   border: 1px solid;
   letter-spacing: 0.02em;
+  color: #ffffff;
+  text-shadow: 0 0 8px currentColor;
 }
 
 /* ── Bottom Section (65%) ── */
@@ -931,11 +874,12 @@
 
 .skill-card-desc {
   font-size: 0.88rem;
-  color: #94a3b8;
+  color: #e2e8f0;
   line-height: 1.6;
   text-align: center;
   margin: 0;
   max-width: 100%;
+  font-weight: 500;
 }
 
 .skill-card-btn {

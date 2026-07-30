@@ -4,8 +4,11 @@ import { skills } from "../data/skills";
 import SkillCard from "../components/SkillCard";
 
 function Home() {
-  const linkFor = (id) =>
-    id === "90-day-job-roadmap" ? "/bskcoding/roadmap" : "#";
+  const linkFor = (id) => {
+    if (id === "90-day-job-roadmap") return "/bskcoding/roadmap";
+    if (id === "java") return "/bskcoding/java";
+    return "#";
+  };
 
   return (
     <div className="main-container">
@@ -39,29 +42,6 @@ function Home() {
           <div className="hero-badge">
             <span>24/7</span>
             <p>Support</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="stats-section">
-        <h2 className="stats-title">Your Learning Journey</h2>
-        <div className="stats-grid">
-          <div className="stat-item">
-            <div className="stat-number">{skills.length}</div>
-            <div className="stat-label">Technology Tracks</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">60+</div>
-            <div className="stat-label">Learning Modules</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">100+</div>
-            <div className="stat-label">Hands-on Exercises</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">24/7</div>
-            <div className="stat-label">Access & Support</div>
           </div>
         </div>
       </section>
