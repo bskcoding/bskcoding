@@ -3083,7 +3083,10 @@ function JavaInterview() {
                 <h2 className="category-title">{category.name}</h2>
                 <div className="questions-vertical">
                   {category.questions.map((q) => (
-                    <div key={q.id} className="question-item-vertical">
+                    <div
+                      key={q.id}
+                      className={`question-item-vertical ${expandedId === q.id ? "active" : ""}`}
+                    >
                       <div
                         className="question-item-header"
                         onClick={() => toggleQuestion(q.id)}
