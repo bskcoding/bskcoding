@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Prism from "prismjs";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-properties";
+import "prismjs/components/prism-xml-doc";
+import "prismjs/components/prism-groovy";
+import "prismjs/themes/prism-tomorrow.css";
 import "./JavaInterview.css";
 
 // Parse the markdown content
@@ -2936,6 +2942,13 @@ const interviewData = `## Java Interview Questions
     }
     \`\`\``;
 
+// Syntax highlighter using Prism.js
+const highlightCode = (code, language) => {
+  const lang = language || "java";
+  const grammar = Prism.languages[lang] || Prism.languages.java;
+  return Prism.highlight(code, grammar, lang);
+};
+
 // Parse questions from markdown with categories
 const parseQuestions = (content) => {
   const categories = [];
@@ -2959,9 +2972,20 @@ const parseQuestions = (content) => {
       } else {
         inCodeBlock = false;
         if (currentQuestion && codeBlockContent.length > 0) {
+          // Remove common leading whitespace from all lines
+          const lines = codeBlockContent.join("\n").split("\n");
+          const minIndent = Math.min(
+            ...lines
+              .filter((l) => l.trim())
+              .map((l) => l.match(/^\s*/)[0].length),
+          );
+          const trimmedContent = lines
+            .map((l) => l.slice(minIndent))
+            .join("\n")
+            .trim();
           currentQuestion.response.push({
             type: "code",
-            content: codeBlockContent.join("\n"),
+            content: trimmedContent,
             language: codeBlockLanguage,
           });
         }
@@ -3112,8 +3136,18 @@ function JavaInterview() {
                                         {item.language || "java"}
                                       </span>
                                     </div>
-                                    <pre>
-                                      <code>{item.content}</code>
+                                    <pre
+                                      className={`language-${item.language || "java"}`}
+                                    >
+                                      <code
+                                        className={`language-${item.language || "java"}`}
+                                        dangerouslySetInnerHTML={{
+                                          __html: highlightCode(
+                                            item.content,
+                                            item.language,
+                                          ),
+                                        }}
+                                      />
                                     </pre>
                                   </div>
                                 ) : (

@@ -8,6 +8,8 @@ import About from "./pages/About";
 import Roadmap90Day from "./topics/90-day-job-roadmap/Roadmap90Day";
 import JavaTopics from "./topics/java/JavaTopics";
 import JavaInterview from "./pages/JavaInterview";
+import SpringBootTopics from "./topics/spring-boot/SpringBootTopics";
+import SpringBootInterview from "./pages/SpringBootInterview";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Contact from "./pages/Contact";
@@ -73,6 +75,22 @@ function App() {
               element={
                 <RequireAuth>
                   <JavaInterview />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/spring-boot"
+              element={
+                <RequireAuth>
+                  <SpringBootTopics />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/bskcoding/spring-boot/interview"
+              element={
+                <RequireAuth>
+                  <SpringBootInterview />
                 </RequireAuth>
               }
             />

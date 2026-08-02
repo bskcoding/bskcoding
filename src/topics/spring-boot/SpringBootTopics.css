@@ -1,19 +1,19 @@
-/* Java Topics Page */
-.java-topics-page {
+/* Spring Boot Topics Page */
+.spring-boot-topics-page {
   min-height: 100vh;
   background: #070c14;
   color: #f8fafc;
 }
 
 /* Hero Section */
-.java-topics-page .header-section {
+.spring-boot-topics-page .header-section {
   background: linear-gradient(135deg, #0d2137 0%, #070c14 100%);
   padding: 4rem 24px;
   text-align: center;
   border-bottom: 1px solid rgba(59, 130, 246, 0.1);
 }
 
-.java-topics-page .logo-container {
+.spring-boot-topics-page .logo-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,21 +21,21 @@
   margin-bottom: 16px;
 }
 
-.java-topics-page .logo-icon {
+.spring-boot-topics-page .logo-icon {
   font-size: 3rem;
 }
 
-.java-topics-page .logo-text {
+.spring-boot-topics-page .logo-text {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.5px;
 }
 
-.java-topics-page .subtitle {
+.spring-boot-topics-page .subtitle {
   font-size: 1.1rem;
   color: #94a3b8;
   max-width: 700px;
@@ -44,13 +44,13 @@
 }
 
 /* Skills Section */
-.java-topics-page .skills-section {
+.spring-boot-topics-page .skills-section {
   padding: 3rem 24px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.java-topics-page .section-title {
+.spring-boot-topics-page .section-title {
   font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 12px;
@@ -58,26 +58,26 @@
   text-align: center;
 }
 
-.java-topics-page .section-subtitle {
+.spring-boot-topics-page .section-subtitle {
   font-size: 1rem;
   color: #94a3b8;
   text-align: center;
   margin-bottom: 32px;
 }
 
-.java-topics-page .skills-grid {
+.spring-boot-topics-page .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
 }
 
-.java-topics-page .skill-card-link {
+.spring-boot-topics-page .skill-card-link {
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
-.java-topics-page .skill-card {
+.spring-boot-topics-page .skill-card {
   background: rgba(10, 18, 34, 0.8);
   border: 2px solid;
   border-radius: 16px;
@@ -88,20 +88,20 @@
   flex-direction: column;
 }
 
-.java-topics-page .skill-card:hover {
+.spring-boot-topics-page .skill-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   background: rgba(10, 18, 34, 0.95);
 }
 
-.java-topics-page .skill-card-top {
+.spring-boot-topics-page .skill-card-top {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.java-topics-page .skill-card-icon {
+.spring-boot-topics-page .skill-card-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,26 +112,26 @@
   flex-shrink: 0;
 }
 
-.java-topics-page .skill-card-title {
+.spring-boot-topics-page .skill-card-title {
   font-size: 1.25rem;
   font-weight: 700;
   color: #ffffff;
 }
 
-.java-topics-page .skill-card-middle {
+.spring-boot-topics-page .skill-card-middle {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.java-topics-page .skill-card-line {
+.spring-boot-topics-page .skill-card-line {
   flex: 1;
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
 }
 
-.java-topics-page .skill-card-badge {
+.spring-boot-topics-page .skill-card-badge {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 6px;
@@ -140,21 +140,21 @@
   border: 1px solid;
 }
 
-.java-topics-page .skill-card-bottom {
+.spring-boot-topics-page .skill-card-bottom {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.java-topics-page .skill-card-desc {
+.spring-boot-topics-page .skill-card-desc {
   font-size: 0.95rem;
   color: #94a3b8;
   line-height: 1.6;
   margin: 0;
 }
 
-.java-topics-page .skill-card-btn {
+.spring-boot-topics-page .skill-card-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -169,48 +169,48 @@
   background: transparent;
 }
 
-.java-topics-page .skill-card-btn:hover {
+.spring-boot-topics-page .skill-card-btn:hover {
   transform: translateX(4px);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .java-topics-page .header-section {
+  .spring-boot-topics-page .header-section {
     padding: 40px 16px 30px;
   }
 
-  .java-topics-page .logo-icon {
+  .spring-boot-topics-page .logo-icon {
     font-size: 2.5rem;
   }
 
-  .java-topics-page .logo-text {
+  .spring-boot-topics-page .logo-text {
     font-size: 2rem;
   }
 
-  .java-topics-page .skills-section {
+  .spring-boot-topics-page .skills-section {
     padding: 24px 16px;
   }
 
-  .java-topics-page .skills-grid {
+  .spring-boot-topics-page .skills-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
-  .java-topics-page .skill-card {
+  .spring-boot-topics-page .skill-card {
     padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .java-topics-page .logo-text {
+  .spring-boot-topics-page .logo-text {
     font-size: 1.75rem;
   }
 
-  .java-topics-page .section-title {
+  .spring-boot-topics-page .section-title {
     font-size: 1.5rem;
   }
 
-  .java-topics-page .skill-card-title {
+  .spring-boot-topics-page .skill-card-title {
     font-size: 1.1rem;
   }
 }

@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./JavaTopics.css";
+import "./SpringBootTopics.css";
 
-function JavaTopics() {
-  const javaColor = "#0084ff";
+function SpringBootTopics() {
+  const springBootColor = "#22c55e";
 
   return (
-    <div className="java-topics-page">
+    <div className="spring-boot-topics-page">
       {/* Hero Section */}
       <section className="header-section">
         <div className="logo-container">
-          <span className="logo-icon">☕</span>
-          <h1 className="logo-text">JAVA</h1>
+          <span className="logo-icon">🌱</span>
+          <h1 className="logo-text">SPRING BOOT</h1>
         </div>
         <p className="subtitle">
-          Master Java programming with comprehensive courses and interview
+          Master Spring Boot framework with comprehensive courses and interview
           preparation
         </p>
       </section>
@@ -26,30 +26,35 @@ function JavaTopics() {
           Select a learning track to get started
         </p>
         <div className="skills-grid">
-          {/* Java Full Course */}
-          <Link to="/bskcoding/course/java" className="skill-card-link">
-            <div className="skill-card" style={{ borderColor: javaColor }}>
+          {/* Spring Boot Full Course */}
+          <Link to="#" className="skill-card-link">
+            <div
+              className="skill-card"
+              style={{ borderColor: springBootColor }}
+            >
               <div className="skill-card-top">
                 <span
                   className="skill-card-icon"
                   style={{
-                    backgroundColor: javaColor + "18",
-                    color: javaColor,
-                    boxShadow: `0 0 20px ${javaColor}25, inset 0 0 0 1px ${javaColor}30`,
+                    backgroundColor: springBootColor + "18",
+                    color: springBootColor,
+                    boxShadow: `0 0 20px ${springBootColor}25, inset 0 0 0 1px ${springBootColor}30`,
                   }}
                 >
                   📚
                 </span>
-                <span className="skill-card-title">Java Full Course</span>
+                <span className="skill-card-title">
+                  Spring Boot Full Course
+                </span>
               </div>
               <div className="skill-card-middle">
                 <span className="skill-card-line" />
                 <span
                   className="skill-card-badge"
                   style={{
-                    background: javaColor + "18",
-                    color: javaColor,
-                    borderColor: javaColor + "40",
+                    background: springBootColor + "18",
+                    color: springBootColor,
+                    borderColor: springBootColor + "40",
                   }}
                 >
                   Course
@@ -64,9 +69,9 @@ function JavaTopics() {
                 <button
                   className="skill-card-btn"
                   style={{
-                    background: javaColor + "15",
-                    color: javaColor,
-                    borderColor: javaColor + "35",
+                    background: springBootColor + "15",
+                    color: springBootColor,
+                    borderColor: springBootColor + "35",
                   }}
                 >
                   Start Learning
@@ -88,30 +93,38 @@ function JavaTopics() {
             </div>
           </Link>
 
-          {/* Java Interview Q&A */}
-          <Link to="/bskcoding/java/interview" className="skill-card-link">
-            <div className="skill-card" style={{ borderColor: javaColor }}>
+          {/* Spring Boot Interview Q&A */}
+          <Link
+            to="/bskcoding/spring-boot/interview"
+            className="skill-card-link"
+          >
+            <div
+              className="skill-card"
+              style={{ borderColor: springBootColor }}
+            >
               <div className="skill-card-top">
                 <span
                   className="skill-card-icon"
                   style={{
-                    backgroundColor: javaColor + "18",
-                    color: javaColor,
-                    boxShadow: `0 0 20px ${javaColor}25, inset 0 0 0 1px ${javaColor}30`,
+                    backgroundColor: springBootColor + "18",
+                    color: springBootColor,
+                    boxShadow: `0 0 20px ${springBootColor}25, inset 0 0 0 1px ${springBootColor}30`,
                   }}
                 >
                   💼
                 </span>
-                <span className="skill-card-title">Java Interview Q&A</span>
+                <span className="skill-card-title">
+                  Spring Boot Interview Q&A
+                </span>
               </div>
               <div className="skill-card-middle">
                 <span className="skill-card-line" />
                 <span
                   className="skill-card-badge"
                   style={{
-                    background: javaColor + "18",
-                    color: javaColor,
-                    borderColor: javaColor + "40",
+                    background: springBootColor + "18",
+                    color: springBootColor,
+                    borderColor: springBootColor + "40",
                   }}
                 >
                   100+ Questions
@@ -126,9 +139,9 @@ function JavaTopics() {
                 <button
                   className="skill-card-btn"
                   style={{
-                    background: javaColor + "15",
-                    color: javaColor,
-                    borderColor: javaColor + "35",
+                    background: springBootColor + "15",
+                    color: springBootColor,
+                    borderColor: springBootColor + "35",
                   }}
                 >
                   Start Practicing
@@ -155,4 +168,4 @@ function JavaTopics() {
   );
 }
 
-export default JavaTopics;
+export default SpringBootTopics;

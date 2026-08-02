@@ -7,6 +7,7 @@ function Home() {
   const linkFor = (id) => {
     if (id === "90-day-job-roadmap") return "/bskcoding/roadmap";
     if (id === "java") return "/bskcoding/java";
+    if (id === "spring-boot") return "/bskcoding/spring-boot";
     return "#";
   };
 
