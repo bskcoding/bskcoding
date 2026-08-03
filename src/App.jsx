@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import ConfigBanner from "./components/ConfigBanner";
@@ -18,11 +18,33 @@ import NotFound from "./pages/NotFound";
 import RequireAuth from "./components/RequireAuth";
 import ChangePasswordModal from "./components/ChangePasswordModal";
 
+// Restores the original route after GitHub Pages 404 redirect.
+// When a user refreshes /login, GitHub Pages serves 404.html which
+// redirects to /index.html?path=/login. This component reads that
+// query param and navigates to the correct page, then cleans the URL.
+function RouteRestorer() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const path = params.get("path");
+
+    if (path && path !== "/" && path !== "/index.html") {
+      // Replace the URL with the clean path and navigate to it
+      window.history.replaceState({}, "", path);
+      navigate(path, { replace: true });
+    }
+  }, [navigate]);
+
+  return null;
+}
+
 function App() {
   const [showChangePassword, setShowChangePassword] = useState(false);
 
   return (
     <BrowserRouter>
+      <RouteRestorer />
       <div className="app-shell">
         <ConfigBanner />
         <div className="navbar-container">

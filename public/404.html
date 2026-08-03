@@ -4,15 +4,29 @@
     <meta charset="utf-8" />
     <title>BSK CODING</title>
     <script>
-      // Redirect all 404s to index.html for React Router
-      // Custom domain (bskcoding.com) serves from root
-      window.location.replace(
+      // GitHub Pages serves this file for any unknown path (e.g. /login on refresh).
+      // Redirect to index.html with the original path in the query string.
+      // The app's RouteRestorer reads ?path= and navigates to the same page.
+      var path = window.location.pathname;
+
+      // Ignore /index.html itself and the root path
+      if (path === "/" || path === "/index.html") {
+        path = "";
+      }
+
+      var redirectUrl =
         window.location.protocol +
-          "//" +
-          window.location.host +
-          "/index.html?path=" +
-          encodeURIComponent(window.location.pathname),
-      );
+        "//" +
+        window.location.host +
+        "/index.html?path=" +
+        encodeURIComponent(path);
+
+      // Preserve any query string from the original URL
+      if (window.location.search) {
+        redirectUrl += "&" + window.location.search.substring(1);
+      }
+
+      window.location.replace(redirectUrl);
     </script>
   </head>
   <body>
