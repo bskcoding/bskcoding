@@ -36,7 +36,7 @@ function Register() {
           email: user.email,
         }),
       );
-      navigate("/bskcoding");
+      navigate("/");
     } catch (err) {
       const code = err?.code || "";
       let msg = "Registration failed. Please try again.";
@@ -143,7 +143,7 @@ function Register() {
           Already have an account?{" "}
           <button
             type="button"
-            onClick={() => navigate("/bskcoding/login")}
+            onClick={() => navigate("/login")}
             className="register-link"
           >
             Sign In

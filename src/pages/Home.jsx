@@ -5,9 +5,9 @@ import SkillCard from "../components/SkillCard";
 
 function Home() {
   const linkFor = (id) => {
-    if (id === "90-day-job-roadmap") return "/bskcoding/roadmap";
-    if (id === "java") return "/bskcoding/java";
-    if (id === "spring-boot") return "/bskcoding/spring-boot";
+    if (id === "90-day-job-roadmap") return "/roadmap";
+    if (id === "java") return "/java";
+    if (id === "spring-boot") return "/spring-boot";
     return "#";
   };
 
@@ -24,10 +24,10 @@ function Home() {
           expert-led courses, and career-ready outcomes.
         </p>
         <div className="hero-actions">
-          <Link to="/bskcoding/roadmap" className="cta-button primary">
+          <Link to="/roadmap" className="cta-button primary">
             Start Learning Path
           </Link>
-          <Link to="/bskcoding/about" className="cta-button secondary">
+          <Link to="/about" className="cta-button secondary">
             Learn More
           </Link>
         </div>

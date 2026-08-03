@@ -94,10 +94,7 @@ function SpringBootTopics() {
           </Link>
 
           {/* Spring Boot Interview Q&A */}
-          <Link
-            to="/bskcoding/spring-boot/interview"
-            className="skill-card-link"
-          >
+          <Link to="/spring-boot/interview" className="skill-card-link">
             <div
               className="skill-card"
               style={{ borderColor: springBootColor }}

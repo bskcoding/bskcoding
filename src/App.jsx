@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
@@ -30,16 +30,13 @@ function App() {
         </div>
         <main className="page-container">
           <Routes>
-            {/* Redirect root to /bskcoding */}
-            <Route path="/" element={<Navigate to="/bskcoding" replace />} />
-
             {/* Public routes */}
-            <Route path="/bskcoding/login" element={<Login />} />
-            <Route path="/bskcoding/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
             {/* Protected routes */}
             <Route
-              path="/bskcoding"
+              path="/"
               element={
                 <RequireAuth>
                   <Home />
@@ -47,7 +44,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/about"
+              path="/about"
               element={
                 <RequireAuth>
                   <About />
@@ -55,7 +52,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/roadmap"
+              path="/roadmap"
               element={
                 <RequireAuth>
                   <Roadmap90Day />
@@ -63,7 +60,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/java"
+              path="/java"
               element={
                 <RequireAuth>
                   <JavaTopics />
@@ -71,7 +68,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/java/interview"
+              path="/java/interview"
               element={
                 <RequireAuth>
                   <JavaInterview />
@@ -79,7 +76,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/spring-boot"
+              path="/spring-boot"
               element={
                 <RequireAuth>
                   <SpringBootTopics />
@@ -87,7 +84,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/spring-boot/interview"
+              path="/spring-boot/interview"
               element={
                 <RequireAuth>
                   <SpringBootInterview />
@@ -95,7 +92,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/contact"
+              path="/contact"
               element={
                 <RequireAuth>
                   <Contact />
@@ -103,7 +100,7 @@ function App() {
               }
             />
             <Route
-              path="/bskcoding/profile"
+              path="/profile"
               element={
                 <RequireAuth>
                   <Profile />

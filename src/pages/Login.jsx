@@ -23,7 +23,7 @@ function Login() {
           email: user.email,
         }),
       );
-      navigate("/bskcoding");
+      navigate("/");
     } catch (err) {
       const code = err?.code || "";
       let msg = "Login failed. Please try again.";
@@ -61,7 +61,7 @@ function Login() {
           email: user.email,
         }),
       );
-      navigate("/bskcoding");
+      navigate("/");
     } catch (err) {
       const msg = err?.message || "Google login failed. Please try again.";
       setError(msg);
@@ -110,7 +110,7 @@ function Login() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/bskcoding/register")}
+              onClick={() => navigate("/register")}
               className="auth-button secondary"
             >
               Create Account

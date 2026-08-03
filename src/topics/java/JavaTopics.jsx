@@ -27,7 +27,7 @@ function JavaTopics() {
         </p>
         <div className="skills-grid">
           {/* Java Full Course */}
-          <Link to="/bskcoding/course/java" className="skill-card-link">
+          <Link to="/java/course" className="skill-card-link">
             <div className="skill-card" style={{ borderColor: javaColor }}>
               <div className="skill-card-top">
                 <span
@@ -89,7 +89,7 @@ function JavaTopics() {
           </Link>
 
           {/* Java Interview Q&A */}
-          <Link to="/bskcoding/java/interview" className="skill-card-link">
+          <Link to="/java/interview" className="skill-card-link">
             <div className="skill-card" style={{ borderColor: javaColor }}>
               <div className="skill-card-top">
                 <span

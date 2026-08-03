@@ -875,7 +875,7 @@ function SpringBootInterview() {
       {/* Hero Section */}
       <section className="interview-header">
         <div className="interview-header-content">
-          <Link to="/bskcoding" className="back-button">
+          <Link to="/" className="back-button">
             ← Back to Home
           </Link>
           <h1 className="interview-title">Spring Boot Interview Questions</h1>

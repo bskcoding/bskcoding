@@ -54,7 +54,7 @@ function NavBar({ onOpenChangePassword }) {
       await logout();
       localStorage.removeItem(CURRENT_USER_KEY);
       setUser(null);
-      navigate("/bskcoding/login");
+      navigate("/login");
       setMenuOpen(false);
       setProfileOpen(false);
     } catch (err) {
@@ -99,34 +99,26 @@ function NavBar({ onOpenChangePassword }) {
         </button>
 
         <nav className={`nav-links${menuOpen ? " open" : ""}`}>
-          <NavLink to="/bskcoding" end className="nav-link" onClick={closeMenu}>
+          <NavLink to="/" end className="nav-link" onClick={closeMenu}>
             <span>Home</span>
           </NavLink>
-          <NavLink
-            to="/bskcoding/about"
-            className="nav-link"
-            onClick={closeMenu}
-          >
+          <NavLink to="/about" className="nav-link" onClick={closeMenu}>
             <span>About</span>
           </NavLink>
-          <NavLink
-            to="/bskcoding/contact"
-            className="nav-link"
-            onClick={closeMenu}
-          >
+          <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
             <span>Contact</span>
           </NavLink>
           {!user && (
             <>
               <NavLink
-                to="/bskcoding/login"
+                to="/login"
                 className="nav-link nav-link-highlight"
                 onClick={closeMenu}
               >
                 <span>Login</span>
               </NavLink>
               <NavLink
-                to="/bskcoding/register"
+                to="/register"
                 className="nav-link nav-link-cta"
                 onClick={closeMenu}
               >
@@ -168,7 +160,7 @@ function NavBar({ onOpenChangePassword }) {
                       className="profile-dropdown-item"
                       onClick={() => {
                         setProfileOpen(false);
-                        navigate("/bskcoding/profile");
+                        navigate("/profile");
                       }}
                     >
                       <span className="profile-item-icon">👤</span>

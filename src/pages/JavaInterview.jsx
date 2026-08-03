@@ -3073,7 +3073,7 @@ function JavaInterview() {
       {/* Hero Section */}
       <section className="interview-header">
         <div className="interview-header-content">
-          <Link to="/bskcoding/java" className="back-button">
+          <Link to="/java" className="back-button">
             ← Back to Java Topics
           </Link>
           <h1 className="interview-title">Java Interview Questions</h1>

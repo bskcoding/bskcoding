@@ -5,19 +5,14 @@
     <title>BSK CODING</title>
     <script>
       // Redirect all 404s to index.html for React Router
-      // This allows BrowserRouter to work on GitHub Pages
-      const path = window.location.pathname;
-
-      // Check if we're in the /bskcoding path or at root
-      if (path.startsWith("/bskcoding")) {
-        // We're in the bskcoding subdirectory
-        // Redirect to /bskcoding/index.html
-        window.location.href = "/bskcoding/index.html";
-      } else {
-        // We're at root level
-        // Redirect to /index.html
-        window.location.href = "/index.html";
-      }
+      // Custom domain (bskcoding.com) serves from root
+      window.location.replace(
+        window.location.protocol +
+          "//" +
+          window.location.host +
+          "/index.html?path=" +
+          encodeURIComponent(window.location.pathname),
+      );
     </script>
   </head>
   <body>
