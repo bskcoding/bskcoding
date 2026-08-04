@@ -10,6 +10,8 @@ import JavaTopics from "./topics/java/JavaTopics";
 import JavaInterview from "./pages/JavaInterview";
 import SpringBootTopics from "./topics/spring-boot/SpringBootTopics";
 import SpringBootInterview from "./pages/SpringBootInterview";
+import MicroservicesTopics from "./topics/microservices/MicroservicesTopics";
+import MicroservicesInterview from "./pages/MicroservicesInterview";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Contact from "./pages/Contact";
@@ -110,6 +112,22 @@ function App() {
               element={
                 <RequireAuth>
                   <SpringBootInterview />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/microservices"
+              element={
+                <RequireAuth>
+                  <MicroservicesTopics />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/microservices/interview"
+              element={
+                <RequireAuth>
+                  <MicroservicesInterview />
                 </RequireAuth>
               }
             />
