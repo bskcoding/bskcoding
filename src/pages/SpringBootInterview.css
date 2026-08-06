@@ -1,5 +1,5 @@
 /* Spring Boot Interview Page */
-.interview-page {
+.spring-boot-interview-page {
   min-height: 100vh;
   background: #070c14;
   color: #f8fafc;
@@ -43,7 +43,7 @@
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 16px;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -121,10 +121,10 @@
 .category-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #22c55e;
+  color: #60a5fa;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 2px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 2px solid rgba(59, 130, 246, 0.3);
 }
 
 .questions-vertical {
@@ -251,7 +251,7 @@
 
 .question-card {
   background: rgba(10, 18, 34, 0.95);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 16px;
   padding: 32px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -263,13 +263,13 @@
   gap: 16px;
   margin-bottom: 24px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(34, 197, 94, 0.15);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
 }
 
 .question-number {
   display: inline-block;
   padding: 6px 14px;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -292,7 +292,7 @@
 .answer-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #22c55e;
+  color: #60a5fa;
   margin-bottom: 16px;
   transition: color 0.3s ease;
 }
@@ -307,8 +307,8 @@
   line-height: 1.8;
   margin-bottom: 16px;
   padding: 16px;
-  background: rgba(34, 197, 94, 0.05);
-  border-left: 3px solid #22c55e;
+  background: rgba(59, 130, 246, 0.05);
+  border-left: 3px solid #3b82f6;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
@@ -318,14 +318,19 @@
   border-left-color: #22c55e;
 }
 
-/* Code Block - Colorful IDE Style */
+/* Code Block */
 .code-block {
-  background: #1e1e2e;
-  border: 1px solid rgba(137, 180, 250, 0.2);
+  background: #080c14;
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 12px;
   overflow: hidden;
   margin: 16px 0;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.code-block {
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .code-header {
@@ -352,95 +357,12 @@
 }
 
 .code-block code {
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.6;
-  color: #cdd6f4;
+  color: #ffffff;
   background: transparent;
-}
-
-/* Prism.js Syntax Highlighting - Catppuccin Mocha Theme */
-.spring-boot-interview-page .token.comment,
-.spring-boot-interview-page .token.prolog,
-.spring-boot-interview-page .token.doctype,
-.spring-boot-interview-page .token.cdata {
-  color: #6c7086;
-  font-style: italic;
-}
-
-.spring-boot-interview-page .token.punctuation {
-  color: #9399b2;
-}
-
-.spring-boot-interview-page .token.property,
-.spring-boot-interview-page .token.tag,
-.spring-boot-interview-page .token.boolean,
-.spring-boot-interview-page .token.number,
-.spring-boot-interview-page .token.constant,
-.spring-boot-interview-page .token.symbol {
-  color: #fab387;
-}
-
-.spring-boot-interview-page .token.selector,
-.spring-boot-interview-page .token.attr-name,
-.spring-boot-interview-page .token.string,
-.spring-boot-interview-page .token.char,
-.spring-boot-interview-page .token.builtin,
-.spring-boot-interview-page .token.inserted {
-  color: #a6e3a1;
-}
-
-.spring-boot-interview-page .token.operator,
-.spring-boot-interview-page .token.entity,
-.spring-boot-interview-page .token.url,
-.spring-boot-interview-page .language-css .token.string,
-.spring-boot-interview-page .style .token.string {
-  color: #94e2d5;
-}
-
-.spring-boot-interview-page .token.atrule,
-.spring-boot-interview-page .token.attr-value,
-.spring-boot-interview-page .token.keyword {
-  color: #cba6f7;
-  font-weight: 600;
-}
-
-.spring-boot-interview-page .token.function,
-.spring-boot-interview-page .token.class-name {
-  color: #89b4fa;
-}
-
-.spring-boot-interview-page .token.regex,
-.spring-boot-interview-page .token.important,
-.spring-boot-interview-page .token.variable {
-  color: #f9e2af;
-}
-
-.spring-boot-interview-page .token.annotation {
-  color: #fab387;
-}
-
-.spring-boot-interview-page .token.deleted {
-  color: #f38ba8;
-}
-
-/* Override Prism theme background to match our code block */
-.spring-boot-interview-page .code-block pre[class*="language-"] {
-  background: #1e1e2e;
-  margin: 0;
-  padding: 20px;
-  overflow-x: auto;
-}
-
-.spring-boot-interview-page .code-block code[class*="language-"] {
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.6;
-  color: #cdd6f4;
-  background: transparent;
-  text-shadow: none;
 }
 
 /* Animations */
@@ -543,4 +465,87 @@
   .interview-stat .stat-label {
     font-size: 0.75rem;
   }
+}
+
+/* Prism.js Syntax Highlighting - Catppuccin Mocha Theme */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6c7086;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #9399b2;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #fab387;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #a6e3a1;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #94e2d5;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #cba6f7;
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #89b4fa;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #f9e2af;
+}
+
+.token.annotation {
+  color: #fab387;
+}
+
+.token.deleted {
+  color: #f38ba8;
+}
+
+/* Override Prism theme background to match our code block */
+.code-block pre[class*="language-"] {
+  background: #080c14;
+  margin: 0;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.code-block code[class*="language-"] {
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #ffffff;
+  background: transparent;
+  text-shadow: none;
 }
