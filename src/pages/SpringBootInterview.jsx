@@ -15,11 +15,22 @@ import { springBootInterviewPart2 } from "../data/springBootInterviewPart2";
 // Concatenated content is identical to the original single source.
 const interviewData = springBootInterviewPart1 + springBootInterviewPart2;
 
-// Syntax highlighter using Prism.js
+// Syntax highlighter using Prism.js.
+// Defensively guards against Prism being unavailable (e.g. a stale cached
+// chunk) so the page never crashes — it falls back to plain text.
 const highlightCode = (code, language) => {
   const lang = language || "java";
-  const grammar = Prism.languages[lang] || Prism.languages.java;
-  return Prism.highlight(code, grammar, lang);
+  try {
+    if (Prism && Prism.languages) {
+      const grammar = Prism.languages[lang] || Prism.languages.java;
+      if (grammar) {
+        return Prism.highlight(code, grammar, lang);
+      }
+    }
+  } catch (err) {
+    console.warn("Prism highlighting failed, falling back to plain text:", err);
+  }
+  return code;
 };
 
 // Parse questions from markdown with categories
