@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Prism from "prismjs";
+import "prismjs";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-properties";
 import "prismjs/components/prism-xml-doc";
@@ -2945,8 +2945,19 @@ const interviewData = `## Java Interview Questions
 // Syntax highlighter using Prism.js
 const highlightCode = (code, language) => {
   const lang = language || "java";
-  const grammar = Prism.languages[lang] || Prism.languages.java;
-  return Prism.highlight(code, grammar, lang);
+  try {
+    // Access Prism from global scope (it's loaded as a side effect)
+    const PrismLib = typeof window !== "undefined" && window.Prism;
+    if (PrismLib && PrismLib.languages) {
+      const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
+      if (grammar) {
+        return PrismLib.highlight(code, grammar, lang);
+      }
+    }
+  } catch (err) {
+    console.warn("Prism highlighting failed, falling back to plain text:", err);
+  }
+  return code;
 };
 
 // Parse questions from markdown with categories

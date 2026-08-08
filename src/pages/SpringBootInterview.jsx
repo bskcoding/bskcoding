@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Prism from "prismjs";
+import "prismjs";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-properties";
 import "prismjs/components/prism-xml-doc";
@@ -16,15 +16,16 @@ import { springBootInterviewPart2 } from "../data/springBootInterviewPart2";
 const interviewData = springBootInterviewPart1 + springBootInterviewPart2;
 
 // Syntax highlighter using Prism.js.
-// Defensively guards against Prism being unavailable (e.g. a stale cached
-// chunk) so the page never crashes — it falls back to plain text.
+// Safely accesses Prism from the global window object and falls back to plain text.
 const highlightCode = (code, language) => {
   const lang = language || "java";
   try {
-    if (Prism && Prism.languages) {
-      const grammar = Prism.languages[lang] || Prism.languages.java;
+    // Access Prism from global scope (it's loaded as a side effect)
+    const PrismLib = typeof window !== "undefined" && window.Prism;
+    if (PrismLib && PrismLib.languages) {
+      const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
       if (grammar) {
-        return Prism.highlight(code, grammar, lang);
+        return PrismLib.highlight(code, grammar, lang);
       }
     }
   } catch (err) {
