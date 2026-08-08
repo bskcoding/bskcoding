@@ -8,6 +8,26 @@ import "prismjs/components/prism-groovy";
 import "prismjs/themes/prism-tomorrow.css";
 import "./JavaInterview.css";
 
+// Syntax highlighter using Prism.js
+const highlightCode = (code, language) => {
+  const lang = language || "java";
+  try {
+    // Get Prism from global scope with defensive checks
+    if (typeof window === "undefined") return code;
+    const PrismLib = window.Prism;
+    if (!PrismLib || !PrismLib.languages) return code;
+
+    const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
+    if (!grammar) return code;
+
+    const highlighted = PrismLib.highlight(code, grammar, lang);
+    return highlighted || code;
+  } catch (err) {
+    console.warn(`Prism highlighting failed for language '${language}':`, err);
+    return code;
+  }
+};
+
 // Parse the markdown content
 const interviewData = `## Java Interview Questions
 
@@ -2941,24 +2961,6 @@ const interviewData = `## Java Interview Questions
         testImplementation 'junit:junit:4.13.2'
     }
     \`\`\``;
-
-// Syntax highlighter using Prism.js
-const highlightCode = (code, language) => {
-  const lang = language || "java";
-  try {
-    // Access Prism from global scope (it's loaded as a side effect)
-    const PrismLib = typeof window !== "undefined" && window.Prism;
-    if (PrismLib && PrismLib.languages) {
-      const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
-      if (grammar) {
-        return PrismLib.highlight(code, grammar, lang);
-      }
-    }
-  } catch (err) {
-    console.warn("Prism highlighting failed, falling back to plain text:", err);
-  }
-  return code;
-};
 
 // Parse questions from markdown with categories
 const parseQuestions = (content) => {

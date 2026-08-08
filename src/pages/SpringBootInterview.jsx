@@ -20,18 +20,20 @@ const interviewData = springBootInterviewPart1 + springBootInterviewPart2;
 const highlightCode = (code, language) => {
   const lang = language || "java";
   try {
-    // Access Prism from global scope (it's loaded as a side effect)
-    const PrismLib = typeof window !== "undefined" && window.Prism;
-    if (PrismLib && PrismLib.languages) {
-      const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
-      if (grammar) {
-        return PrismLib.highlight(code, grammar, lang);
-      }
-    }
+    // Get Prism from global scope with defensive checks
+    if (typeof window === "undefined") return code;
+    const PrismLib = window.Prism;
+    if (!PrismLib || !PrismLib.languages) return code;
+
+    const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
+    if (!grammar) return code;
+
+    const highlighted = PrismLib.highlight(code, grammar, lang);
+    return highlighted || code;
   } catch (err) {
-    console.warn("Prism highlighting failed, falling back to plain text:", err);
+    console.warn(`Prism highlighting failed for language '${language}':`, err);
+    return code;
   }
-  return code;
 };
 
 // Parse questions from markdown with categories
