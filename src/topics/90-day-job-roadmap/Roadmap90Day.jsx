@@ -1,9 +1,4 @@
-import { Link } from "react-router-dom";
-import { skills } from "../../data/skills";
-
 function Roadmap90Day() {
-  const roadmap = skills.find((s) => s.id === "90-day-job-roadmap");
-
   return (
     <div className="roadmap-page">
       <div className="container">

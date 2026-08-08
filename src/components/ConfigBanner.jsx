@@ -5,12 +5,15 @@ export default function ConfigBanner() {
   const [info, setInfo] = useState(null);
 
   useEffect(() => {
-    try {
-      const res = validateFirebaseConfig();
-      setInfo(res);
-    } catch (err) {
-      setInfo({ ok: false, error: err.message || String(err) });
-    }
+    const checkConfig = async () => {
+      try {
+        const res = validateFirebaseConfig();
+        setInfo(res);
+      } catch (err) {
+        setInfo({ ok: false, error: err.message || String(err) });
+      }
+    };
+    checkConfig();
   }, []);
 
   if (!info) return null;

@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { getCurrentUser, logout } from "../utils/auth";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import ChangePasswordModal from "./ChangePasswordModal";
 import bskimg from "../assets/bskimg.svg";
 
 const CURRENT_USER_KEY = "bsk_current_user";

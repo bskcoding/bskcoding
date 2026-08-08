@@ -6,7 +6,7 @@ const CURRENT_KEY = "bsk_current_user";
 export async function logout() {
   try {
     await firebaseLogout();
-  } catch (err) {
+  } catch {
     // ignore firebase signout errors and continue clearing local session
   }
   localStorage.removeItem(CURRENT_KEY);

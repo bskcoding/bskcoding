@@ -61,11 +61,7 @@ export async function loginWithGoogle() {
 }
 
 export async function logout() {
-  try {
-    await signOut(auth);
-  } catch (err) {
-    throw err;
-  }
+  await signOut(auth);
 }
 
 export async function resetPassword(email) {

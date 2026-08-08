@@ -34,12 +34,9 @@ function ChangePasswordModal({ isOpen, onClose }) {
   const hasPasswordProvider = isPasswordProvider();
   const hasGoogleProvider = isGoogleProvider();
 
-  // Show password form if user has password provider (even if signed in with Google)
-  const showPasswordForm = hasPasswordProvider;
   // Show Google notice only if user is Google-only (no password provider)
   const showGoogleNotice = hasGoogleProvider && !hasPasswordProvider;
 
-  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -51,12 +48,13 @@ function ChangePasswordModal({ isOpen, onClose }) {
   // Reset the form whenever the modal opens.
   useEffect(() => {
     if (isOpen) {
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      setErrors({});
-      setTouched({});
-      setLoading(false);
+      return () => {
+        setNewPassword("");
+        setConfirmPassword("");
+        setErrors({});
+        setTouched({});
+        setLoading(false);
+      };
     }
   }, [isOpen]);
 

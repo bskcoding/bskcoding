@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { skills } from "../data/skills";
 import SkillCard from "../components/SkillCard";
