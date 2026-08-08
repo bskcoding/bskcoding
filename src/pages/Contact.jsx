@@ -20,11 +20,11 @@ function Contact() {
           </div>
           <div className="contact-card">
             <h2>Phone</h2>
-            <p>+1 (555) 123-4567</p>
+            <p>xxxxx</p>
           </div>
           <div className="contact-card">
             <h2>Office</h2>
-            <p>123 Learning Ave, Tech City</p>
+            <p>Kuppam, Chittoor, Andhra Pradesh</p>
           </div>
         </div>
       </section>

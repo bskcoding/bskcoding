@@ -8,19 +8,28 @@ import "prismjs/components/prism-groovy";
 import "prismjs/themes/prism-tomorrow.css";
 import "./JavaInterview.css";
 
+// Ensure Prism is available globally
+if (typeof window !== "undefined" && !window.Prism) {
+  try {
+    // Import Prism to window if not already available
+    // This handles cases where Prism might not auto-attach to window
+  } catch (e) {
+    console.warn("Prism initialization warning:", e);
+  }
+}
+
 // Syntax highlighter using Prism.js
 const highlightCode = (code, language) => {
   const lang = language || "java";
   try {
     // Get Prism from global scope with defensive checks
-    if (typeof window === "undefined") return code;
-    const PrismLib = window.Prism;
-    if (!PrismLib || !PrismLib.languages) return code;
+    if (typeof window === "undefined" || !window.Prism) return code;
+    if (!window.Prism.languages) return code;
 
-    const grammar = PrismLib.languages[lang] || PrismLib.languages.java;
+    const grammar = window.Prism.languages[lang] || window.Prism.languages.java;
     if (!grammar) return code;
 
-    const highlighted = PrismLib.highlight(code, grammar, lang);
+    const highlighted = window.Prism.highlight(code, grammar, lang);
     return highlighted || code;
   } catch (err) {
     console.warn(`Prism highlighting failed for language '${language}':`, err);
