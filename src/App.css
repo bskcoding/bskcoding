@@ -53,6 +53,103 @@
   }
 }
 
+/* Error boundary fallback */
+.error-boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 24px;
+}
+
+.error-boundary-card {
+  max-width: 480px;
+  width: 100%;
+  background: rgba(10, 18, 34, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 20px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.error-boundary-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.error-boundary-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 12px;
+}
+
+.error-boundary-text {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.error-boundary-detail {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.8rem;
+  text-align: left;
+  overflow-x: auto;
+  margin: 0 0 20px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.error-boundary-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-boundary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.error-boundary-primary {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.error-boundary-primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.error-boundary-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.error-boundary-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
 .main-container {
   width: 100%;
   max-width: 1200px;

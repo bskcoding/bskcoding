@@ -5,6 +5,8 @@ import NavBar from "./components/NavBar";
 import ConfigBanner from "./components/ConfigBanner";
 import RequireAuth from "./components/RequireAuth";
 import ChangePasswordModal from "./components/ChangePasswordModal";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { BASENAME } from "./utils/basePath";
 
 // Route-level code splitting: each page is loaded on demand, so the main
 // bundle stays small and large pages (interview/topic pages) are only
@@ -34,8 +36,9 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Restores the original route after GitHub Pages 404 redirect.
 // When a user refreshes /login, GitHub Pages serves 404.html which
-// redirects to /index.html?path=/login. This component reads that
+// redirects to <base>/index.html?path=/login. This component reads that
 // query param and navigates to the correct page, then cleans the URL.
+// On GitHub Pages (<repo>), the clean URL must include the base prefix.
 function RouteRestorer() {
   const navigate = useNavigate();
 
@@ -44,8 +47,9 @@ function RouteRestorer() {
     const path = params.get("path");
 
     if (path && path !== "/" && path !== "/index.html") {
+      const cleanUrl = BASENAME === "/" ? path : BASENAME + path;
       // Replace the URL with the clean path and navigate to it
-      window.history.replaceState({}, "", path);
+      window.history.replaceState({}, "", cleanUrl);
       navigate(path, { replace: true });
     }
   }, [navigate]);
@@ -65,121 +69,123 @@ function App() {
   const [showChangePassword, setShowChangePassword] = useState(false);
 
   return (
-    <BrowserRouter>
-      <RouteRestorer />
-      <div className="app-shell">
-        <ConfigBanner />
-        <div className="navbar-container">
-          <NavBar onOpenChangePassword={() => setShowChangePassword(true)} />
+    <BrowserRouter basename={BASENAME}>
+      <ErrorBoundary>
+        <RouteRestorer />
+        <div className="app-shell">
+          <ConfigBanner />
+          <div className="navbar-container">
+            <NavBar onOpenChangePassword={() => setShowChangePassword(true)} />
+          </div>
+          <main className="page-container">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* Public routes */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+                {/* Protected routes */}
+                <Route
+                  path="/"
+                  element={
+                    <RequireAuth>
+                      <Home />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/about"
+                  element={
+                    <RequireAuth>
+                      <About />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/roadmap"
+                  element={
+                    <RequireAuth>
+                      <Roadmap90Day />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/java"
+                  element={
+                    <RequireAuth>
+                      <JavaTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/java/interview"
+                  element={
+                    <RequireAuth>
+                      <JavaInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/spring-boot"
+                  element={
+                    <RequireAuth>
+                      <SpringBootTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/spring-boot/interview"
+                  element={
+                    <RequireAuth>
+                      <SpringBootInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/microservices"
+                  element={
+                    <RequireAuth>
+                      <MicroservicesTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/microservices/interview"
+                  element={
+                    <RequireAuth>
+                      <MicroservicesInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/contact"
+                  element={
+                    <RequireAuth>
+                      <Contact />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <RequireAuth>
+                      <Profile />
+                    </RequireAuth>
+                  }
+                />
+
+                {/* 404 */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </main>
+
+          <ChangePasswordModal
+            isOpen={showChangePassword}
+            onClose={() => setShowChangePassword(false)}
+          />
         </div>
-        <main className="page-container">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Public routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-
-              {/* Protected routes */}
-              <Route
-                path="/"
-                element={
-                  <RequireAuth>
-                    <Home />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/about"
-                element={
-                  <RequireAuth>
-                    <About />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/roadmap"
-                element={
-                  <RequireAuth>
-                    <Roadmap90Day />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/java"
-                element={
-                  <RequireAuth>
-                    <JavaTopics />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/java/interview"
-                element={
-                  <RequireAuth>
-                    <JavaInterview />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/spring-boot"
-                element={
-                  <RequireAuth>
-                    <SpringBootTopics />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/spring-boot/interview"
-                element={
-                  <RequireAuth>
-                    <SpringBootInterview />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/microservices"
-                element={
-                  <RequireAuth>
-                    <MicroservicesTopics />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/microservices/interview"
-                element={
-                  <RequireAuth>
-                    <MicroservicesInterview />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/contact"
-                element={
-                  <RequireAuth>
-                    <Contact />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <RequireAuth>
-                    <Profile />
-                  </RequireAuth>
-                }
-              />
-
-              {/* 404 */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </main>
-
-        <ChangePasswordModal
-          isOpen={showChangePassword}
-          onClose={() => setShowChangePassword(false)}
-        />
-      </div>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
