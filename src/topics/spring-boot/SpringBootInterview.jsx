@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import "./SpringBootInterview.css";
-import { springBootInterviewPart1 } from "../data/springBootInterviewPart1";
-import { springBootInterviewPart2 } from "../data/springBootInterviewPart2";
+import { springBootInterviewPart1 } from "../../data/spring-boot/springBootInterviewPart1";
+import { springBootInterviewPart2 } from "../../data/spring-boot/springBootInterviewPart2";
 
 // Split into two files to keep each file small and manageable.
 // Part 1 = Questions 1-50, Part 2 = Questions 51-100.

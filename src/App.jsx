@@ -17,16 +17,18 @@ const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
 const JavaTopics = lazy(() => import("./topics/java/JavaTopics"));
-const JavaInterview = lazy(() => import("./pages/JavaInterview"));
+const JavaInterview = lazy(() => import("./topics/java/JavaInterview"));
 const SpringBootTopics = lazy(
   () => import("./topics/spring-boot/SpringBootTopics"),
 );
-const SpringBootInterview = lazy(() => import("./pages/SpringBootInterview"));
+const SpringBootInterview = lazy(
+  () => import("./topics/spring-boot/SpringBootInterview"),
+);
 const MicroservicesTopics = lazy(
   () => import("./topics/microservices/MicroservicesTopics"),
 );
 const MicroservicesInterview = lazy(
-  () => import("./pages/MicroservicesInterview"),
+  () => import("./topics/microservices/MicroservicesInterview"),
 );
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
