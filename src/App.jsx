@@ -32,6 +32,8 @@ const MicroservicesInterview = lazy(
 );
 const SQLTopics = lazy(() => import("./topics/sql/SQLTopics"));
 const SQLInterview = lazy(() => import("./topics/sql/SQLInterview"));
+const KafkaTopics = lazy(() => import("./topics/kafka/KafkaTopics"));
+const KafkaInterview = lazy(() => import("./topics/kafka/KafkaInterview"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -174,6 +176,22 @@ function App() {
                   element={
                     <RequireAuth>
                       <SQLInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/kafka"
+                  element={
+                    <RequireAuth>
+                      <KafkaTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/kafka/interview"
+                  element={
+                    <RequireAuth>
+                      <KafkaInterview />
                     </RequireAuth>
                   }
                 />

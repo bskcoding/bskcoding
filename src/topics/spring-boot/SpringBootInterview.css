@@ -313,9 +313,62 @@
   transition: all 0.3s ease;
 }
 
-.question-item-vertical.active .answer-text {
+.answer-list {
+  margin: 0 0 16px 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.answer-list-item {
+  font-size: 1rem;
+  color: #e2e8f0;
+  line-height: 1.7;
+  padding: 10px 14px;
+  background: rgba(59, 130, 246, 0.05);
+  border-left: 3px solid #3b82f6;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.question-item-vertical.active .answer-text,
+.question-item-vertical.active .answer-list-item {
   background: rgba(34, 197, 94, 0.05);
   border-left-color: #22c55e;
+}
+
+.answer-table-wrapper {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+.answer-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(10, 18, 34, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.answer-table th,
+.answer-table td {
+  padding: 12px 14px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  text-align: left;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.answer-table th {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+.answer-table tr:nth-child(even) td {
+  background: rgba(59, 130, 246, 0.04);
 }
 
 /* Code Block */

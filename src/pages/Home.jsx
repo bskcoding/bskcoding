@@ -9,6 +9,7 @@ function Home() {
     if (id === "spring-boot") return "/spring-boot";
     if (id === "microservices") return "/microservices";
     if (id === "sql-databases") return "/sql";
+    if (id === "apache-kafka") return "/kafka";
     return "#";
   };
 
