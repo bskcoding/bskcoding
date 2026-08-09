@@ -107,6 +107,24 @@ function NavBar({ onOpenChangePassword }) {
           <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
             <span>Contact</span>
           </NavLink>
+          <a
+            href="https://topmate.io/venkatesh_bharath"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+            onClick={closeMenu}
+          >
+            <span>1:1 Call</span>
+          </a>
+          <a
+            href="https://www.youtube.com/@bskcoding"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+            onClick={closeMenu}
+          >
+            <span>▶ YouTube</span>
+          </a>
           {!user && (
             <>
               <NavLink
