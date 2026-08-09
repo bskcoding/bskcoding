@@ -38,7 +38,6 @@ function AiChat() {
   const [parsingFile, setParsingFile] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
   const [showResumeBuilder, setShowResumeBuilder] = useState(false);
-  const [resumeText, setResumeText] = useState("");
   const fileInputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
@@ -168,8 +167,6 @@ function AiChat() {
 
     try {
       const parsed = await parseResumeFile(file);
-
-      setResumeText(parsed.content);
 
       // Add user message about upload
       setMessages((prev) => [

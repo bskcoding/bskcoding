@@ -456,7 +456,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     }
 
     // ===== SKILLS =====
-    const skillEntries = Object.entries(resume.skills).filter(([k, v]) => v);
+    const skillEntries = Object.entries(resume.skills).filter(([, v]) => v);
     if (skillEntries.length > 0) {
       addSection("Technical Skills");
       skillEntries.forEach(([key, value]) => {
@@ -1247,11 +1247,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                     <p>{resume.summary}</p>
                   </div>
                 )}
-                {Object.entries(resume.skills).some(([k, v]) => v) && (
+                {Object.entries(resume.skills).some(([, v]) => v) && (
                   <div className="rb-preview-section">
                     <h3>Technical Skills</h3>
                     {Object.entries(resume.skills)
-                      .filter(([k, v]) => v)
+                      .filter(([, v]) => v)
                       .map(([key, value]) => (
                         <p key={key} className="rb-preview-skill">
                           <strong>

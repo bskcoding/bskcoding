@@ -32,6 +32,7 @@ async function extractPDFText(file) {
     console.error("PDF extraction error:", error);
     throw new Error(
       "Could not read the PDF file. Please try a different file or format.",
+      { cause: error },
     );
   }
 }
