@@ -107,6 +107,14 @@ function NavBar({ onOpenChangePassword }) {
           <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
             <span>Contact</span>
           </NavLink>
+          <NavLink
+            to="/ai-chat"
+            className="nav-link nav-link-ai"
+            onClick={closeMenu}
+          >
+            <span className="nav-link-ai-icon">✦</span>
+            <span>Chat with AI</span>
+          </NavLink>
           <a
             href="https://topmate.io/venkatesh_bharath"
             target="_blank"
