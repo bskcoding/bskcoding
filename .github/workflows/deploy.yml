@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Setup Pages
@@ -35,10 +35,10 @@ jobs:
 
       - name: Create .env file with secrets
         env:
-          GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
         run: |
           if [ -z "$GEMINI_KEY" ]; then
-            echo "ERROR: GEMINI_API_KEY secret is not set in GitHub Secrets"
+            echo "ERROR: VITE_GEMINI_API_KEY secret is not set in GitHub Secrets"
             echo "Please add it at: https://github.com/bskcoding/bskcoding/settings/secrets/actions"
             exit 1
           fi
