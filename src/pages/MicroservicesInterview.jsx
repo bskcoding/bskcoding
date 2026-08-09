@@ -1,22 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "prismjs";
-import "prismjs/components/prism-java";
-import "prismjs/components/prism-properties";
-import "prismjs/components/prism-xml-doc";
-import "prismjs/components/prism-groovy";
-import "prismjs/themes/prism-tomorrow.css";
 import "./MicroservicesInterview.css";
 
-// Ensure Prism is available globally
-if (typeof window !== "undefined" && !window.Prism) {
-  try {
-    // Import Prism to window if not already available
-    // This handles cases where Prism might not auto-attach to window
-  } catch (e) {
-    console.warn("Prism initialization warning:", e);
-  }
-}
+// Simple code display - returns code as-is for rendering in <pre> tag
+const highlightCode = (code) => {
+  // HTML escape the code for safe rendering
+  return code
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+};
 
 // Parse the markdown content
 const interviewData = `## Microservices Interview Questions
@@ -546,25 +541,6 @@ const interviewData = `## Microservices Interview Questions
     - **Monitoring**: ELK for Logs, Zipkin for Tracing, Prometheus for Metrics, Grafana Dashboards.
     - **Best Practices**: One database per microservice, stateless services, externalized configuration, health checks, correlation IDs, API versioning, idempotent APIs, graceful shutdown, zero-downtime deployments.
     - **Interview Tip**: Explain requirements, microservices, database strategy, communication, security, resilience, scalability, monitoring, deployment, and production best practices.`;
-
-// Syntax highlighter using Prism.js
-const highlightCode = (code, language) => {
-  const lang = language || "java";
-  try {
-    // Get Prism from global scope with defensive checks
-    if (typeof window === "undefined" || !window.Prism) return code;
-    if (!window.Prism.languages) return code;
-
-    const grammar = window.Prism.languages[lang] || window.Prism.languages.java;
-    if (!grammar) return code;
-
-    const highlighted = window.Prism.highlight(code, grammar, lang);
-    return highlighted || code;
-  } catch (err) {
-    console.warn(`Prism highlighting failed for language '${language}':`, err);
-    return code;
-  }
-};
 
 // Parse questions from markdown with categories
 const parseQuestions = (content) => {

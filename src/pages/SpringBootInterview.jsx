@@ -1,48 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "prismjs";
-import "prismjs/components/prism-java";
-import "prismjs/components/prism-properties";
-import "prismjs/components/prism-xml-doc";
-import "prismjs/components/prism-groovy";
-import "prismjs/themes/prism-tomorrow.css";
 import "./SpringBootInterview.css";
 import { springBootInterviewPart1 } from "../data/springBootInterviewPart1";
 import { springBootInterviewPart2 } from "../data/springBootInterviewPart2";
-
-// Ensure Prism is available globally
-if (typeof window !== "undefined" && !window.Prism) {
-  try {
-    // Import Prism to window if not already available
-    // This handles cases where Prism might not auto-attach to window
-  } catch (e) {
-    console.warn("Prism initialization warning:", e);
-  }
-}
 
 // Split into two files to keep each file small and manageable.
 // Part 1 = Questions 1-50, Part 2 = Questions 51-100.
 // Concatenated content is identical to the original single source.
 const interviewData = springBootInterviewPart1 + springBootInterviewPart2;
 
-// Syntax highlighter using Prism.js.
-// Safely accesses Prism from the global window object and falls back to plain text.
-const highlightCode = (code, language) => {
-  const lang = language || "java";
-  try {
-    // Get Prism from global scope with defensive checks
-    if (typeof window === "undefined" || !window.Prism) return code;
-    if (!window.Prism.languages) return code;
-
-    const grammar = window.Prism.languages[lang] || window.Prism.languages.java;
-    if (!grammar) return code;
-
-    const highlighted = window.Prism.highlight(code, grammar, lang);
-    return highlighted || code;
-  } catch (err) {
-    console.warn(`Prism highlighting failed for language '${language}':`, err);
-    return code;
-  }
+// Simple code display - returns code as-is for rendering in <pre> tag
+const highlightCode = (code) => {
+  // HTML escape the code for safe rendering
+  return code
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
 };
 
 // Parse questions from markdown with categories
