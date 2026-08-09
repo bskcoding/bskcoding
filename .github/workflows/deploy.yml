@@ -34,8 +34,15 @@ jobs:
         run: npm ci
 
       - name: Create .env file with secrets
+        env:
+          GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          echo "VITE_GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > .env
+          if [ -z "$GEMINI_KEY" ]; then
+            echo "ERROR: GEMINI_API_KEY secret is not set in GitHub Secrets"
+            echo "Please add it at: https://github.com/bskcoding/bskcoding/settings/secrets/actions"
+            exit 1
+          fi
+          echo "VITE_GEMINI_API_KEY=$GEMINI_KEY" > .env
           echo "VITE_BASE_PATH=./" >> .env.production
 
       - name: Build
