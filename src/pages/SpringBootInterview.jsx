@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import hljs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
 import "./SpringBootInterview.css";
 import { springBootInterviewPart1 } from "../data/springBootInterviewPart1";
 import { springBootInterviewPart2 } from "../data/springBootInterviewPart2";
@@ -9,15 +11,26 @@ import { springBootInterviewPart2 } from "../data/springBootInterviewPart2";
 // Concatenated content is identical to the original single source.
 const interviewData = springBootInterviewPart1 + springBootInterviewPart2;
 
-// Simple code display - returns code as-is for rendering in <pre> tag
-const highlightCode = (code) => {
-  // HTML escape the code for safe rendering
-  return code
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;");
+// Syntax highlight code using Highlight.js
+const highlightCode = (code, language) => {
+  try {
+    if (!language) language = "java";
+    // Auto-detect if language is not specified
+    const highlighted = hljs.highlight(code, {
+      language,
+      ignoreIllegals: true,
+    }).value;
+    return highlighted;
+  } catch (err) {
+    console.warn(`Highlight.js error for language '${language}':`, err);
+    // Fallback: return HTML-escaped plain text
+    return code
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#x27;");
+  }
 };
 
 // Parse questions from markdown with categories
