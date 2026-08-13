@@ -84,7 +84,6 @@ function ResumeBuilder({ onClose }) {
   const [aiMessage, setAiMessage] = useState("");
   const [uploadingResume, setUploadingResume] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [resumeFilled, setResumeFilled] = useState(false);
   const [parsingComplete, setParsingComplete] = useState(false);
 
   // Resume upload handler - parses the file and uses AI to auto-fill all fields
