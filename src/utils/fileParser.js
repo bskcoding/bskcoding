@@ -82,21 +82,93 @@ export async function parseResumeFile(file) {
 }
 
 /**
- * Build a prompt to send with the uploaded resume content
+ * Build a prompt that asks Gemini to extract ALL resume data
+ * into the exact JSON structure used by the Resume Builder.
+ * This auto-fills every field including name, contact info,
+ * summary, experience, projects, skills, education, certificates.
  */
-export function buildResumeAnalysisPrompt(resumeText, filename) {
-  return `I have uploaded my resume file "${filename}". Here is the extracted text content:
+export function buildResumeDataExtractionPrompt(resumeText, filename) {
+  return `You are an expert resume parser. I have uploaded my resume file "${filename}". 
+Your job is to extract ALL information from it and return it as valid JSON that exactly matches the Resume Builder data structure.
 
 === RESUME CONTENT START ===
 ${resumeText}
 === RESUME CONTENT END ===
 
-Please analyze my resume and:
-1. Provide a professional summary of what my resume shows
-2. Identify strengths and weaknesses
-3. Suggest improvements for the resume (content, formatting, keywords)
-4. Give a proper designed resume structure with my information organized professionally
-5. Suggest what I should add/remove/change
+Extract every detail you can find:
+1. **name** - Full name
+2. **title** - Professional title / current job title
+3. **email** - Email address
+4. **phone** - Phone number
+5. **linkedin** - LinkedIn URL (if present)
+6. **github** - GitHub URL (if present)
+7. **location** - City, State, Country
+8. **summary** - Professional summary / objective statement
+9. **experience** - Array of work experiences with: company, role, startDate, endDate, location, and points (array of achievement/responsibility bullets)
+10. **projects** - Array of projects with: name, techStack, and points (array of contribution bullets)
+11. **skills** - Object with categories: languages, frameworks, frontend, databases, devops, testing, cloud, messaging, concepts
+12. **education** - Array of education entries with: degree, institution, cgpa, startYear, endYear, location
+13. **certificates** - Array of certification names
 
-Format your response as a structured markdown guide.`;
+Rules:
+- If a field is not found in the resume, use an empty string "" (or empty array [] for arrays).
+- POLISH all extracted content to be ATS-friendly and professional:
+  - Rewrite experience/project bullet points with strong action verbs and quantified achievements where possible.
+  - Clean up grammar, spelling, and formatting.
+  - Make content concise and impactful.
+- For skills, categorize them correctly (e.g., Java, Python → languages; Spring Boot, React → frameworks/frontend).
+- If the resume has NO summary/objective, GENERATE a compelling 2-3 sentence professional summary based on the person's title, experience, and skills. Make it ATS-optimized with relevant keywords.
+- If the resume has a summary, polish and improve it to be more professional and ATS-friendly.
+- Return ONLY the valid JSON object. No markdown fences, no explanation, no extra text.
+
+The response MUST be exactly this JSON structure:
+{
+  "name": "",
+  "title": "",
+  "email": "",
+  "phone": "",
+  "linkedin": "",
+  "github": "",
+  "location": "",
+  "summary": "",
+  "experience": [
+    {
+      "company": "",
+      "role": "",
+      "startDate": "",
+      "endDate": "",
+      "location": "",
+      "points": [""]
+    }
+  ],
+  "projects": [
+    {
+      "name": "",
+      "techStack": "",
+      "points": [""]
+    }
+  ],
+  "skills": {
+    "languages": "",
+    "frameworks": "",
+    "frontend": "",
+    "databases": "",
+    "devops": "",
+    "testing": "",
+    "cloud": "",
+    "messaging": "",
+    "concepts": ""
+  },
+  "education": [
+    {
+      "degree": "",
+      "institution": "",
+      "cgpa": "",
+      "startYear": "",
+      "endYear": "",
+      "location": ""
+    }
+  ],
+  "certificates": [""]
+}`;
 }

@@ -355,32 +355,43 @@
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.15) !important;
 }
 
-/* AI Chat nav link - highlight with gradient glow */
-.nav-link-ai {
+/* Resume Builder nav link - highlight with gradient glow */
+.nav-link-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.12),
-    rgba(6, 182, 212, 0.08)
-  ) !important;
-  border: 1px solid rgba(59, 130, 246, 0.25) !important;
-  color: #c7d2fe !important;
+    rgba(139, 92, 246, 0.15),
+    rgba(59, 130, 246, 0.1)
+  );
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #e0e7ff;
   font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.nav-link-ai:hover {
+.nav-link-resume:hover {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.2),
-    rgba(6, 182, 212, 0.12)
-  ) !important;
-  border-color: rgba(59, 130, 246, 0.4) !important;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2) !important;
+    rgba(139, 92, 246, 0.25),
+    rgba(59, 130, 246, 0.15)
+  );
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
 }
 
-.nav-link-ai-icon {
-  font-size: 0.85em;
+.nav-link-resume-icon {
+  font-size: 0.9em;
   animation: nav-ai-glow 2s ease-in-out infinite;
-  color: #a5b4fc;
+  color: #c4b5fd;
 }
 
 @keyframes nav-ai-glow {
@@ -391,19 +402,9 @@
   }
   50% {
     opacity: 1;
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.6));
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.5));
   }
-}
-
-.nav-link-ai.active {
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.18),
-    rgba(6, 182, 212, 0.1)
-  ) !important;
-  border: 1px solid rgba(59, 130, 246, 0.4) !important;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15) !important;
 }
 
 /* User section - dark blue theme */

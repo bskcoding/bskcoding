@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { jsPDF } from "jspdf";
 import { GoogleGenAI } from "@google/genai";
+import {
+  parseResumeFile,
+  buildResumeDataExtractionPrompt,
+} from "../utils/fileParser";
 import "./ResumeBuilder.css";
 
 // Initialize Gemini AI client for suggestions
@@ -15,6 +19,7 @@ const AI_MODELS = [
 ];
 
 const STEPS = [
+  { id: "upload", label: "Upload Resume", icon: "📤" },
   { id: "personal", label: "Personal Info", icon: "👤" },
   { id: "summary", label: "Summary", icon: "📝" },
   { id: "experience", label: "Experience", icon: "💼" },
@@ -70,11 +75,202 @@ const EMPTY_RESUME = {
 };
 
 function ResumeBuilder({ onClose }) {
+  const isModal = typeof onClose === "function";
+  const fileInputRef = useRef(null);
   const [step, setStep] = useState(0);
   const [resume, setResume] = useState(EMPTY_RESUME);
   const [showPreview, setShowPreview] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiMessage, setAiMessage] = useState("");
+  const [uploadingResume, setUploadingResume] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [resumeFilled, setResumeFilled] = useState(false);
+  const [parsingComplete, setParsingComplete] = useState(false);
+
+  // Resume upload handler - parses the file and uses AI to auto-fill all fields
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!ai || !apiKey) {
+      setAiMessage(
+        "⚠️ Gemini API key not configured. Add VITE_GEMINI_API_KEY to .env",
+      );
+      return;
+    }
+
+    setUploadingResume(true);
+    setAiLoading(true);
+    setAiMessage("");
+    setUploadedFile(file.name);
+
+    try {
+      // Parse the resume file (PDF/TXT) to extract text
+      const parsed = await parseResumeFile(file);
+
+      // Build the structured data extraction prompt
+      const prompt = buildResumeDataExtractionPrompt(
+        parsed.content,
+        parsed.filename,
+      );
+
+      let response = null;
+      let lastError = null;
+
+      // Try each AI model until one works
+      for (const model of AI_MODELS) {
+        try {
+          response = await ai.models.generateContent({
+            model,
+            contents: [{ role: "user", parts: [{ text: prompt }] }],
+          });
+          if (response?.text) break;
+        } catch (err) {
+          lastError = err;
+          console.warn(`AI parse model '${model}' failed:`, err?.message);
+        }
+      }
+
+      if (!response?.text && lastError) throw lastError;
+
+      // Parse the JSON response
+      const text = response.text.trim();
+      const jsonStr = text
+        .replace(/^```json\s*/, "")
+        .replace(/```$/, "")
+        .replace(/^```\s*/, "")
+        .replace(/```$/, "")
+        .trim();
+      const parsedData = JSON.parse(jsonStr);
+
+      // Sanitize and merge the extracted data into the resume
+      setResume((prev) => {
+        const updated = { ...prev };
+
+        // Personal info
+        const personalFields = [
+          "name",
+          "title",
+          "email",
+          "phone",
+          "linkedin",
+          "github",
+          "location",
+        ];
+        personalFields.forEach((field) => {
+          if (parsedData[field] && !updated[field]) {
+            updated[field] = String(parsedData[field]).trim();
+          }
+        });
+
+        // Summary
+        if (parsedData.summary && !updated.summary) {
+          updated.summary = String(parsedData.summary).trim();
+        }
+
+        // Experience
+        if (
+          parsedData.experience &&
+          Array.isArray(parsedData.experience) &&
+          parsedData.experience.length > 0
+        ) {
+          const validExp = parsedData.experience.filter(
+            (exp) => exp.company || exp.role,
+          );
+          if (validExp.length > 0) {
+            updated.experience = validExp.map((exp) => ({
+              company: exp.company || "",
+              role: exp.role || "",
+              startDate: exp.startDate || "",
+              endDate: exp.endDate || "",
+              location: exp.location || "",
+              points: Array.isArray(exp.points)
+                ? exp.points.filter(Boolean)
+                : [""],
+            }));
+          }
+        }
+
+        // Projects
+        if (
+          parsedData.projects &&
+          Array.isArray(parsedData.projects) &&
+          parsedData.projects.length > 0
+        ) {
+          const validProjects = parsedData.projects.filter((p) => p.name);
+          if (validProjects.length > 0) {
+            updated.projects = validProjects.map((proj) => ({
+              name: proj.name || "",
+              techStack: proj.techStack || "",
+              points: Array.isArray(proj.points)
+                ? proj.points.filter(Boolean)
+                : [""],
+            }));
+          }
+        }
+
+        // Skills
+        if (parsedData.skills && typeof parsedData.skills === "object") {
+          Object.keys(updated.skills).forEach((key) => {
+            if (parsedData.skills[key] && !updated.skills[key]) {
+              updated.skills[key] = String(parsedData.skills[key]).trim();
+            }
+          });
+        }
+
+        // Education
+        if (
+          parsedData.education &&
+          Array.isArray(parsedData.education) &&
+          parsedData.education.length > 0
+        ) {
+          const validEdu = parsedData.education.filter(
+            (edu) => edu.degree || edu.institution,
+          );
+          if (validEdu.length > 0) {
+            updated.education = validEdu.map((edu) => ({
+              degree: edu.degree || "",
+              institution: edu.institution || "",
+              cgpa: edu.cgpa || "",
+              startYear: edu.startYear || "",
+              endYear: edu.endYear || "",
+              location: edu.location || "",
+            }));
+          }
+        }
+
+        // Certificates
+        if (parsedData.certificates && Array.isArray(parsedData.certificates)) {
+          const validCerts = parsedData.certificates.filter(Boolean);
+          if (validCerts.length > 0) {
+            updated.certificates = validCerts;
+          }
+        }
+
+        return updated;
+      });
+
+      setResumeFilled(true);
+      setParsingComplete(true);
+      setAiMessage(
+        "✨ Resume parsed successfully! All your details have been auto-filled. Review each section below.",
+      );
+
+      // Auto-advance to next step after successful parsing
+      setTimeout(() => {
+        setStep(1);
+      }, 1200);
+    } catch (error) {
+      console.error("Resume parsing error:", error);
+      setAiMessage(
+        "⚠️ Could not parse the resume. Please try again or fill in the details manually.",
+      );
+    } finally {
+      setUploadingResume(false);
+      setAiLoading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
   const updateField = (section, field, value) => {
     setResume((prev) => {
@@ -346,12 +542,12 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     const contentWidth = pageWidth - margin * 2;
     let y = 20;
 
-    // ===== HEADER =====
-    doc.setFillColor(15, 23, 42);
+    // ===== HEADER (white background with dark blue text - matches preview) =====
+    doc.setFillColor(255, 255, 255);
     doc.rect(0, 0, pageWidth, 55, "F");
 
     // Name
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(30, 58, 138); // dark blue #1e3a8a
     doc.setFont("helvetica", "bold");
     doc.setFontSize(24);
     doc.text((resume.name || "Your Name").toUpperCase(), pageWidth / 2, 22, {
@@ -362,29 +558,85 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     if (resume.title) {
       doc.setFontSize(12);
       doc.setFont("helvetica", "normal");
-      doc.setTextColor(147, 197, 253);
+      doc.setTextColor(37, 99, 235); // blue #2563eb
       doc.text(resume.title.toUpperCase(), pageWidth / 2, 32, {
         align: "center",
       });
     }
 
-    // Contact line
+    // Contact line - render as clean text (no emojis for PDF compatibility)
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(226, 232, 240);
-    const contactParts = [];
-    if (resume.location) contactParts.push(`Location: ${resume.location}`);
-    if (resume.email) contactParts.push(`Email: ${resume.email}`);
-    if (resume.phone) contactParts.push(`Mobile: ${resume.phone}`);
-    if (resume.linkedin) contactParts.push(`LinkedIn: ${resume.linkedin}`);
-    if (resume.github) contactParts.push(`GitHub: ${resume.github}`);
-    const contactLine = contactParts.join("  |  ");
+    doc.setTextColor(75, 85, 99); // gray #4b5563
+
+    const contactItems = [];
+    if (resume.location) {
+      contactItems.push({ label: `Location: ${resume.location}`, url: null });
+    }
+    if (resume.email) {
+      const emailUrl = resume.email.startsWith("http")
+        ? resume.email
+        : `mailto:${resume.email}`;
+      contactItems.push({ label: `Email: ${resume.email}`, url: emailUrl });
+    }
+    if (resume.phone) {
+      contactItems.push({ label: `Mobile: ${resume.phone}`, url: null });
+    }
+    if (resume.linkedin) {
+      // Handle case where LinkedIn URL is just "LinkedIn" or incomplete
+      let linkedinUrl = resume.linkedin;
+      if (!linkedinUrl.startsWith("http")) {
+        // If it's just "LinkedIn" or similar, we'll leave the label as-is but set url to null
+        // so it doesn't show a broken link; the preview will show it as plain text
+        contactItems.push({ label: `LinkedIn: ${resume.linkedin}`, url: null });
+      } else {
+        linkedinUrl = resume.linkedin.startsWith("http")
+          ? resume.linkedin
+          : `https://${resume.linkedin.replace(/^https?:\/\//, "")}`;
+        contactItems.push({
+          label: `LinkedIn: ${resume.linkedin}`,
+          url: linkedinUrl,
+        });
+      }
+    }
+    if (resume.github) {
+      const githubUrl = resume.github.startsWith("http")
+        ? resume.github
+        : `https://${resume.github.replace(/^https?:\/\//, "")}`;
+      contactItems.push({ label: `GitHub: ${resume.github}`, url: githubUrl });
+    }
+    const contactLine = contactItems.map((item) => item.label).join("  |  ");
     const contactLines = doc.splitTextToSize(contactLine, contentWidth);
     let contactY = 42;
     contactLines.forEach((line) => {
       doc.text(line, pageWidth / 2, contactY, { align: "center" });
       contactY += 5;
     });
+
+    // Add clickable link annotations over contact items in PDF
+    if (contactLines.length > 0) {
+      const lineHeight = 5;
+      contactLines.forEach((line, lineIdx) => {
+        const yPos = 42 + lineIdx * lineHeight;
+        const lineWidth = doc.getTextWidth(line);
+        const startX = (pageWidth - lineWidth) / 2;
+        let runningText = "";
+
+        contactItems.forEach((item) => {
+          if (!item.url) {
+            runningText += item.label + "  |  ";
+            return;
+          }
+          const itemWidth = doc.getTextWidth(item.label);
+          const beforeWidth = doc.getTextWidth(runningText);
+          // Add invisible link over the item text
+          doc.link(startX + beforeWidth, yPos - 4, itemWidth, lineHeight + 2, {
+            url: item.url,
+          });
+          runningText += item.label + "  |  ";
+        });
+      });
+    }
 
     y = 70;
 
@@ -613,6 +865,85 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
 
   const renderStep = () => {
     switch (STEPS[step].id) {
+      case "upload":
+        return (
+          <div className="rb-upload-wrap">
+            <div className="rb-upload-icon">📤</div>
+            <h3>Upload Your Resume</h3>
+            <p>
+              Upload your existing resume (PDF, TXT) and BSK AI will
+              automatically detect your name, contact info, experience,
+              projects, skills, education, and more — then fill all the resume
+              builder fields for you.
+            </p>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf,.txt,.md,.doc"
+              onChange={handleResumeUpload}
+              style={{ display: "none" }}
+            />
+
+            <button
+              className="rb-upload-btn"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingResume || aiLoading}
+            >
+              {uploadingResume ? (
+                <>
+                  <span className="rb-ai-spinner">⏳</span>
+                  {uploadedFile ? `Parsing ${uploadedFile}...` : "Reading..."}
+                </>
+              ) : (
+                <>
+                  <span>📄</span>
+                  Choose Resume File
+                </>
+              )}
+            </button>
+
+            {uploadedFile && !uploadingResume && (
+              <div className="rb-upload-file">
+                <span>✅</span>
+                <span>
+                  <strong>{uploadedFile}</strong> uploaded
+                </span>
+                {parsingComplete && (
+                  <span className="rb-upload-done">✓ Parsed</span>
+                )}
+              </div>
+            )}
+
+            {parsingComplete && (
+              <div className="rb-upload-success">
+                <span>🎉</span>
+                <div>
+                  <strong>Resume data extracted!</strong>
+                  <p>
+                    {resume.name ? `Welcome, ${resume.name}! ` : ""}All your
+                    details have been auto-filled. Review each section and make
+                    edits if needed, or click "Next →" to continue.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="rb-upload-or">
+              <span>OR</span>
+            </div>
+
+            <button className="rb-upload-skip" onClick={() => setStep(1)}>
+              Start from scratch & fill manually →
+            </button>
+
+            <p className="rb-upload-hint">
+              💡 Supported formats: PDF, TXT, MD. Your file is processed locally
+              and only sent to Gemini for data extraction.
+            </p>
+          </div>
+        );
+
       case "personal":
         return (
           <div className="rb-form-grid">
@@ -1229,16 +1560,59 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                 <div className="rb-preview-header">
                   <h2>{(resume.name || "Your Name").toUpperCase()}</h2>
                   {resume.title && <h3>{resume.title.toUpperCase()}</h3>}
-                  <p>
-                    {[
-                      resume.location ? `Location: ${resume.location}` : "",
-                      resume.email ? `Email: ${resume.email}` : "",
-                      resume.phone ? `Mobile: ${resume.phone}` : "",
-                      resume.linkedin ? `LinkedIn: ${resume.linkedin}` : "",
-                      resume.github ? `GitHub: ${resume.github}` : "",
-                    ]
-                      .filter(Boolean)
-                      .join("  |  ")}
+                  <p className="rb-preview-contact">
+                    {resume.location && (
+                      <span className="rb-preview-contact-item">
+                        📍 {resume.location}
+                      </span>
+                    )}
+                    {resume.email && (
+                      <a
+                        href={
+                          resume.email.startsWith("http")
+                            ? resume.email
+                            : `mailto:${resume.email}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rb-preview-contact-item rb-preview-link"
+                      >
+                        ✉ {resume.email}
+                      </a>
+                    )}
+                    {resume.phone && (
+                      <span className="rb-preview-contact-item">
+                        📞 {resume.phone}
+                      </span>
+                    )}
+                    {resume.linkedin && (
+                      <a
+                        href={
+                          resume.linkedin.startsWith("http")
+                            ? resume.linkedin
+                            : `https://${resume.linkedin.replace(/^https?:\/\//, "")}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rb-preview-contact-item rb-preview-link"
+                      >
+                        🔗 {resume.linkedin}
+                      </a>
+                    )}
+                    {resume.github && (
+                      <a
+                        href={
+                          resume.github.startsWith("http")
+                            ? resume.github
+                            : `https://${resume.github.replace(/^https?:\/\//, "")}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rb-preview-contact-item rb-preview-link"
+                      >
+                        💻 {resume.github}
+                      </a>
+                    )}
                   </p>
                 </div>
                 {resume.summary && (
@@ -1359,11 +1733,10 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
   };
 
   return (
-    <div className="rb-overlay">
-      <div className="rb-modal">
+    <div className={isModal ? "rb-overlay" : "rb-page"}>
+      <div className={isModal ? "rb-modal" : "rb-page-card"}>
         <div className="rb-header">
           <div className="rb-header-info">
-            <div className="rb-header-icon">📄</div>
             <div>
               <h2>Resume Builder</h2>
               <p>
@@ -1372,9 +1745,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
               </p>
             </div>
           </div>
-          <button className="rb-close" onClick={onClose}>
-            ✕
-          </button>
+          {isModal && (
+            <button className="rb-close" onClick={onClose}>
+              ✕
+            </button>
+          )}
         </div>
 
         <div className="rb-steps">
@@ -1407,7 +1782,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
             ← Back
           </button>
           <div className="rb-footer-center">
-            {step < STEPS.length - 1 && (
+            {step < STEPS.length - 1 && STEPS[step].id !== "upload" && (
               <button
                 className="rb-btn rb-btn-ai"
                 onClick={() => getAISuggestion(STEPS[step].id)}
@@ -1429,7 +1804,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
             </div>
           </div>
           <button className="rb-btn rb-btn-primary" onClick={nextStep}>
-            {step === STEPS.length - 1 ? "Finish ✓" : "Next →"}
+            {step === STEPS.length - 1
+              ? "Finish ✓"
+              : STEPS[step].id === "upload"
+                ? "Skip →"
+                : "Next →"}
           </button>
         </div>
       </div>

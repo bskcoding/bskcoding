@@ -38,7 +38,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Profile = lazy(() => import("./pages/Profile"));
-const AiChat = lazy(() => import("./pages/AiChat"));
+const ResumeBuilderPage = lazy(() => import("./pages/ResumeBuilderPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Restores the original route after GitHub Pages 404 redirect.
@@ -213,14 +213,13 @@ function App() {
                   }
                 />
                 <Route
-                  path="/ai-chat"
+                  path="/resume-builder"
                   element={
                     <RequireAuth>
-                      <AiChat />
+                      <ResumeBuilderPage />
                     </RequireAuth>
                   }
                 />
-
                 {/* 404 */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

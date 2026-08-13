@@ -1,5 +1,38 @@
 /* ===== RESUME BUILDER ===== */
 
+/* Full page mode */
+.rb-page {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: var(--dark-navy, #080e1a);
+}
+
+.rb-page-card {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(10, 18, 34, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 20px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(59, 130, 246, 0.15);
+  overflow: hidden;
+}
+
+.rb-page-card .rb-body {
+  max-height: none;
+  min-height: 400px;
+}
+
+.rb-page-card .rb-steps {
+  overflow-x: auto;
+}
+
 .rb-overlay {
   position: fixed;
   inset: 0;
@@ -68,33 +101,16 @@
   gap: 14px;
 }
 
-.rb-header-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.25),
-    rgba(6, 182, 212, 0.15)
-  );
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
 .rb-header h2 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #f8fafc;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e3a8a;
   margin: 0;
 }
 
 .rb-header p {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #64748b;
   margin: 2px 0 0;
 }
 
@@ -443,6 +459,29 @@
   text-align: center;
 }
 
+.rb-preview-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+}
+
+.rb-preview-contact-item {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.rb-preview-contact-item.rb-preview-link {
+  color: #1e3a8a;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.rb-preview-contact-item.rb-preview-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
 .rb-preview-location {
   font-size: 0.8rem !important;
   color: #6b7280 !important;
@@ -633,6 +672,171 @@
   color: #64748b;
 }
 
+/* Upload Resume Step */
+.rb-upload-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.rb-upload-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(6, 182, 212, 0.1)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+}
+
+.rb-upload-wrap h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.rb-upload-wrap > p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0;
+}
+
+.rb-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.rb-upload-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+.rb-upload-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rb-upload-file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #6ee7b7;
+}
+
+.rb-upload-done {
+  background: rgba(52, 211, 153, 0.2);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.rb-upload-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: 12px;
+  text-align: left;
+  max-width: 500px;
+  width: 100%;
+}
+
+.rb-upload-success > span {
+  font-size: 1.5rem;
+}
+
+.rb-upload-success strong {
+  color: #6ee7b7;
+  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.rb-upload-success p {
+  color: #a7f3d0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rb-upload-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.rb-upload-or::before,
+.rb-upload-or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.rb-upload-or span {
+  font-size: 0.8rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rb-upload-skip {
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #93c5fd;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.rb-upload-skip:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.rb-upload-hint {
+  font-size: 0.75rem !important;
+  color: #64748b !important;
+  margin-top: 4px !important;
+}
+
 /* Scrollbar */
 .rb-modal::-webkit-scrollbar,
 .rb-body::-webkit-scrollbar,
@@ -662,12 +866,6 @@
 
   .rb-header {
     padding: 18px 16px 12px;
-  }
-
-  .rb-header-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
   }
 
   .rb-header h2 {
