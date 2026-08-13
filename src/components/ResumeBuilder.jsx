@@ -249,7 +249,6 @@ function ResumeBuilder({ onClose }) {
         return updated;
       });
 
-      setResumeFilled(true);
       setParsingComplete(true);
       setAiMessage(
         "✨ Resume parsed successfully! All your details have been auto-filled. Review each section below.",
