@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import { GoogleGenAI } from "@google/genai";
 import {
   parseResumeFile,
@@ -77,6 +78,7 @@ const EMPTY_RESUME = {
 function ResumeBuilder({ onClose }) {
   const isModal = typeof onClose === "function";
   const fileInputRef = useRef(null);
+  const previewRef = useRef(null);
   const [step, setStep] = useState(0);
   const [resume, setResume] = useState(EMPTY_RESUME);
   const [showPreview, setShowPreview] = useState(false);
@@ -362,6 +364,14 @@ function ResumeBuilder({ onClose }) {
     });
   };
 
+  // Helper to display URLs cleanly — show only the ID/username part
+  // e.g. "https://github.com/venkatesh-bharath" → "venkatesh-bharath"
+  const cleanUrl = (url) => {
+    const cleaned = url.replace(/^https?:\/\//, "").replace(/^www\./, "");
+    const segments = cleaned.split("/").filter(Boolean);
+    return segments.pop() || cleaned;
+  };
+
   const nextStep = () => {
     if (step < STEPS.length - 1) {
       setStep(step + 1);
@@ -532,7 +542,84 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     if (step > 0) setStep(step - 1);
   };
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
+    // Ensure the preview is visible so html2canvas can capture it
+    if (!showPreview) {
+      setShowPreview(true);
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
+
+    const element = previewRef.current;
+    if (!element) return;
+
+    try {
+      // Use html2canvas to capture the EXACT preview HTML as an image,
+      // guaranteeing the downloaded PDF matches the on-screen preview pixel for pixel.
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff",
+        allowTaint: true,
+        onclone: (clonedDoc) => {
+          // In the cloned document, remove constraints that would truncate
+          // or alter the rendering of the full resume content.
+          const clonedEl = clonedDoc.querySelector(".rb-preview");
+          if (clonedEl) {
+            clonedEl.style.maxHeight = "none";
+            clonedEl.style.overflow = "visible";
+            clonedEl.style.overflowY = "visible";
+          }
+          // Remove height/overflow constraints from parent containers
+          // so the full resume content is captured without clipping.
+          const parents = clonedDoc.querySelectorAll(
+            ".rb-modal, .rb-body, .rb-overlay, .rb-page, .rb-page-card",
+          );
+          parents.forEach((p) => {
+            p.style.maxHeight = "none";
+            p.style.overflow = "visible";
+            p.style.overflowY = "visible";
+          });
+        },
+      });
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      // Compute image dimensions to preserve aspect ratio and fit to PDF page width
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const imgRatio = canvasWidth / canvasHeight;
+      const imgWidth = pageWidth;
+      const imgHeight = pageWidth / imgRatio;
+
+      const totalPages = Math.ceil(imgHeight / pageHeight);
+      const imgData = canvas.toDataURL("image/png");
+
+      // Split the image across multiple pages if the resume is long
+      for (let i = 0; i < totalPages; i++) {
+        if (i > 0) pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, -(i * pageHeight), imgWidth, imgHeight);
+      }
+
+      pdf.save(`${(resume.name || "resume").replace(/\s+/g, "_")}_Resume.pdf`);
+    } catch (error) {
+      console.error(
+        "PDF generation failed, falling back to text-based PDF:",
+        error,
+      );
+      // Fallback to the original jsPDF text-based approach
+      downloadPDFText();
+    }
+  };
+
+  const downloadPDFText = () => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -586,13 +673,16 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       if (!linkedinUrl.startsWith("http")) {
         // If it's just "LinkedIn" or similar, we'll leave the label as-is but set url to null
         // so it doesn't show a broken link; the preview will show it as plain text
-        contactItems.push({ label: `LinkedIn: ${resume.linkedin}`, url: null });
+        contactItems.push({
+          label: `LinkedIn: ${cleanUrl(resume.linkedin)}`,
+          url: null,
+        });
       } else {
         linkedinUrl = resume.linkedin.startsWith("http")
           ? resume.linkedin
           : `https://${resume.linkedin.replace(/^https?:\/\//, "")}`;
         contactItems.push({
-          label: `LinkedIn: ${resume.linkedin}`,
+          label: `LinkedIn: ${cleanUrl(resume.linkedin)}`,
           url: linkedinUrl,
         });
       }
@@ -601,7 +691,10 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       const githubUrl = resume.github.startsWith("http")
         ? resume.github
         : `https://${resume.github.replace(/^https?:\/\//, "")}`;
-      contactItems.push({ label: `GitHub: ${resume.github}`, url: githubUrl });
+      contactItems.push({
+        label: `GitHub: ${cleanUrl(resume.github)}`,
+        url: githubUrl,
+      });
     }
     const contactLine = contactItems.map((item) => item.label).join("  |  ");
     const contactLines = doc.splitTextToSize(contactLine, contentWidth);
@@ -644,17 +737,15 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         doc.addPage();
         y = 20;
       }
-      doc.setFillColor(37, 99, 235);
-      doc.rect(margin, y - 5, 3, 8, "F");
-      doc.setTextColor(37, 99, 235);
+      doc.setTextColor(50, 50, 50); // plain black, no blue
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(13);
-      doc.text(title.toUpperCase(), margin + 8, y);
-      y += 7;
-      doc.setDrawColor(37, 99, 235);
+      doc.setFontSize(12);
+      doc.text(title.toUpperCase(), margin, y);
+      y += 4;
+      doc.setDrawColor(180, 180, 180); // light gray line
       doc.setLineWidth(0.5);
       doc.line(margin, y, pageWidth - margin, y);
-      y += 8;
+      y += 6;
     };
 
     const addText = (
@@ -709,25 +800,39 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     const skillEntries = Object.entries(resume.skills).filter(([, v]) => v);
     if (skillEntries.length > 0) {
       addSection("Technical Skills");
+      const skillLabels = {
+        languages: "Languages",
+        frameworks: "Frameworks",
+        frontend: "Frontend",
+        databases: "Databases",
+        devops: "DevOps",
+        testing: "Testing",
+        cloud: "Cloud",
+        messaging: "Messaging",
+        concepts: "Core Concepts",
+      };
       skillEntries.forEach(([key, value]) => {
-        const label = key.charAt(0).toUpperCase() + key.slice(1);
+        const label =
+          skillLabels[key] || key.charAt(0).toUpperCase() + key.slice(1);
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
         doc.setTextColor(30, 30, 30);
-        doc.text(`${label}:`, margin + 2, y);
+        const labelText = `${label}: `;
+        doc.text(labelText, margin + 2, y);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(50, 50, 50);
-        const valueLines = doc.splitTextToSize(value, contentWidth - 80);
-        valueLines.forEach((line, i) => {
+        const labelWidth = doc.getTextWidth(labelText);
+        const valueX = margin + 2 + labelWidth + 2; // Added an extra 2mm space to ensure there is a clear space after the colon
+        const valueLines = doc.splitTextToSize(
+          value,
+          contentWidth - valueX + margin,
+        );
+        valueLines.forEach((line) => {
           if (y > pageHeight - 30) {
             doc.addPage();
             y = 20;
           }
-          if (i === 0) {
-            doc.text(line, margin + 80, y);
-          } else {
-            doc.text(line, margin + 80, y);
-          }
+          doc.text(line, valueX, y);
           y += 5.5;
         });
         y += 1;
@@ -812,40 +917,51 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
           doc.addPage();
           y = 20;
         }
+
+        // Line 1: Institution (left, bold) and Years (right, normal/italic)
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
         doc.setTextColor(20, 20, 20);
         doc.text(edu.institution || "", margin, y);
+
         if (edu.startYear || edu.endYear) {
-          doc.setFont("helvetica", "italic");
-          doc.setFontSize(9);
-          doc.setTextColor(100, 100, 100);
-          const years = `${edu.startYear || ""}${edu.startYear && edu.endYear ? " - " : ""}${edu.endYear || ""}`;
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(10);
+          doc.setTextColor(50, 50, 50);
+          const years = `${edu.startYear || ""}${edu.startYear && edu.endYear ? " – " : ""}${edu.endYear || ""}`;
           doc.text(years, pageWidth - margin, y, { align: "right" });
         }
+
         y += 5;
-        if (edu.degree) {
-          doc.setFont("helvetica", "normal");
-          doc.setFontSize(10);
-          doc.setTextColor(50, 50, 50);
-          doc.text(edu.degree, margin + 2, y);
-          y += 5;
+
+        // Line 2: Degree + CGPA (left, degree regular, CGPA italic) and Location (right, italic)
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(50, 50, 50);
+
+        let degreeText = edu.degree || "";
+        let cgpaText = edu.cgpa ? `CGPA: ${edu.cgpa}` : "";
+
+        if (degreeText && cgpaText) {
+          doc.text(degreeText + "; ", margin, y);
+          const degreeWidth = doc.getTextWidth(degreeText + "; ");
+          doc.setFont("helvetica", "italic");
+          doc.text(cgpaText, margin + degreeWidth, y);
+        } else if (degreeText) {
+          doc.text(degreeText, margin, y);
+        } else if (cgpaText) {
+          doc.setFont("helvetica", "italic");
+          doc.text(cgpaText, margin, y);
         }
-        if (edu.cgpa) {
-          doc.setFont("helvetica", "normal");
-          doc.setFontSize(10);
-          doc.setTextColor(50, 50, 50);
-          doc.text(`CGPA: ${edu.cgpa}`, margin + 2, y);
-          y += 5;
-        }
+
         if (edu.location) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(9);
           doc.setTextColor(100, 100, 100);
-          doc.text(edu.location, margin + 2, y);
-          y += 5;
+          doc.text(edu.location, pageWidth - margin, y, { align: "right" });
         }
-        y += 3;
+
+        y += 8;
       });
     }
 
@@ -1553,175 +1669,199 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                 {showPreview ? "Hide Preview" : "Show Preview"}
               </button>
             </div>
-            {showPreview && (
-              <div className="rb-preview">
-                <div className="rb-preview-header">
-                  <h2>{(resume.name || "Your Name").toUpperCase()}</h2>
-                  {resume.title && <h3>{resume.title.toUpperCase()}</h3>}
-                  <p className="rb-preview-contact">
-                    {resume.location && (
-                      <span className="rb-preview-contact-item">
-                        📍 {resume.location}
-                      </span>
-                    )}
-                    {resume.email && (
-                      <a
-                        href={
-                          resume.email.startsWith("http")
-                            ? resume.email
-                            : `mailto:${resume.email}`
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rb-preview-contact-item rb-preview-link"
-                      >
-                        ✉ {resume.email}
-                      </a>
-                    )}
-                    {resume.phone && (
-                      <span className="rb-preview-contact-item">
-                        📞 {resume.phone}
-                      </span>
-                    )}
-                    {resume.linkedin && (
-                      <a
-                        href={
-                          resume.linkedin.startsWith("http")
-                            ? resume.linkedin
-                            : `https://${resume.linkedin.replace(/^https?:\/\//, "")}`
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rb-preview-contact-item rb-preview-link"
-                      >
-                        🔗 {resume.linkedin}
-                      </a>
-                    )}
-                    {resume.github && (
-                      <a
-                        href={
-                          resume.github.startsWith("http")
-                            ? resume.github
-                            : `https://${resume.github.replace(/^https?:\/\//, "")}`
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rb-preview-contact-item rb-preview-link"
-                      >
-                        💻 {resume.github}
-                      </a>
-                    )}
-                  </p>
-                </div>
-                {resume.summary && (
-                  <div className="rb-preview-section">
-                    <h3>Professional Summary</h3>
-                    <p>{resume.summary}</p>
-                  </div>
-                )}
-                {Object.entries(resume.skills).some(([, v]) => v) && (
-                  <div className="rb-preview-section">
-                    <h3>Technical Skills</h3>
-                    {Object.entries(resume.skills)
-                      .filter(([, v]) => v)
-                      .map(([key, value]) => (
-                        <p key={key} className="rb-preview-skill">
-                          <strong>
-                            {key.charAt(0).toUpperCase() + key.slice(1)}:
-                          </strong>{" "}
-                          {value}
-                        </p>
-                      ))}
-                  </div>
-                )}
-                {resume.experience.some((e) => e.company || e.role) && (
-                  <div className="rb-preview-section">
-                    <h3>Professional Experience</h3>
-                    {resume.experience
-                      .filter((e) => e.company || e.role)
-                      .map((exp, idx) => (
-                        <div key={idx} className="rb-preview-item">
-                          <div className="rb-preview-item-header">
-                            <strong>
-                              {exp.role}
-                              {exp.company ? ` - ${exp.company}` : ""}
-                            </strong>
-                            <span>
-                              {exp.startDate}
-                              {exp.startDate && exp.endDate ? " - " : ""}
-                              {exp.endDate}
-                            </span>
-                          </div>
-                          {exp.location && (
-                            <p className="rb-preview-location">
-                              {exp.location}
-                            </p>
-                          )}
-                          <ul>
-                            {exp.points.filter(Boolean).map((p, i) => (
-                              <li key={i}>{p}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                  </div>
-                )}
-                {resume.projects.some((p) => p.name) && (
-                  <div className="rb-preview-section">
-                    <h3>Technical Projects</h3>
-                    {resume.projects
-                      .filter((p) => p.name)
-                      .map((proj, idx) => (
-                        <div key={idx} className="rb-preview-item">
-                          <div className="rb-preview-item-header">
-                            <strong>{proj.name}</strong>
-                          </div>
-                          {proj.techStack && (
-                            <p className="rb-preview-tech">{proj.techStack}</p>
-                          )}
-                          <ul>
-                            {proj.points.filter(Boolean).map((p, i) => (
-                              <li key={i}>{p}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                  </div>
-                )}
-                {resume.education.some((e) => e.degree || e.institution) && (
-                  <div className="rb-preview-section">
-                    <h3>Education</h3>
-                    {resume.education
-                      .filter((e) => e.degree || e.institution)
-                      .map((edu, idx) => (
-                        <div key={idx} className="rb-preview-item">
-                          <div className="rb-preview-item-header">
-                            <strong>{edu.institution}</strong>
-                            <span>
-                              {edu.startYear}
-                              {edu.startYear && edu.endYear ? " - " : ""}
-                              {edu.endYear}
-                            </span>
-                          </div>
-                          {edu.degree && <p>{edu.degree}</p>}
-                          {edu.cgpa && <p>CGPA: {edu.cgpa}</p>}
-                          {edu.location && <p>{edu.location}</p>}
-                        </div>
-                      ))}
-                  </div>
-                )}
-                {resume.certificates.filter(Boolean).length > 0 && (
-                  <div className="rb-preview-section">
-                    <h3>Certifications</h3>
-                    <ul>
-                      {resume.certificates.filter(Boolean).map((cert, idx) => (
-                        <li key={idx}>{cert}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+            <div
+              className="rb-preview"
+              ref={previewRef}
+              style={{ display: showPreview ? "block" : "none" }}
+            >
+              <div className="rb-preview-header">
+                <h2>{(resume.name || "Your Name").toUpperCase()}</h2>
+                {resume.title && <h3>{resume.title.toUpperCase()}</h3>}
+                <p className="rb-preview-contact">
+                  {resume.location && (
+                    <span className="rb-preview-contact-item">
+                      📍 {resume.location}
+                    </span>
+                  )}
+                  {resume.email && (
+                    <a
+                      href={
+                        resume.email.startsWith("http")
+                          ? resume.email
+                          : `mailto:${resume.email}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rb-preview-contact-item rb-preview-link"
+                    >
+                      ✉ {resume.email}
+                    </a>
+                  )}
+                  {resume.phone && (
+                    <span className="rb-preview-contact-item">
+                      📞 {resume.phone}
+                    </span>
+                  )}
+                  {resume.linkedin && (
+                    <a
+                      href={
+                        resume.linkedin.startsWith("http")
+                          ? resume.linkedin
+                          : `https://${resume.linkedin.replace(/^https?:\/\//, "")}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rb-preview-contact-item rb-preview-link"
+                    >
+                      🔗 {cleanUrl(resume.linkedin)}
+                    </a>
+                  )}
+                  {resume.github && (
+                    <a
+                      href={
+                        resume.github.startsWith("http")
+                          ? resume.github
+                          : `https://${resume.github.replace(/^https?:\/\//, "")}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rb-preview-contact-item rb-preview-link"
+                    >
+                      💻 {cleanUrl(resume.github)}
+                    </a>
+                  )}
+                </p>
               </div>
-            )}
+              {resume.summary && (
+                <div className="rb-preview-section">
+                  <h3>Professional Summary</h3>
+                  <p>{resume.summary}</p>
+                </div>
+              )}
+              {Object.entries(resume.skills).some(([, v]) => v) && (
+                <div className="rb-preview-section">
+                  <h3>Technical Skills</h3>
+                  {Object.entries(resume.skills)
+                    .filter(([, v]) => v)
+                    .map(([key, value]) => (
+                      <p key={key} className="rb-preview-skill">
+                        <strong>
+                          {key.charAt(0).toUpperCase() + key.slice(1)}:
+                        </strong>{" "}
+                        {value}
+                      </p>
+                    ))}
+                </div>
+              )}
+              {resume.experience.some((e) => e.company || e.role) && (
+                <div className="rb-preview-section">
+                  <h3>Professional Experience</h3>
+                  {resume.experience
+                    .filter((e) => e.company || e.role)
+                    .map((exp, idx) => (
+                      <div key={idx} className="rb-preview-item">
+                        <div className="rb-preview-item-header">
+                          <strong>
+                            {exp.role}
+                            {exp.company ? ` - ${exp.company}` : ""}
+                          </strong>
+                          <span>
+                            {exp.startDate}
+                            {exp.startDate && exp.endDate ? " - " : ""}
+                            {exp.endDate}
+                          </span>
+                        </div>
+                        {exp.location && (
+                          <p className="rb-preview-location">{exp.location}</p>
+                        )}
+                        <ul>
+                          {exp.points.filter(Boolean).map((p, i) => (
+                            <li key={i}>{p}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                </div>
+              )}
+              {resume.projects.some((p) => p.name) && (
+                <div className="rb-preview-section">
+                  <h3>Technical Projects</h3>
+                  {resume.projects
+                    .filter((p) => p.name)
+                    .map((proj, idx) => (
+                      <div key={idx} className="rb-preview-item">
+                        <div className="rb-preview-item-header">
+                          <strong>{proj.name}</strong>
+                        </div>
+                        {proj.techStack && (
+                          <p className="rb-preview-tech">{proj.techStack}</p>
+                        )}
+                        <ul>
+                          {proj.points.filter(Boolean).map((p, i) => (
+                            <li key={i}>{p}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                </div>
+              )}
+              {resume.education.some((e) => e.degree || e.institution) && (
+                <div className="rb-preview-section">
+                  <h3>Education</h3>
+                  {resume.education
+                    .filter((e) => e.degree || e.institution)
+                    .map((edu, idx) => (
+                      <div key={idx} className="rb-preview-item">
+                        <div className="rb-preview-item-header">
+                          <strong>{edu.institution}</strong>
+                          <span>
+                            {edu.startYear}
+                            {edu.startYear && edu.endYear ? " - " : ""}
+                            {edu.endYear}
+                          </span>
+                        </div>
+                        <div
+                          className="rb-preview-item-header"
+                          style={{
+                            fontStyle: "normal",
+                            color: "#4b5563",
+                            marginTop: "2px",
+                          }}
+                        >
+                          <span style={{ fontSize: "0.85rem" }}>
+                            {edu.degree}
+                            {edu.degree && edu.cgpa ? "; " : ""}
+                            {edu.cgpa && (
+                              <span style={{ fontStyle: "italic" }}>
+                                CGPA: {edu.cgpa}
+                              </span>
+                            )}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "0.8rem",
+                              fontStyle: "italic",
+                              color: "#6b7280",
+                            }}
+                          >
+                            {edu.location}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+              {resume.certificates.filter(Boolean).length > 0 && (
+                <div className="rb-preview-section">
+                  <h3>Certifications</h3>
+                  <ul>
+                    {resume.certificates.filter(Boolean).map((cert, idx) => (
+                      <li key={idx}>{cert}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         );
 
