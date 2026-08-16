@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, Fragment } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { GoogleGenAI } from "@google/genai";
@@ -30,6 +30,20 @@ const STEPS = [
   { id: "certificates", label: "Certificates", icon: "📜" },
   { id: "preview", label: "Preview & Download", icon: "📄" },
 ];
+
+// Display labels for each skill category key — keeps consistent naming
+// across the preview and the PDF text export.
+const SKILL_LABELS = {
+  languages: "Languages",
+  frameworks: "Frameworks",
+  frontend: "Frontend",
+  databases: "Databases",
+  devops: "DevOps",
+  testing: "Testing",
+  cloud: "Cloud",
+  messaging: "Messaging",
+  concepts: "Core Concepts",
+};
 
 const EMPTY_RESUME = {
   name: "",
@@ -552,9 +566,72 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     const element = previewRef.current;
     if (!element) return;
 
+    const constraintSelectors =
+      ".rb-modal, .rb-body, .rb-overlay, .rb-page, .rb-page-card";
+
     try {
+      // ── Temporarily disable height/overflow constraints on the live DOM
+      //    so we can (a) measure exact link positions and (b) capture the
+      //    full preview content rather than just the clipped visible area. ──
+      const measuredElements = [element];
+      document
+        .querySelectorAll(constraintSelectors)
+        .forEach((p) => measuredElements.push(p));
+
+      const originalStyles = new Map();
+      measuredElements.forEach((el) => {
+        if (el) {
+          originalStyles.set(el, {
+            maxHeight: el.style.maxHeight,
+            overflow: el.style.overflow,
+            overflowY: el.style.overflowY,
+          });
+          el.style.maxHeight = "none";
+          el.style.overflow = "visible";
+          el.style.overflowY = "visible";
+        }
+      });
+
+      // Force a synchronous layout flush so the style changes above
+      // take effect before reading element positions
+      // prettier-ignore
+      void element.offsetHeight;
+
+      // Measure preview dimensions and link positions relative to the
+      // preview container (in CSS pixels). These will be scaled to PDF
+      // mm coordinates after the html2canvas capture.
+      const previewRect = element.getBoundingClientRect();
+      const previewWidthPx = previewRect.width;
+      const linkElements = element.querySelectorAll(".rb-preview-link");
+      const linkPositions = Array.from(linkElements)
+        .map((link) => {
+          const rect = link.getBoundingClientRect();
+          return {
+            left: rect.left - previewRect.left,
+            top: rect.top - previewRect.top,
+            width: rect.width,
+            height: rect.height,
+            url: link.href,
+          };
+        })
+        .filter((pos) => {
+          // Keep mailto and well-formed HTTP(S) URLs that have a dot
+          // in the hostname — filters out entries like "https://Linkdin".
+          if (!pos.url) return false;
+          if (pos.url.startsWith("mailto:")) return true;
+          if (pos.url.startsWith("https://") || pos.url.startsWith("http://")) {
+            try {
+              return new URL(pos.url).hostname.includes(".");
+            } catch {
+              return false;
+            }
+          }
+          return false;
+        });
+
       // Use html2canvas to capture the EXACT preview HTML as an image,
-      // guaranteeing the downloaded PDF matches the on-screen preview pixel for pixel.
+      // guaranteeing the downloaded PDF matches the on-screen preview
+      // pixel for pixel.
       const canvas = await html2canvas(element, {
         scale: 2,
         useCORS: true,
@@ -562,25 +639,28 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         backgroundColor: "#ffffff",
         allowTaint: true,
         onclone: (clonedDoc) => {
-          // In the cloned document, remove constraints that would truncate
-          // or alter the rendering of the full resume content.
           const clonedEl = clonedDoc.querySelector(".rb-preview");
           if (clonedEl) {
             clonedEl.style.maxHeight = "none";
             clonedEl.style.overflow = "visible";
             clonedEl.style.overflowY = "visible";
           }
-          // Remove height/overflow constraints from parent containers
-          // so the full resume content is captured without clipping.
-          const parents = clonedDoc.querySelectorAll(
-            ".rb-modal, .rb-body, .rb-overlay, .rb-page, .rb-page-card",
-          );
-          parents.forEach((p) => {
+          clonedDoc.querySelectorAll(constraintSelectors).forEach((p) => {
             p.style.maxHeight = "none";
             p.style.overflow = "visible";
             p.style.overflowY = "visible";
           });
         },
+      });
+
+      // Restore original styles on the live DOM
+      measuredElements.forEach((el) => {
+        if (el && originalStyles.has(el)) {
+          const styles = originalStyles.get(el);
+          el.style.maxHeight = styles.maxHeight;
+          el.style.overflow = styles.overflow;
+          el.style.overflowY = styles.overflowY;
+        }
       });
 
       const pdf = new jsPDF({
@@ -592,7 +672,8 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
 
-      // Compute image dimensions to preserve aspect ratio and fit to PDF page width
+      // Compute image dimensions to preserve aspect ratio and fit to
+      // PDF page width.
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
       const imgRatio = canvasWidth / canvasHeight;
@@ -602,10 +683,29 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       const totalPages = Math.ceil(imgHeight / pageHeight);
       const imgData = canvas.toDataURL("image/png");
 
+      // Scale factor: CSS pixels -> PDF mm (uniform image scaling)
+      const pixelToMm = imgWidth / previewWidthPx;
+
       // Split the image across multiple pages if the resume is long
       for (let i = 0; i < totalPages; i++) {
         if (i > 0) pdf.addPage();
         pdf.addImage(imgData, "PNG", 0, -(i * pageHeight), imgWidth, imgHeight);
+
+        // Overlay invisible clickable link annotations on top of the
+        // rasterised image so that email / LinkedIn / GitHub links are
+        // tappable in the downloaded PDF (html2canvas produces a flat
+        // image with no interactivity on its own).
+        linkPositions.forEach((link) => {
+          const linkPdfY = link.top * pixelToMm;
+          const linkPage = Math.floor(linkPdfY / pageHeight);
+          if (linkPage === i) {
+            const pdfX = link.left * pixelToMm;
+            const pdfY = linkPdfY - i * pageHeight;
+            const pdfW = Math.max(link.width * pixelToMm, 1);
+            const pdfH = Math.max(link.height * pixelToMm, 1);
+            pdf.link(pdfX, pdfY, pdfW, pdfH, { url: link.url });
+          }
+        });
       }
 
       pdf.save(`${(resume.name || "resume").replace(/\s+/g, "_")}_Resume.pdf`);
@@ -732,11 +832,16 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     y = 70;
 
     // ===== HELPER FUNCTIONS =====
-    const addSection = (title) => {
-      if (y > pageHeight - 40) {
+    // Helper to ensure content fits on current page; moves to new page if needed
+    const ensureSpace = (requiredHeight) => {
+      if (y + requiredHeight > pageHeight - 20) {
         doc.addPage();
         y = 20;
       }
+    };
+
+    const addSection = (title) => {
+      ensureSpace(15);
       doc.setTextColor(50, 50, 50); // plain black, no blue
       doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
@@ -759,11 +864,8 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       doc.setFontSize(size);
       doc.setTextColor(color[0], color[1], color[2]);
       const lines = doc.splitTextToSize(text, contentWidth - indent);
+      ensureSpace(lines.length * 5.5);
       lines.forEach((line) => {
-        if (y > pageHeight - 30) {
-          doc.addPage();
-          y = 20;
-        }
         doc.text(line, margin + indent, y);
         y += 5.5;
       });
@@ -774,11 +876,8 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       doc.setFontSize(size);
       doc.setTextColor(50, 50, 50);
       const lines = doc.splitTextToSize(text, contentWidth - 12);
+      ensureSpace(lines.length * 5.5);
       lines.forEach((line, i) => {
-        if (y > pageHeight - 30) {
-          doc.addPage();
-          y = 20;
-        }
         if (i === 0) {
           doc.text("•", margin + 2, y);
           doc.text(line, margin + 10, y);
@@ -811,27 +910,32 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         messaging: "Messaging",
         concepts: "Core Concepts",
       };
+      // Calculate max label width for consistent two-column alignment
+      const labelWidths = skillEntries.map(([key]) => {
+        const label =
+          skillLabels[key] || key.charAt(0).toUpperCase() + key.slice(1);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        return doc.getTextWidth(`${label}:`);
+      });
+      const maxLabelWidth = Math.max(...labelWidths);
+      const valueX = margin + 2 + maxLabelWidth + 6;
+
       skillEntries.forEach(([key, value]) => {
         const label =
           skillLabels[key] || key.charAt(0).toUpperCase() + key.slice(1);
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
         doc.setTextColor(30, 30, 30);
-        const labelText = `${label}: `;
-        doc.text(labelText, margin + 2, y);
+        doc.text(`${label}:`, margin + 2, y);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(50, 50, 50);
-        const labelWidth = doc.getTextWidth(labelText);
-        const valueX = margin + 2 + labelWidth + 2; // Added an extra 2mm space to ensure there is a clear space after the colon
         const valueLines = doc.splitTextToSize(
           value,
-          contentWidth - valueX + margin,
+          pageWidth - valueX - margin,
         );
+        ensureSpace(valueLines.length * 5.5);
         valueLines.forEach((line) => {
-          if (y > pageHeight - 30) {
-            doc.addPage();
-            y = 20;
-          }
           doc.text(line, valueX, y);
           y += 5.5;
         });
@@ -845,10 +949,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       addSection("Professional Experience");
       resume.experience.forEach((exp) => {
         if (!exp.company && !exp.role) return;
-        if (y > pageHeight - 50) {
-          doc.addPage();
-          y = 20;
-        }
+        ensureSpace(30);
         // Role - Company
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
@@ -885,10 +986,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       addSection("Technical Projects");
       resume.projects.forEach((proj) => {
         if (!proj.name) return;
-        if (y > pageHeight - 50) {
-          doc.addPage();
-          y = 20;
-        }
+        ensureSpace(30);
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
         doc.setTextColor(20, 20, 20);
@@ -913,10 +1011,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       addSection("Education");
       resume.education.forEach((edu) => {
         if (!edu.degree && !edu.institution) return;
-        if (y > pageHeight - 50) {
-          doc.addPage();
-          y = 20;
-        }
+        ensureSpace(30);
 
         // Line 1: Institution (left, bold) and Years (right, normal/italic)
         doc.setFont("helvetica", "bold");
@@ -1741,16 +1836,22 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
               {Object.entries(resume.skills).some(([, v]) => v) && (
                 <div className="rb-preview-section">
                   <h3>Technical Skills</h3>
-                  {Object.entries(resume.skills)
-                    .filter(([, v]) => v)
-                    .map(([key, value]) => (
-                      <p key={key} className="rb-preview-skill">
-                        <strong>
-                          {key.charAt(0).toUpperCase() + key.slice(1)}:
-                        </strong>{" "}
-                        {value}
-                      </p>
-                    ))}
+                  <div className="rb-preview-skills-grid">
+                    {Object.entries(resume.skills)
+                      .filter(([, v]) => v)
+                      .map(([key, value]) => (
+                        <Fragment key={key}>
+                          <span className="rb-preview-skill-label">
+                            {SKILL_LABELS[key] ||
+                              key.charAt(0).toUpperCase() + key.slice(1)}
+                          </span>
+                          <span className="rb-preview-skill-colon">:</span>
+                          <span className="rb-preview-skill-value">
+                            {value}
+                          </span>
+                        </Fragment>
+                      ))}
+                  </div>
                 </div>
               )}
               {resume.experience.some((e) => e.company || e.role) && (

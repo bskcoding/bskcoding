@@ -434,7 +434,7 @@
 .rb-preview-header {
   text-align: center;
   padding-bottom: 16px;
-  border-bottom: 3px solid #2563eb;
+  border-bottom: none;
   margin-bottom: 20px;
 }
 
@@ -551,9 +551,42 @@
   font-style: italic;
 }
 
-.rb-preview-skill {
-  font-size: 0.85rem !important;
-  margin-bottom: 4px !important;
+/* Technical Skills — 3-column table-like layout with invisible borders.
+   Column 1: skill category name (e.g. "Languages")
+   Column 2: colon separator (":")
+   Column 3: skill values (e.g. "Java, SQL, JavaScript")
+*/
+.rb-preview-skills-grid {
+  display: grid;
+  grid-template-columns: 140px auto 1fr;
+  gap: 4px 12px;
+  font-size: 0.85rem;
+  /* borders not visible — transparent border-collapse effect */
+  border-collapse: collapse;
+  border: none;
+  border-spacing: 0;
+}
+
+.rb-preview-skill-label,
+.rb-preview-skill-colon,
+.rb-preview-skill-value {
+  border: none;
+  border: 1px solid transparent;
+}
+
+.rb-preview-skill-label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.rb-preview-skill-colon {
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.rb-preview-skill-value {
+  color: #374151;
 }
 
 /* Footer */
