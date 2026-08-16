@@ -52,6 +52,8 @@ const EMPTY_RESUME = {
   phone: "",
   linkedin: "",
   github: "",
+  website: "",
+  websiteName: "",
   location: "",
   summary: "",
   experience: [
@@ -86,7 +88,7 @@ const EMPTY_RESUME = {
       location: "",
     },
   ],
-  certificates: [""],
+  certificates: [{ name: "", url: "" }],
 };
 
 function ResumeBuilder({ onClose }) {
@@ -170,6 +172,8 @@ function ResumeBuilder({ onClose }) {
           "phone",
           "linkedin",
           "github",
+          "website",
+          "websiteName",
           "location",
         ];
         personalFields.forEach((field) => {
@@ -256,7 +260,17 @@ function ResumeBuilder({ onClose }) {
 
         // Certificates
         if (parsedData.certificates && Array.isArray(parsedData.certificates)) {
-          const validCerts = parsedData.certificates.filter(Boolean);
+          const validCerts = parsedData.certificates
+            .filter(Boolean)
+            .map((cert) =>
+              typeof cert === "string"
+                ? { name: cert, url: "" }
+                : {
+                    name: cert.name || cert.certificate || "",
+                    url: cert.url || cert.link || "",
+                  },
+            )
+            .filter((c) => c.name);
           if (validCerts.length > 0) {
             updated.certificates = validCerts;
           }
@@ -343,7 +357,7 @@ function ResumeBuilder({ onClose }) {
           location: "",
         });
       } else if (section === "certificates") {
-        items.push("");
+        items.push({ name: "", url: "" });
       }
       return { ...prev, [section]: items };
     });
@@ -428,13 +442,13 @@ TASK: Generate professional ${sectionName} content suggestions.
 - For certificates: suggest relevant certifications for a Java developer.
 
 Format your response as JSON matching this structure:
-${sectionId === "personal" ? `{"name": "", "title": "", "email": "", "phone": "", "linkedin": "", "github": "", "location": ""}` : ""}
+${sectionId === "personal" ? `{"name": "", "title": "", "email": "", "phone": "", "linkedin": "", "github": "", "website": "", "websiteName": "", "location": ""}` : ""}
 ${sectionId === "summary" ? `{"summary": "your suggested summary text"}` : ""}
 ${sectionId === "experience" ? `{"experience": [{"company": "", "role": "", "startDate": "", "endDate": "", "location": "", "points": ["point1", "point2"]}]}` : ""}
 ${sectionId === "projects" ? `{"projects": [{"name": "", "techStack": "", "points": ["point1", "point2"]}]}` : ""}
 ${sectionId === "skills" ? `{"skills": {"languages": "", "frameworks": "", "frontend": "", "databases": "", "devops": "", "testing": "", "cloud": "", "messaging": "", "concepts": ""}}` : ""}
 ${sectionId === "education" ? `{"education": [{"degree": "", "institution": "", "cgpa": "", "startYear": "", "endYear": "", "location": ""}]}` : ""}
-${sectionId === "certificates" ? `{"certificates": ["cert1", "cert2"]}` : ""}
+${sectionId === "certificates" ? `{"certificates": [{"name": "cert1", "url": "link1"}]}` : ""}
 
 IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
 
@@ -527,7 +541,17 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
           ) {
             const existing = prev.certificates.filter(Boolean);
             if (existing.length === 0 && suggestions.certificates.length > 0) {
-              updated.certificates = suggestions.certificates;
+              updated.certificates = suggestions.certificates
+                .filter(Boolean)
+                .map((cert) =>
+                  typeof cert === "string"
+                    ? { name: cert, url: "" }
+                    : {
+                        name: cert.name || cert.certificate || "",
+                        url: cert.url || cert.link || "",
+                      },
+                )
+                .filter((c) => c.name);
             }
           }
         }
@@ -776,6 +800,15 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       contactItems.push({
         label: "GitHub",
         url: githubUrl,
+      });
+    }
+    if (resume.website && resume.websiteName) {
+      const websiteUrl = resume.website.startsWith("http")
+        ? resume.website
+        : `https://${resume.website.replace(/^https?:\/\//, "")}`;
+      contactItems.push({
+        label: resume.websiteName,
+        url: websiteUrl,
       });
     }
     const contactLine = contactItems.map((item) => item.label).join("  |  ");
@@ -1043,11 +1076,38 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     }
 
     // ===== CERTIFICATES =====
-    const certs = resume.certificates.filter(Boolean);
+    const certs = resume.certificates.filter((c) =>
+      typeof c === "string" ? c : c.name,
+    );
     if (certs.length > 0) {
       addSection("Certifications");
       certs.forEach((cert) => {
-        addBullet(cert, 10);
+        const certName = typeof cert === "string" ? cert : cert.name || "";
+        const certUrl = typeof cert === "string" ? "" : cert.url || "";
+        if (certUrl && certUrl.startsWith("http")) {
+          // Draw clickable link for certificate
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(10);
+          doc.setTextColor(30, 58, 138);
+          const lines = doc.splitTextToSize(certName, contentWidth - 12);
+          ensureSpace(lines.length * 5.5);
+          const linkY = y;
+          lines.forEach((line, i) => {
+            if (i === 0) {
+              doc.text("•", margin + 2, y);
+              doc.text(line, margin + 10, y);
+            } else {
+              doc.text(line, margin + 10, y);
+            }
+            y += 5.5;
+          });
+          doc.link(margin + 8, linkY - 4, doc.getTextWidth(certName), 5, {
+            url: certUrl,
+          });
+          doc.setTextColor(0, 0, 0);
+        } else {
+          addBullet(certName, 10);
+        }
       });
     }
 
@@ -1213,6 +1273,28 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                   updateField("personal", "github", e.target.value)
                 }
                 placeholder="e.g. github.com/yourname"
+              />
+            </div>
+            <div className="rb-field">
+              <label>Website URL</label>
+              <input
+                type="text"
+                value={resume.website}
+                onChange={(e) =>
+                  updateField("personal", "website", e.target.value)
+                }
+                placeholder="e.g. https://yourwebsite.com"
+              />
+            </div>
+            <div className="rb-field">
+              <label>Website Name</label>
+              <input
+                type="text"
+                value={resume.websiteName}
+                onChange={(e) =>
+                  updateField("personal", "websiteName", e.target.value)
+                }
+                placeholder="e.g. Portfolio, LeetCode, HackerRank"
               />
             </div>
           </div>
@@ -1698,37 +1780,63 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       case "certificates":
         return (
           <div className="rb-form-grid">
-            <div className="rb-field rb-full">
-              <label>Certificates</label>
-              {resume.certificates.map((cert, idx) => (
-                <div key={idx} className="rb-point-row">
-                  <input
-                    type="text"
-                    value={cert}
-                    onChange={(e) => {
-                      const items = [...resume.certificates];
-                      items[idx] = e.target.value;
-                      setResume((prev) => ({ ...prev, certificates: items }));
-                    }}
-                    placeholder={`e.g. Oracle Certified Associate`}
-                  />
+            {resume.certificates.map((cert, idx) => (
+              <div key={idx} className="rb-card-item">
+                <div className="rb-card-header">
+                  <h4>Certificate {idx + 1}</h4>
                   {resume.certificates.length > 1 && (
                     <button
-                      className="rb-point-remove"
+                      className="rb-remove-btn"
                       onClick={() => removeArrayItem("certificates", idx)}
                     >
-                      ✕
+                      ✕ Remove
                     </button>
                   )}
                 </div>
-              ))}
-              <button
-                className="rb-add-point"
-                onClick={() => addArrayItem("certificates")}
-              >
-                + Add Certificate
-              </button>
-            </div>
+                <div className="rb-field">
+                  <label>Certificate Name</label>
+                  <input
+                    type="text"
+                    value={cert.name || ""}
+                    onChange={(e) =>
+                      updateArrayItem(
+                        "certificates",
+                        idx,
+                        "name",
+                        e.target.value,
+                      )
+                    }
+                    placeholder="e.g. Oracle Certified Associate"
+                  />
+                </div>
+                <div className="rb-field">
+                  <label>Certificate URL (optional)</label>
+                  <input
+                    type="text"
+                    value={cert.url || ""}
+                    onChange={(e) =>
+                      updateArrayItem(
+                        "certificates",
+                        idx,
+                        "url",
+                        e.target.value,
+                      )
+                    }
+                    placeholder="e.g. https://www.credly.com/badges/..."
+                  />
+                  <p className="rb-hint">
+                    Add a link so the certificate is clickable in the preview
+                    and PDF.
+                  </p>
+                </div>
+              </div>
+            ))}
+            <button
+              className="rb-add-item"
+              onClick={() => addArrayItem("certificates")}
+            >
+              + Add Another Certificate
+            </button>
           </div>
         );
 
@@ -1804,6 +1912,20 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       className="rb-preview-contact-item rb-preview-link"
                     >
                       GitHub
+                    </a>
+                  )}
+                  {resume.website && resume.websiteName && (
+                    <a
+                      href={
+                        resume.website.startsWith("http")
+                          ? resume.website
+                          : `https://${resume.website.replace(/^https?:\/\//, "")}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rb-preview-contact-item rb-preview-link"
+                    >
+                      {resume.websiteName}
                     </a>
                   )}
                 </p>
@@ -1935,13 +2057,38 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                     ))}
                 </div>
               )}
-              {resume.certificates.filter(Boolean).length > 0 && (
+              {resume.certificates.filter((c) => c.name || c).length > 0 && (
                 <div className="rb-preview-section">
                   <h3>Certifications</h3>
                   <ul>
-                    {resume.certificates.filter(Boolean).map((cert, idx) => (
-                      <li key={idx}>{cert}</li>
-                    ))}
+                    {resume.certificates
+                      .filter((c) => c.name || c)
+                      .map((cert, idx) => {
+                        const certName =
+                          typeof cert === "string" ? cert : cert.name || "";
+                        const certUrl =
+                          typeof cert === "string" ? "" : cert.url || "";
+                        return (
+                          <li key={idx}>
+                            {certUrl ? (
+                              <a
+                                href={
+                                  certUrl.startsWith("http")
+                                    ? certUrl
+                                    : `https://${certUrl.replace(/^https?:\/\//, "")}`
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rb-preview-link"
+                              >
+                                {certName}
+                              </a>
+                            ) : (
+                              certName
+                            )}
+                          </li>
+                        );
+                      })}
                   </ul>
                 </div>
               )}
