@@ -1808,7 +1808,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      🔗 {cleanUrl(resume.linkedin)}
+                      🔗 LinkedIn
                     </a>
                   )}
                   {resume.github && (
@@ -1822,7 +1822,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      💻 {cleanUrl(resume.github)}
+                      💻 GitHub
                     </a>
                   )}
                 </p>
