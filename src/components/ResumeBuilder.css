@@ -423,7 +423,7 @@
 
 .rb-preview {
   background: white;
-  color: #1f2937;
+  color: #0f172a;
   border-radius: 12px;
   padding: 32px;
   max-height: 500px;
@@ -441,20 +441,20 @@
 .rb-preview-header h2 {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #030712;
   margin: 0 0 4px;
 }
 
 .rb-preview-header h3 {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #2563eb;
+  color: #1e3a8a;
   margin: 0 0 6px;
 }
 
 .rb-preview-header p {
   font-size: 0.85rem;
-  color: #4b5563;
+  color: #374151;
   margin: 0;
   text-align: center;
 }
@@ -467,7 +467,7 @@
 }
 
 .rb-preview-contact-item {
-  color: #4b5563;
+  color: #374151;
   text-decoration: none;
 }
 
@@ -478,13 +478,13 @@
 }
 
 .rb-preview-contact-item.rb-preview-link:hover {
-  color: #2563eb;
+  color: #1e3a8a;
   text-decoration: underline;
 }
 
 .rb-preview-location {
   font-size: 0.8rem !important;
-  color: #6b7280 !important;
+  color: #374151 !important;
   font-style: italic;
   margin-bottom: 4px !important;
 }
@@ -496,7 +496,7 @@
 .rb-preview-section h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #2563eb;
+  color: #1e3a8a;
   border-bottom: 1px solid #e5e7eb;
   padding-bottom: 6px;
   margin: 0 0 12px;
@@ -505,7 +505,7 @@
 
 .rb-preview-section p {
   font-size: 0.9rem;
-  color: #374151;
+  color: #1f2937;
   line-height: 1.6;
   margin: 0 0 8px;
 }
@@ -529,7 +529,7 @@
 
 .rb-preview-item-header span {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #374151;
   font-style: italic;
 }
 
@@ -540,14 +540,14 @@
 
 .rb-preview-item li {
   font-size: 0.85rem;
-  color: #374151;
+  color: #1f2937;
   line-height: 1.6;
   margin-bottom: 4px;
 }
 
 .rb-preview-tech {
   font-size: 0.8rem !important;
-  color: #6b7280 !important;
+  color: #374151 !important;
   font-style: italic;
 }
 
@@ -576,17 +576,17 @@
 
 .rb-preview-skill-label {
   font-weight: 600;
-  color: #374151;
+  color: #1f2937;
 }
 
 .rb-preview-skill-colon {
   font-weight: 600;
-  color: #374151;
+  color: #1f2937;
   white-space: nowrap;
 }
 
 .rb-preview-skill-value {
-  color: #374151;
+  color: #1f2937;
 }
 
 /* Footer */
