@@ -378,14 +378,6 @@ function ResumeBuilder({ onClose }) {
     });
   };
 
-  // Helper to display URLs cleanly — show only the ID/username part
-  // e.g. "https://github.com/venkatesh-bharath" → "venkatesh-bharath"
-  const cleanUrl = (url) => {
-    const cleaned = url.replace(/^https?:\/\//, "").replace(/^www\./, "");
-    const segments = cleaned.split("/").filter(Boolean);
-    return segments.pop() || cleaned;
-  };
-
   const nextStep = () => {
     if (step < STEPS.length - 1) {
       setStep(step + 1);
@@ -732,40 +724,30 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     doc.rect(0, 0, pageWidth, 55, "F");
 
     // Name
-    doc.setTextColor(30, 58, 138); // dark blue #1e3a8a
+    doc.setTextColor(0, 0, 0); // dark blue #1e3a8a
     doc.setFont("helvetica", "bold");
     doc.setFontSize(24);
     doc.text((resume.name || "Your Name").toUpperCase(), pageWidth / 2, 22, {
       align: "center",
     });
 
-    // Title
-    if (resume.title) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "normal");
-      doc.setTextColor(37, 99, 235); // blue #2563eb
-      doc.text(resume.title.toUpperCase(), pageWidth / 2, 32, {
-        align: "center",
-      });
-    }
-
     // Contact line - render as clean text (no emojis for PDF compatibility)
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(75, 85, 99); // gray #4b5563
+    doc.setTextColor(0, 0, 0); // gray #4b5563
 
     const contactItems = [];
     if (resume.location) {
-      contactItems.push({ label: `Location: ${resume.location}`, url: null });
+      contactItems.push({ label: resume.location, url: null });
     }
     if (resume.email) {
       const emailUrl = resume.email.startsWith("http")
         ? resume.email
         : `mailto:${resume.email}`;
-      contactItems.push({ label: `Email: ${resume.email}`, url: emailUrl });
+      contactItems.push({ label: resume.email, url: emailUrl });
     }
     if (resume.phone) {
-      contactItems.push({ label: `Mobile: ${resume.phone}`, url: null });
+      contactItems.push({ label: resume.phone, url: null });
     }
     if (resume.linkedin) {
       // Handle case where LinkedIn URL is just "LinkedIn" or incomplete
@@ -774,7 +756,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         // If it's just "LinkedIn" or similar, we'll leave the label as-is but set url to null
         // so it doesn't show a broken link; the preview will show it as plain text
         contactItems.push({
-          label: `LinkedIn: ${cleanUrl(resume.linkedin)}`,
+          label: "LinkedIn",
           url: null,
         });
       } else {
@@ -782,7 +764,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
           ? resume.linkedin
           : `https://${resume.linkedin.replace(/^https?:\/\//, "")}`;
         contactItems.push({
-          label: `LinkedIn: ${cleanUrl(resume.linkedin)}`,
+          label: "LinkedIn",
           url: linkedinUrl,
         });
       }
@@ -792,7 +774,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         ? resume.github
         : `https://${resume.github.replace(/^https?:\/\//, "")}`;
       contactItems.push({
-        label: `GitHub: ${cleanUrl(resume.github)}`,
+        label: "GitHub",
         url: githubUrl,
       });
     }
@@ -842,13 +824,13 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
 
     const addSection = (title) => {
       ensureSpace(15);
-      doc.setTextColor(50, 50, 50); // plain black, no blue
+      doc.setTextColor(0, 0, 0); // plain black, no blue
       doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
       doc.text(title.toUpperCase(), margin, y);
       y += 4;
-      doc.setDrawColor(180, 180, 180); // light gray line
-      doc.setLineWidth(0.5);
+      doc.setDrawColor(209, 213, 219); // light gray line
+      doc.setLineWidth(0.3);
       doc.line(margin, y, pageWidth - margin, y);
       y += 6;
     };
@@ -858,7 +840,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       size = 10,
       bold = false,
       indent = 0,
-      color = [50, 50, 50],
+      color = [0, 0, 0],
     ) => {
       doc.setFont("helvetica", bold ? "bold" : "normal");
       doc.setFontSize(size);
@@ -874,7 +856,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     const addBullet = (text, size = 10) => {
       doc.setFont("helvetica", "normal");
       doc.setFontSize(size);
-      doc.setTextColor(50, 50, 50);
+      doc.setTextColor(0, 0, 0);
       const lines = doc.splitTextToSize(text, contentWidth - 12);
       ensureSpace(lines.length * 5.5);
       lines.forEach((line, i) => {
@@ -926,10 +908,10 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
           skillLabels[key] || key.charAt(0).toUpperCase() + key.slice(1);
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
-        doc.setTextColor(30, 30, 30);
+        doc.setTextColor(0, 0, 0);
         doc.text(`${label}:`, margin + 2, y);
         doc.setFont("helvetica", "normal");
-        doc.setTextColor(50, 50, 50);
+        doc.setTextColor(0, 0, 0);
         const valueLines = doc.splitTextToSize(
           value,
           pageWidth - valueX - margin,
@@ -953,14 +935,14 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         // Role - Company
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
-        doc.setTextColor(20, 20, 20);
+        doc.setTextColor(0, 0, 0);
         const title = `${exp.role}${exp.company ? " - " + exp.company : ""}`;
         doc.text(title, margin, y);
         // Dates on right
         if (exp.startDate || exp.endDate) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(9);
-          doc.setTextColor(100, 100, 100);
+          doc.setTextColor(0, 0, 0);
           const dates = `${exp.startDate || ""}${exp.startDate && exp.endDate ? " - " : ""}${exp.endDate || ""}`;
           doc.text(dates, pageWidth - margin, y, { align: "right" });
         }
@@ -969,7 +951,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         if (exp.location) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(9);
-          doc.setTextColor(100, 100, 100);
+          doc.setTextColor(0, 0, 0);
           doc.text(exp.location, margin, y);
           y += 5;
         }
@@ -989,16 +971,16 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         ensureSpace(30);
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
-        doc.setTextColor(20, 20, 20);
+        doc.setTextColor(0, 0, 0);
         doc.text(proj.name, margin, y);
-        y += 5;
         if (proj.techStack) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(9);
-          doc.setTextColor(100, 100, 100);
-          doc.text(proj.techStack, margin, y);
-          y += 5;
+          doc.setTextColor(0, 0, 0);
+          const techWidth = doc.getTextWidth(proj.techStack);
+          doc.text(proj.techStack, pageWidth - margin - techWidth, y);
         }
+        y += 5;
         proj.points.filter(Boolean).forEach((point) => {
           addBullet(point, 10);
         });
@@ -1016,13 +998,13 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         // Line 1: Institution (left, bold) and Years (right, normal/italic)
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
-        doc.setTextColor(20, 20, 20);
+        doc.setTextColor(0, 0, 0);
         doc.text(edu.institution || "", margin, y);
 
         if (edu.startYear || edu.endYear) {
           doc.setFont("helvetica", "normal");
           doc.setFontSize(10);
-          doc.setTextColor(50, 50, 50);
+          doc.setTextColor(0, 0, 0);
           const years = `${edu.startYear || ""}${edu.startYear && edu.endYear ? " – " : ""}${edu.endYear || ""}`;
           doc.text(years, pageWidth - margin, y, { align: "right" });
         }
@@ -1032,7 +1014,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         // Line 2: Degree + CGPA (left, degree regular, CGPA italic) and Location (right, italic)
         doc.setFont("helvetica", "normal");
         doc.setFontSize(10);
-        doc.setTextColor(50, 50, 50);
+        doc.setTextColor(0, 0, 0);
 
         let degreeText = edu.degree || "";
         let cgpaText = edu.cgpa ? `CGPA: ${edu.cgpa}` : "";
@@ -1052,7 +1034,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         if (edu.location) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(9);
-          doc.setTextColor(100, 100, 100);
+          doc.setTextColor(0, 0, 0);
           doc.text(edu.location, pageWidth - margin, y, { align: "right" });
         }
 
@@ -1771,11 +1753,10 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
             >
               <div className="rb-preview-header">
                 <h2>{(resume.name || "Your Name").toUpperCase()}</h2>
-                {resume.title && <h3>{resume.title.toUpperCase()}</h3>}
                 <p className="rb-preview-contact">
                   {resume.location && (
                     <span className="rb-preview-contact-item">
-                      📍 {resume.location}
+                      {resume.location}
                     </span>
                   )}
                   {resume.email && (
@@ -1789,12 +1770,12 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      ✉ {resume.email}
+                      {resume.email}
                     </a>
                   )}
                   {resume.phone && (
                     <span className="rb-preview-contact-item">
-                      📞 {resume.phone}
+                      {resume.phone}
                     </span>
                   )}
                   {resume.linkedin && (
@@ -1808,7 +1789,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      🔗 LinkedIn
+                      LinkedIn
                     </a>
                   )}
                   {resume.github && (
@@ -1822,7 +1803,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      💻 GitHub
+                      GitHub
                     </a>
                   )}
                 </p>
@@ -1893,10 +1874,12 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       <div key={idx} className="rb-preview-item">
                         <div className="rb-preview-item-header">
                           <strong>{proj.name}</strong>
+                          {proj.techStack && (
+                            <span className="rb-preview-tech">
+                              {proj.techStack}
+                            </span>
+                          )}
                         </div>
-                        {proj.techStack && (
-                          <p className="rb-preview-tech">{proj.techStack}</p>
-                        )}
                         <ul>
                           {proj.points.filter(Boolean).map((p, i) => (
                             <li key={i}>{p}</li>
@@ -1925,7 +1908,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                           className="rb-preview-item-header"
                           style={{
                             fontStyle: "normal",
-                            color: "#4b5563",
+                            color: "#000000",
                             marginTop: "2px",
                           }}
                         >
@@ -1942,7 +1925,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                             style={{
                               fontSize: "0.8rem",
                               fontStyle: "italic",
-                              color: "#6b7280",
+                              color: "#000000",
                             }}
                           >
                             {edu.location}

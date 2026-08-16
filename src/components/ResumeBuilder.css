@@ -423,7 +423,8 @@
 
 .rb-preview {
   background: white;
-  color: #0f172a;
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
   border-radius: 12px;
   padding: 32px;
   max-height: 500px;
@@ -441,20 +442,13 @@
 .rb-preview-header h2 {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #030712;
+  color: #000000;
   margin: 0 0 4px;
-}
-
-.rb-preview-header h3 {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #1e3a8a;
-  margin: 0 0 6px;
 }
 
 .rb-preview-header p {
   font-size: 0.85rem;
-  color: #374151;
+  color: #000000;
   margin: 0;
   text-align: center;
 }
@@ -467,7 +461,7 @@
 }
 
 .rb-preview-contact-item {
-  color: #374151;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -484,34 +478,34 @@
 
 .rb-preview-location {
   font-size: 0.8rem !important;
-  color: #374151 !important;
+  color: #000000 !important;
   font-style: italic;
   margin-bottom: 4px !important;
 }
 
 .rb-preview-section {
-  margin-bottom: 20px;
+  margin-bottom: 26px;
 }
 
 .rb-preview-section h3 {
   font-size: 1rem;
   font-weight: 700;
   color: #1e3a8a;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 6px;
-  margin: 0 0 12px;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 4px;
+  margin: 0 0 14px;
   text-transform: uppercase;
 }
 
 .rb-preview-section p {
   font-size: 0.9rem;
-  color: #1f2937;
+  color: #000000;
   line-height: 1.6;
   margin: 0 0 8px;
 }
 
 .rb-preview-item {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .rb-preview-item-header {
@@ -524,12 +518,12 @@
 
 .rb-preview-item-header strong {
   font-size: 0.95rem;
-  color: #111827;
+  color: #000000;
 }
 
 .rb-preview-item-header span {
   font-size: 0.8rem;
-  color: #374151;
+  color: #000000;
   font-style: italic;
 }
 
@@ -540,14 +534,14 @@
 
 .rb-preview-item li {
   font-size: 0.85rem;
-  color: #1f2937;
-  line-height: 1.6;
-  margin-bottom: 4px;
+  color: #000000;
+  line-height: 1.7;
+  margin-bottom: 6px;
 }
 
 .rb-preview-tech {
   font-size: 0.8rem !important;
-  color: #374151 !important;
+  color: #000000 !important;
   font-style: italic;
 }
 
@@ -576,17 +570,17 @@
 
 .rb-preview-skill-label {
   font-weight: 600;
-  color: #1f2937;
+  color: #000000;
 }
 
 .rb-preview-skill-colon {
   font-weight: 600;
-  color: #1f2937;
+  color: #000000;
   white-space: nowrap;
 }
 
 .rb-preview-skill-value {
-  color: #1f2937;
+  color: #000000;
 }
 
 /* Footer */
