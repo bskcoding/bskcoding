@@ -469,18 +469,18 @@
 }
 
 .rb-preview-icon {
-  color: #1e3a8a;
+  color: #000000;
   font-size: 0.9rem;
 }
 
 .rb-preview-contact-item.rb-preview-link {
-  color: #1e3a8a;
+  color: #000000;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .rb-preview-contact-item.rb-preview-link:hover {
-  color: #1e3a8a;
+  color: #000000;
   text-decoration: underline;
 }
 
