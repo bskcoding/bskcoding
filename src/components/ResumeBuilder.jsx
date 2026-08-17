@@ -1,4 +1,13 @@
 import { useState, useRef, Fragment } from "react";
+import {
+  FaLocationDot,
+  FaSquarePhone,
+  FaSquareGithub,
+  FaLinkedin,
+  FaSquareYoutube,
+  FaSquareEnvelope,
+} from "react-icons/fa6";
+import { CgWebsite } from "react-icons/cg";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { GoogleGenAI } from "@google/genai";
@@ -1864,6 +1873,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                 <p className="rb-preview-contact">
                   {resume.location && (
                     <span className="rb-preview-contact-item">
+                      <FaLocationDot className="rb-preview-icon" />
                       {resume.location}
                     </span>
                   )}
@@ -1878,11 +1888,13 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
+                      <FaSquareEnvelope className="rb-preview-icon" />
                       {resume.email}
                     </a>
                   )}
                   {resume.phone && (
                     <span className="rb-preview-contact-item">
+                      <FaSquarePhone className="rb-preview-icon" />
                       {resume.phone}
                     </span>
                   )}
@@ -1897,6 +1909,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
+                      <FaLinkedin className="rb-preview-icon" />
                       LinkedIn
                     </a>
                   )}
@@ -1911,6 +1924,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
+                      <FaSquareGithub className="rb-preview-icon" />
                       GitHub
                     </a>
                   )}
@@ -1925,6 +1939,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
+                      <CgWebsite className="rb-preview-icon" />
                       {resume.websiteName}
                     </a>
                   )}

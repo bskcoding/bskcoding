@@ -463,6 +463,14 @@
 .rb-preview-contact-item {
   color: #000000;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rb-preview-icon {
+  color: #1e3a8a;
+  font-size: 0.9rem;
 }
 
 .rb-preview-contact-item.rb-preview-link {
@@ -490,7 +498,7 @@
 .rb-preview-section h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #1e3a8a;
+  color: #00040e;
   border-bottom: 1px solid #d1d5db;
   padding-bottom: 4px;
   margin: 0 0 14px;
