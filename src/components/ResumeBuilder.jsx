@@ -4,10 +4,9 @@ import {
   FaSquarePhone,
   FaSquareGithub,
   FaLinkedin,
-  FaSquareYoutube,
   FaSquareEnvelope,
 } from "react-icons/fa6";
-import { CgWebsite } from "react-icons/cg";
+import { FaLaptopCode } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { GoogleGenAI } from "@google/genai";
@@ -1939,7 +1938,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      <CgWebsite className="rb-preview-icon" />
+                      <FaLaptopCode className="rb-preview-icon" />
                       {resume.websiteName}
                     </a>
                   )}
