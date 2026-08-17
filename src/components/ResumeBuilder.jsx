@@ -6,7 +6,7 @@ import {
   FaLinkedin,
   FaSquareEnvelope,
 } from "react-icons/fa6";
-import { FaLaptopCode } from "react-icons/fa";
+import { CgWebsite } from "react-icons/cg";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { GoogleGenAI } from "@google/genai";
@@ -643,6 +643,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
           // in the hostname — filters out entries like "https://Linkdin".
           if (!pos.url) return false;
           if (pos.url.startsWith("mailto:")) return true;
+          if (pos.url.startsWith("tel:")) return true;
           if (pos.url.startsWith("https://") || pos.url.startsWith("http://")) {
             try {
               return new URL(pos.url).hostname.includes(".");
@@ -779,7 +780,8 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       contactItems.push({ label: resume.email, url: emailUrl });
     }
     if (resume.phone) {
-      contactItems.push({ label: resume.phone, url: null });
+      const phoneUrl = `tel:${resume.phone.replace(/\s+/g, "")}`;
+      contactItems.push({ label: resume.phone, url: phoneUrl });
     }
     if (resume.linkedin) {
       // Handle case where LinkedIn URL is just "LinkedIn" or incomplete
@@ -1892,10 +1894,13 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                     </a>
                   )}
                   {resume.phone && (
-                    <span className="rb-preview-contact-item">
+                    <a
+                      href={`tel:${resume.phone.replace(/\s+/g, "")}`}
+                      className="rb-preview-contact-item rb-preview-link"
+                    >
                       <FaSquarePhone className="rb-preview-icon" />
                       {resume.phone}
-                    </span>
+                    </a>
                   )}
                   {resume.linkedin && (
                     <a
@@ -1938,7 +1943,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                       rel="noopener noreferrer"
                       className="rb-preview-contact-item rb-preview-link"
                     >
-                      <FaLaptopCode className="rb-preview-icon" />
+                      <CgWebsite className="rb-preview-icon" />
                       {resume.websiteName}
                     </a>
                   )}

@@ -484,6 +484,16 @@
   text-decoration: underline;
 }
 
+.rb-preview-link {
+  color: #000000;
+  text-decoration: none;
+}
+
+.rb-preview-link:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
 .rb-preview-location {
   font-size: 0.8rem !important;
   color: #000000 !important;
