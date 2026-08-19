@@ -601,6 +601,27 @@
   color: #000000;
 }
 
+/* Bold markdown: **text** renders as bold in preview */
+.rb-preview-skill-value strong {
+  font-weight: bold;
+}
+
+.rb-preview-section p strong {
+  font-weight: bold;
+}
+.rb-preview-skill-value {
+  color: #000000;
+}
+
+/* Bold markdown: **text** renders as bold in preview */
+.rb-preview-skill-value strong {
+  font-weight: bold;
+}
+
+.rb-preview-section p strong {
+  font-weight: bold;
+}
+
 /* Footer */
 .rb-footer {
   display: flex;

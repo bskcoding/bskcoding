@@ -53,6 +53,18 @@ const SKILL_LABELS = {
   concepts: "Core Concepts",
 };
 
+// Helper to render text with **bold** markdown syntax as JSX
+const formatText = (text) => {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+};
+
 const EMPTY_RESUME = {
   name: "",
   title: "",
@@ -981,21 +993,30 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         doc.setTextColor(0, 0, 0);
         const title = `${exp.role}${exp.company ? " - " + exp.company : ""}`;
         doc.text(title, margin, y);
-        // Dates on right
-        if (exp.startDate || exp.endDate) {
-          doc.setFont("helvetica", "italic");
-          doc.setFontSize(9);
-          doc.setTextColor(0, 0, 0);
-          const dates = `${exp.startDate || ""}${exp.startDate && exp.endDate ? " - " : ""}${exp.endDate || ""}`;
-          doc.text(dates, pageWidth - margin, y, { align: "right" });
-        }
         y += 5;
-        // Location
-        if (exp.location) {
-          doc.setFont("helvetica", "italic");
-          doc.setFontSize(9);
-          doc.setTextColor(0, 0, 0);
-          doc.text(exp.location, margin, y);
+        // Location and Dates on same line block with pipe separator
+        if (exp.location || exp.startDate || exp.endDate) {
+          // Build compact line: location | dates format
+          let lineText = "";
+          if (exp.location) {
+            lineText = exp.location;
+          }
+          if (exp.startDate || exp.endDate) {
+            const dates = `${exp.startDate || ""}${exp.startDate && exp.endDate ? " - " : ""}${exp.endDate || ""}`;
+            if (lineText) {
+              lineText += " | " + dates;
+            } else {
+              lineText = dates;
+            }
+          }
+          if (lineText) {
+            doc.setFont("helvetica", "italic");
+            doc.setFontSize(9);
+            doc.setTextColor(0, 0, 0);
+            doc.text(lineText, margin, y);
+          }
+          y += 5;
+        } else {
           y += 5;
         }
         // Bullet points
@@ -1063,8 +1084,8 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
         let cgpaText = edu.cgpa ? `CGPA: ${edu.cgpa}` : "";
 
         if (degreeText && cgpaText) {
-          doc.text(degreeText + "; ", margin, y);
-          const degreeWidth = doc.getTextWidth(degreeText + "; ");
+          doc.text(degreeText + "| ", margin, y);
+          const degreeWidth = doc.getTextWidth(degreeText + "| ");
           doc.setFont("helvetica", "italic");
           doc.text(cgpaText, margin + degreeWidth, y);
         } else if (degreeText) {
@@ -1324,8 +1345,8 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                 rows="5"
               />
               <p className="rb-hint">
-                Tip: Mention your years of experience, key technologies, and
-                what makes you unique.
+                Tip: Type `**text**` (with two asterisks before and after) for
+                bold formatting.
               </p>
             </div>
           </div>
@@ -1836,7 +1857,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                   />
                   <p className="rb-hint">
                     Add a link so the certificate is clickable in the preview
-                    and PDF.
+                    and PDF. Use `**text**` for bold formatting.
                   </p>
                 </div>
               </div>
@@ -1952,7 +1973,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
               {resume.summary && (
                 <div className="rb-preview-section">
                   <h3>Professional Summary</h3>
-                  <p>{resume.summary}</p>
+                  <p>{formatText(resume.summary)}</p>
                 </div>
               )}
               {Object.entries(resume.skills).some(([, v]) => v) && (
@@ -1969,7 +1990,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                           </span>
                           <span className="rb-preview-skill-colon">:</span>
                           <span className="rb-preview-skill-value">
-                            {value}
+                            {formatText(value)}
                           </span>
                         </Fragment>
                       ))}
@@ -1989,17 +2010,18 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                             {exp.company ? ` - ${exp.company}` : ""}
                           </strong>
                           <span>
+                            {exp.location}
+                            {exp.location && (exp.startDate || exp.endDate)
+                              ? " | "
+                              : ""}
                             {exp.startDate}
                             {exp.startDate && exp.endDate ? " - " : ""}
                             {exp.endDate}
                           </span>
                         </div>
-                        {exp.location && (
-                          <p className="rb-preview-location">{exp.location}</p>
-                        )}
                         <ul>
                           {exp.points.filter(Boolean).map((p, i) => (
-                            <li key={i}>{p}</li>
+                            <li key={i}>{formatText(p)}</li>
                           ))}
                         </ul>
                       </div>
@@ -2023,7 +2045,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                         </div>
                         <ul>
                           {proj.points.filter(Boolean).map((p, i) => (
-                            <li key={i}>{p}</li>
+                            <li key={i}>{formatText(p)}</li>
                           ))}
                         </ul>
                       </div>
@@ -2055,7 +2077,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                         >
                           <span style={{ fontSize: "0.85rem" }}>
                             {edu.degree}
-                            {edu.degree && edu.cgpa ? "; " : ""}
+                            {edu.degree && edu.cgpa ? " | " : ""}
                             {edu.cgpa && (
                               <span style={{ fontStyle: "italic" }}>
                                 CGPA: {edu.cgpa}
