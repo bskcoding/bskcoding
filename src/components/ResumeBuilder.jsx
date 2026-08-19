@@ -454,10 +454,12 @@ TASK: Generate professional ${sectionName} content suggestions.
 - If the user has already entered some data, improve and enhance it.
 - If fields are empty, suggest realistic professional content based on their experience level and other sections.
 - Return ONLY the suggested content in a structured format that can be directly used.
+- IMPORTANT: Make all content ATS-friendly - use strong action verbs, quantified achievements, industry-relevant keywords, and avoid graphics, tables, or special characters that ATS parsers cannot read.
+- IMPORTANT: Use **bold** markdown syntax (wrap text in double asterisks, e.g. **RESTful APIs**) to highlight key keywords, metrics, technology names, and achievements within text content (e.g., "Developed **RESTful APIs** using **Spring Boot**, reducing latency by **40%**"). Bold sparingly to emphasize key accomplishments and technical terms — the content is rendered as rich text.
 - For skills: suggest comprehensive skill categories (Languages, Frameworks, Frontend, Databases, DevOps, Testing, Cloud, Messaging, Core Concepts) based on their experience and projects.
-- For summary: write a compelling 2-3 sentence professional summary.
-- For experience: suggest bullet points with action verbs and quantified achievements.
-- For projects: suggest project descriptions with tech stack and contributions.
+- For summary: write a compelling 2-3 sentence professional summary that is ATS-optimized with relevant keywords.
+- For experience: suggest ATS-friendly bullet points with strong action verbs and quantified achievements.
+- For projects: suggest ATS-friendly project descriptions with tech stack and contributions.
 - For education: suggest standard education entries.
 - For certificates: suggest relevant certifications for a Java developer.
 
@@ -717,7 +719,15 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       const imgWidth = pageWidth;
       const imgHeight = pageWidth / imgRatio;
 
-      const totalPages = Math.ceil(imgHeight / pageHeight);
+      // Avoid a blank trailing page: a new page is only created when
+      // there is more than a tiny threshold of content remaining
+      // (3% of one page height). This prevents the PDF from ending with
+      // an empty page when content is just barely over a page boundary.
+      const pageThreshold = pageHeight * 0.03;
+      const totalPages = Math.max(
+        1,
+        Math.floor((imgHeight - pageThreshold) / pageHeight) + 1,
+      );
       const imgData = canvas.toDataURL("image/png");
 
       // Scale factor: CSS pixels -> PDF mm (uniform image scaling)
@@ -890,6 +900,63 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       y += 6;
     };
 
+    // Parse **bold** markdown syntax into styled text segments
+    const parseSegments = (text) => {
+      if (!text) return [{ text: "", bold: false }];
+      const parts = text.split(/(\*\*.*?\*\*)/g).filter((p) => p.length > 0);
+      return parts.map((part) => ({
+        text: part.startsWith("**") ? part.slice(2, -2) : part,
+        bold: part.startsWith("**"),
+      }));
+    };
+
+    // Flatten segments into tokens (words + whitespace), each carrying
+    // its own bold flag so we can wrap lines and render inline bold.
+    const segmentToTokens = (segments) => {
+      const tokens = [];
+      segments.forEach((seg) => {
+        seg.text
+          .match(/\S+|\s+/g)
+          ?.forEach((t) => tokens.push({ text: t, bold: seg.bold }));
+      });
+      return tokens;
+    };
+
+    // Greedily wrap tokens into lines that fit within maxWidth
+    const wrapTokens = (tokens, maxWidth, size) => {
+      doc.setFontSize(size);
+      const lines = [];
+      let currentLine = [];
+      let currentWidth = 0;
+      tokens.forEach((token) => {
+        doc.setFont("helvetica", token.bold ? "bold" : "normal");
+        const w = doc.getTextWidth(token.text);
+        if (currentWidth + w > maxWidth && currentLine.length > 0) {
+          lines.push(currentLine);
+          currentLine = [];
+          currentWidth = 0;
+        }
+        currentLine.push(token);
+        currentWidth += w;
+      });
+      if (currentLine.length > 0) {
+        lines.push(currentLine);
+      }
+      return lines.length > 0 ? lines : [[]];
+    };
+
+    // Render a line of tokens at startX, current baseline y
+    const drawTokens = (tokens, startX, size, color) => {
+      let currentX = startX;
+      tokens.forEach((token) => {
+        doc.setFont("helvetica", token.bold ? "bold" : "normal");
+        doc.setFontSize(size);
+        doc.setTextColor(color[0], color[1], color[2]);
+        doc.text(token.text, currentX, y);
+        currentX += doc.getTextWidth(token.text);
+      });
+    };
+
     const addText = (
       text,
       size = 10,
@@ -897,30 +964,32 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       indent = 0,
       color = [0, 0, 0],
     ) => {
-      doc.setFont("helvetica", bold ? "bold" : "normal");
-      doc.setFontSize(size);
-      doc.setTextColor(color[0], color[1], color[2]);
-      const lines = doc.splitTextToSize(text, contentWidth - indent);
+      let tokens = segmentToTokens(parseSegments(text));
+      if (bold) {
+        tokens = tokens.map((t) => ({ ...t, bold: true }));
+      }
+      const maxWidth = contentWidth - indent;
+      const lines = wrapTokens(tokens, maxWidth, size);
       ensureSpace(lines.length * 5.5);
       lines.forEach((line) => {
-        doc.text(line, margin + indent, y);
+        drawTokens(line, margin + indent, size, color);
         y += 5.5;
       });
     };
 
     const addBullet = (text, size = 10) => {
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(size);
-      doc.setTextColor(0, 0, 0);
-      const lines = doc.splitTextToSize(text, contentWidth - 12);
+      const tokens = segmentToTokens(parseSegments(text));
+      const maxWidth = contentWidth - 12;
+      const lines = wrapTokens(tokens, maxWidth, size);
       ensureSpace(lines.length * 5.5);
       lines.forEach((line, i) => {
         if (i === 0) {
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(size);
+          doc.setTextColor(0, 0, 0);
           doc.text("•", margin + 2, y);
-          doc.text(line, margin + 10, y);
-        } else {
-          doc.text(line, margin + 10, y);
         }
+        drawTokens(line, margin + 10, size, [0, 0, 0]);
         y += 5.5;
       });
     };
@@ -987,14 +1056,14 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
       resume.experience.forEach((exp) => {
         if (!exp.company && !exp.role) return;
         ensureSpace(30);
-        // Role - Company
+        // Role - Company (left, bold) ... Location | Dates (right, italic)
         doc.setFont("helvetica", "bold");
         doc.setFontSize(11);
         doc.setTextColor(0, 0, 0);
         const title = `${exp.role}${exp.company ? " - " + exp.company : ""}`;
         doc.text(title, margin, y);
-        y += 5;
-        // Location and Dates on same line block with pipe separator
+
+        // Location | Dates — right-aligned, same baseline as the title
         if (exp.location || exp.startDate || exp.endDate) {
           // Build compact line: location | dates format
           let lineText = "";
@@ -1013,12 +1082,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
             doc.setFont("helvetica", "italic");
             doc.setFontSize(9);
             doc.setTextColor(0, 0, 0);
-            doc.text(lineText, margin, y);
+            doc.text(lineText, pageWidth - margin, y, { align: "right" });
           }
-          y += 5;
-        } else {
-          y += 5;
         }
+        y += 8;
+
         // Bullet points
         exp.points.filter(Boolean).forEach((point) => {
           addBullet(point, 10);
