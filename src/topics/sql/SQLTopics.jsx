@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../java/JavaTopics.css";
 
 function SQLTopics() {
-  const sqlColor = "#10b981";
+  const sqlColor = "#07acff";
 
   return (
     <div className="java-topics-page">

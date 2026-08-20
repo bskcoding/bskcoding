@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./SpringBootTopics.css";
 
 function SpringBootTopics() {
-  const springBootColor = "#22c55e";
+  const springBootColor = "#07acff";
 
   return (
     <div className="spring-boot-topics-page">

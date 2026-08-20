@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../java/JavaTopics.css";
 
 function KafkaTopics() {
-  const kafkaColor = "#f59e0b";
+  const kafkaColor = "#07acff";
 
   return (
     <div className="java-topics-page">

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./MicroservicesTopics.css";
 
 function MicroservicesTopics() {
-  const microservicesColor = "#1D4ED8";
+  const microservicesColor = "#07acff";
 
   return (
     <div className="microservices-topics-page">

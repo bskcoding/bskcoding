@@ -3,8 +3,8 @@ export const skills = [
     id: "java",
     name: "Java",
     icon: "☕",
-    color: "#3B82F6",
-    progress: 85,
+    color: "#3bf676",
+    progress: 50,
     description:
       "Master Java fundamentals, OOP, multithreading, and advanced concepts.",
     subtopics: [
@@ -24,8 +24,8 @@ export const skills = [
     id: "spring-boot",
     name: "Spring Boot",
     icon: "🌱",
-    color: "#2563EB",
-    progress: 78,
+    color: "#3bf676",
+    progress: 50,
     description:
       "Build production-ready REST APIs and microservices with Spring Boot.",
     subtopics: [
@@ -45,8 +45,8 @@ export const skills = [
     id: "microservices",
     name: "Microservices",
     icon: "🔧",
-    color: "#1D4ED8",
-    progress: 72,
+    color: "#3bf676",
+    progress: 50,
     description: "Design distributed systems with modern service patterns.",
     subtopics: [
       "Microservices vs Monolith",
@@ -65,8 +65,8 @@ export const skills = [
     id: "apache-kafka",
     name: "Apache Kafka",
     icon: "⚡",
-    color: "#3B82F6",
-    progress: 68,
+    color: "#3bf676",
+    progress: 50,
     description: "Master event streaming and real-time data pipelines.",
     subtopics: [
       "Kafka Architecture & Concepts",
@@ -85,8 +85,8 @@ export const skills = [
     id: "sql-databases",
     name: "SQL & Databases",
     icon: "🗃️",
-    color: "#3B82F6",
-    progress: 82,
+    color: "#3bf676",
+    progress: 50,
     description:
       "Gain strong database skills for backend and analytics systems.",
     subtopics: [
@@ -107,7 +107,7 @@ export const skills = [
     name: "Data Structures & Algorithms (DSA)",
     icon: "📊",
     color: "#2563EB",
-    progress: 75,
+    progress: 0,
     description: "Learn efficient algorithms and problem-solving techniques.",
     subtopics: [
       "Arrays, Strings & Pointers",
@@ -127,7 +127,7 @@ export const skills = [
     name: "System Design",
     icon: "🏗️",
     color: "#3B82F6",
-    progress: 70,
+    progress: 0,
     description:
       "Plan scalable systems with reliability, performance and observability.",
     subtopics: [
@@ -144,11 +144,53 @@ export const skills = [
     ],
   },
   {
+    id: "javascript",
+    name: "JavaScript",
+    icon: "🟡",
+    color: "#3B82F6",
+    progress: 0,
+    description:
+      "Master JavaScript fundamentals, ES6+, async programming, and modern browser APIs.",
+    subtopics: [
+      "JavaScript Basics & Syntax",
+      "ES6+ Features (Arrow Functions, Promises, Destructuring)",
+      "DOM Manipulation & Events",
+      "Asynchronous JS (Callbacks, Promises, Async/Await)",
+      "Closures & Scope",
+      "Prototypes & Object-Oriented JS",
+      "Error Handling & Debugging",
+      "Modules & Build Tools",
+      "Browser APIs & Fetch",
+      "JavaScript Design Patterns",
+    ],
+  },
+  {
+    id: "reactjs",
+    name: "ReactJS",
+    icon: "⚛️",
+    color: "#3B82F6",
+    progress: 0,
+    description:
+      "Build interactive user interfaces and single-page apps with React.",
+    subtopics: [
+      "React Fundamentals & JSX",
+      "Components, Props & State",
+      "Hooks (useState, useEffect, useContext, custom hooks)",
+      "Component Lifecycle & Performance Optimization",
+      "React Router & Navigation",
+      "State Management (Context API, Redux Toolkit)",
+      "Forms & Controlled Components",
+      "Styling (CSS Modules, Styled Components)",
+      "React Patterns & Best Practices",
+      "Testing React Components (Jest, RTL)",
+    ],
+  },
+  {
     id: "company-interview",
     name: "Company-wise Interview Prep",
     icon: "🏢",
     color: "#3B82F6",
-    progress: 62,
+    progress: 0,
     description:
       "Prepare for top tech company interviews with tailored company-specific strategies.",
     subtopics: [
@@ -168,7 +210,7 @@ export const skills = [
     id: "90-day-job-roadmap",
     name: "90-Day Job Preparation Roadmap",
     icon: "🗺️",
-    color: "#2563EB",
+    color: "#00ff1e",
     progress: 100,
     description:
       "Follow a structured 90-day plan to land your next software engineering role.",

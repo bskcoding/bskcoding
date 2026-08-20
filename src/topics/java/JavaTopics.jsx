@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./JavaTopics.css";
 
 function JavaTopics() {
-  const javaColor = "#0084ff";
+  const javaColor = "#07acff";
 
   return (
     <div className="java-topics-page">
