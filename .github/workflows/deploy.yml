@@ -31,13 +31,24 @@ jobs:
       - name: Create .env file
         env:
           GEMINI_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+          EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
         run: |
           if [ -z "$GEMINI_KEY" ]; then
             echo "❌ VITE_GEMINI_API_KEY secret is not set"
             exit 1
           fi
 
+          if [ -z "$EMAILJS_SERVICE_ID" ] || [ -z "$EMAILJS_TEMPLATE_ID" ] || [ -z "$EMAILJS_PUBLIC_KEY" ]; then
+            echo "❌ EmailJS secrets are not set"
+            exit 1
+          fi
+
           echo "VITE_GEMINI_API_KEY=$GEMINI_KEY" > .env
+          echo "VITE_EMAILJS_SERVICE_ID=$EMAILJS_SERVICE_ID" >> .env
+          echo "VITE_EMAILJS_TEMPLATE_ID=$EMAILJS_TEMPLATE_ID" >> .env
+          echo "VITE_EMAILJS_PUBLIC_KEY=$EMAILJS_PUBLIC_KEY" >> .env
 
       - name: Check Gemini secret
         env:
@@ -48,6 +59,19 @@ jobs:
             exit 1
           else
             echo "✅ Gemini secret is available"
+          fi
+
+      - name: Check EmailJS secrets
+        env:
+          EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+        run: |
+          if [ -z "$EMAILJS_SERVICE_ID" ] || [ -z "$EMAILJS_TEMPLATE_ID" ] || [ -z "$EMAILJS_PUBLIC_KEY" ]; then
+            echo "❌ EmailJS secrets are EMPTY"
+            exit 1
+          else
+            echo "✅ EmailJS secrets are available"
           fi
 
       - name: Build

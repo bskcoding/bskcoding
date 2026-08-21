@@ -1,4 +1,4 @@
-/* ===== BSK CODING - CLEAN MODERN APP ===== */
+﻿/* ===== BSK CODING - CLEAN MODERN APP ===== */
 
 :root {
   --text: #e2e8f0;
@@ -879,6 +879,18 @@
   border-color: rgba(59, 130, 246, 0.3);
 }
 
+.support-badge-clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.support-badge-clickable:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+}
+
 .hero-badge span {
   display: block;
   font-size: 1.75rem;
@@ -946,7 +958,7 @@
   padding: 0;
 }
 
-/* ── Skill Cards — redesigned 3-section layout ── */
+/* â”€â”€ Skill Cards â€” redesigned 3-section layout â”€â”€ */
 .skill-card {
   display: flex;
   flex-direction: column;
@@ -975,7 +987,7 @@
   border-color: #60a5fa;
 }
 
-/* ── Top Section (20%) ── */
+/* â”€â”€ Top Section (20%) â”€â”€ */
 .skill-card-top {
   display: flex;
   flex-direction: column;
@@ -1005,7 +1017,7 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* ── Middle Section (15%) —  ─── [%] ─── ── */
+/* â”€â”€ Middle Section (15%) â€”  â”€â”€â”€ [%] â”€â”€â”€ â”€â”€ */
 .skill-card-middle {
   display: flex;
   align-items: center;
@@ -1033,7 +1045,7 @@
   text-shadow: 0 0 8px currentColor;
 }
 
-/* ── Bottom Section (65%) ── */
+/* â”€â”€ Bottom Section (65%) â”€â”€ */
 .skill-card-bottom {
   display: flex;
   flex-direction: column;
@@ -1551,7 +1563,7 @@
 
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 
@@ -1644,7 +1656,7 @@
   color: #fbbf24;
 }
 
-/* ── Stat number in the middle ── */
+/* â”€â”€ Stat number in the middle â”€â”€ */
 .about-stat {
   display: flex;
   flex-direction: column;
@@ -1700,9 +1712,322 @@
   border-color: rgba(139, 92, 246, 0.12);
 }
 
+.contact-card-clickable {
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+}
+
+.contact-card-clickable:hover {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2);
+}
+
+.contact-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.contact-card-clickable:hover .contact-card-action {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+}
+
+/* ===== SUPPORT SECTION (HOME) ===== */
+.support-section {
+  padding: 40px 0;
+  margin-top: 30px;
+}
+
+.support-card {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.08),
+    rgba(139, 92, 246, 0.06)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 20px;
+  padding: 40px 32px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.support-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.support-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 12px;
+}
+
+.support-text {
+  color: #94a3b8;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0 0 24px;
+}
+
+.support-email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== EMAIL CONTACT MODAL ===== */
+.email-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.email-modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(10, 18, 34, 0.98);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.email-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.email-modal-close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.email-modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.email-modal-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.email-modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 8px;
+}
+
+.email-modal-header p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.email-modal-header p strong {
+  color: #60a5fa;
+}
+
+.email-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.email-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.email-modal-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.email-modal-field input,
+.email-modal-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.email-modal-field input:focus,
+.email-modal-field textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.email-modal-field input::placeholder,
+.email-modal-field textarea::placeholder {
+  color: rgba(229, 231, 235, 0.4);
+}
+
+.email-modal-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.email-modal-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+}
+
+.email-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.email-modal-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.email-modal-btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.email-modal-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.email-modal-btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.email-modal-btn-primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.email-modal-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.email-modal-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+.email-modal-success {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.email-modal-success-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.email-modal-success h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #34d399;
+  margin: 0 0 8px;
+}
+
+.email-modal-success p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   max-width: 900px;
   margin: 0 auto;
@@ -2426,7 +2751,7 @@
 }
 
 .cpwd-error::before {
-  content: "⚠";
+  content: "âš ";
   font-size: 0.9rem;
 }
 

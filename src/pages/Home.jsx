@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { skills } from "../data/skills";
 import SkillCard from "../components/SkillCard";
+import EmailContactModal from "../components/EmailContactModal";
 
 function Home() {
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+
   const linkFor = (id) => {
     if (id === "90-day-job-roadmap") return "/roadmap";
     if (id === "java") return "/java";
@@ -10,6 +14,7 @@ function Home() {
     if (id === "microservices") return "/microservices";
     if (id === "sql-databases") return "/sql";
     if (id === "apache-kafka") return "/kafka";
+    if (id === "reactive-programming") return "/reactive-programming";
     return "#";
   };
 
@@ -42,7 +47,12 @@ function Home() {
             <span>120+</span>
             <p>Hands-on Modules</p>
           </div>
-          <div className="hero-badge">
+          <div
+            className="hero-badge support-badge-clickable"
+            onClick={() => setEmailModalOpen(true)}
+            role="button"
+            aria-label="Open email support"
+          >
             <span>24/7</span>
             <p>Support</p>
           </div>
@@ -93,6 +103,11 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <EmailContactModal
+        isOpen={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+      />
     </div>
   );
 }

@@ -19,10 +19,6 @@ function Contact() {
             <p>support@bskcoding.com</p>
           </div>
           <div className="contact-card">
-            <h2>Phone</h2>
-            <p>xxxxx</p>
-          </div>
-          <div className="contact-card">
             <h2>Office</h2>
             <p>Kuppam, Chittoor, Andhra Pradesh</p>
           </div>

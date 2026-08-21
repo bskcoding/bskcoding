@@ -34,6 +34,12 @@ const SQLTopics = lazy(() => import("./topics/sql/SQLTopics"));
 const SQLInterview = lazy(() => import("./topics/sql/SQLInterview"));
 const KafkaTopics = lazy(() => import("./topics/kafka/KafkaTopics"));
 const KafkaInterview = lazy(() => import("./topics/kafka/KafkaInterview"));
+const ReactiveProgrammingTopics = lazy(
+  () => import("./topics/reactive-programming/ReactiveProgrammingTopics"),
+);
+const ReactiveProgrammingInterview = lazy(
+  () => import("./topics/reactive-programming/ReactiveProgrammingInterview"),
+);
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -193,6 +199,22 @@ function App() {
                   element={
                     <RequireAuth>
                       <KafkaInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/reactive-programming"
+                  element={
+                    <RequireAuth>
+                      <ReactiveProgrammingTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/reactive-programming/interview"
+                  element={
+                    <RequireAuth>
+                      <ReactiveProgrammingInterview />
                     </RequireAuth>
                   }
                 />
