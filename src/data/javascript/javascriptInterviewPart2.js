@@ -202,7 +202,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
         set(target, prop, value) {
           const validator = schema[prop];
           if (validator && !validator(value)) {
-            throw new Error(\\\`Invalid \${prop}\\\`);
+            throw new Error(\`Invalid \${prop}\`);
           }
           target[prop] = value;
           return true;
@@ -222,11 +222,11 @@ export const javascriptInterviewPart2 = `### Advanced Questions
       // Proxy with Reflect
       const loggingProxy = new Proxy(obj, {
         get(target, prop) {
-          console.log(\\\`Getting \${String(prop)}\\\`);
+          console.log(\`Getting \${String(prop)}\`);
           return Reflect.get(target, prop);
         },
         set(target, prop, value) {
-          console.log(\\\`Setting \${String(prop)} to \${value}\\\`);
+          console.log(\`Setting \${String(prop)} to \${value}\`);
           return Reflect.set(target, prop, value);
         }
       });
@@ -610,7 +610,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
       // Unicode property escapes
       const emoji = /\\p{Emoji}/u;
       // Lookbehind assertions
-      const price = /(?<=\\$)\\d+/.exec('Price: $100');
+      const price = /(?<=[USD])\\d+/.exec('Price: USD 100');
       \`\`\`
     - **Note**: Named groups make regex readable — access matches via match.groups.year instead of array indices.
 
@@ -697,12 +697,12 @@ export const javascriptInterviewPart2 = `### Advanced Questions
           return acc + str + sanitize(value);
         }, '');
       }
-      const safe = html\\\`<div>\${userInput}</div>\\\`;
+      const safe = html\`<div>\${userInput}</div>\`;
       // Raw strings
-      const path = String.raw\\\`C:\\Users\\John\\\`;
+      const path = String.raw\`C:\\Users\\John\`;
       // Expression interpolation
-      const message = \\\`Hello \${user.name}!
-      Today is \${new Date().toLocaleString()}\\\`;
+      const message = \`Hello \${user.name}!
+      Today is \${new Date().toLocaleString()}\`;
       \`\`\`
     - **Note**: String.raw preserves backslashes literally — perfect for Windows paths and regex patterns.
 
@@ -777,7 +777,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
           this.name = name;
         }
         speak() {
-          console.log(\\\`\${this.name} speaks\\\`);
+          console.log(\`\${this.name} speaks\`);
         }
       }
       class Dog extends Animal {
@@ -963,7 +963,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
           // Handle validation
         }
         // Re-throw with context
-        throw new Error(\\\`Failed to fetch user: \${error.message}\\\`, {
+        throw new Error(\`Failed to fetch user: \${error.message}\`, {
           cause: error
         });
       }
@@ -1073,7 +1073,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
        // Classical inheritance
        class Animal {
          constructor(name) { this.name = name; }
-         speak() { console.log(\\\`\${this.name} speaks\\\`); }
+         speak() { console.log(\`\${this.name} speaks\`); }
        }
        class Dog extends Animal {}
 

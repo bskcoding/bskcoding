@@ -698,7 +698,7 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
       const items = data.map((item, index) => ({
         ...item,
         // Generate stable key
-        _key: \\\`\${item.type}-\${item.id}\\\`
+        _key: \`\${item.type}-\${item.id}\`
       }));
       \`\`\`
     - **Note**: Keys help React match old and new elements between renders — wrong keys cause state bugs.
@@ -711,7 +711,7 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
       // Good - stable IDs
       <li key={user.id}>{user.name}</li>
       // Good - composite key
-      <li key={\\\`\${user.id}-\${user.type}\\\`}>{user.name}</li>
+      <li key={\`\${user.id}-\${user.type}\`}>{user.name}</li>
       // Bad - index (can cause issues)
       <li key={index}>{item.name}</li>
       // Key with custom component

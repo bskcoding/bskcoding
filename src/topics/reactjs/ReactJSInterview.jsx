@@ -14,11 +14,16 @@ const interviewData = reactjsInterviewPart1 + reactjsInterviewPart2;
 const NL = String.fromCharCode(10);
 
 // Syntax highlight code using Highlight.js
+// Note: highlight.js has no separate "jsx" grammar — JSX is handled by
+// its javascript language, so map jsx/bash/etc. to supported languages.
 const highlightCode = (code, language) => {
   try {
-    if (!language) language = "jsx";
+    let lang = language || "jsx";
+    // Map unsupported aliases to languages highlight.js knows.
+    if (lang === "jsx" || lang === "tsx") lang = "javascript";
+    if (lang === "bash" || lang === "shell") lang = "bash";
     const highlighted = hljs.highlight(code, {
-      language,
+      language: lang,
       ignoreIllegals: true,
     }).value;
     return highlighted;
@@ -249,10 +254,10 @@ function ReactJSInterview() {
                                         </span>
                                       </div>
                                       <pre
-                                        className={`language-${item.language || "jsx"}`}
+                                        className={`language-${item.language === "tsx" ? "javascript" : item.language || "javascript"}`}
                                       >
                                         <code
-                                          className={`language-${item.language || "jsx"}`}
+                                          className={`language-${item.language === "tsx" ? "javascript" : item.language || "javascript"}`}
                                           dangerouslySetInnerHTML={{
                                             __html: highlightCode(
                                               item.content,

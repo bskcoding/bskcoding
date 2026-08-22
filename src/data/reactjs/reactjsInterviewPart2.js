@@ -367,7 +367,7 @@ export const reactjsInterviewPart2 = `### Advanced Questions
 
         return (
           <button
-            className={\\\`tab \${activeTab === index ? 'active' : ''}\\\`}
+            className={\`tab \${activeTab === index ? 'active' : ''}\`}
             onClick={() => setActiveTab(index)}
           >
             {children}
@@ -401,7 +401,7 @@ export const reactjsInterviewPart2 = `### Advanced Questions
 
         return (
           <SelectContext.Provider value={contextValue}>
-            <div className={\\\`select \${className}\\\`}>
+            <div className={\`select \${className}\`}>
               {children}
             </div>
           </SelectContext.Provider>
@@ -1135,7 +1135,7 @@ export const reactjsInterviewPart2 = `### Advanced Questions
       import { Profiler } from 'react';
       function App() {
         const onRender = (id, phase, actualDuration) => {
-          console.log(\\\`Component \${id} took \${actualDuration}ms\\\`);
+          console.log(\`Component \${id} took \${actualDuration}ms\`);
         };
         return (
           <Profiler id="App" onRender={onRender}>
@@ -1352,7 +1352,7 @@ export const reactjsInterviewPart2 = `### Advanced Questions
 
           async function fetchUser() {
             try {
-              const response = await fetch(\\\`/api/users/\\\${userId}\\\`, {
+              const response = await fetch(\`/api/users/\${userId}\`, {
                 signal: controller.signal
               });
               const data = await response.json();

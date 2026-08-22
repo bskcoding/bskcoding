@@ -25,7 +25,6 @@ function MaangPreparation() {
         <p className="maang-page-subtitle">{description}</p>
 
         <div className="maang-letter-wrap maang-page-grid">
-          <h3 className="maang-letter-wrap-title">MAANG</h3>
           <MaangLetterGrid charColors={charColors} />
         </div>
       </section>

@@ -13,7 +13,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
        age: 30,
        // Using newer syntax
        get description() {
-         return \\\`\${this.name} is \${this.age} years old\\\`;
+         return \`\${this.name} is \${this.age} years old\`;
        }
      };
      \`\`\`
@@ -66,7 +66,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
      const array = [1, 2, 3];
      // for-of with destructuring
      for (const [index, value] of array.entries()) {
-       console.log(\\\`\${index}: \${value}\\\`);
+       console.log(\`\${index}: \${value}\`);
      }
      // Iterator helpers (ES2025)
      const result = array.values()
@@ -165,11 +165,11 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       // Modern template literals
       const name = 'John';
       const age = 30;
-      const message = \\\`Name: \${name}
+      const message = \`Name: \${name}
       Age: \${age}
-      Status: \${age >= 18 ? 'Adult' : 'Minor'}\\\`;
+      Status: \${age >= 18 ? 'Adult' : 'Minor'}\`;
       // Tagged template
-      const html = htmlEscape\\\`<div>\${userInput}</div>\\\`;
+      const html = htmlEscape\`<div>\${userInput}</div>\`;
       \`\`\`
     - **Note**: Tagged templates receive strings and values separately, enabling safe HTML escaping and i18n.
 
@@ -185,7 +185,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       // Class with arrow methods
       class User {
         constructor(name) { this.name = name; }
-        greet = () => console.log(\\\`Hello \${this.name}\\\`);
+        greet = () => console.log(\`Hello \${this.name}\`);
       }
       \`\`\`
     - **Note**: Arrow functions have no own this, arguments, or prototype — they cannot be used as constructors.
@@ -565,7 +565,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
         }
 
         get fullName() {
-          return \\\`\${this._firstName} \${this._lastName}\\\`;
+          return \`\${this._firstName} \${this._lastName}\`;
         }
 
         set password(value) {
@@ -594,7 +594,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       // Class inheritance
       class Animal {
         constructor(name) { this.name = name; }
-        speak() { console.log(\\\`\${this.name} speaks\\\`); }
+        speak() { console.log(\`\${this.name} speaks\`); }
       }
       class Dog extends Animal {
         speak() { super.speak(); console.log('Woof!'); }
@@ -764,7 +764,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
         retry: 3,
         hooks: {
           beforeRequest: [request => {
-            request.headers.set('Authorization', \\\`Bearer \${token}\\\`);
+            request.headers.set('Authorization', \`Bearer \${token}\`);
           }]
         }
       }).json();
@@ -934,7 +934,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       const fetchPages = async function* (url) {
         let page = 1;
         while (true) {
-          const response = await fetch(\\\`\${url}?page=\${page}\\\`);
+          const response = await fetch(\`\${url}?page=\${page}\`);
           const data = await response.json();
           if (data.length === 0) break;
           yield data;
