@@ -1,4 +1,4 @@
-﻿/* ===== BSK CODING - CLEAN MODERN APP ===== */
+/* ===== BSK CODING - CLEAN MODERN APP ===== */
 
 :root {
   --text: #e2e8f0;
@@ -958,7 +958,7 @@
   padding: 0;
 }
 
-/* â”€â”€ Skill Cards â€” redesigned 3-section layout â”€â”€ */
+/* ── Skill Cards — redesigned 3-section layout ── */
 .skill-card {
   display: flex;
   flex-direction: column;
@@ -987,7 +987,7 @@
   border-color: #60a5fa;
 }
 
-/* â”€â”€ Top Section (20%) â”€â”€ */
+/* ── Top Section (20%) ── */
 .skill-card-top {
   display: flex;
   flex-direction: column;
@@ -1017,7 +1017,7 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* â”€â”€ Middle Section (15%) â€”  â”€â”€â”€ [%] â”€â”€â”€ â”€â”€ */
+/* ── Middle Section (15%) —  ─── [%] ─── ── */
 .skill-card-middle {
   display: flex;
   align-items: center;
@@ -1045,7 +1045,7 @@
   text-shadow: 0 0 8px currentColor;
 }
 
-/* â”€â”€ Bottom Section (65%) â”€â”€ */
+/* ── Bottom Section (65%) ── */
 .skill-card-bottom {
   display: flex;
   flex-direction: column;
@@ -1101,6 +1101,131 @@
   box-shadow:
     0 0 35px rgba(34, 197, 94, 0.5),
     0 15px 40px rgba(34, 197, 94, 0.25) !important;
+}
+
+/* ===== Featured Skill Card (e.g. MAANG Preparation) ===== */
+.skill-card.featured {
+  border-color: rgba(37, 99, 237, 0.6) !important;
+  box-shadow:
+    0 0 30px rgba(37, 99, 237, 0.3),
+    0 8px 30px rgba(0, 0, 0, 0.35) !important;
+  animation: featuredGlow 3s ease-in-out infinite;
+}
+
+.skill-card.featured:hover {
+  box-shadow:
+    0 0 40px rgba(37, 99, 237, 0.5),
+    0 0 60px rgba(252, 210, 2, 0.3),
+    0 15px 45px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-8px) scale(1.02);
+}
+
+.skill-card-featured-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+  z-index: 2;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+.badge-emoji {
+  font-size: 1.1rem;
+  animation: emojiBounce 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+.badge-text {
+  letter-spacing: 0.5px;
+}
+
+.badge-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+  box-shadow: 0 0 6px #fff;
+}
+
+.badge-sparkle--2 {
+  top: -6px;
+  left: 16px;
+  animation-delay: 0.3s;
+}
+
+.badge-sparkle--3 {
+  bottom: -6px;
+  right: 12px;
+  animation-delay: 0.7s;
+}
+
+@keyframes featuredGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 30px rgba(37, 99, 237, 0.3),
+      0 8px 30px rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(37, 99, 237, 0.5),
+      0 0 20px rgba(252, 210, 2, 0.4),
+      0 12px 35px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(245, 158, 11, 0.8),
+      0 0 30px rgba(252, 210, 2, 0.6);
+  }
+}
+
+@keyframes emojiBounce {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.3) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  75% {
+    transform: scale(1.25) rotate(-3deg);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
 }
 
 /* CTA Section - dark slate */
@@ -1656,7 +1781,7 @@
   color: #fbbf24;
 }
 
-/* â”€â”€ Stat number in the middle â”€â”€ */
+/* ── Stat number in the middle ── */
 .about-stat {
   display: flex;
   flex-direction: column;
@@ -2751,7 +2876,7 @@
 }
 
 .cpwd-error::before {
-  content: "âš ";
+  content: "⚠";
   font-size: 0.9rem;
 }
 
@@ -2940,3 +3065,4 @@
     max-width: none;
   }
 }
+

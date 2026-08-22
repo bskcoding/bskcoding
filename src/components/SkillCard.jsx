@@ -1,6 +1,22 @@
 function SkillCard({ skill }) {
   return (
-    <div className="skill-card">
+    <div
+      className={`skill-card${skill.featured ? " featured" : ""}`}
+      style={{
+        "--skill-color": skill.color,
+      }}
+    >
+      {/* Animated badge for featured (e.g. MAANG) tracks */}
+      {skill.featured && (
+        <div className="skill-card-featured-badge" aria-label="Featured track">
+          <span className="badge-emoji">🔥</span>
+          <span className="badge-text">HOT</span>
+          <span className="badge-sparkle" />
+          <span className="badge-sparkle badge-sparkle--2" />
+          <span className="badge-sparkle badge-sparkle--3" />
+        </div>
+      )}
+
       {/* Top Section — 20%: icon + title */}
       <div className="skill-card-top">
         <span
