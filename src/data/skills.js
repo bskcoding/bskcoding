@@ -1,5 +1,28 @@
 export const skills = [
   {
+    id: "maang",
+    name: "🏆 MAANG Preparation",
+    icon: "📊",
+    color: "#2563EB",
+    progress: 0,
+    description:
+      "Master DSA + System Design + Reactive + Agentic AI to crack top product-based companies",
+    subtopics: [
+      "📊 DSA Foundation",
+      "🌳 Advanced DSAs",
+      "🔀 Graph Mastery",
+      "🧩 Dynamic Programming",
+      "📈 Advanced Topics",
+      "🏗️ System Design - Basics",
+      "🌐 Advanced System Design",
+      "🏢 Microservices & Reactive",
+      "⚡ Reactive Deep Dive",
+      "🤖 AI/ML Fundamentals",
+      "🧠 Agentic AI Engineering",
+      "🎯 Mock Interviews & Offers",
+    ],
+  },
+  {
     id: "90-day-job-roadmap",
     name: "90-Day Job Preparation Roadmap",
     icon: "🗺️",
