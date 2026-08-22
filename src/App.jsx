@@ -13,11 +13,13 @@ import { BASENAME } from "./utils/basePath";
 // downloaded when the user actually visits them.
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
+const MaangPreparation = lazy(() => import("./pages/MaangPreparation"));
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
 const JavaTopics = lazy(() => import("./topics/java/JavaTopics"));
 const JavaInterview = lazy(() => import("./topics/java/JavaInterview"));
+
 const SpringBootTopics = lazy(
   () => import("./topics/spring-boot/SpringBootTopics"),
 );

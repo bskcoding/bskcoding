@@ -1,4 +1,51 @@
 function SkillCard({ skill }) {
+  const isMaang = skill.id === "maang";
+
+  // Render the title with colourful characters for the MAANG skill
+  const renderTitle = () => {
+    if (!isMaang) return <span className="skill-card-title">{skill.name}</span>;
+
+    // Split "🏆 MAANG Preparation" into parts
+    const parts = skill.name.split(" ");
+    // parts[0] = "🏆", parts[1] = "MAANG", parts[2] = "Preparation"
+    const colors = skill.charColors || [
+      "#FF5733",
+      "#FFBD33",
+      "#33FF57",
+      "#33A1FF",
+      "#A133FF",
+    ];
+
+    return (
+      <span className="skill-card-title skill-card-title-maang">
+        <span className="maang-title-emoji">{parts[0]}</span>{" "}
+        <span className="maang-title-letters">
+          {parts[1].split("").map((letter, i) => (
+            <span
+              key={i}
+              className="maang-title-letter"
+              style={{
+                color: colors[i % colors.length],
+                textShadow: `0 0 10px ${colors[i % colors.length]}80`,
+              }}
+            >
+              {letter}
+            </span>
+          ))}
+        </span>{" "}
+        <span
+          className="maang-title-rest"
+          style={{
+            color: colors[2], // single colour for "Preparation"
+            textShadow: `0 0 10px ${colors[2]}80`,
+          }}
+        >
+          {parts.slice(2).join(" ")}
+        </span>
+      </span>
+    );
+  };
+
   return (
     <div
       className={`skill-card${skill.featured ? " featured" : ""}`}
@@ -29,7 +76,7 @@ function SkillCard({ skill }) {
         >
           {skill.icon}
         </span>
-        <span className="skill-card-title">{skill.name}</span>
+        {renderTitle()}
       </div>
 
       {/* Middle Section — 15%: divider | badge | divider */}

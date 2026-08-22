@@ -1,4 +1,4 @@
-/* ===== BSK CODING - CLEAN MODERN APP ===== */
+﻿/* ===== BSK CODING - CLEAN MODERN APP ===== */
 
 :root {
   --text: #e2e8f0;
@@ -1110,6 +1110,71 @@
     0 0 30px rgba(37, 99, 237, 0.3),
     0 8px 30px rgba(0, 0, 0, 0.35) !important;
   animation: featuredGlow 3s ease-in-out infinite;
+}
+
+/* Colourful MAANG title inside the featured skill card */
+.skill-card-title-maang {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1.4;
+}
+
+.maang-title-emoji {
+  font-size: 1.1em;
+}
+
+.maang-title-letters {
+  display: inline-flex;
+  gap: 1px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.maang-title-letter {
+  display: inline-block;
+  font-size: 1.15em;
+  font-weight: 800;
+  animation: maangTitleGlow 2.5s ease-in-out infinite;
+}
+
+.maang-title-letter:nth-child(1) {
+  animation-delay: 0s;
+}
+.maang-title-letter:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.maang-title-letter:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.maang-title-letter:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.maang-title-letter:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+@keyframes maangTitleGlow {
+  0%,
+  100% {
+    filter: brightness(1);
+    transform: translateY(0);
+  }
+  50% {
+    filter: brightness(1.4);
+    transform: translateY(-2px);
+  }
+}
+
+.maang-title-rest {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
 .skill-card.featured:hover {
@@ -3066,3 +3131,399 @@
   }
 }
 
+/* ===== MAANG LETTER GRID ===== */
+
+.maang-letter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.maang-letter-grid--compact {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  max-width: 340px;
+  padding: 0;
+}
+
+/* Attractive wrapper backdrop for the whole grid */
+.maang-letter-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 16px;
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      1200px 420px at 50% 0%,
+      rgba(59, 130, 246, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 87, 51, 0.06),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(161, 51, 255, 0.06),
+      transparent 55%
+    );
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 10px 40px rgba(0, 0, 0, 0.45),
+    inset 0 0 60px rgba(59, 130, 246, 0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.maang-letter-wrap-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: -0.4px;
+  text-align: center;
+  text-shadow:
+    0 0 12px rgba(59, 130, 246, 0.35),
+    0 0 24px rgba(255, 255, 255, 0.2);
+  margin: 0;
+}
+
+.maang-letter-wrap-sub {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0.85;
+  max-width: 420px;
+  margin: 0;
+}
+
+/* Each letter tile — glossy, glowing, colourful */
+.maang-letter-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, var(--ml-color), #141c30);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  overflow: hidden;
+  cursor: default;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 8px 18px rgba(0, 0, 0, 0.45),
+    0 0 10px var(--ml-color);
+  transform: translateY(0) scale(0.92);
+  opacity: 0;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+  animation:
+    mlCellIn 0.7s ease forwards,
+    mlGlow 3.4s ease-in-out infinite;
+  animation-delay: var(--ml-delay, 0s);
+}
+
+.maang-letter-cell:hover {
+  transform: translateY(-10px) scale(1.06) !important;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.35),
+    0 18px 36px rgba(0, 0, 0, 0.55),
+    0 0 30px var(--ml-color),
+    0 0 50px var(--ml-color);
+}
+
+/* Entrance animation */
+@keyframes mlCellIn {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.82);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Pulsing coloured glow */
+@keyframes mlGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.18),
+      0 8px 18px rgba(0, 0, 0, 0.45),
+      0 0 10px var(--ml-color);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.28),
+      0 10px 22px rgba(0, 0, 0, 0.5),
+      0 0 22px var(--ml-color),
+      0 0 36px var(--ml-color);
+  }
+}
+
+/* Orbiting ring of particle dots */
+.maang-particle-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  animation: mlRotate 9s linear infinite;
+}
+
+@keyframes mlRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Individual orbiting dot */
+.maang-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--ml-color);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow:
+    0 0 6px var(--ml-color),
+    inset 0 0 3px #fff;
+  transform: translate(-50%, -50%) rotate(var(--ml-p-angle)) translate(62px)
+    scale(0.75);
+}
+
+/* Glossy moving light streak */
+.maang-glare {
+  position: absolute;
+  top: -140%;
+  left: -140%;
+  width: 340%;
+  height: 340%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.38) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: mlGlare 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes mlGlare {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(25deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.85;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(120%) translateY(120%) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+/* The big bold letter */
+.maang-letter {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.6),
+    0 0 16px var(--ml-color);
+  letter-spacing: -0.02em;
+  z-index: 1;
+  line-height: 1;
+}
+
+/* Company label under the letter */
+.maang-company {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  z-index: 1;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+/* Darker theme override on the app-shell so whites stay readable */
+.app-shell .maang-letter-company {
+  color: rgba(226, 232, 240, 0.85);
+}
+
+@media (max-width: 768px) {
+  .maang-letter-grid {
+    gap: 10px;
+    max-width: 430px;
+  }
+
+  .maang-letter-grid--compact {
+    max-width: 280px;
+  }
+
+  .maang-letter-cell {
+    border-radius: 14px;
+  }
+
+  .maang-letter {
+    font-size: 1.7rem;
+  }
+
+  .maang-company {
+    font-size: 0.55rem;
+  }
+}
+
+/* ===== MAANG LETTER GRID SECTION (HOME) ===== */
+.maang-hero-section {
+  padding: 36px 16px 24px;
+  text-align: center;
+}
+
+/* ===== MAANG PREPARATION PAGE ===== */
+.maang-page {
+  padding: 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.maang-page-hero {
+  text-align: center;
+  padding: 56px 24px 40px;
+  margin-bottom: 40px;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--dark-teal) 0%, transparent 70%),
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 87, 51, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(161, 51, 255, 0.08),
+      transparent 55%
+    );
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.maang-page-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(
+    135deg,
+    #ff5733,
+    #ffbd33,
+    #33ff57,
+    #33a1ff,
+    #a133ff
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin: 0 0 14px;
+}
+
+.maang-page-subtitle {
+  color: var(--text);
+  font-size: 1.05rem;
+  max-width: 760px;
+  margin: 0 auto;
+  opacity: 0.88;
+  line-height: 1.7;
+}
+
+.maang-page-grid {
+  margin-top: 26px;
+}
+
+.maang-subtopics {
+  margin-bottom: 40px;
+}
+
+.maang-subtopics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.maang-subtopic-card {
+  background: rgba(10, 18, 34, 0.8);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.maang-subtopic-card:hover {
+  background: rgba(16, 26, 48, 0.9);
+  border-color: rgba(59, 130, 246, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+}
+
+.maang-subtopic-emoji {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.maang-subtopic-name {
+  font-size: 0.85rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.maang-page-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .maang-hero-section {
+    padding: 28px 12px 16px;
+  }
+
+  .maang-page-hero {
+    padding: 40px 16px 32px;
+  }
+
+  .maang-page-title {
+    font-size: 1.9rem;
+  }
+
+  .maang-subtopics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

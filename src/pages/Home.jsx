@@ -8,6 +8,7 @@ function Home() {
   const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   const linkFor = (id) => {
+    if (id === "maang") return "/maang";
     if (id === "90-day-job-roadmap") return "/roadmap";
     if (id === "java") return "/java";
     if (id === "spring-boot") return "/spring-boot";

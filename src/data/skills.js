@@ -6,6 +6,7 @@ export const skills = [
     color: "#2563EB",
     progress: 0,
     featured: true,
+    charColors: ["#FF5733", "#FFBD33", "#33FF57", "#33A1FF", "#A133FF"],
     description:
       "Master DSA + System Design + Reactive + Agentic AI to crack top product-based companies",
     subtopics: [
