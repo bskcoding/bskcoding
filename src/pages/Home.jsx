@@ -11,6 +11,8 @@ function Home() {
     if (id === "maang") return "/maang";
     if (id === "90-day-job-roadmap") return "/roadmap";
     if (id === "java") return "/java";
+    if (id === "javascript") return "/javascript";
+    if (id === "reactjs") return "/reactjs";
     if (id === "spring-boot") return "/spring-boot";
     if (id === "microservices") return "/microservices";
     if (id === "sql-databases") return "/sql";

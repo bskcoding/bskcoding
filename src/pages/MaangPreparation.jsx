@@ -52,9 +52,6 @@ function MaangPreparation() {
       </section>
 
       <section className="maang-page-cta">
-        <Link to="/roadmap" className="cta-button primary">
-          View 90-Day Roadmap
-        </Link>
         <Link to="/" className="cta-button secondary">
           Back to Home
         </Link>

@@ -19,6 +19,16 @@ const Roadmap90Day = lazy(
 );
 const JavaTopics = lazy(() => import("./topics/java/JavaTopics"));
 const JavaInterview = lazy(() => import("./topics/java/JavaInterview"));
+const JavaScriptTopics = lazy(
+  () => import("./topics/javascript/JavaScriptTopics"),
+);
+const JavaScriptInterview = lazy(
+  () => import("./topics/javascript/JavaScriptInterview"),
+);
+const ReactJSTopics = lazy(() => import("./topics/reactjs/ReactJSTopics"));
+const ReactJSInterview = lazy(
+  () => import("./topics/reactjs/ReactJSInterview"),
+);
 
 const SpringBootTopics = lazy(
   () => import("./topics/spring-boot/SpringBootTopics"),
@@ -137,6 +147,38 @@ function App() {
                   element={
                     <RequireAuth>
                       <JavaInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/javascript"
+                  element={
+                    <RequireAuth>
+                      <JavaScriptTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/javascript/interview"
+                  element={
+                    <RequireAuth>
+                      <JavaScriptInterview />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/reactjs"
+                  element={
+                    <RequireAuth>
+                      <ReactJSTopics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/reactjs/interview"
+                  element={
+                    <RequireAuth>
+                      <ReactJSInterview />
                     </RequireAuth>
                   }
                 />

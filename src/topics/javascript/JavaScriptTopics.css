@@ -1,0 +1,216 @@
+/* JavaScript Topics Page */
+.js-topics-page {
+  min-height: 100vh;
+  background: #070c14;
+  color: #f8fafc;
+}
+
+/* Hero Section */
+.js-topics-page .header-section {
+  background: linear-gradient(135deg, #0d2137 0%, #070c14 100%);
+  padding: 4rem 24px;
+  text-align: center;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.js-topics-page .logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.js-topics-page .logo-icon {
+  font-size: 3rem;
+}
+
+.js-topics-page .logo-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f7df1e, #eab308);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.js-topics-page .subtitle {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Skills Section */
+.js-topics-page .skills-section {
+  padding: 3rem 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.js-topics-page .section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.js-topics-page .section-subtitle {
+  font-size: 1rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.js-topics-page .skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.js-topics-page .skill-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.js-topics-page .skill-card {
+  background: rgba(10, 18, 34, 0.8);
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.js-topics-page .skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background: rgba(10, 18, 34, 0.95);
+}
+
+.js-topics-page .skill-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.js-topics-page .skill-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.js-topics-page .skill-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.js-topics-page .skill-card-middle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.js-topics-page .skill-card-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.js-topics-page .skill-card-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.js-topics-page .skill-card-bottom {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.js-topics-page .skill-card-desc {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.js-topics-page .skill-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid;
+  background: transparent;
+}
+
+.js-topics-page .skill-card-btn:hover {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .js-topics-page .header-section {
+    padding: 40px 16px 30px;
+  }
+
+  .js-topics-page .logo-icon {
+    font-size: 2.5rem;
+  }
+
+  .js-topics-page .logo-text {
+    font-size: 2rem;
+  }
+
+  .js-topics-page .skills-section {
+    padding: 24px 16px;
+  }
+
+  .js-topics-page .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .js-topics-page .skill-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .js-topics-page .logo-text {
+    font-size: 1.75rem;
+  }
+
+  .js-topics-page .section-title {
+    font-size: 1.5rem;
+  }
+
+  .js-topics-page .skill-card-title {
+    font-size: 1.1rem;
+  }
+}

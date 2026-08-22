@@ -173,8 +173,8 @@ export const skills = [
     id: "javascript",
     name: "JavaScript",
     icon: "🟡",
-    color: "#3B82F6",
-    progress: 0,
+    color: "#3bf676",
+    progress: 50,
     description:
       "Master JavaScript fundamentals, ES6+, async programming, and modern browser APIs.",
     subtopics: [
@@ -194,8 +194,8 @@ export const skills = [
     id: "reactjs",
     name: "ReactJS",
     icon: "⚛️",
-    color: "#3B82F6",
-    progress: 0,
+    color: "#3bf676",
+    progress: 50,
     description:
       "Build interactive user interfaces and single-page apps with React.",
     subtopics: [
