@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * MaangLetterGrid
  *
@@ -54,7 +52,7 @@ function MaangLetterGrid({ charColors, className = "", compact = false }) {
         const color = colors[index % colors.length];
         return (
           <div
-            key={item.company + index}
+            key={item.letter + index}
             className="maang-letter-cell"
             style={{
               "--ml-color": color,

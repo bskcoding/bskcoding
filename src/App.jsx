@@ -205,6 +205,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/maang"
+                  element={
+                    <RequireAuth>
+                      <MaangPreparation />
+                    </RequireAuth>
+                  }
+                />
+                <Route
                   path="/reactive-programming"
                   element={
                     <RequireAuth>
