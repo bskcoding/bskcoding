@@ -32,6 +32,14 @@ function EmailContactModal({ isOpen, onClose }) {
       return;
     }
 
+    // Guard: EmailJS credentials may not be configured in the environment
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setError(
+        "The contact form is temporarily unavailable. Please email us directly at support@bskcoding.com.",
+      );
+      return;
+    }
+
     setSending(true);
 
     try {
