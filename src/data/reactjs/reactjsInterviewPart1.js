@@ -3,11 +3,11 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
 
 ### Basic Questions
 
-1. **What is React in 2026?**
+1. **What is React?**
    - **Answer**: React is a JavaScript library for building user interfaces with component-based architecture. Modern React (18+) features automatic batching, concurrent rendering, and Suspense.
    - **Example**:
      \`\`\`jsx
-     // Modern React (2026)
+     // Modern React 
      import { StrictMode } from 'react';
      import { createRoot } from 'react-dom/client';
 
@@ -20,7 +20,7 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
      \`\`\`
    - **Note**: StrictMode double-renders in development to surface side effects — it has no effect in production.
 
-2. **What are the main features of React 2026?**
+2. **What are the main features of React?**
    - **Answer**: Component-based, Virtual DOM, Hooks, Suspense, Concurrent features. Modern: Server Components, Actions, useOptimistic, useTransition.
    - **Example**:
      \`\`\`jsx
@@ -56,7 +56,7 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
      \`\`\`
    - **Note**: Server Components run only on the server — zero JS shipped for them, smaller bundles.
 
-4. **What is JSX and how does it work in 2026?**
+4. **What is JSX and how does it work?**
    - **Answer**: JavaScript XML, HTML-like syntax in JS, transformed by build tools. Modern: JSX transforms, automatic runtime, TypeScript support.
    - **Example**:
      \`\`\`jsx
@@ -117,7 +117,7 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
    - **Note**: Component names must start with a capital letter — lowercase tags are treated as HTML elements.
 
 7. **Explain the difference between functional and class components.**
-   - **Answer**: Functional: Hooks, simpler, preferred in 2026. Class: Lifecycle methods, legacy (less common).
+   - **Answer**: Functional: Hooks, simpler, preferred. Class: Lifecycle methods, legacy (less common).
    - **Example**:
      \`\`\`jsx
      // Modern - Functional Component
@@ -161,7 +161,7 @@ export const reactjsInterviewPart1 = `## ReactJS Interview Questions
      \`\`\`
    - **Note**: React diffs the new tree against the previous one (reconciliation) and applies minimal DOM mutations.
 
-9. **How do you create a React application in 2026?**
+9. **How do you create a React application?**
    - **Answer**: create-react-app, vite, Next.js. Modern: Vite is preferred for faster builds.
    - **Example**:
      \`\`\`bash

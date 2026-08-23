@@ -3,11 +3,11 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
 
 ### Basic Questions
 
-1. **What is JavaScript and how has it evolved in 2026?**
-   - **Answer**: JavaScript is a high-level, interpreted programming language that conforms to the ECMAScript specification. In 2026, JavaScript has evolved with features like Temporal API for date/time, Decorators, and Pattern Matching proposals.
+1. **What is JavaScript and how has it evolved?**
+   - **Answer**: JavaScript is a high-level, interpreted programming language that conforms to the ECMAScript specification.  JavaScript has evolved with features like Temporal API for date/time, Decorators, and Pattern Matching proposals.
    - **Example**:
      \`\`\`javascript
-     // Modern JavaScript (2026)
+     // Modern JavaScript 
      const user = {
        name: 'John',
        age: 30,
@@ -19,8 +19,8 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
      \`\`\`
    - **Note**: Modern JavaScript runs everywhere — browsers, servers (Node.js), mobile apps, and even embedded devices.
 
-2. **What are the data types supported by JavaScript (2026)?**
-   - **Answer**: Primitive Types: Number, String, Boolean, Undefined, Null, Symbol, BigInt. Structural Types: Object, Function, Array. New in 2026: Record & Tuple (proposal stage 3).
+2. **What are the data types supported by JavaScript ?**
+   - **Answer**: Primitive Types: Number, String, Boolean, Undefined, Null, Symbol, BigInt. Structural Types: Object, Function, Array. New: Record & Tuple (proposal stage 3).
    - **Example**:
      \`\`\`javascript
      // Modern data type usage
@@ -33,7 +33,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
    - **Note**: Use typeof to check primitives; Array.isArray() for arrays since typeof returns 'object' for arrays.
 
 3. **What are the different ways to declare a variable in JavaScript?**
-   - **Answer**: var (legacy), let, const. Best Practice (2026): Use const by default, let when reassignment is needed, avoid var.
+   - **Answer**: var (legacy), let, const. Best Practice : Use const by default, let when reassignment is needed, avoid var.
    - **Example**:
      \`\`\`javascript
      // Modern approach
@@ -58,7 +58,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
      \`\`\`
    - **Note**: TDZ means accessing a let/const variable before declaration throws a ReferenceError instead of returning undefined.
 
-5. **What are the different types of loops in JavaScript (2026)?**
+5. **What are the different types of loops in JavaScript ?**
    - **Answer**: Traditional: for, while, do...while. Modern: for...in (objects), for...of (iterables). New: Iterator helpers (ES2025).
    - **Example**:
      \`\`\`javascript
@@ -106,7 +106,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
    - **Note**: map always returns a new array of the same length — it never mutates the original.
 
 8. **What is the difference between == and ===?**
-   - **Answer**: ==: Abstract equality (type coercion). ===: Strict equality (no coercion). Best Practice (2026): Always use ===, avoid ==.
+   - **Answer**: ==: Abstract equality (type coercion). ===: Strict equality (no coercion). Best Practice : Always use ===, avoid ==.
    - **Example**:
      \`\`\`javascript
      // Modern practice
@@ -307,7 +307,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       \`\`\`
     - **Note**: finally runs regardless of success or failure — ideal for closing connections and releasing resources.
 
-20. **Explain promises in modern JavaScript (2026).**
+20. **Explain promises in modern JavaScript .**
     - **Answer**: Object representing async operation completion. Modern: Async/await is preferred over .then() chains.
     - **Example**:
       \`\`\`javascript
@@ -357,7 +357,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       \`\`\`
     - **Note**: Callbacks are still used for event handlers and array methods, but not for control flow.
 
-23. **Explain callback hell and how to avoid it (2026).**
+23. **Explain callback hell and how to avoid it .**
     - **Answer**: Nested callbacks making code hard to read. Modern: Promises, async/await, observables.
     - **Example**:
       \`\`\`javascript
@@ -376,7 +376,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       \`\`\`
     - **Note**: Use Promise.all for independent parallel calls instead of sequential awaits to improve performance.
 
-24. **What are JavaScript modules in 2026?**
+24. **What are JavaScript modules?**
     - **Answer**: Native ES modules with import/export, dynamic imports. Modern: Module federation, import maps.
     - **Example**:
       \`\`\`javascript
@@ -421,7 +421,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       \`\`\`
     - **Note**: A module can have one default export and unlimited named exports; default imports allow any local name.
 
-26. **What is the purpose of the spread operator (2026)?**
+26. **What is the purpose of the spread operator ?**
     - **Answer**: Expands iterables, creates shallow copies. Modern: Spread with objects, arrays, function calls.
     - **Example**:
       \`\`\`javascript
@@ -519,7 +519,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       \`\`\`
     - **Note**: HOFs power middleware patterns in Express, Redux, and React higher-order components.
 
-32. **How do you create a class in JavaScript (2026)?**
+32. **How do you create a class in JavaScript ?**
     - **Answer**: Class syntax with private fields, static methods. Modern: Private fields (#), static blocks, decorators.
     - **Example**:
       \`\`\`javascript
@@ -725,7 +725,7 @@ export const javascriptInterviewPart1 = `## JavaScript Interview Questions
       \`\`\`
     - **Note**: With spread (...) you rarely need apply anymore — f(...args) replaces f.apply(null, args).
 
-41. **What is the fetch API in 2026?**
+41. **What is the fetch API?**
     - **Answer**: Modern API for HTTP requests. Modern: AbortController, FormData, Streams API.
     - **Example**:
       \`\`\`javascript

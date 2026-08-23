@@ -1,7 +1,7 @@
 // JavaScript Interview Questions - Part 2 (Questions 51-100)
 export const javascriptInterviewPart2 = `### Advanced Questions
 
-51. **What is the concept of dynamic typing in 2026?**
+51. **What is the concept of dynamic typing?**
     - **Answer**: Types determined at runtime. Modern: TypeScript, JSDoc for type safety.
     - **Example**:
       \`\`\`javascript
@@ -42,7 +42,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
       \`\`\`
     - **Note**: Implicit coercion causes subtle bugs ('1' + 1 = '11') — always convert explicitly.
 
-53. **What are the new features in ES2026 (ECMAScript 2026)?**
+53. **What are the new features in ES2026?**
     - **Answer**: Temporal API, Decorators, Pattern Matching. New Set methods: union(), intersection(). Array.fromAsync() for async iteration.
     - **Example**:
       \`\`\`javascript
@@ -65,7 +65,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
       \`\`\`
     - **Note**: Check browser support before using cutting-edge features — many are still proposal-stage.
 
-54. **What are promises and how do they work (2026)?**
+54. **What are promises and how do they work ?**
     - **Answer**: Objects representing async operations. Modern: Promise.withResolvers(), Promise.any().
     - **Example**:
       \`\`\`javascript
@@ -290,7 +290,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
       \`\`\`
     - **Note**: Sequential awaits are slower than parallel Promise.all when operations don't depend on each other.
 
-64. **How do you debug JavaScript code (2026)?**
+64. **How do you debug JavaScript code ?**
     - **Answer**: Chrome DevTools, VS Code debugger. Modern: Logging, breakpoints, performance tools.
     - **Example**:
       \`\`\`javascript
@@ -511,7 +511,7 @@ export const javascriptInterviewPart2 = `### Advanced Questions
       \`\`\`
     - **Note**: Use Wasm for CPU-intensive work (image processing, games); JS remains best for DOM and orchestration.
 
-74. **What are the new features in ECMAScript 2026 (latest)?**
+74. **What are the new features in ECMAScript 2026?**
     - **Answer**: Pattern matching, decorators (finalized). Modern: Temporal API, JSON modules.
     - **Example**:
       \`\`\`javascript
