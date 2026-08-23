@@ -3476,30 +3476,178 @@
 }
 
 .maang-subtopic-card {
-  background: rgba(10, 18, 34, 0.8);
-  border: 1px solid rgba(59, 130, 246, 0.12);
-  border-radius: 14px;
-  padding: 18px 14px;
-  text-align: center;
-  transition: all 0.25s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(
+    145deg,
+    rgba(16, 26, 48, 0.9),
+    rgba(10, 18, 34, 0.85)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 16px;
+  padding: 18px 16px;
+  text-align: left;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  animation: maangCardIn 0.6s ease backwards;
+  animation-delay: calc(var(--ml-idx, 0) * 0.06s);
+}
+
+@keyframes maangCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Rotating rainbow gradient border on hover */
+.maang-subtopic-card::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(
+    from var(--maang-rot, 0deg),
+    #ff5733,
+    #ffbd33,
+    #33ff57,
+    #33a1ff,
+    #a133ff,
+    #ff5733
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  animation: maangBorderSpin 4s linear infinite;
+  z-index: 0;
+}
+
+@keyframes maangBorderSpin {
+  to {
+    --maang-rot: 360deg;
+  }
+}
+
+@property --maang-rot {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Inner surface sits above the rainbow layer */
+.maang-subtopic-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 15px;
+  background: linear-gradient(
+    150deg,
+    rgba(18, 28, 52, 0.98),
+    rgba(10, 18, 34, 0.96)
+  );
+  z-index: 0;
+  transition: background 0.3s ease;
+}
+
+.maang-subtopic-card:hover::before {
+  opacity: 0.55;
+}
+
+.maang-subtopic-card:hover::after {
+  background: linear-gradient(
+    150deg,
+    rgba(22, 34, 62, 0.99),
+    rgba(12, 20, 38, 0.97)
+  );
 }
 
 .maang-subtopic-card:hover {
-  background: rgba(16, 26, 48, 0.9);
-  border-color: rgba(59, 130, 246, 0.35);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.5),
+    0 0 26px rgba(51, 161, 255, 0.18);
+}
+
+/* Diagonal shine sweep on hover */
+.maang-subtopic-shine {
+  position: absolute;
+  top: -80%;
+  left: -80%;
+  width: 260%;
+  height: 260%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.maang-subtopic-card:hover .maang-subtopic-shine {
+  transform: translateX(120%);
+}
+
+.maang-subtopic-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .maang-subtopic-emoji {
   font-size: 1.5rem;
-  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+  transition: transform 0.3s ease;
+}
+
+.maang-subtopic-card:hover .maang-subtopic-emoji {
+  transform: scale(1.25) rotate(-8deg);
+}
+
+.maang-subtopic-num {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(148, 163, 184, 0.75);
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 2px 8px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.maang-subtopic-card:hover .maang-subtopic-num {
+  color: #93c5fd;
+  background: rgba(96, 165, 250, 0.14);
+  border-color: rgba(96, 165, 250, 0.35);
 }
 
 .maang-subtopic-name {
-  font-size: 0.85rem;
+  position: relative;
+  z-index: 1;
+  font-size: 0.88rem;
+  line-height: 1.5;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.maang-subtopic-card:hover .maang-subtopic-name {
+  color: #f1f5f9;
 }
 
 .maang-page-cta {
@@ -3525,5 +3673,9 @@
 
   .maang-subtopics-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .maang-subtopic-card {
+    padding: 14px 12px;
   }
 }

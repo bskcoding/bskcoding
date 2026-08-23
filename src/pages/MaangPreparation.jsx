@@ -37,12 +37,18 @@ function MaangPreparation() {
         <div className="maang-subtopics-grid">
           {subtopics.map((topic, i) => (
             <div key={topic} className="maang-subtopic-card">
-              <div
-                className="maang-subtopic-emoji"
-                style={{ "--ml-idx": i }}
-                aria-hidden="true"
-              >
-                {topic.match(/^\S+/)?.[0] ?? "📌"}
+              <span className="maang-subtopic-shine" aria-hidden="true" />
+              <div className="maang-subtopic-top">
+                <span
+                  className="maang-subtopic-emoji"
+                  style={{ "--ml-idx": i }}
+                  aria-hidden="true"
+                >
+                  {topic.match(/^\S+/)?.[0] ?? "📌"}
+                </span>
+                <span className="maang-subtopic-num">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
               <span className="maang-subtopic-name">{topic}</span>
             </div>
