@@ -18,6 +18,7 @@ function Home() {
     if (id === "sql-databases") return "/sql";
     if (id === "apache-kafka") return "/kafka";
     if (id === "reactive-programming") return "/reactive-programming";
+    if (id === "dsa") return "/dsa";
     return "#";
   };
 

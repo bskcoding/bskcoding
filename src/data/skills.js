@@ -215,8 +215,8 @@ export const skills = [
     id: "dsa",
     name: "Data Structures & Algorithms (DSA)",
     icon: "📊",
-    color: "#2563EB",
-    progress: 0,
+    color: "#00ff1e",
+    progress: 100,
     description: "Learn efficient algorithms and problem-solving techniques.",
     subtopics: [
       "Arrays, Strings & Pointers",
