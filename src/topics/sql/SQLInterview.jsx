@@ -206,10 +206,12 @@ function SQLInterview() {
                               {q.response.map((block, index) => {
                                 if (block.type === "code") {
                                   return (
-                                    <div
-                                      key={index}
-                                      className="answer-code-block"
-                                    >
+                                    <div key={index} className="code-block">
+                                      <div className="code-header">
+                                        <span className="code-language">
+                                          {block.language || "sql"}
+                                        </span>
+                                      </div>
                                       <pre>
                                         <code
                                           dangerouslySetInnerHTML={{
