@@ -190,9 +190,25 @@
   }
 
   .lc-problem {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .lc-problem-name {
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .lc-difficulty {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+  }
+  .lc-play-btn,
+  .lc-link {
+    font-size: 0.75rem;
+    padding: 4px 10px;
   }
 
   .lc-stats {
