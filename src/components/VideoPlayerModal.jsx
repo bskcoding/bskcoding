@@ -15,8 +15,19 @@ import "./VideoPlayerModal.css";
  *      https://youtu.be/VIDEO_ID
  *      https://www.youtube.com/embed/VIDEO_ID
  *  - title     : string   — optional heading shown above the player
+ *  - description: string  — optional problem description shown below the player
+ *  - example   : string   — optional example input/output shown below the player
+ *  - explanation: string  — optional detailed explanation shown below the player
  */
-function VideoPlayerModal({ isOpen, onClose, videoUrl, title }) {
+function VideoPlayerModal({
+  isOpen,
+  onClose,
+  videoUrl,
+  title,
+  description,
+  example,
+  explanation,
+}) {
   // Extract the 11-char YouTube video id from common URL formats.
   const extractVideoId = (url) => {
     if (!url) return null;
@@ -95,6 +106,27 @@ function VideoPlayerModal({ isOpen, onClose, videoUrl, title }) {
             </div>
           )}
         </div>
+
+        {description && (
+          <div className="vpm-section">
+            <h3 className="vpm-section-title">Problem</h3>
+            <p className="vpm-text">{description}</p>
+          </div>
+        )}
+
+        {example && (
+          <div className="vpm-section vpm-example">
+            <h3 className="vpm-section-title">Example</h3>
+            <pre className="vpm-example-text">{example}</pre>
+          </div>
+        )}
+
+        {explanation && (
+          <div className="vpm-section">
+            <h3 className="vpm-section-title">Explanation</h3>
+            <p className="vpm-text">{explanation}</p>
+          </div>
+        )}
       </div>
     </div>
   );

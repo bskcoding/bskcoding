@@ -4,6 +4,12 @@ import VideoPlayerModal from "../../components/VideoPlayerModal";
 import { dsaCourseVideos } from "../../data/dsa/dsaCourseVideos";
 import "./DSACourse.css";
 
+// Build category list preserving order of appearance
+const categories = [];
+for (const v of dsaCourseVideos) {
+  if (!categories.includes(v.category)) categories.push(v.category);
+}
+
 function DSACourse() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -31,27 +37,34 @@ function DSACourse() {
         </p>
       </section>
 
-      {/* Lessons Grid */}
+      {/* Lessons Grid - grouped by topic, sequential order within each */}
       <section className="lessons-section">
-        <h2 className="lessons-title">Course Lessons</h2>
-        <div className="lessons-grid">
-          {dsaCourseVideos.map((video, idx) => (
-            <div
-              key={idx}
-              className="lesson-card"
-              onClick={() => openVideo(video)}
-            >
-              <div className="lesson-number">{idx + 1}</div>
-              <div className="lesson-content">
-                <h3 className="lesson-title">{video.title}</h3>
-                <p className="lesson-desc">{video.description}</p>
-              </div>
-              <button className="lesson-play-btn" aria-label="Play">
-                ▶
-              </button>
+        {categories.map((cat) => (
+          <div key={cat} className="lesson-category">
+            <h2 className="lesson-category-title">{cat}</h2>
+            <div className="lessons-grid">
+              {dsaCourseVideos
+                .map((video, idx) => ({ video, idx }))
+                .filter(({ video }) => video.category === cat)
+                .map(({ video, idx }) => (
+                  <div
+                    key={idx}
+                    className="lesson-card"
+                    onClick={() => openVideo(video)}
+                  >
+                    <div className="lesson-card-top">
+                      <span className="lesson-number">Day {idx + 1}</span>
+                      <button className="lesson-play-btn" aria-label="Play">
+                        ▶
+                      </button>
+                    </div>
+                    <h3 className="lesson-title">{video.title}</h3>
+                    <p className="lesson-desc">{video.description}</p>
+                  </div>
+                ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Global Video Player Modal */}
@@ -60,6 +73,7 @@ function DSACourse() {
         onClose={closeVideo}
         videoUrl={selectedVideo?.videoLink || ""}
         title={selectedVideo?.title || "DSA Lecture"}
+        description={selectedVideo?.description || ""}
       />
     </div>
   );

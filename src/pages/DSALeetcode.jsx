@@ -4,11 +4,8 @@ import VideoPlayerModal from "../components/VideoPlayerModal";
 import { dsaLeetcodeProblems } from "../data/dsa/dsaLeetcodeProblems";
 import "./DSALeetcode.css";
 
-// Build category list preserving order of appearance
-const categories = [];
-for (const p of dsaLeetcodeProblems) {
-  if (!categories.includes(p.category)) categories.push(p.category);
-}
+// Sort problems by question number for sequential display
+const sortedProblems = [...dsaLeetcodeProblems].sort((a, b) => a.id - b.id);
 
 function DSALeetcode() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,8 +39,8 @@ function DSALeetcode() {
         <h1 className="lc-title">75 LeetCode Problems</h1>
         <p className="lc-subtitle">
           The most frequently asked LeetCode problems for technical interviews,
-          organized by category and difficulty. Click any problem to watch the
-          video explanation in-app.
+          in question-number order with topic labels. Click any problem to watch
+          the video explanation in-app.
         </p>
         <div className="lc-stats">
           <span className="lc-stat">{easy} Easy</span>
@@ -52,45 +49,44 @@ function DSALeetcode() {
         </div>
       </section>
 
+      {/* All problems in sequential question-number order */}
       <section className="lc-content">
-        {categories.map((cat) => (
-          <div key={cat} className="lc-category">
-            <h2 className="lc-category-title">{cat}</h2>
-            <div className="lc-problems">
-              {dsaLeetcodeProblems
-                .filter((p) => p.category === cat)
-                .map((p) => (
-                  <div
-                    key={p.id}
-                    className="lc-problem"
-                    onClick={() => openVideo(p)}
+        <div className="lc-problems">
+          {sortedProblems.map((p) => (
+            <div key={p.id} className="lc-problem" onClick={() => openVideo(p)}>
+              <div className="lc-problem-top">
+                <span className="lc-problem-id">#{p.id}</span>
+                <span
+                  className={`lc-difficulty lc-${p.difficulty.toLowerCase()}`}
+                >
+                  {p.difficulty}
+                </span>
+              </div>
+              <span className="lc-problem-name">{p.title}</span>
+              <span className="lc-problem-topic">{p.category}</span>
+              <div className="lc-problem-actions">
+                <button
+                  className="lc-play-btn"
+                  aria-label="Play video"
+                  title="Watch video explanation"
+                >
+                  ▶
+                </button>
+                {p.leetcodeUrl && (
+                  <a
+                    href={p.leetcodeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="lc-link"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    <span className="lc-problem-id">#{p.id}</span>
-                    <span className="lc-problem-name">{p.title}</span>
-                    <span
-                      className={`lc-difficulty lc-${p.difficulty.toLowerCase()}`}
-                    >
-                      {p.difficulty}
-                    </span>
-                    <button className="lc-play-btn" aria-label="Play video">
-                      ▶
-                    </button>
-                    {p.leetcodeUrl && (
-                      <a
-                        href={p.leetcodeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="lc-link"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        LeetCode
-                      </a>
-                    )}
-                  </div>
-                ))}
+                    LeetCode ↗
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
       {/* Global Video Player Modal */}
@@ -99,6 +95,9 @@ function DSALeetcode() {
         onClose={closeVideo}
         videoUrl={selectedProblem?.videoLink || ""}
         title={selectedProblem?.title || "LeetCode Problem"}
+        description={selectedProblem?.description || ""}
+        example={selectedProblem?.example || ""}
+        explanation={selectedProblem?.explanation || ""}
       />
     </div>
   );

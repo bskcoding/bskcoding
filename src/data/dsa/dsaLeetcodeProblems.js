@@ -1,11 +1,14 @@
 // 75 LeetCode Problems with video links (Telugu MAANG Prep series)
-// Each problem: id, title, description, videoLink, leetcodeUrl, difficulty, category
+// Each problem: id, title, description, explanation, example, videoLink, leetcodeUrl, difficulty, category
 export const dsaLeetcodeProblems = [
   {
     id: 1,
     title: "MAANG Prep: 75 Essential LeetCode DSA Questions (Intro)",
     description:
       "This video provides an introduction and roadmap to the complete 75 LeetCode Data Structures and Algorithms questions preparation series for MAANG (Microsoft, Amazon, Apple, Netflix, Google) interviews. It explains the importance of these 75 carefully selected questions for cracking coding interviews at top tech companies. The video outlines the preparation strategy, covers the structure of the series, and helps viewers understand how to approach each problem category including Arrays, Strings, Linked Lists, Trees, Graphs, Dynamic Programming, and Bit Manipulation. All explanations are provided in Telugu for better understanding.",
+    explanation:
+      "This is the introductory video of the 75 LeetCode DSA preparation series. It explains why these 75 questions are carefully selected based on their frequency in MAANG interviews. The video covers the overall roadmap: starting with Arrays & Hashing, moving to Two Pointers, Sliding Window, Stack, Binary Search, Linked Lists, Trees, Tries, Heaps, Graphs, Dynamic Programming, Intervals, and finally Bit Manipulation. It also explains the recommended study approach: watch the video explanation, understand the approach, implement the solution yourself, and then practice similar problems. The series is taught entirely in Telugu to help Telugu-speaking students understand complex DSA concepts more easily.",
+    example: "",
     videoLink: "https://www.youtube.com/watch?v=qMzJlL5LQBI",
     leetcodeUrl: "",
     difficulty: "Intro",
@@ -15,7 +18,11 @@ export const dsaLeetcodeProblems = [
     id: 2,
     title: "Two Sum",
     description:
-      "This problem requires finding two numbers in an array that add up to a given target. Given an array of integers and a target integer, we need to return the indices of the two numbers such that they sum to the target. Each input has exactly one solution, and the same element cannot be used twice. The answer can be returned in any order. This is a fundamental problem that tests array manipulation and hash map usage. Example: Input nums = [2,7,11,15], target = 9, Output [0,1] because nums[0] + nums[1] = 9.",
+      "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. Each input has exactly one solution, and the same element cannot be used twice.",
+    explanation:
+      "Approach: Use a HashMap to store each number and its index as we traverse the array. For each element nums[i], calculate the complement = target - nums[i]. If the complement already exists in the map, we found our pair and return [map[complement], i]. Otherwise, store nums[i] with its index in the map. This gives O(n) time complexity because each lookup and insertion in a hash map is O(1). The brute force approach would be O(n²) using nested loops. Space complexity is O(n) for the hash map. Key insight: instead of checking all pairs, we only need to check if the complement of each number exists in the array.",
+    example:
+      "Input: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nExplanation: nums[0] + nums[1] = 2 + 7 = 9",
     videoLink: "https://www.youtube.com/watch?v=GjW9aOa50-Q",
     leetcodeUrl: "https://leetcode.com/problems/two-sum/",
     difficulty: "Easy",
@@ -25,7 +32,11 @@ export const dsaLeetcodeProblems = [
     id: 3,
     title: "Best Time to Buy and Sell Stock",
     description:
-      "This problem involves maximizing profit from stock trading. Given an array of prices where each element represents the stock price on a particular day, we need to choose a single day to buy and a different day in the future to sell to maximize profit. If no profit can be achieved, return 0. Example: prices = [7,1,5,3,6,4], the maximum profit is 5 (buy on day 2 at price 1 and sell on day 5 at price 6). This problem tests understanding of array traversal and tracking minimum values.",
+      "You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve. If no profit can be achieved, return 0.",
+    explanation:
+      "Approach: Use a single pass with two variables. Track the minimum price seen so far (minPrice) and the maximum profit (maxProfit). For each price, update minPrice = min(minPrice, price) and calculate profit = price - minPrice, then update maxProfit = max(maxProfit, profit). The key insight is that we want to buy at the lowest price before the selling day. By tracking the minimum price as we traverse, we ensure we always consider buying at the lowest possible price before the current day. Time complexity is O(n) with a single pass, space complexity is O(1). The greedy approach works because we only need to find the maximum difference where the buy day comes before the sell day.",
+    example:
+      "Input: prices = [7,1,5,3,6,4]\nOutput: 5\nExplanation: Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5",
     videoLink: "https://www.youtube.com/watch?v=zfUtewM809E",
     leetcodeUrl:
       "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
@@ -36,7 +47,11 @@ export const dsaLeetcodeProblems = [
     id: 4,
     title: "Contains Duplicate",
     description:
-      "This problem checks if any value appears at least twice in an array. Given an integer array, return true if any value appears at least twice, and false if every element is distinct. Example: nums = [1,2,3,1] returns true because 1 appears twice. This problem tests understanding of hash sets and duplicate detection. A simple yet essential problem for coding interviews that covers data structure selection for efficient lookups.",
+      "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
+    explanation:
+      "Approach: Use a HashSet to track seen elements. Iterate through the array, for each element check if it already exists in the set. If yes, return true (duplicate found). If not, add it to the set. If we complete the loop without finding duplicates, return false. Time complexity is O(n) because each set operation (add/contains) is O(1) on average. Space complexity is O(n) for the set. Alternative approaches: sort the array first (O(n log n)) and check adjacent elements, or use a brute force nested loop (O(n²)). The HashSet approach is optimal for this problem.",
+    example:
+      "Input: nums = [1,2,3,1]\nOutput: true\nExplanation: The value 1 appears twice in the array",
     videoLink: "https://www.youtube.com/watch?v=4WGPYzcoG9k",
     leetcodeUrl: "https://leetcode.com/problems/contains-duplicate/",
     difficulty: "Easy",
@@ -46,7 +61,11 @@ export const dsaLeetcodeProblems = [
     id: 5,
     title: "Product of Array Except Self",
     description:
-      "This problem requires calculating product of all elements except self. Given an integer array, return an array where each element is the product of all other elements in the array. The solution must run in O(n) time without using division operation. The product of any prefix or suffix fits in a 32-bit integer. Example: nums = [1,2,3,4], output = [24,12,8,6]. This problem tests prefix and suffix product techniques and is a classic interview question.",
+      "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i]. The solution must run in O(n) time without using the division operation.",
+    explanation:
+      "Approach: Use prefix and suffix product arrays. First pass: create a prefix array where prefix[i] = product of all elements before index i. Second pass: create a suffix array where suffix[i] = product of all elements after index i. Then result[i] = prefix[i] * suffix[i]. To optimize space to O(1) (excluding output array), we can use the output array itself: first pass store prefix products in the output array, then second pass multiply by suffix products using a running variable. Time complexity is O(n) with two passes, space complexity is O(1) extra space. The key constraint is not using division, which would be the naive approach (total product / nums[i]).",
+    example:
+      "Input: nums = [1,2,3,4]\nOutput: [24,12,8,6]\nExplanation: answer[0] = 2*3*4 = 24, answer[1] = 1*3*4 = 12, etc.",
     videoLink: "https://www.youtube.com/watch?v=lVsIz5jAMmA",
     leetcodeUrl: "https://leetcode.com/problems/product-of-array-except-self/",
     difficulty: "Medium",
@@ -56,7 +75,11 @@ export const dsaLeetcodeProblems = [
     id: 6,
     title: "Maximum Subarray",
     description:
-      "This problem asks to find the contiguous subarray with the largest sum and return its sum. Given an integer array, we need to find the subarray with maximum sum. Example: nums = [-2,1,-3,4,-1,2,1,-5,4], output = 6 (subarray [4,-1,2,1] has sum 6). The solution uses Kadane's Algorithm which works by maintaining current sum and maximum sum. If current sum becomes negative, reset it to zero. This is a fundamental dynamic programming problem.",
+      "Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.",
+    explanation:
+      "Approach: Use Kadane's Algorithm. Maintain two variables: currentSum (sum of the current subarray) and maxSum (maximum sum found so far). Iterate through the array, for each element add it to currentSum. Update maxSum = max(maxSum, currentSum). If currentSum becomes negative, reset it to 0 because starting a new subarray from the next element is always better than continuing with a negative sum. Time complexity is O(n) with a single pass, space complexity is O(1). The key insight is that a negative prefix sum never helps maximize the subarray sum, so we discard it. This is a classic example of dynamic programming where the optimal solution at each step depends only on the previous step.",
+    example:
+      "Input: nums = [-2,1,-3,4,-1,2,1,-5,4]\nOutput: 6\nExplanation: The subarray [4,-1,2,1] has the largest sum = 6",
     videoLink: "https://www.youtube.com/watch?v=06cO3EPoWes",
     leetcodeUrl: "https://leetcode.com/problems/maximum-subarray/",
     difficulty: "Medium",
@@ -66,7 +89,11 @@ export const dsaLeetcodeProblems = [
     id: 7,
     title: "Maximum Product Subarray",
     description:
-      "This problem requires finding a contiguous subarray with the largest product. Given an integer array, find the subarray that has the largest product and return the product. Example: nums = [2,3,-2,4], output = 6 ([2,3] has product 6). For nums = [-2,0,-1], output = 0. This problem uses dynamic programming and requires tracking both maximum and minimum products at each position to handle negative numbers effectively.",
+      "Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.",
+    explanation:
+      "Approach: This is trickier than Maximum Subarray because negative numbers can flip the sign. We need to track both the maximum product and minimum product ending at each position. When we encounter a negative number, the maximum and minimum swap roles (multiplying a negative by the minimum gives the maximum). Maintain curMax and curMin. For each element, compute: tempMax = max(nums[i], curMax * nums[i], curMin * nums[i]) and curMin = min(nums[i], curMax * nums[i], curMin * nums[i]). Update result = max(result, curMax). Time complexity is O(n), space complexity is O(1). The key insight is that a negative number can turn a small (negative) product into a large positive product.",
+    example:
+      "Input: nums = [2,3,-2,4]\nOutput: 6\nExplanation: The subarray [2,3] has the largest product = 6",
     videoLink: "https://www.youtube.com/watch?v=U6w9pS7_V-0",
     leetcodeUrl: "https://leetcode.com/problems/maximum-product-subarray/",
     difficulty: "Medium",
@@ -76,7 +103,11 @@ export const dsaLeetcodeProblems = [
     id: 8,
     title: "Find Minimum in Rotated Sorted Array",
     description:
-      "This problem requires finding the minimum element in a rotated sorted array of unique elements. The original sorted array has been rotated some number of times. The solution must run in O(log n) time. Example: nums = [3,4,5,1,2], output = 1 (original array [1,2,3,4,5] rotated 3 times). This problem tests binary search implementation on a modified sorted array with pivot detection.",
+      "Suppose an array of length n sorted in ascending order is rotated between 1 and n times. Given the sorted rotated array nums of unique elements, return the minimum element of this array. The solution must run in O(log n) time.",
+    explanation:
+      "Approach: Use binary search. The rotated array has two sorted halves. The minimum element is the pivot point where the rotation happened. In a rotated sorted array, the minimum element is the only element that is smaller than its previous element. Use binary search: if nums[mid] > nums[right], the minimum is in the right half (because the left half is sorted and larger). Otherwise, the minimum is in the left half (including mid). Continue until left == right, which is the minimum. Time complexity is O(log n), space complexity is O(1). The key insight is that comparing nums[mid] with nums[right] tells us which half contains the rotation point.",
+    example:
+      "Input: nums = [3,4,5,1,2]\nOutput: 1\nExplanation: The original array [1,2,3,4,5] was rotated 3 times",
     videoLink: "https://www.youtube.com/watch?v=vopmtrYOx-s",
     leetcodeUrl:
       "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
@@ -87,7 +118,11 @@ export const dsaLeetcodeProblems = [
     id: 9,
     title: "Search in Rotated Sorted Array",
     description:
-      "This problem requires searching a target value in a rotated sorted array. Given the array after rotation and an integer target, return the index of target if found, or -1 if not found. The solution must run in O(log n) time. Example: nums = [4,5,6,7,0,1,2], target = 0, output = 4; target = 3, output = -1. This problem tests advanced binary search techniques on rotated arrays with comparison logic.",
+      "There is an integer array nums sorted in ascending order (with distinct values). Prior to being passed to your function, nums is possibly rotated at an unknown pivot index. Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums. The solution must run in O(log n) time.",
+    explanation:
+      "Approach: Use modified binary search. At each step, determine which half is sorted. If nums[left] <= nums[mid], the left half is sorted. Check if target is in the left half's range (nums[left] <= target < nums[mid]), if yes search left, otherwise search right. If the right half is sorted (nums[mid] <= nums[right]), check if target is in the right half's range (nums[mid] < target <= nums[right]), if yes search right, otherwise search left. Continue until found or left > right. Time complexity is O(log n), space complexity is O(1). The key insight is that in a rotated sorted array, at least one half is always sorted, and we can determine which half to search based on the target's value.",
+    example:
+      "Input: nums = [4,5,6,7,0,1,2], target = 0\nOutput: 4\nExplanation: 0 is at index 4 in the array",
     videoLink: "https://www.youtube.com/watch?v=jbIzK1jZMhc",
     leetcodeUrl:
       "https://leetcode.com/problems/search-in-rotated-sorted-array/",
@@ -98,7 +133,11 @@ export const dsaLeetcodeProblems = [
     id: 10,
     title: "3Sum",
     description:
-      "This problem requires finding all triplets in an array that sum to zero. Given an integer array, return all triplets [nums[i], nums[j], nums[k]] where i, j, k are distinct and nums[i] + nums[j] + nums[k] = 0. The solution set must not contain duplicate triplets. Example: nums = [-1,0,1,2,-1,-4], output = [[-1,-1,2],[-1,0,1]]. This is a classic two-pointer technique problem involving sorting and handling duplicates.",
+      "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. The solution set must not contain duplicate triplets.",
+    explanation:
+      "Approach: Sort the array first. Then fix one element (nums[i]) and use two pointers (left = i+1, right = n-1) to find pairs that sum to -nums[i]. For each i, if nums[i] > 0, break (since array is sorted, all remaining numbers are positive). Skip duplicate values of i. For the two-pointer part: if sum < 0, move left pointer right; if sum > 0, move right pointer left; if sum == 0, add the triplet and move both pointers while skipping duplicates. Time complexity is O(n²) because for each i we do a two-pointer scan, space complexity is O(1) excluding the output. The key insight is sorting enables the two-pointer technique and easy duplicate handling.",
+    example:
+      "Input: nums = [-1,0,1,2,-1,-4]\nOutput: [[-1,-1,2],[-1,0,1]]\nExplanation: These are the only triplets that sum to 0",
     videoLink: "https://www.youtube.com/watch?v=rAw-BxUizJw",
     leetcodeUrl: "https://leetcode.com/problems/3sum/",
     difficulty: "Medium",
@@ -108,7 +147,11 @@ export const dsaLeetcodeProblems = [
     id: 11,
     title: "Container With Most Water",
     description:
-      "This problem requires finding two lines that together with the x-axis form a container with the most water. Given an array of heights representing vertical lines, find the maximum area of water the container can store. Example: height = [1,8,6,2,5,4,8,3,7], output = 49. This problem uses two-pointer technique where we move the pointer pointing to the shorter line inward to potentially find a larger area. The area is calculated as width × min(height[left], height[right]).",
+      "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store.",
+    explanation:
+      "Approach: Use two pointers, one at the start (left) and one at the end (right). Calculate the area as (right - left) * min(height[left], height[right]). Update maxArea if current area is larger. Then move the pointer pointing to the shorter line inward. Why? Because the area is limited by the shorter line. Moving the taller line inward would only decrease the width without potentially increasing the height (since the shorter line still limits it). Moving the shorter line inward might find a taller line that increases the area. Time complexity is O(n) with a single pass, space complexity is O(1). The key insight is that the optimal solution always involves moving the shorter pointer.",
+    example:
+      "Input: height = [1,8,6,2,5,4,8,3,7]\nOutput: 49\nExplanation: Lines at index 1 and 8 form the max area = 7 * 7 = 49",
     videoLink: "https://www.youtube.com/watch?v=v4HvnH6L_cM",
     leetcodeUrl: "https://leetcode.com/problems/container-with-most-water/",
     difficulty: "Medium",
@@ -118,7 +161,11 @@ export const dsaLeetcodeProblems = [
     id: 12,
     title: "Set Matrix Zeroes",
     description:
-      "This problem requires setting entire rows and columns to zero if any element in the matrix is zero. Given an m x n integer matrix, if any element is 0, set its entire row and column to 0. The operation must be done in-place without using extra space for a separate matrix. Example: matrix = [[1,1,1],[1,0,1],[1,1,1]], output = [[1,0,1],[0,0,0],[1,0,1]]. This problem tests in-place matrix manipulation using first row and column as markers.",
+      "Given an m x n integer matrix, if an element is 0, set its entire row and column to 0. The operation must be done in-place.",
+    explanation:
+      "Approach: Use the first row and first column as markers. First, check if the first row and first column themselves contain any zeros (store these in boolean flags). Then, iterate through the rest of the matrix. If matrix[i][j] == 0, set matrix[i][0] = 0 and matrix[0][j] = 0 as markers. After this, iterate again and for each cell, if matrix[i][0] == 0 or matrix[0][j] == 0, set matrix[i][j] = 0. Finally, handle the first row and first column based on the boolean flags. Time complexity is O(m*n), space complexity is O(1). The key insight is using the first row/column as in-place markers to avoid extra space.",
+    example:
+      "Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]\nOutput: [[1,0,1],[0,0,0],[1,0,1]]\nExplanation: The cell (1,1) is 0, so row 1 and column 1 become 0",
     videoLink: "https://www.youtube.com/watch?v=mFsoVAfMM0A",
     leetcodeUrl: "https://leetcode.com/problems/set-matrix-zeroes/",
     difficulty: "Medium",
@@ -128,7 +175,11 @@ export const dsaLeetcodeProblems = [
     id: 13,
     title: "Spiral Matrix",
     description:
-      "This problem requires returning all elements of a matrix in spiral order. Given an m x n matrix, traverse the matrix in a spiral pattern starting from the top-left corner, moving right, down, left, up, and repeating until all elements are visited. Example: matrix = [[1,2,3],[4,5,6],[7,8,9]], output = [1,2,3,6,9,8,7,4,5]. This problem tests careful boundary handling and direction control while traversing a 2D array.",
+      "Given an m x n matrix, return all elements of the matrix in spiral order.",
+    explanation:
+      "Approach: Use four boundary variables: top, bottom, left, right. Traverse in four directions: 1) Move right along the top row (from left to right), then increment top. 2) Move down along the right column (from top to bottom), then decrement right. 3) Move left along the bottom row (from right to left), then decrement bottom. 4) Move up along the left column (from bottom to top), then increment left. Repeat until top > bottom or left > right. Time complexity is O(m*n) since we visit each cell once, space complexity is O(1) excluding the output array. The key insight is carefully updating boundaries after each direction traversal.",
+    example:
+      "Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\nOutput: [1,2,3,6,9,8,7,4,5]\nExplanation: Traverse in spiral order starting from top-left",
     videoLink: "https://www.youtube.com/watch?v=FlvgvbPvgxE",
     leetcodeUrl: "https://leetcode.com/problems/spiral-matrix/",
     difficulty: "Medium",
@@ -138,7 +189,11 @@ export const dsaLeetcodeProblems = [
     id: 14,
     title: "Rotate Image",
     description:
-      "This problem requires rotating an n x n matrix by 90 degrees clockwise in-place. Given a 2D matrix representing an image, rotate it by 90 degrees without allocating another 2D matrix. Example: matrix = [[1,2,3],[4,5,6],[7,8,9]], output = [[7,4,1],[8,5,2],[9,6,3]]. This problem tests understanding of matrix transposition and row reversal techniques.",
+      "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise). You have to rotate the image in-place.",
+    explanation:
+      "Approach: Rotating a matrix 90 degrees clockwise can be done in two steps: 1) Transpose the matrix (swap matrix[i][j] with matrix[j][i] for all i < j). 2) Reverse each row. Transpose converts rows to columns, and then reversing each row completes the 90-degree clockwise rotation. For example, [[1,2,3],[4,5,6],[7,8,9]] transposed becomes [[1,4,7],[2,5,8],[3,6,9]], and reversing each row gives [[7,4,1],[8,5,2],[9,6,3]]. Time complexity is O(n²) since we visit each cell, space complexity is O(1) for in-place rotation. The key insight is decomposing the rotation into transpose + row reversal.",
+    example:
+      "Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\nOutput: [[7,4,1],[8,5,2],[9,6,3]]\nExplanation: Rotate the matrix 90 degrees clockwise",
     videoLink: "https://www.youtube.com/watch?v=zGp1MGl8WD4",
     leetcodeUrl: "https://leetcode.com/problems/rotate-image/",
     difficulty: "Medium",
@@ -148,7 +203,11 @@ export const dsaLeetcodeProblems = [
     id: 15,
     title: "Word Search",
     description:
-      'This problem requires searching for a word in a grid of characters. Given an m x n board and a word, return true if the word exists in the grid. The word can be constructed from letters of adjacent cells (horizontally or vertically neighboring). The same cell cannot be used more than once. Example: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED", output = true. This problem tests depth-first search and backtracking on grids.',
+      "Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.",
+    explanation:
+      "Approach: Use DFS with backtracking. For each cell in the board, if it matches the first character of the word, start a DFS from that cell. In the DFS, check if the current character matches the word character at the current index. If we reach the end of the word, return true. Mark the current cell as visited (e.g., change it to a special character or use a visited set). Then recursively explore all four directions (up, down, left, right). After exploring, unmark the cell (backtrack) so it can be used in other paths. Time complexity is O(m*n*4^L) where L is the length of the word, space complexity is O(L) for the recursion stack. The key insight is backtracking to explore all possible paths.",
+    example:
+      'Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"\nOutput: true\nExplanation: The word "ABCCED" exists in the board',
     videoLink: "https://www.youtube.com/watch?v=fUMwtUhiaN0",
     leetcodeUrl: "https://leetcode.com/problems/word-search/",
     difficulty: "Medium",
@@ -158,7 +217,11 @@ export const dsaLeetcodeProblems = [
     id: 16,
     title: "Longest Substring Without Repeating Characters",
     description:
-      'This problem requires finding the length of the longest substring without repeating characters. Given a string, find the longest substring with all distinct characters. Example: s = "abcabcbb", output = 3 ("abc"). This problem uses the sliding window technique with a hash set or hash map to track characters in the current window. It tests understanding of substring problems and efficient window manipulation.',
+      "Given a string s, find the length of the longest substring without repeating characters.",
+    explanation:
+      "Approach: Use the sliding window technique with a HashMap. Maintain two pointers: left and right. Expand the window by moving right. For each character at right, if it's already in the map, move left to max(left, map[char] + 1) to skip past the previous occurrence. Update map[char] = right. The current window length is right - left + 1, update maxLength. Time complexity is O(n) because each character is processed at most twice (once when added, once when removed), space complexity is O(min(n, alphabet size)) for the map. The key insight is using the map to track the last occurrence of each character to efficiently shrink the window.",
+    example:
+      'Input: s = "abcabcbb"\nOutput: 3\nExplanation: The answer is "abc", with the length of 3',
     videoLink: "https://www.youtube.com/watch?v=liT9Z467sa4",
     leetcodeUrl:
       "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
@@ -169,7 +232,11 @@ export const dsaLeetcodeProblems = [
     id: 17,
     title: "Longest Repeating Character Replacement",
     description:
-      "This problem requires finding the length of the longest substring containing the same character after at most k replacements. Given a string and an integer k, you can replace any character with another uppercase English character up to k times. Return the length of the longest substring with same letters after performing the operations. Example: s = \"ABAB\", k = 2, output = 4 (replace both 'A's with 'B's or vice versa). This problem uses sliding window with frequency tracking.",
+      "You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.",
+    explanation:
+      "Approach: Use the sliding window technique with a frequency array. Maintain left and right pointers and a count array for character frequencies. Expand the window by moving right and incrementing the frequency of the new character. Track maxFreq = the maximum frequency of any character in the current window. The window is valid if (windowLength - maxFreq) <= k, meaning we can replace the remaining characters to make them all the same. If the window becomes invalid, shrink it by moving left and decrementing frequencies. The answer is the maximum window length. Time complexity is O(n), space complexity is O(26) for the frequency array. The key insight is that the window is valid if the number of characters to replace (window length - max frequency) is at most k.",
+    example:
+      'Input: s = "ABAB", k = 2\nOutput: 4\nExplanation: Replace the two \'A\'s with \'B\'s or vice versa to get "BBBB" or "AAAA"',
     videoLink: "https://www.youtube.com/watch?v=XSqwI-IMJ8o",
     leetcodeUrl:
       "https://leetcode.com/problems/longest-repeating-character-replacement/",
@@ -180,7 +247,11 @@ export const dsaLeetcodeProblems = [
     id: 18,
     title: "Minimum Window Substring",
     description:
-      'This problem requires finding the minimum window substring that contains all characters of string t. Given two strings s and t, return the minimum window substring of s such that every character in t (including duplicates) is included. If no such substring exists, return empty string. Example: s = "ADOBECODEBANC", t = "ABC", output = "BANC". This is a classic sliding window problem using two pointers and character counting with frequency maps.',
+      'Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".',
+    explanation:
+      "Approach: Use the sliding window technique with two frequency maps. First, build a frequency map for string t (required characters). Then use two pointers (left, right) to maintain a window in s. Expand the window by moving right, and for each character, decrement its count in the window map. Track how many required characters are satisfied (formed). When formed == t.length(), the window contains all required characters. Now try to shrink the window by moving left while the window is still valid. Track the minimum window length and its start position. Time complexity is O(n) where n is the length of s, space complexity is O(m) where m is the size of the character set. The key insight is tracking the count of satisfied characters to efficiently determine window validity.",
+    example:
+      'Input: s = "ADOBECODEBANC", t = "ABC"\nOutput: "BANC"\nExplanation: The minimum window substring "BANC" includes A, B, and C',
     videoLink: "https://www.youtube.com/watch?v=sbZ2mhi7aIw",
     leetcodeUrl: "https://leetcode.com/problems/minimum-window-substring/",
     difficulty: "Hard",
@@ -190,7 +261,11 @@ export const dsaLeetcodeProblems = [
     id: 19,
     title: "Valid Anagram",
     description:
-      'This problem checks if two strings are anagrams of each other. Given two strings s and t, return true if t is an anagram of s, false otherwise. An anagram is formed by rearranging the letters of a word or phrase using all original letters exactly once. Example: s = "anagram", t = "nagaram", output = true; s = "rat", t = "car", output = false. This problem tests character frequency counting using hash maps or sorting approach.',
+      "Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.",
+    explanation:
+      "Approach: There are two main approaches. 1) Sorting: Sort both strings and compare them. If they are equal, they are anagrams. Time complexity is O(n log n) due to sorting. 2) Frequency counting: Use a frequency array (size 26 for lowercase letters) or a HashMap. Increment counts for characters in s, decrement for characters in t. If all counts are zero at the end, they are anagrams. Time complexity is O(n), space complexity is O(1) for a fixed-size frequency array. The key insight is that anagrams have the same character frequencies, so comparing frequencies is sufficient.",
+    example:
+      'Input: s = "anagram", t = "nagaram"\nOutput: true\nExplanation: "nagaram" is an anagram of "anagram"',
     videoLink: "https://www.youtube.com/watch?v=r6bohvsFUdQ",
     leetcodeUrl: "https://leetcode.com/problems/valid-anagram/",
     difficulty: "Easy",
@@ -200,7 +275,11 @@ export const dsaLeetcodeProblems = [
     id: 20,
     title: "Group Anagrams",
     description:
-      'This problem requires grouping anagrams together from an array of strings. Given an array of strings, group the anagrams together. Return the answer in any order. Example: strs = ["eat","tea","tan","ate","nat","bat"], output = [["bat"],["nat","tan"],["ate","eat","tea"]]. This problem tests use of hash maps with sorted strings as keys or character frequency arrays as keys.',
+      "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
+    explanation:
+      "Approach: Use a HashMap where the key is a canonical representation of an anagram group. For each string, create a key by either: 1) Sorting the characters (e.g., 'eat' -> 'aet'), or 2) Creating a frequency array of 26 counts and converting it to a string key. Add the string to the list at that key. Finally, return all the lists in the map. Time complexity is O(n * k log k) for the sorting approach (where k is the max string length) or O(n * k) for the frequency approach, space complexity is O(n * k). The key insight is finding a canonical key that is the same for all anagrams.",
+    example:
+      'Input: strs = ["eat","tea","tan","ate","nat","bat"]\nOutput: [["bat"],["nat","tan"],["ate","eat","tea"]]\nExplanation: Anagrams are grouped together',
     videoLink: "https://www.youtube.com/watch?v=8mYj4pkyghI",
     leetcodeUrl: "https://leetcode.com/problems/group-anagrams/",
     difficulty: "Medium",
@@ -210,7 +289,11 @@ export const dsaLeetcodeProblems = [
     id: 21,
     title: "Valid Parentheses",
     description:
-      "This problem checks if a string of brackets is valid. Given a string containing characters '(', ')', '{', '}', '[', ']', determine if the input string is valid. A string is valid if open brackets are closed by the same type, closed in correct order, and every close bracket has a corresponding open bracket. Example: s = \"()\" returns true; s = \"()[]{}\" returns true; s = \"(]\" returns false. This problem tests stack data structure usage for bracket matching.",
+      "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. A string is valid if open brackets are closed by the same type of brackets, open brackets are closed in the correct order, and every close bracket has a corresponding open bracket of the same type.",
+    explanation:
+      "Approach: Use a Stack. Iterate through each character in the string. If it's an opening bracket ('(', '{', '['), push it onto the stack. If it's a closing bracket (')', '}', ']'), check if the stack is empty (if so, return false) and if the top of the stack is the matching opening bracket. If it matches, pop the stack; if not, return false. After processing all characters, return true if the stack is empty (all brackets matched), false otherwise. Time complexity is O(n), space complexity is O(n) for the stack. The key insight is that the stack naturally handles the LIFO (Last In, First Out) nature of bracket matching.",
+    example:
+      'Input: s = "()[]{}"\nOutput: true\nExplanation: All brackets are properly closed in the correct order',
     videoLink: "https://www.youtube.com/watch?v=CxjDHDnZAfM",
     leetcodeUrl: "https://leetcode.com/problems/valid-parentheses/",
     difficulty: "Easy",
@@ -220,7 +303,11 @@ export const dsaLeetcodeProblems = [
     id: 22,
     title: "Longest Palindromic Substring",
     description:
-      'This problem requires finding the longest palindromic substring in a string. Given a string s, return the longest palindromic substring. Example: s = "babad", output = "bab" (or "aba"); s = "cbbd", output = "bb". This problem tests techniques like expanding around centers (odd and even length palindromes) or dynamic programming approach for palindrome detection.',
+      "Given a string s, return the longest palindromic substring in s.",
+    explanation:
+      "Approach: Use the expand around center technique. A palindrome can be centered at a single character (odd length) or between two characters (even length). For each position i in the string, expand outward from i as the center for odd-length palindromes, and from i and i+1 as the center for even-length palindromes. While expanding, check if the characters at both ends match. Track the longest palindrome found. Time complexity is O(n²) because for each of the 2n-1 centers, we expand up to n times, space complexity is O(1). Alternative DP approach: dp[i][j] = true if s[i..j] is a palindrome, with O(n²) time and space. The key insight is that every palindrome has a center, and expanding from centers is efficient.",
+    example:
+      'Input: s = "babad"\nOutput: "bab"\nExplanation: "aba" is also a valid answer',
     videoLink: "https://www.youtube.com/watch?v=_tja5NitebI",
     leetcodeUrl: "https://leetcode.com/problems/longest-palindromic-substring/",
     difficulty: "Medium",
@@ -230,7 +317,11 @@ export const dsaLeetcodeProblems = [
     id: 23,
     title: "Palindromic Substrings",
     description:
-      'This problem requires counting the number of palindromic substrings in a string. Given a string s, return the number of palindromic substrings. A substring is a contiguous sequence of characters. Example: s = "abc", output = 3 ("a", "b", "c"); s = "aaa", output = 6 ("a", "a", "a", "aa", "aa", "aaa"). This problem uses expand around center technique and counts palindromes of odd and even lengths.',
+      "Given a string s, return the number of palindromic substrings in it. A substring is a contiguous sequence of characters within the string.",
+    explanation:
+      "Approach: Use the expand around center technique. For each position i in the string, count palindromes centered at i (odd length) and centered between i and i+1 (even length). For each center, expand outward while the characters match, incrementing the count for each valid palindrome. Time complexity is O(n²) because for each of the 2n-1 centers, we expand up to n times, space complexity is O(1). Alternative DP approach: dp[i][j] = true if s[i..j] is a palindrome, and count all true entries, with O(n²) time and space. The key insight is that each palindrome has a unique center, so counting palindromes by expanding from each center avoids duplicates.",
+    example:
+      'Input: s = "abc"\nOutput: 3\nExplanation: Three palindromic strings: "a", "b", "c"',
     videoLink: "https://www.youtube.com/watch?v=8ME7fTpXwfM",
     leetcodeUrl: "https://leetcode.com/problems/palindromic-substrings/",
     difficulty: "Medium",
@@ -240,7 +331,11 @@ export const dsaLeetcodeProblems = [
     id: 24,
     title: "Reverse Linked List",
     description:
-      "This problem requires reversing a singly linked list. Given the head of a singly linked list, reverse the list and return the reversed list. Example: head = [1,2,3,4,5], output = [5,4,3,2,1]. This problem tests linked list manipulation using iterative approach with three pointers (prev, curr, next) or recursive approach. It is a fundamental linked list problem.",
+      "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+    explanation:
+      "Approach: Use the iterative approach with three pointers: prev, curr, and next. Initialize prev = null and curr = head. While curr is not null: save next = curr.next, then set curr.next = prev (reverse the pointer), then move prev = curr and curr = next. After the loop, prev is the new head. Time complexity is O(n), space complexity is O(1). Alternative recursive approach: recursively reverse the rest of the list, then set head.next.next = head and head.next = null. The recursive approach has O(n) space for the recursion stack. The key insight is carefully saving the next pointer before overwriting the current node's next.",
+    example:
+      "Input: head = [1,2,3,4,5]\nOutput: [5,4,3,2,1]\nExplanation: The list is reversed",
     videoLink: "https://www.youtube.com/watch?v=4M9mXiwOAuM",
     leetcodeUrl: "https://leetcode.com/problems/reverse-linked-list/",
     difficulty: "Easy",
@@ -250,7 +345,11 @@ export const dsaLeetcodeProblems = [
     id: 25,
     title: "Encode and Decode Strings",
     description:
-      'This problem requires designing an algorithm to encode a list of strings into a single string and decode it back to the original list. Design encode and decode methods. Example: encode ["lint","code","love","you"] to "lint;;code;;love;;you" and decode back. This problem tests string manipulation and understanding of delimiters. The challenge is handling strings that may contain the delimiter itself, requiring careful encoding design.',
+      "Design an algorithm to encode a list of strings to a single string. The encoded string is then decoded back to the original list of strings.",
+    explanation:
+      "Approach: Use length-prefix encoding. For each string, encode it as: [length]#[string]. For example, ['lint', 'code'] becomes '4#lint4#code'. To decode, iterate through the encoded string: read the length until '#', then extract that many characters as the next string. This approach handles strings containing any characters including delimiters because the length tells us exactly how many characters to read. Time complexity is O(n) for both encode and decode where n is the total length of all strings, space complexity is O(n) for the encoded/decoded result. The key insight is that using length prefixes avoids delimiter collision issues.",
+    example:
+      'Input: ["lint","code","love","you"]\nOutput: "4#lint4#code4#love3#you"\nExplanation: Each string is prefixed with its length',
     videoLink: "https://www.youtube.com/watch?v=zhAza_5USys",
     leetcodeUrl: "https://leetcode.com/problems/encode-and-decode-strings/",
     difficulty: "Medium",
@@ -260,7 +359,11 @@ export const dsaLeetcodeProblems = [
     id: 26,
     title: "Linked List Cycle",
     description:
-      "This problem determines if a linked list has a cycle. Given the head of a linked list, return true if there is a cycle, false otherwise. A cycle exists when some node can be reached again by following the next pointer. Example: head = [3,2,0,-4] with tail connecting to position 1, output = true. This problem uses Floyd's Cycle Detection Algorithm (tortoise and hare) with slow and fast pointers to detect cycles efficiently.",
+      "Given head, the head of a linked list, determine if the linked list has a cycle in it. There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Return true if there is a cycle, false otherwise.",
+    explanation:
+      "Approach: Use Floyd's Cycle Detection Algorithm (tortoise and hare). Initialize two pointers: slow and fast, both starting at head. Move slow one step at a time and fast two steps at a time. If there is a cycle, the fast pointer will eventually catch up to the slow pointer (they will meet). If the fast pointer reaches null, there is no cycle. Time complexity is O(n) where n is the number of nodes, space complexity is O(1). Alternative approach: use a HashSet to track visited nodes, but this uses O(n) space. The key insight is that in a cycle, the fast pointer moves twice as fast and will eventually lap the slow pointer.",
+    example:
+      "Input: head = [3,2,0,-4], pos = 1\nOutput: true\nExplanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed)",
     videoLink: "https://www.youtube.com/watch?v=sP78rPvG4XA",
     leetcodeUrl: "https://leetcode.com/problems/linked-list-cycle/",
     difficulty: "Easy",
@@ -270,7 +373,11 @@ export const dsaLeetcodeProblems = [
     id: 27,
     title: "Merge Two Sorted Lists",
     description:
-      "This problem requires merging two sorted linked lists into one sorted list. Given the heads of two sorted linked lists, merge them into a single sorted list by splicing together the nodes. Example: list1 = [1,2,4], list2 = [1,3,4], output = [1,1,2,3,4,4]. This problem tests linked list merging with iterative approach using a dummy node to simplify construction of the merged list.",
+      "You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.",
+    explanation:
+      "Approach: Use a dummy node to simplify the merging process. Create a dummy node and a current pointer pointing to it. While both lists are not empty, compare the values at the heads of both lists. Append the smaller node to the current pointer and advance that list. After the loop, append any remaining nodes from the non-empty list. Return dummy.next as the head of the merged list. Time complexity is O(n + m) where n and m are the lengths of the two lists, space complexity is O(1) (excluding the dummy node). The key insight is using a dummy node to avoid special handling of the head case.",
+    example:
+      "Input: list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]\nExplanation: The two sorted lists are merged into one sorted list",
     videoLink: "https://www.youtube.com/watch?v=jTN4fLXLwlc",
     leetcodeUrl: "https://leetcode.com/problems/merge-two-sorted-lists/",
     difficulty: "Easy",
@@ -280,7 +387,11 @@ export const dsaLeetcodeProblems = [
     id: 28,
     title: "Merge K Sorted Lists",
     description:
-      "This problem requires merging k sorted linked lists into one sorted linked list. Given an array of k linked lists, each sorted in ascending order, merge all lists into one sorted list. Example: lists = [[1,4,5],[1,3,4],[2,6]], output = [1,1,2,3,4,4,5,6]. This problem can be solved using a priority queue (min-heap) or by repeatedly merging two lists (divide and conquer approach).",
+      "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.",
+    explanation:
+      "Approach: Use a min-heap (priority queue). Add the head of each list to the heap. While the heap is not empty, pop the smallest node, append it to the result, and if the popped node has a next node, push that next node onto the heap. Time complexity is O(n log k) where n is the total number of nodes and k is the number of lists, space complexity is O(k) for the heap. Alternative approach: divide and conquer - repeatedly merge pairs of lists using the merge two sorted lists function, reducing the number of lists by half each time. Time complexity is also O(n log k). The key insight is that the heap always gives us the smallest available node among all list heads.",
+    example:
+      "Input: lists = [[1,4,5],[1,3,4],[2,6]]\nOutput: [1,1,2,3,4,4,5,6]\nExplanation: All three lists are merged into one sorted list",
     videoLink: "https://www.youtube.com/watch?v=tYH94SsdhPI",
     leetcodeUrl: "https://leetcode.com/problems/merge-k-sorted-lists/",
     difficulty: "Hard",
@@ -290,7 +401,11 @@ export const dsaLeetcodeProblems = [
     id: 29,
     title: "Remove Nth Node From End of List",
     description:
-      "This problem requires removing the nth node from the end of a linked list. Given the head of a linked list and an integer n, remove the nth node from the end and return the head. Example: head = [1,2,3,4,5], n = 2, output = [1,2,3,5]. This approach uses a two-pass algorithm: first find the length of the list, then traverse to the node before the target and remove it.",
+      "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+    explanation:
+      "Approach: Use a two-pass algorithm. First pass: traverse the list to find its total length. The node to remove is at position (length - n) from the start (0-indexed). Second pass: traverse to the node before the target node (position length - n - 1) and update its next pointer to skip the target node. Handle the edge case where the head itself needs to be removed (n == length). Time complexity is O(n) with two passes, space complexity is O(1). Alternative single-pass approach: use two pointers with a gap of n between them. Move the fast pointer n steps ahead, then move both pointers until fast reaches the end. The slow pointer will be at the node before the target. The key insight is that the two-pointer approach avoids the need to find the length first.",
+    example:
+      "Input: head = [1,2,3,4,5], n = 2\nOutput: [1,2,3,5]\nExplanation: The 2nd node from the end (4) is removed",
     videoLink: "https://www.youtube.com/watch?v=3zYDxGxGjQo",
     leetcodeUrl:
       "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
@@ -301,7 +416,11 @@ export const dsaLeetcodeProblems = [
     id: 30,
     title: "Remove Nth Node From End of List (DFS)",
     description:
-      "This is an alternative solution to removing the nth node from the end of a linked list. Given the head of a linked list and n, remove the nth node from the end. This approach uses a single-pass algorithm with two pointers (fast and slow) or a recursive depth-first search method where the recursion returns the depth from the end, allowing the node to be removed during backtracking.",
+      "This is an alternative solution to removing the nth node from the end of a linked list. Given the head of a linked list and n, remove the nth node from the end and return its head.",
+    explanation:
+      "Approach: Use a single-pass two-pointer technique. Create a dummy node pointing to head. Initialize slow and fast pointers both at the dummy node. Move the fast pointer n+1 steps ahead (creating a gap of n+1 between slow and fast). Then move both pointers one step at a time until fast reaches null. At this point, slow is at the node before the target node. Update slow.next = slow.next.next to remove the target. Time complexity is O(n) with a single pass, space complexity is O(1). Alternative recursive approach: recursively traverse to the end, and during backtracking, count the depth from the end. When the depth equals n, remove the current node. The recursive approach has O(n) space for the recursion stack. The key insight is maintaining a gap of n+1 between the two pointers so that when fast reaches the end, slow is at the node before the target.",
+    example:
+      "Input: head = [1,2,3,4,5], n = 2\nOutput: [1,2,3,5]\nExplanation: The 2nd node from the end (4) is removed using single-pass approach",
     videoLink: "https://www.youtube.com/watch?v=_mV41bPJhPI",
     leetcodeUrl:
       "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
@@ -312,7 +431,11 @@ export const dsaLeetcodeProblems = [
     id: 31,
     title: "Reorder List",
     description:
-      "This problem requires reordering a linked list in a specific pattern. Given a singly linked list represented as L0 → L1 → ... → Ln, reorder it to L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → ... Example: head = [1,2,3,4], output = [1,4,2,3]; head = [1,2,3,4,5], output = [1,5,2,4,3]. The solution involves finding the middle of the list, reversing the second half, and then merging the two halves alternately.",
+      "You are given the head of a singly linked-list. The list can be represented as L0 → L1 → ... → Ln-1 → Ln. Reorder the list to be L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → ...",
+    explanation:
+      "Approach: This problem is solved in three steps. 1) Find the middle of the linked list using the slow and fast pointer technique (slow moves 1 step, fast moves 2 steps). 2) Reverse the second half of the list (from the middle to the end). 3) Merge the two halves alternately: take one node from the first half, then one from the reversed second half, and so on. Time complexity is O(n) for all three steps combined, space complexity is O(1). The key insight is decomposing the problem into three well-known subproblems: finding the middle, reversing a list, and merging two lists.",
+    example:
+      "Input: head = [1,2,3,4]\nOutput: [1,4,2,3]\nExplanation: The list is reordered as L0 → Ln → L1 → Ln-1",
     videoLink: "https://www.youtube.com/watch?v=SjJFu8P21dE",
     leetcodeUrl: "https://leetcode.com/problems/reorder-list/",
     difficulty: "Medium",
@@ -322,7 +445,11 @@ export const dsaLeetcodeProblems = [
     id: 32,
     title: "Maximum Depth of Binary Tree",
     description:
-      "This problem requires finding the maximum depth (height) of a binary tree. Given the root of a binary tree, return its maximum depth, which is the number of nodes along the longest path from the root to the farthest leaf. Example: root = [3,9,20,null,null,15,7], output = 3. This problem uses recursive approach where depth = 1 + max(depth(left), depth(right)), or iterative approach using level order traversal.",
+      "Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.",
+    explanation:
+      "Approach: Use recursion. The maximum depth of a tree is 1 (for the root) plus the maximum of the depths of its left and right subtrees. Base case: if the root is null, return 0. Recursive case: return 1 + max(maxDepth(root.left), maxDepth(root.right)). Time complexity is O(n) where n is the number of nodes, space complexity is O(h) where h is the height of the tree (for the recursion stack). Alternative iterative approach: use BFS (level order traversal) with a queue and count the number of levels. The key insight is that the depth of a tree can be computed recursively by combining the depths of subtrees.",
+    example:
+      "Input: root = [3,9,20,null,null,15,7]\nOutput: 3\nExplanation: The longest path is 3 → 20 → 15 (or 3 → 20 → 7)",
     videoLink: "https://www.youtube.com/watch?v=7fNxSkv508k",
     leetcodeUrl: "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
     difficulty: "Easy",
@@ -332,7 +459,11 @@ export const dsaLeetcodeProblems = [
     id: 33,
     title: "Same Tree",
     description:
-      "This problem checks if two binary trees are the same. Given the roots of two binary trees p and q, return true if they are identical (structurally and with same node values), false otherwise. Example: p = [1,2,3], q = [1,2,3], output = true. This problem uses recursive comparison: both roots null returns true; one null returns false; values differ returns false; recursively check left and right subtrees.",
+      "Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.",
+    explanation:
+      "Approach: Use recursion. Two trees are the same if: 1) Both roots are null (return true), 2) One root is null and the other is not (return false), 3) The values of the roots are different (return false), 4) The left subtrees are the same AND the right subtrees are the same. Recursively check these conditions. Time complexity is O(n) where n is the number of nodes in the smaller tree, space complexity is O(h) for the recursion stack. The key insight is that tree comparison can be done by comparing the root and recursively comparing the subtrees.",
+    example:
+      "Input: p = [1,2,3], q = [1,2,3]\nOutput: true\nExplanation: Both trees are structurally identical with same values",
     videoLink: "https://www.youtube.com/watch?v=t7XreO4TwqU",
     leetcodeUrl: "https://leetcode.com/problems/same-tree/",
     difficulty: "Easy",
@@ -342,7 +473,11 @@ export const dsaLeetcodeProblems = [
     id: 34,
     title: "Invert Binary Tree",
     description:
-      "This problem requires inverting a binary tree (swapping left and right children of every node). Given the root of a binary tree, invert the tree and return the root. Example: root = [4,2,7,1,3,6,9], output = [4,7,2,9,6,3,1]. This problem uses a simple recursive approach: swap the left and right children at each node, then recursively invert the left and right subtrees.",
+      "Given the root of a binary tree, invert the tree, and return its root.",
+    explanation:
+      "Approach: Use recursion. For each node, swap its left and right children, then recursively invert the left subtree and the right subtree. Base case: if the root is null, return null. The recursive case: swap left and right, then recursively invert both. Time complexity is O(n) where n is the number of nodes, space complexity is O(h) for the recursion stack. Alternative iterative approach: use a queue (BFS) and swap children for each node as we process it. The key insight is that inverting a tree is simply swapping children at every node, which can be done recursively or iteratively.",
+    example:
+      "Input: root = [4,2,7,1,3,6,9]\nOutput: [4,7,2,9,6,3,1]\nExplanation: Every node's left and right children are swapped",
     videoLink: "https://www.youtube.com/watch?v=W0TWj9tr2YY",
     leetcodeUrl: "https://leetcode.com/problems/invert-binary-tree/",
     difficulty: "Easy",
@@ -352,7 +487,11 @@ export const dsaLeetcodeProblems = [
     id: 35,
     title: "Binary Tree Maximum Path Sum",
     description:
-      "This problem requires finding the maximum path sum in a binary tree. A path is a sequence of nodes where each pair has an edge connecting them. A node can appear at most once, and the path does not need to pass through the root. The path sum is the sum of node values. Example: root = [1,2,3], output = 6 (path 2→1→3 sum = 6). This problem uses recursion where each node returns the maximum contribution (node value + max of left/right gains) and tracks the maximum path sum through each node.",
+      "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. The path sum is the sum of the node values in the path. Given the root of a binary tree, return the maximum path sum.",
+    explanation:
+      "Approach: Use recursion with a global maximum tracker. For each node, compute the maximum path sum that goes through this node. This is: node.val + max(0, leftGain) + max(0, rightGain), where leftGain is the maximum path sum from the left subtree (taking only positive contributions). Update the global maximum with this value. Then return the maximum contribution this node can provide to its parent: node.val + max(0, leftGain, rightGain) - we can only take one branch (left or right) when going up to the parent. Time complexity is O(n), space complexity is O(h) for the recursion stack. The key insight is that a path can go through a node and include both left and right branches, but when returning to the parent, we can only take one branch.",
+    example:
+      "Input: root = [1,2,3]\nOutput: 6\nExplanation: The optimal path is 2 → 1 → 3 with a path sum of 2 + 1 + 3 = 6",
     videoLink: "https://www.youtube.com/watch?v=Z5QL4Po8EGQ",
     leetcodeUrl: "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
     difficulty: "Hard",
@@ -362,7 +501,11 @@ export const dsaLeetcodeProblems = [
     id: 36,
     title: "Binary Tree Level Order Traversal",
     description:
-      "This problem requires returning level order traversal of a binary tree. Given the root of a binary tree, return the values of nodes level by level (left to right). Example: root = [3,9,20,null,null,15,7], output = [[3],[9,20],[15,7]]. This problem uses a queue (BFS approach) to traverse the tree level by level, processing all nodes at each level before moving to the next.",
+      "Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).",
+    explanation:
+      "Approach: Use BFS (Breadth-First Search) with a queue. Start by adding the root to the queue. While the queue is not empty: record the current queue size (number of nodes at this level), create a list for this level, process that many nodes (pop from queue, add to level list, push their children to the queue), and add the level list to the result. Time complexity is O(n) where n is the number of nodes, space complexity is O(n) for the queue (in the worst case, the queue holds all nodes at the widest level). The key insight is using the queue size at the start of each level to know how many nodes belong to the current level.",
+    example:
+      "Input: root = [3,9,20,null,null,15,7]\nOutput: [[3],[9,20],[15,7]]\nExplanation: Nodes are grouped by their level",
     videoLink: "https://www.youtube.com/watch?v=n69oY3HEins",
     leetcodeUrl:
       "https://leetcode.com/problems/binary-tree-level-order-traversal/",
@@ -373,7 +516,11 @@ export const dsaLeetcodeProblems = [
     id: 37,
     title: "Serialize and Deserialize Binary Tree",
     description:
-      "This problem requires designing algorithms to serialize and deserialize a binary tree. Serialization converts a binary tree to a string, and deserialization reconstructs the tree from that string. There is no restriction on the format. Example: root = [1,2,3,null,null,4,5] should serialize and deserialize back to the same tree. This problem tests understanding of tree traversal (preorder or level order) and string parsing to reconstruct the tree structure.",
+      "Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment. Design an algorithm to serialize and deserialize a binary tree.",
+    explanation:
+      "Approach: Use preorder traversal for serialization. Serialize: traverse the tree in preorder (root, left, right). For each node, append its value followed by a delimiter (e.g., ','). For null nodes, append 'null'. This creates a string like '1,2,null,null,3,4,null,null,5,null,null,'. Deserialize: split the string by the delimiter and use a queue or index to process tokens. For each token: if it's 'null', return null. Otherwise, create a node with that value, recursively build the left subtree from the next tokens, then the right subtree. Time complexity is O(n) for both operations, space complexity is O(n) for the string and recursion stack. The key insight is that preorder traversal with null markers uniquely represents a binary tree.",
+    example:
+      "Input: root = [1,2,3,null,null,4,5]\nOutput: [1,2,3,null,null,4,5]\nExplanation: The tree is serialized and deserialized back to the same tree",
     videoLink: "https://www.youtube.com/watch?v=OJEA944g5oM",
     leetcodeUrl:
       "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
@@ -384,7 +531,11 @@ export const dsaLeetcodeProblems = [
     id: 38,
     title: "Subtree of Another Tree",
     description:
-      "This problem checks if one binary tree is a subtree of another. Given two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values as subRoot. Example: root = [3,4,5,1,2], subRoot = [4,1,2], output = true. This problem uses recursion to check if subRoot matches root or any of root's subtrees using a helper function that checks if two trees are identical.",
+      "Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise. A subtree of a binary tree is a tree that consists of a node in tree and all of this node's descendants.",
+    explanation:
+      "Approach: Use recursion with a helper function. The helper function isSameTree(p, q) checks if two trees are identical (same as the 'Same Tree' problem). The main function isSubtree(root, subRoot) checks: 1) If root is null, return false (subRoot can't be a subtree of an empty tree). 2) If isSameTree(root, subRoot) is true, return true. 3) Otherwise, recursively check if subRoot is a subtree of root.left or root.right. Time complexity is O(n * m) in the worst case where n is the number of nodes in root and m is the number of nodes in subRoot, space complexity is O(n) for the recursion stack. The key insight is combining the 'Same Tree' check with recursive subtree exploration.",
+    example:
+      "Input: root = [3,4,5,1,2], subRoot = [4,1,2]\nOutput: true\nExplanation: The subtree [4,1,2] exists within the tree [3,4,5,1,2]",
     videoLink: "https://www.youtube.com/watch?v=o1kN4EcDH6o",
     leetcodeUrl: "https://leetcode.com/problems/subtree-of-another-tree/",
     difficulty: "Easy",
@@ -394,7 +545,11 @@ export const dsaLeetcodeProblems = [
     id: 39,
     title: "Construct Binary Tree from Preorder and Inorder Traversal",
     description:
-      "This problem requires constructing a binary tree from preorder and inorder traversal arrays. Given two integer arrays preorder and inorder, construct and return the binary tree. Example: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7], output = [3,9,20,null,null,15,7]. This problem uses the fact that preorder's first element is root, find it in inorder, left part is left subtree, right part is right subtree, then recursively construct.",
+      "Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.",
+    explanation:
+      "Approach: Use recursion with the properties of preorder and inorder traversals. In preorder, the first element is always the root. In inorder, elements to the left of the root are in the left subtree, and elements to the right are in the right subtree. Algorithm: 1) Take the first element of preorder as the root. 2) Find the root's index in inorder. 3) Elements before this index in inorder form the left subtree's inorder, elements after form the right subtree's inorder. 4) The next few elements in preorder (equal to the size of the left subtree) form the left subtree's preorder, the rest form the right subtree's preorder. 5) Recursively construct left and right subtrees. Use a HashMap to store inorder indices for O(1) lookup. Time complexity is O(n), space complexity is O(n) for the map and recursion stack. The key insight is that preorder gives us the root, and inorder tells us how to split the remaining elements.",
+    example:
+      "Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]\nOutput: [3,9,20,null,null,15,7]\nExplanation: The tree is reconstructed from its traversals",
     videoLink: "https://www.youtube.com/watch?v=09s2pZv0jqc",
     leetcodeUrl:
       "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
@@ -405,7 +560,11 @@ export const dsaLeetcodeProblems = [
     id: 40,
     title: "Binary Tree Zigzag Level Order Traversal",
     description:
-      "This problem requires returning zigzag level order traversal of a binary tree. Given the root of a binary tree, return level order traversal where nodes are processed left-to-right at even levels and right-to-left at odd levels. Example: root = [3,9,20,null,null,15,7], output = [[3],[20,9],[15,7]]. This problem uses BFS with a queue and a flag to reverse the order of nodes at each level.",
+      "Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).",
+    explanation:
+      "Approach: Use BFS with a queue, similar to level order traversal, but with a direction flag. Process each level as in level order traversal. For each level, if the direction is left-to-right, add nodes to the end of the level list. If the direction is right-to-left, add nodes to the front of the level list (or add normally and reverse at the end). Toggle the direction after each level. Time complexity is O(n) where n is the number of nodes, space complexity is O(n) for the queue. The key insight is that zigzag traversal is just level order traversal with alternating directions, which can be handled by adding to the front or back of the level list.",
+    example:
+      "Input: root = [3,9,20,null,null,15,7]\nOutput: [[3],[20,9],[15,7]]\nExplanation: Levels alternate between left-to-right and right-to-left",
     videoLink: "https://www.youtube.com/watch?v=M_2IZf-g3qw",
     leetcodeUrl:
       "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/",
@@ -416,7 +575,11 @@ export const dsaLeetcodeProblems = [
     id: 41,
     title: "Validate Binary Search Tree",
     description:
-      "This problem validates if a binary tree is a valid Binary Search Tree (BST). Given the root of a binary tree, determine if it is a valid BST. A valid BST has: left subtree containing only nodes with keys less than node's key, right subtree containing only nodes with keys greater than node's key, and both subtrees are valid BSTs. Example: root = [2,1,3], output = true. This problem uses in-order traversal or range-based recursion to validate BST properties.",
+      "Given the root of a binary tree, determine if it is a valid binary search tree (BST). A valid BST is defined as follows: The left subtree of a node contains only nodes with keys less than the node's key. The right subtree of a node contains only nodes with keys greater than the node's key. Both the left and right subtrees must also be binary search trees.",
+    explanation:
+      "Approach: Use range-based recursion. For each node, maintain a valid range (min, max). The root can be any value. For the left child, the valid range is (min, root.val). For the right child, the valid range is (root.val, max). If any node's value is outside its valid range, the tree is not a valid BST. Use null (or Long.MIN_VALUE/MAX_VALUE) for unbounded ranges. Time complexity is O(n) where n is the number of nodes, space complexity is O(h) for the recursion stack. Alternative approach: perform in-order traversal and check if the values are strictly increasing. The key insight is that in a BST, each node's value must be within a specific range determined by its ancestors.",
+    example:
+      "Input: root = [2,1,3]\nOutput: true\nExplanation: The tree is a valid BST (1 < 2 < 3)",
     videoLink: "https://www.youtube.com/watch?v=rB25y6zqayY",
     leetcodeUrl: "https://leetcode.com/problems/validate-binary-search-tree/",
     difficulty: "Medium",
@@ -426,7 +589,11 @@ export const dsaLeetcodeProblems = [
     id: 42,
     title: "Kth Smallest Element in a BST",
     description:
-      "This problem requires finding the kth smallest element in a Binary Search Tree. Given the root of a BST and an integer k, return the kth smallest value (1-indexed). Example: root = [3,1,4,null,2], k = 1, output = 1. This problem uses in-order traversal of the BST, which visits nodes in sorted order. The kth node visited during traversal is the answer. Can be solved iteratively or recursively.",
+      "Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.",
+    explanation:
+      "Approach: Use in-order traversal. In a BST, in-order traversal visits nodes in ascending order. Perform in-order traversal and count nodes. When the count reaches k, return the current node's value. This can be done recursively (with a counter and result variable) or iteratively (using a stack). Time complexity is O(h + k) where h is the height of the tree (we need to reach the leftmost node first), space complexity is O(h) for the recursion stack or explicit stack. The key insight is that in-order traversal of a BST produces sorted order, so the kth visited node is the kth smallest element.",
+    example:
+      "Input: root = [3,1,4,null,2], k = 1\nOutput: 1\nExplanation: The 1st smallest element is 1",
     videoLink: "https://www.youtube.com/watch?v=Zxsi81RGZ4U",
     leetcodeUrl: "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
     difficulty: "Medium",
@@ -436,7 +603,11 @@ export const dsaLeetcodeProblems = [
     id: 43,
     title: "Lowest Common Ancestor of a Binary Search Tree",
     description:
-      "This problem requires finding the lowest common ancestor (LCA) of two nodes in a Binary Search Tree. Given a BST and two nodes p and q, find the lowest node that has both p and q as descendants. Example: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8, output = 6. In a BST, the LCA is the first node whose value lies between p.val and q.val (inclusive). This property makes the solution simple.",
+      "Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST. The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants.",
+    explanation:
+      "Approach: Use the BST property. Start from the root. If both p.val and q.val are less than root.val, the LCA is in the left subtree, so move to root.left. If both p.val and q.val are greater than root.val, the LCA is in the right subtree, so move to root.right. Otherwise (one is less and one is greater, or one equals root.val), the current node is the LCA. Time complexity is O(h) where h is the height of the tree, space complexity is O(1) for the iterative approach or O(h) for the recursive approach. The key insight is that the LCA is the first node where p and q diverge (one goes left, one goes right, or one is the current node).",
+    example:
+      "Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8\nOutput: 6\nExplanation: The LCA of nodes 2 and 8 is 6",
     videoLink: "https://www.youtube.com/watch?v=I6_DoixraQU",
     leetcodeUrl:
       "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
@@ -447,7 +618,11 @@ export const dsaLeetcodeProblems = [
     id: 44,
     title: "Implement Trie (Prefix Tree)",
     description:
-      'This problem requires implementing a Trie (Prefix Tree) data structure. The Trie class supports: insert(String word) - inserts a word into the trie; search(String word) - returns true if word is in the trie; startsWith(String prefix) - returns true if any inserted word has the given prefix. Example: insert "apple", search "apple" returns true, search "app" returns false, startsWith "app" returns true. This problem tests understanding of tree-based string storage and prefix searching.',
+      'A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. Implement the Trie class: insert(String word), search(String word), startsWith(String prefix).',
+    explanation:
+      "Approach: Implement a Trie using a tree of nodes. Each node has: an array (or map) of children (26 for lowercase letters) and a boolean flag indicating if the node represents the end of a word. insert(word): traverse the trie character by character, creating new nodes as needed, and mark the last node as end-of-word. search(word): traverse the trie, if any character is missing, return false; at the end, return the end-of-word flag. startsWith(prefix): traverse the trie, if any character is missing, return false; otherwise return true (no need to check end-of-word). Time complexity is O(L) for all operations where L is the length of the word/prefix, space complexity is O(n * L) where n is the number of words and L is the average word length. The key insight is that a trie shares prefixes between words, making prefix operations efficient.",
+    example:
+      'Input: insert("apple"), search("apple"), search("app"), startsWith("app")\nOutput: true, false, true\nExplanation: "apple" is inserted, "apple" is found, "app" is not a word, but "app" is a prefix',
     videoLink: "https://www.youtube.com/watch?v=BOoR91es740",
     leetcodeUrl: "https://leetcode.com/problems/implement-trie-prefix-tree/",
     difficulty: "Medium",
@@ -457,7 +632,11 @@ export const dsaLeetcodeProblems = [
     id: 45,
     title: "Design Add and Search Words Data Structure",
     description:
-      'This problem requires designing a data structure that supports adding words and searching for words with wildcard dots. Implement WordDictionary class with: addWord(word) - adds a word; search(word) - returns true if any added word matches, where \'.\' can match any single character. Example: addWord "bad", addWord "dad", search "b.." returns true. This problem uses Trie with recursive DFS for search where \'.\' matches any node at that level.',
+      "Design a data structure that supports adding new words and finding if a string matches any previously added string. Implement the WordDictionary class: addWord(word), search(word) where '.' can match any single character.",
+    explanation:
+      "Approach: Use a Trie with recursive DFS for search. addWord(word): same as inserting into a standard trie. search(word): traverse the trie recursively. For each character: if it's a regular character, follow the corresponding child. If it's a '.', try all children at that level (recursively search each child for the remaining characters). If any path leads to a valid word, return true. Time complexity is O(L) for addWord and O(26^L) in the worst case for search (when the word is all dots), space complexity is O(n * L) for the trie. The key insight is that the '.' wildcard requires exploring all possible children, which is handled by recursion.",
+    example:
+      'Input: addWord("bad"), addWord("dad"), search("b..")\nOutput: true\nExplanation: "b.." matches "bad" where dots match any character',
     videoLink: "https://www.youtube.com/watch?v=76nfH0pxUWA",
     leetcodeUrl:
       "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
@@ -468,7 +647,11 @@ export const dsaLeetcodeProblems = [
     id: 46,
     title: "Word Search II",
     description:
-      'This problem requires finding all words from a list that exist in a board. Given an m x n board and a list of words, return all words on the board. Each word is constructed from adjacent cells (horizontally or vertically), and the same cell cannot be used more than once. Example: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"], output = ["eat","oath"]. This problem uses Trie to store all words and DFS with backtracking on the board.',
+      "Given an m x n board of characters and a list of strings words, return all words on the board. Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.",
+    explanation:
+      "Approach: Combine Trie with DFS backtracking. 1) Build a Trie from all the words. 2) For each cell in the board, start a DFS. 3) In the DFS, check if the current character exists in the Trie. If not, backtrack. 4) If the current Trie node marks the end of a word, add the word to the result. 5) Mark the current cell as visited, explore all four directions, then unmark (backtrack). 6) To avoid duplicates, remove the word from the Trie once found (or use a set). Time complexity is O(m * n * 4^L) where L is the maximum word length, space complexity is O(total characters in all words) for the Trie. The key insight is that the Trie allows us to prune the search early when a prefix doesn't match any word.",
+    example:
+      'Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]\nOutput: ["eat","oath"]\nExplanation: "oath" and "eat" can be found on the board',
     videoLink: "https://www.youtube.com/watch?v=E4BVu5aNGl0",
     leetcodeUrl: "https://leetcode.com/problems/word-search-ii/",
     difficulty: "Hard",
@@ -478,7 +661,11 @@ export const dsaLeetcodeProblems = [
     id: 47,
     title: "Top K Frequent Elements",
     description:
-      "This problem requires finding the k most frequent elements in an array. Given an integer array and integer k, return the k most frequent elements. Answer can be in any order. Example: nums = [1,1,1,2,2,3], k = 2, output = [1,2]. This problem uses a hash map to count frequencies and a bucket sort (array of lists by frequency) or a min-heap (priority queue) to extract the top k elements.",
+      "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.",
+    explanation:
+      "Approach: Use a HashMap to count frequencies, then use bucket sort. 1) Count the frequency of each element using a HashMap. 2) Create an array of lists (buckets) where bucket[i] contains elements with frequency i. 3) Iterate from the highest frequency bucket down, collecting elements until we have k elements. Time complexity is O(n) where n is the number of elements, space complexity is O(n). Alternative approach: use a min-heap of size k to keep the k most frequent elements, with O(n log k) time complexity. The key insight is that bucket sort leverages the fact that frequencies are bounded by n, allowing O(n) time.",
+    example:
+      "Input: nums = [1,1,1,2,2,3], k = 2\nOutput: [1,2]\nExplanation: 1 appears 3 times and 2 appears 2 times, which are the top 2",
     videoLink: "https://www.youtube.com/watch?v=8YyeibZp9ds",
     leetcodeUrl: "https://leetcode.com/problems/top-k-frequent-elements/",
     difficulty: "Medium",
@@ -488,7 +675,11 @@ export const dsaLeetcodeProblems = [
     id: 48,
     title: "Find Median from Data Stream",
     description:
-      "This problem requires designing a data structure that supports adding numbers and finding the median of the current data stream. The median is the middle value in an ordered list; for even length, median is the mean of two middle values. Example: addNum(1), addNum(2), findMedian() returns 1.5; addNum(3), findMedian() returns 2.0. This problem uses two heaps: a max-heap for the lower half and a min-heap for the upper half to efficiently maintain the median.",
+      "The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values. Implement the MedianFinder class: addNum(int num), findMedian().",
+    explanation:
+      "Approach: Use two heaps. Maintain a max-heap for the lower half of the numbers and a min-heap for the upper half. The max-heap contains the smaller half, and the min-heap contains the larger half. Keep the sizes balanced (max-heap size is either equal to or one more than min-heap size). addNum(num): if num <= max-heap top, add to max-heap; otherwise add to min-heap. Rebalance if sizes differ by more than 1. findMedian(): if max-heap size > min-heap size, return max-heap top; otherwise return (max-heap top + min-heap top) / 2.0. Time complexity is O(log n) for addNum and O(1) for findMedian, space complexity is O(n). The key insight is that the median is always at the top of the heaps (or the average of the two tops).",
+    example:
+      "Input: addNum(1), addNum(2), findMedian(), addNum(3), findMedian()\nOutput: 1.5, 2.0\nExplanation: After [1,2] median is 1.5, after [1,2,3] median is 2.0",
     videoLink: "https://www.youtube.com/watch?v=BUH5KXiFtaw",
     leetcodeUrl: "https://leetcode.com/problems/find-median-from-data-stream/",
     difficulty: "Hard",
@@ -498,7 +689,11 @@ export const dsaLeetcodeProblems = [
     id: 49,
     title: "Clone Graph",
     description:
-      "This problem requires creating a deep copy (clone) of an undirected graph. Given a reference to a node in a connected undirected graph, return a deep copy of the graph. Each node contains a value and a list of its neighbors. Example: adjList = [[2,4],[1,3],[2,4],[1,3]] returns a deep copy. This problem uses BFS or DFS with a hash map to track visited nodes and map original nodes to their cloned copies.",
+      "Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.",
+    explanation:
+      "Approach: Use BFS or DFS with a HashMap. The map stores the mapping from original nodes to their cloned copies. Start with the given node, create its clone, and add to the map. Use a queue (for BFS) or recursion (for DFS) to process nodes. For each node, iterate through its neighbors: if a neighbor is not in the map, create its clone and add to the map and queue. Then add the neighbor's clone to the current node's clone's neighbors list. Time complexity is O(V + E) where V is the number of vertices and E is the number of edges, space complexity is O(V) for the map and queue/stack. The key insight is using the map to avoid cloning the same node twice and to handle cycles.",
+    example:
+      "Input: adjList = [[2,4],[1,3],[2,4],[1,3]]\nOutput: [[2,4],[1,3],[2,4],[1,3]]\nExplanation: A deep copy of the graph is returned",
     videoLink: "https://www.youtube.com/watch?v=CRaZP12HlyQ",
     leetcodeUrl: "https://leetcode.com/problems/clone-graph/",
     difficulty: "Medium",
@@ -508,7 +703,11 @@ export const dsaLeetcodeProblems = [
     id: 50,
     title: "Course Schedule",
     description:
-      "This problem determines if all courses can be finished given prerequisites. Given numCourses and a prerequisites array where prerequisites[i] = [ai, bi] means course bi must be taken before course ai, return true if all courses can be finished, false otherwise. Example: numCourses = 2, prerequisites = [[1,0]], output = true. This problem uses topological sort (Kahn's algorithm) or DFS with cycle detection to check if the prerequisite graph has a cycle.",
+      "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. Return true if you can finish all courses. Otherwise, return false.",
+    explanation:
+      "Approach: This is a cycle detection problem in a directed graph. Build an adjacency list where each course points to its dependent courses (courses that require it as a prerequisite). Also track the in-degree of each course. Use Kahn's algorithm (topological sort): 1) Add all courses with in-degree 0 to a queue. 2) Process each course, decrement the in-degree of its dependents. 3) If a dependent's in-degree becomes 0, add it to the queue. 4) Count the number of processed courses. If the count equals numCourses, all courses can be finished (no cycle). Otherwise, there's a cycle and return false. Time complexity is O(V + E) where V is the number of courses and E is the number of prerequisites, space complexity is O(V + E). The key insight is that a cycle in the prerequisite graph means some courses can never be taken.",
+    example:
+      "Input: numCourses = 2, prerequisites = [[1,0]]\nOutput: true\nExplanation: Take course 0 first, then course 1",
     videoLink: "https://www.youtube.com/watch?v=r7x5VBzAIoY",
     leetcodeUrl: "https://leetcode.com/problems/course-schedule/",
     difficulty: "Medium",
@@ -518,7 +717,11 @@ export const dsaLeetcodeProblems = [
     id: 51,
     title: "Number of Islands",
     description:
-      "This problem counts the number of islands in a 2D binary grid. Given an m x n grid of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and formed by connecting adjacent lands horizontally or vertically. Example: grid with all '1's in one connected component returns 1. This problem uses DFS or BFS to traverse each land cell and mark visited cells, counting each connected component.",
+      "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.",
+    explanation:
+      "Approach: Use DFS or BFS. Iterate through each cell in the grid. When we find a '1' (land) that hasn't been visited, increment the island count and perform a DFS (or BFS) from that cell to mark all connected land cells as visited (change '1' to '0' or use a visited set). The DFS explores all four directions (up, down, left, right) recursively. Time complexity is O(m * n) where m and n are the grid dimensions, space complexity is O(m * n) in the worst case for the recursion stack (or visited set). The key insight is that each island is a connected component, and we count components by exploring each unvisited land cell.",
+    example:
+      'Input: grid = [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]\nOutput: 1\nExplanation: All the 1\'s are connected, forming one island',
     videoLink: "https://www.youtube.com/watch?v=wreu3u_xdd8",
     leetcodeUrl: "https://leetcode.com/problems/number-of-islands/",
     difficulty: "Medium",
@@ -528,7 +731,11 @@ export const dsaLeetcodeProblems = [
     id: 52,
     title: "Pacific Atlantic Water Flow",
     description:
-      "This problem finds cells where water can flow to both the Pacific and Atlantic oceans. Given an m x n height matrix, water flows to neighboring cells if neighbor's height <= current cell's height. Pacific Ocean touches left and top edges; Atlantic touches right and bottom edges. Return coordinates where rainwater can flow to both oceans. This problem uses DFS/BFS from ocean boundaries (Pacific from top and left, Atlantic from bottom and right) to mark reachable cells, then find intersection.",
+      "There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges. Given an m x n matrix of non-negative integers representing the height of each unit cell, return a list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.",
+    explanation:
+      "Approach: Instead of checking from each cell whether water can flow to both oceans (which is expensive), work backwards from the oceans. Water flows from a cell to a neighbor if neighbor's height <= current cell's height. So, water can flow from a neighbor to a cell if cell's height >= neighbor's height. Start DFS/BFS from the Pacific ocean boundary (top row and left column) and mark all cells reachable by flowing uphill (where current height >= neighbor height). Similarly, start from the Atlantic ocean boundary (bottom row and right column). A cell can flow to both oceans if it's reachable from both the Pacific and Atlantic starting points. Time complexity is O(m * n), space complexity is O(m * n) for the visited sets. The key insight is reversing the flow direction to start from the oceans.",
+    example:
+      "Input: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]\nOutput: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]\nExplanation: These cells can flow to both oceans",
     videoLink: "https://www.youtube.com/watch?v=yH0DesUBuFo",
     leetcodeUrl: "https://leetcode.com/problems/pacific-atlantic-water-flow/",
     difficulty: "Medium",
@@ -538,7 +745,11 @@ export const dsaLeetcodeProblems = [
     id: 53,
     title: "Longest Consecutive Sequence",
     description:
-      "This problem finds the length of the longest consecutive elements sequence in an unsorted array. Given an unsorted integer array, return the length of the longest consecutive sequence. The algorithm must run in O(n) time. Example: nums = [100,4,200,1,3,2], output = 4 ([1,2,3,4]). This problem uses a hash set to store all numbers, then for each number, checks if it's the start of a sequence (num-1 not in set), and counts consecutive elements.",
+      "Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. The algorithm must run in O(n) time.",
+    explanation:
+      "Approach: Use a HashSet. 1) Add all numbers to a set. 2) For each number, check if it's the start of a sequence by checking if num-1 is NOT in the set. 3) If it is the start, count the length of the sequence by checking num+1, num+2, etc. in the set. 4) Track the maximum sequence length. Time complexity is O(n) because each number is visited at most twice (once when checking if it's a start, and once as part of a sequence), space complexity is O(n) for the set. The key insight is that we only start counting from the beginning of each sequence, avoiding O(n²) work.",
+    example:
+      "Input: nums = [100,4,200,1,3,2]\nOutput: 4\nExplanation: The longest consecutive elements sequence is [1, 2, 3, 4]",
     videoLink: "https://www.youtube.com/watch?v=F31UjCHu1WM",
     leetcodeUrl: "https://leetcode.com/problems/longest-consecutive-sequence/",
     difficulty: "Medium",
@@ -548,7 +759,11 @@ export const dsaLeetcodeProblems = [
     id: 54,
     title: "Alien Dictionary",
     description:
-      'This problem derives the order of letters in an alien language. Given a list of words sorted lexicographically by the rules of a new language, derive the order of letters. Example: ["wrt","wrf","er","ett","rftt"] returns "wertf". This problem uses topological sort on a graph where edges represent order relationships between letters. Compare adjacent words to find the first differing character and build the graph.',
+      "There is a new alien language that uses the English alphabet. However, the order of the letters is unknown to you. You are given a list of strings words from the alien language's dictionary, where the strings are sorted lexicographically by the rules of this new language. Return a string of the unique letters in the new alien language sorted in lexicographically increasing order by the new language's rules. If there is no solution, return \"\".",
+    explanation:
+      "Approach: Build a directed graph and perform topological sort. 1) Create a graph with all unique characters as nodes. 2) Compare each pair of adjacent words. Find the first position where they differ. The character in the first word comes before the character in the second word, so add an edge from the first character to the second. 3) If the first word is a prefix of the second word but longer, the order is invalid (return empty string). 4) Perform topological sort (Kahn's algorithm) on the graph. If the result length equals the number of unique characters, return the result; otherwise, there's a cycle and return empty string. Time complexity is O(C) where C is the total number of characters in all words, space complexity is O(V + E) for the graph. The key insight is that comparing adjacent words reveals the character ordering constraints.",
+    example:
+      'Input: words = ["wrt","wrf","er","ett","rftt"]\nOutput: "wertf"\nExplanation: The correct order of letters is w, e, r, t, f',
     videoLink: "https://www.youtube.com/watch?v=DQONKW1255g",
     leetcodeUrl: "https://leetcode.com/problems/alien-dictionary/",
     difficulty: "Hard",
@@ -558,7 +773,11 @@ export const dsaLeetcodeProblems = [
     id: 55,
     title: "Graph Valid Tree",
     description:
-      "This problem checks if given edges form a valid tree. Given n nodes labeled 0 to n-1 and a list of undirected edges, check if these edges make up a valid tree. A valid tree has n nodes, n-1 edges, and is fully connected with no cycles. Example: n = 5, edges = [[0,1],[0,2],[0,3],[1,4]], output = true. This problem uses union-find or DFS to check for cycles and connectivity.",
+      "You have a graph of n nodes labeled from 0 to n - 1. You are given an integer n and a list of edges where edges[i] = [ai, bi] indicates that there is an undirected edge between nodes ai and bi. Return true if the edges of the given graph make up a valid tree, and false otherwise.",
+    explanation:
+      "Approach: A graph is a valid tree if: 1) It has exactly n-1 edges, 2) It is fully connected (all nodes reachable from any node), 3) It has no cycles. Use Union-Find (Disjoint Set Union): 1) If edges.length != n-1, return false. 2) Initialize a union-find structure with n nodes. 3) For each edge, if the two nodes are already in the same set, there's a cycle, return false. Otherwise, union them. 4) After processing all edges, check that all nodes are in the same set (fully connected). Time complexity is O(n * α(n)) where α is the inverse Ackermann function (nearly O(1) for union-find operations), space complexity is O(n). Alternative approach: DFS from node 0 and check if all nodes are visited and no cycles. The key insight is that a tree is a connected acyclic graph with exactly n-1 edges.",
+    example:
+      "Input: n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]\nOutput: true\nExplanation: The graph is connected and has no cycles",
     videoLink: "https://www.youtube.com/watch?v=fbznsldBpRA",
     leetcodeUrl: "https://leetcode.com/problems/graph-valid-tree/",
     difficulty: "Medium",
@@ -568,7 +787,11 @@ export const dsaLeetcodeProblems = [
     id: 56,
     title: "Number of Connected Components in an Undirected Graph",
     description:
-      "This problem finds the number of connected components in an undirected graph. Given n nodes labeled 0 to n-1 and a list of undirected edges, find the number of connected components. Example: n = 5, edges = [[0,1],[1,2],[3,4]], output = 2 (components: {0,1,2} and {3,4}). This problem uses union-find or DFS to count distinct connected groups of nodes.",
+      "You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [ai, bi] indicates that there is an undirected edge between nodes ai and bi. Return the number of connected components in the graph.",
+    explanation:
+      "Approach: Use Union-Find (Disjoint Set Union). 1) Initialize a union-find structure with n nodes, each node is its own component (count = n). 2) For each edge, union the two nodes. If the two nodes were in different components, decrement the component count. 3) After processing all edges, the component count is the answer. Time complexity is O(n + E * α(n)) where E is the number of edges and α is the inverse Ackermann function, space complexity is O(n). Alternative approach: use DFS/BFS to count connected components by exploring each unvisited node. The key insight is that union-find naturally tracks connected components, and each successful union reduces the component count by 1.",
+    example:
+      "Input: n = 5, edges = [[0,1],[1,2],[3,4]]\nOutput: 2\nExplanation: Components are {0,1,2} and {3,4}",
     videoLink: "https://www.youtube.com/watch?v=30I_IEgm_Pc",
     leetcodeUrl:
       "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
@@ -579,7 +802,11 @@ export const dsaLeetcodeProblems = [
     id: 57,
     title: "Climbing Stairs",
     description:
-      "This problem counts the number of ways to climb a staircase. You are climbing a staircase that takes n steps to reach the top. Each time you can climb 1 or 2 steps. In how many distinct ways can you climb to the top? Example: n = 2, output = 2 (1+1 or 2); n = 3, output = 3 (1+1+1, 1+2, 2+1). This is a classic Fibonacci sequence problem solved using dynamic programming: ways[n] = ways[n-1] + ways[n-2].",
+      "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+    explanation:
+      "Approach: Use dynamic programming. To reach step n, you can either come from step n-1 (by taking 1 step) or from step n-2 (by taking 2 steps). So, ways[n] = ways[n-1] + ways[n-2]. Base cases: ways[0] = 1 (one way to stay at the ground), ways[1] = 1 (one way to reach step 1). This is the Fibonacci sequence. Optimize space: instead of an array, use two variables to track the last two values. Time complexity is O(n), space complexity is O(1) with the optimized approach. The key insight is that this is a Fibonacci sequence problem, and the number of ways grows exponentially with n.",
+    example:
+      "Input: n = 3\nOutput: 3\nExplanation: There are three ways: 1+1+1, 1+2, 2+1",
     videoLink: "https://www.youtube.com/watch?v=UQTvXqWxKvE",
     leetcodeUrl: "https://leetcode.com/problems/climbing-stairs/",
     difficulty: "Easy",
@@ -589,7 +816,11 @@ export const dsaLeetcodeProblems = [
     id: 58,
     title: "Coin Change",
     description:
-      "This problem finds the fewest number of coins needed to make a given amount. Given an array of coin denominations and a target amount, return the fewest number of coins to make that amount. If the amount cannot be made, return -1. Example: coins = [1,2,5], amount = 11, output = 3 (5+5+1). This problem uses dynamic programming: dp[amount] = min(dp[amount - coin] + 1) for each coin, with dp[0] = 0.",
+      "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.",
+    explanation:
+      "Approach: Use dynamic programming (bottom-up). Create a dp array of size amount+1, initialized to a large value (e.g., amount+1 or Infinity). Set dp[0] = 0 (0 coins needed to make amount 0). For each amount from 1 to target, for each coin: if coin <= amount, dp[amount] = min(dp[amount], dp[amount - coin] + 1). After filling the array, if dp[amount] is still the large value, return -1 (impossible); otherwise return dp[amount]. Time complexity is O(amount * number of coins), space complexity is O(amount). The key insight is that the optimal solution for an amount depends on the optimal solutions for smaller amounts (amount - coin).",
+    example:
+      "Input: coins = [1,2,5], amount = 11\nOutput: 3\nExplanation: 11 = 5 + 5 + 1, using 3 coins",
     videoLink: "https://www.youtube.com/watch?v=R5tnHGLNLD4",
     leetcodeUrl: "https://leetcode.com/problems/coin-change/",
     difficulty: "Medium",
@@ -599,7 +830,11 @@ export const dsaLeetcodeProblems = [
     id: 59,
     title: "Longest Increasing Subsequence",
     description:
-      "This problem finds the length of the longest strictly increasing subsequence. Given an integer array, return the length of the longest strictly increasing subsequence. Example: nums = [10,9,2,5,3,7,101,18], output = 4 ([2,3,7,101]); nums = [0,1,0,3,2,3], output = 4. This problem uses dynamic programming (O(n²)) or patience sorting with binary search (O(n log n)) to track the smallest tail values.",
+      "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
+    explanation:
+      "Approach: Use patience sorting with binary search for O(n log n) time. Maintain an array 'tails' where tails[i] is the smallest possible tail value of an increasing subsequence of length i+1. For each number in nums: use binary search to find the position in tails where this number should go (the first element >= num). If found, replace it; if not found (num is larger than all), append it. The length of tails is the answer. Time complexity is O(n log n), space complexity is O(n). Alternative DP approach: dp[i] = length of LIS ending at index i, dp[i] = 1 + max(dp[j]) for all j < i where nums[j] < nums[i], with O(n²) time. The key insight is that maintaining the smallest tail values allows binary search to find the correct position efficiently.",
+    example:
+      "Input: nums = [10,9,2,5,3,7,101,18]\nOutput: 4\nExplanation: The longest increasing subsequence is [2,3,7,101]",
     videoLink: "https://www.youtube.com/watch?v=ogUnDgLtgTw",
     leetcodeUrl:
       "https://leetcode.com/problems/longest-increasing-subsequence/",
@@ -610,7 +845,11 @@ export const dsaLeetcodeProblems = [
     id: 60,
     title: "Longest Common Subsequence",
     description:
-      'This problem finds the length of the longest common subsequence between two strings. Given two strings text1 and text2, return the length of their longest common subsequence. A subsequence is formed by deleting some characters without changing relative order. Example: text1 = "abcde", text2 = "ace", output = 3 ("ace"). This problem uses 2D dynamic programming where dp[i][j] = dp[i-1][j-1]+1 if chars match, else max(dp[i-1][j], dp[i][j-1]).',
+      "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0. A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.",
+    explanation:
+      "Approach: Use 2D dynamic programming. Create a dp table of size (m+1) x (n+1) where m and n are the lengths of the two strings. dp[i][j] represents the length of the LCS of text1[0..i-1] and text2[0..j-1]. Base case: dp[0][j] = 0 and dp[i][0] = 0 (empty string has LCS length 0). Transition: if text1[i-1] == text2[j-1], dp[i][j] = dp[i-1][j-1] + 1. Otherwise, dp[i][j] = max(dp[i-1][j], dp[i][j-1]). The answer is dp[m][n]. Time complexity is O(m * n), space complexity is O(m * n) (can be optimized to O(min(m, n)) using a 1D array). The key insight is that when characters match, we extend the LCS of the prefixes; when they don't, we take the best of skipping one character from either string.",
+    example:
+      'Input: text1 = "abcde", text2 = "ace"\nOutput: 3\nExplanation: The longest common subsequence is "ace"',
     videoLink: "https://www.youtube.com/watch?v=syERHFbrTk0",
     leetcodeUrl: "https://leetcode.com/problems/longest-common-subsequence/",
     difficulty: "Medium",
@@ -620,7 +859,11 @@ export const dsaLeetcodeProblems = [
     id: 61,
     title: "Word Break",
     description:
-      'This problem checks if a string can be segmented into dictionary words. Given a string s and a dictionary of strings wordDict, return true if s can be segmented into one or more dictionary words. The same word can be reused. Example: s = "leetcode", wordDict = ["leet","code"], output = true. This problem uses dynamic programming where dp[i] represents if s[0:i] can be segmented, checking all words that match suffix ending at i.',
+      "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words. Note that the same word in the dictionary may be reused multiple times in the segmentation.",
+    explanation:
+      "Approach: Use dynamic programming. Create a boolean dp array of size n+1 where n is the length of s. dp[i] = true if s[0..i-1] can be segmented into dictionary words. Set dp[0] = true (empty string can be segmented). For each position i from 1 to n, for each word in wordDict: if the word matches the suffix of s[0..i-1] (i.e., s[i-word.length..i-1] == word) and dp[i-word.length] is true, then dp[i] = true. The answer is dp[n]. Time complexity is O(n * m * L) where n is the length of s, m is the number of words, and L is the average word length, space complexity is O(n). The key insight is that a string can be segmented if there's a valid word ending at position i and the prefix before that word can also be segmented.",
+    example:
+      'Input: s = "leetcode", wordDict = ["leet","code"]\nOutput: true\nExplanation: "leetcode" can be segmented as "leet code"',
     videoLink: "https://www.youtube.com/watch?v=ZFfsAh9Z1xk",
     leetcodeUrl: "https://leetcode.com/problems/word-break/",
     difficulty: "Medium",
@@ -630,7 +873,11 @@ export const dsaLeetcodeProblems = [
     id: 62,
     title: "Combination Sum IV (DP)",
     description:
-      "This problem counts the number of combinations that sum to a target. Given an array of distinct integers and a target integer, return the number of possible combinations that add up to the target. Different sequences are counted as different combinations. Example: nums = [1,2,3], target = 4, output = 7. This problem uses dynamic programming where dp[amount] = sum of dp[amount - num] for each num, with dp[0] = 1. This counts permutations/combinations with order mattering.",
+      "Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target. The test cases are generated so that the answer can fit in a 32-bit integer.",
+    explanation:
+      "Approach: Use dynamic programming (bottom-up). Create a dp array of size target+1, initialized to 0. Set dp[0] = 1 (one way to make sum 0 - use no numbers). For each amount from 1 to target, for each num in nums: if num <= amount, dp[amount] += dp[amount - num]. The answer is dp[target]. Time complexity is O(target * number of nums), space complexity is O(target). The key insight is that this counts ordered combinations (permutations) because we iterate over amounts first and then over nums, meaning different orderings of the same numbers are counted separately. For example, [1,2] and [2,1] are both counted for target 3.",
+    example:
+      "Input: nums = [1,2,3], target = 4\nOutput: 7\nExplanation: The possible combinations are (1,1,1,1), (1,1,2), (1,2,1), (1,3), (2,1,1), (2,2), (3,1)",
     videoLink: "https://www.youtube.com/watch?v=oZ-yC2dDG94",
     leetcodeUrl: "https://leetcode.com/problems/combination-sum-iv/",
     difficulty: "Medium",
@@ -640,7 +887,11 @@ export const dsaLeetcodeProblems = [
     id: 63,
     title: "Combination Sum (Backtracking)",
     description:
-      "This problem finds all combinations that sum to a target using backtracking. Given an array of distinct integers and a target, find all unique combinations where numbers sum to target. Each number can be used unlimited times. Example: candidates = [2,3,6,7], target = 7, output = [[7],[2,2,3]]. This problem uses backtracking with recursion, exploring all combinations by including the current element and moving forward (allowing reuse).",
+      "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times.",
+    explanation:
+      "Approach: Use backtracking (recursion). Sort the candidates array first (optional but helps with pruning). Define a recursive function that takes: the current index, the remaining target, and the current combination. At each step: 1) If remaining target is 0, add the current combination to the result. 2) If remaining target is negative or index is out of bounds, return. 3) For each candidate from the current index to the end: include the candidate in the combination, recursively call with the same index (allowing reuse) and remaining target minus the candidate, then remove the candidate (backtrack). Time complexity is O(2^(target/min(candidates))) in the worst case, space complexity is O(target/min(candidates)) for the recursion stack. The key insight is that allowing reuse means we stay at the same index when recursing, and sorting helps prune early when candidates exceed the remaining target.",
+    example:
+      "Input: candidates = [2,3,6,7], target = 7\nOutput: [[2,2,3],[7]]\nExplanation: 2+2+3 = 7 and 7 = 7",
     videoLink: "https://www.youtube.com/watch?v=6i9kWyCLrko",
     leetcodeUrl: "https://leetcode.com/problems/combination-sum/",
     difficulty: "Medium",
@@ -650,7 +901,11 @@ export const dsaLeetcodeProblems = [
     id: 64,
     title: "House Robber",
     description:
-      "This problem finds the maximum amount a robber can rob without alerting police. Given an integer array representing money in each house, adjacent houses cannot be robbed on the same night. Return the maximum amount that can be robbed. Example: nums = [1,2,3,1], output = 4 (rob houses 1 and 3: 1+3=4). This problem uses dynamic programming where dp[i] = max(dp[i-1], dp[i-2] + nums[i]), representing robbing or skipping the current house.",
+      "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night. Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.",
+    explanation:
+      "Approach: Use dynamic programming. dp[i] represents the maximum amount that can be robbed from the first i houses. For each house, we have two choices: 1) Rob this house: dp[i-2] + nums[i] (can't rob the previous house). 2) Skip this house: dp[i-1]. Take the maximum of both. Base cases: dp[0] = nums[0], dp[1] = max(nums[0], nums[1]). Optimize space: use two variables (prev2, prev1) instead of an array. Time complexity is O(n), space complexity is O(1) with the optimized approach. The key insight is that the decision at each house depends only on the previous two houses, making this a simple linear DP problem.",
+    example:
+      "Input: nums = [1,2,3,1]\nOutput: 4\nExplanation: Rob house 1 (money = 1) and then rob house 3 (money = 3), total = 1 + 3 = 4",
     videoLink: "https://www.youtube.com/watch?v=k5MRvhAGQ6E",
     leetcodeUrl: "https://leetcode.com/problems/house-robber/",
     difficulty: "Medium",
@@ -660,7 +915,11 @@ export const dsaLeetcodeProblems = [
     id: 65,
     title: "House Robber II",
     description:
-      "This problem is similar to House Robber but with houses arranged in a circle. Given an integer array representing money in each house, houses are in a circle (first and last are adjacent). Return the maximum amount that can be robbed. Example: nums = [2,3,2], output = 3. This problem uses House Robber solution twice: once excluding the first house, and once excluding the last house, and taking the maximum of both.",
+      "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.",
+    explanation:
+      "Approach: The circular arrangement means the first and last houses are adjacent, so we can't rob both. Solve this by running the House Robber solution twice: 1) Rob houses from index 0 to n-2 (exclude the last house). 2) Rob houses from index 1 to n-1 (exclude the first house). Take the maximum of both results. Handle the edge case where there's only one house (return nums[0]). Time complexity is O(n) (two passes), space complexity is O(1). The key insight is that the circular constraint can be broken by considering two linear cases: either we exclude the first house or we exclude the last house.",
+    example:
+      "Input: nums = [2,3,2]\nOutput: 3\nExplanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses. The maximum is 3",
     videoLink: "https://www.youtube.com/watch?v=e1c4KThCbUE",
     leetcodeUrl: "https://leetcode.com/problems/house-robber-ii/",
     difficulty: "Medium",
@@ -670,7 +929,11 @@ export const dsaLeetcodeProblems = [
     id: 66,
     title: "Decode Ways",
     description:
-      "This problem counts the number of ways to decode a digit string into letters. Given a string containing only digits, where 'A' → 1, 'B' → 2, ..., 'Z' → 26, return the number of ways to decode it. Example: s = \"12\", output = 2 (\"AB\" and \"L\"). This problem uses dynamic programming where dp[i] = dp[i-1] + dp[i-2] if the two digits form a valid number (10-26), with careful handling of leading zeros.",
+      "A message containing letters from A-Z can be encoded into numbers using the following mapping: 'A' -> '1', 'B' -> '2', ..., 'Z' -> '26'. To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above. Given a string s containing only digits, return the number of ways to decode it.",
+    explanation:
+      "Approach: Use dynamic programming. dp[i] represents the number of ways to decode the first i characters of the string. Base cases: dp[0] = 1 (empty string has 1 way), dp[1] = 1 if s[0] != '0' else 0. For each position i from 2 to n: 1) If s[i-1] != '0', dp[i] += dp[i-1] (single digit decode). 2) If the two-digit number s[i-2..i-1] is between 10 and 26, dp[i] += dp[i-2] (two-digit decode). The answer is dp[n]. Time complexity is O(n), space complexity is O(n) (can be optimized to O(1) with two variables). The key insight is that '0' can only be decoded as part of a two-digit number (10 or 20), and numbers 27-99 are invalid for two-digit decoding.",
+    example:
+      'Input: s = "12"\nOutput: 2\nExplanation: "12" could be decoded as "AB" (1 2) or "L" (12)',
     videoLink: "https://www.youtube.com/watch?v=Ppv0MbzvRcc",
     leetcodeUrl: "https://leetcode.com/problems/decode-ways/",
     difficulty: "Medium",
@@ -680,7 +943,11 @@ export const dsaLeetcodeProblems = [
     id: 67,
     title: "Unique Paths",
     description:
-      "This problem counts the number of unique paths from top-left to bottom-right in a grid. Given an m x n grid, a robot starts at grid[0][0] and moves to grid[m-1][n-1], moving only down or right. Return the number of possible unique paths. Example: m = 3, n = 2, output = 3. This problem uses dynamic programming where dp[i][j] = dp[i-1][j] + dp[i][j-1], or combinatorics using C(m+n-2, m-1).",
+      "There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m-1][n-1]). The robot can only move either down or right at any point in time. Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.",
+    explanation:
+      "Approach: Use dynamic programming. dp[i][j] represents the number of unique paths to reach cell (i, j). Base cases: dp[0][j] = 1 (only one way to reach any cell in the first row - move right) and dp[i][0] = 1 (only one way to reach any cell in the first column - move down). Transition: dp[i][j] = dp[i-1][j] + dp[i][j-1] (paths from above + paths from the left). The answer is dp[m-1][n-1]. Time complexity is O(m * n), space complexity is O(m * n) (can be optimized to O(n) using a 1D array). Alternative approach: combinatorics - the robot must make exactly (m-1) down moves and (n-1) right moves, total (m+n-2) moves. The number of unique paths is C(m+n-2, m-1) = (m+n-2)! / ((m-1)! * (n-1)!). The key insight is that each cell can only be reached from above or from the left.",
+    example:
+      "Input: m = 3, n = 2\nOutput: 3\nExplanation: From the top-left corner, there are a total of 3 ways to reach the bottom-right corner",
     videoLink: "https://www.youtube.com/watch?v=pUt21JEa1Sw",
     leetcodeUrl: "https://leetcode.com/problems/unique-paths/",
     difficulty: "Medium",
@@ -690,7 +957,11 @@ export const dsaLeetcodeProblems = [
     id: 68,
     title: "Jump Game",
     description:
-      "This problem determines if you can reach the last index in an array. Given an array where each element represents the maximum jump length at that position, return true if you can reach the last index, false otherwise. Example: nums = [2,3,1,1,4], output = true; nums = [3,2,1,0,4], output = false. This problem uses greedy approach tracking the furthest reachable index: maxReach = max(maxReach, i + nums[i]).",
+      "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position. Return true if you can reach the last index, or false otherwise.",
+    explanation:
+      "Approach: Use a greedy approach. Maintain a variable maxReach that tracks the furthest index reachable so far. Initialize maxReach = 0. Iterate through the array: 1) If the current index i is greater than maxReach, we can't reach this position, return false. 2) Update maxReach = max(maxReach, i + nums[i]). 3) If maxReach >= n-1 (last index), return true. Time complexity is O(n), space complexity is O(1). The key insight is that we don't need to track all possible paths - we just need to know the furthest index we can reach, and if we can reach the last index, we're done. If at any point we can't reach the current index, we're stuck.",
+    example:
+      "Input: nums = [2,3,1,1,4]\nOutput: true\nExplanation: Jump 1 step from index 0 to 1, then 3 steps to the last index",
     videoLink: "https://www.youtube.com/watch?v=WgFQQLB1MY4",
     leetcodeUrl: "https://leetcode.com/problems/jump-game/",
     difficulty: "Medium",
@@ -700,7 +971,11 @@ export const dsaLeetcodeProblems = [
     id: 69,
     title: "Insert Interval",
     description:
-      "This problem inserts a new interval into a sorted non-overlapping interval list. Given an array of non-overlapping intervals sorted by start, and a new interval, insert it and merge if necessary. Example: intervals = [[1,3],[6,9]], newInterval = [2,5], output = [[1,5],[6,9]]. This problem tests interval manipulation: find insertion position, merge overlapping intervals, and reconstruct the result.",
+      "You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval. Insert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary). Return intervals after the insertion.",
+    explanation:
+      "Approach: Iterate through the intervals and handle three cases: 1) If the current interval ends before the new interval starts (interval.end < newInterval.start), add it to the result as-is. 2) If the current interval starts after the new interval ends (interval.start > newInterval.end), add the new interval to the result, then add the current interval and all remaining intervals as-is. 3) If the intervals overlap, merge them: newInterval.start = min(newInterval.start, interval.start) and newInterval.end = max(newInterval.end, interval.end). After the loop, if the new interval hasn't been added yet, add it. Time complexity is O(n) where n is the number of intervals, space complexity is O(n) for the result. The key insight is that intervals before the new interval are added as-is, overlapping intervals are merged, and intervals after are added as-is.",
+    example:
+      "Input: intervals = [[1,3],[6,9]], newInterval = [2,5]\nOutput: [[1,5],[6,9]]\nExplanation: The new interval [2,5] overlaps with [1,3] and they are merged",
     videoLink: "https://www.youtube.com/watch?v=OOYtF5tHxLc",
     leetcodeUrl: "https://leetcode.com/problems/insert-interval/",
     difficulty: "Medium",
@@ -710,7 +985,11 @@ export const dsaLeetcodeProblems = [
     id: 70,
     title: "Merge Intervals",
     description:
-      "This problem merges all overlapping intervals. Given an array of intervals, merge all overlapping intervals and return non-overlapping intervals covering all input intervals. Example: intervals = [[1,3],[2,6],[8,10],[15,18]], output = [[1,6],[8,10],[15,18]]. This problem sorts intervals by start, then iteratively merges if current.start <= last.end, updating the end to max(last.end, current.end).",
+      "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
+    explanation:
+      "Approach: Sort the intervals by their start time. Then iterate through the sorted intervals. Maintain a result list. For each interval: 1) If the result is empty or the current interval's start is greater than the last interval's end in the result, add the current interval as a new interval. 2) Otherwise, the intervals overlap, so merge them by updating the last interval's end to max(last.end, current.end). Time complexity is O(n log n) due to sorting, space complexity is O(n) for the result (or O(log n) for the sort in some languages). The key insight is that sorting by start time ensures that overlapping intervals are adjacent, making the merge process straightforward.",
+    example:
+      "Input: intervals = [[1,3],[2,6],[8,10],[15,18]]\nOutput: [[1,6],[8,10],[15,18]]\nExplanation: [1,3] and [2,6] overlap and are merged into [1,6]",
     videoLink: "https://www.youtube.com/watch?v=qafLchuse5A",
     leetcodeUrl: "https://leetcode.com/problems/merge-intervals/",
     difficulty: "Medium",
@@ -720,7 +999,11 @@ export const dsaLeetcodeProblems = [
     id: 71,
     title: "Non-overlapping Intervals",
     description:
-      "This problem finds the minimum number of intervals to remove to make the rest non-overlapping. Given an array of intervals, return the minimum number of intervals to remove. Example: intervals = [[1,2],[2,3],[3,4],[1,3]], output = 1 ([1,3] can be removed). This problem sorts by end time and uses greedy approach to count intervals that overlap with the selected interval.",
+      "Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.",
+    explanation:
+      "Approach: Use a greedy approach. Sort the intervals by their end time. Maintain a variable 'end' to track the end of the last selected interval. Iterate through the sorted intervals: 1) If the current interval's start >= end, it doesn't overlap, so select it and update end = current.end. 2) Otherwise, the interval overlaps, so increment the removal count. Time complexity is O(n log n) due to sorting, space complexity is O(1) (or O(log n) for the sort). The key insight is that sorting by end time and greedily selecting intervals that don't overlap gives the maximum number of non-overlapping intervals, so the minimum removals is total intervals minus the maximum non-overlapping count. This is the classic interval scheduling problem.",
+    example:
+      "Input: intervals = [[1,2],[2,3],[3,4],[1,3]]\nOutput: 1\nExplanation: Remove [1,3] to make the rest non-overlapping",
     videoLink: "https://www.youtube.com/watch?v=pYVS4y7dqCc",
     leetcodeUrl: "https://leetcode.com/problems/non-overlapping-intervals/",
     difficulty: "Medium",
@@ -730,7 +1013,11 @@ export const dsaLeetcodeProblems = [
     id: 72,
     title: "Meeting Rooms",
     description:
-      "This problem determines if a person can attend all meetings. Given an array of meeting intervals [start, end], determine if a person could attend all meetings. Example: [[0,30],[5,10],[15,20]] returns false (overlap); [[7,10],[2,4]] returns true. This problem sorts intervals by start time and checks if any interval's start is less than the previous interval's end (overlap).",
+      "Given an array of meeting time intervals where intervals[i] = [starti, endi], determine if a person could attend all meetings.",
+    explanation:
+      "Approach: Sort the intervals by their start time. Then iterate through the sorted intervals. For each interval (except the first), check if its start time is less than the previous interval's end time. If so, the meetings overlap and the person can't attend all meetings, return false. If no overlaps are found, return true. Time complexity is O(n log n) due to sorting, space complexity is O(1) (or O(log n) for the sort). The key insight is that after sorting by start time, overlapping meetings will be adjacent, so we only need to check consecutive intervals.",
+    example:
+      "Input: intervals = [[0,30],[5,10],[15,20]]\nOutput: false\nExplanation: The meetings at [0,30] and [5,10] overlap",
     videoLink: "https://www.youtube.com/watch?v=j-SG7G-hPr0",
     leetcodeUrl: "https://leetcode.com/problems/meeting-rooms/",
     difficulty: "Easy",
@@ -740,7 +1027,11 @@ export const dsaLeetcodeProblems = [
     id: 73,
     title: "Meeting Rooms II",
     description:
-      "This problem finds the minimum number of conference rooms required. Given an array of meeting intervals, find the minimum number of rooms needed. Example: [[0,30],[5,10],[15,20]] output = 2; [[7,10],[2,4]] output = 1. This problem sorts start and end times separately, or uses a min-heap to track end times of meetings, counting the maximum number of simultaneous meetings.",
+      "Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.",
+    explanation:
+      "Approach: Use a min-heap (priority queue). Sort the intervals by start time. Iterate through the sorted intervals: 1) If the heap is not empty and the earliest ending meeting (heap top) ends before or at the current meeting's start, pop it (that room is free). 2) Add the current meeting's end time to the heap. 3) The heap size represents the number of rooms currently in use. Track the maximum heap size. Time complexity is O(n log n) due to sorting and heap operations, space complexity is O(n) for the heap. Alternative approach: separate the start times and end times into two arrays, sort both, and use two pointers to count the maximum number of overlapping meetings. The key insight is that the minimum number of rooms equals the maximum number of simultaneous meetings.",
+    example:
+      "Input: intervals = [[0,30],[5,10],[15,20]]\nOutput: 2\nExplanation: Two rooms are needed because [0,30] overlaps with both [5,10] and [15,20]",
     videoLink: "https://www.youtube.com/watch?v=UZGxzrdpec4",
     leetcodeUrl: "https://leetcode.com/problems/meeting-rooms-ii/",
     difficulty: "Medium",
@@ -750,7 +1041,11 @@ export const dsaLeetcodeProblems = [
     id: 74,
     title: "Sum of Two Integers",
     description:
-      "This problem adds two integers without using + and - operators. Given two integers a and b, return their sum without using the operators + and -. Example: a = 1, b = 2, output = 3; a = 2, b = 3, output = 5. This problem uses bit manipulation: XOR gives sum without carry, AND and left shift gives carry. Repeat until no carry remains: sum = a ^ b, carry = (a & b) << 1, continue with a = sum, b = carry.",
+      "Given two integers a and b, return the sum of the two integers without using the operators + and -.",
+    explanation:
+      "Approach: Use bit manipulation. The XOR operation (a ^ b) gives the sum of two bits without considering the carry. The AND operation (a & b) identifies the positions where both bits are 1, which is where a carry is generated. Left shift the carry by 1 ((a & b) << 1) to move it to the correct position. Repeat: sum = a ^ b, carry = (a & b) << 1, then set a = sum and b = carry. Continue until carry is 0. The final sum is a. Time complexity is O(1) since integers have a fixed number of bits (32 or 64), space complexity is O(1). The key insight is that addition can be decomposed into XOR (sum without carry) and AND + shift (carry), and this process repeats until no carry remains.",
+    example:
+      "Input: a = 1, b = 2\nOutput: 3\nExplanation: 1 + 2 = 3 without using + operator",
     videoLink: "https://www.youtube.com/watch?v=DCCzKeRajdQ",
     leetcodeUrl: "https://leetcode.com/problems/sum-of-two-integers/",
     difficulty: "Medium",
@@ -760,7 +1055,11 @@ export const dsaLeetcodeProblems = [
     id: 75,
     title: "Number of 1 Bits",
     description:
-      "This problem counts the number of '1' bits (Hamming weight) in an integer's binary representation. Write a function that takes an unsigned integer and returns the number of '1' bits. Example: n = 00000000000000000000000000001011, output = 3. This problem uses bit manipulation: while n != 0, n &= n-1 clears the lowest set bit, count increments. This is the Brian Kernighan's algorithm, or simply loop through bits.",
+      "Write a function that takes the binary representation of an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).",
+    explanation:
+      "Approach: Use Brian Kernighan's algorithm. The key observation is that n & (n-1) clears the lowest set bit in n. For example, n = 12 (1100), n-1 = 11 (1011), n & (n-1) = 8 (1000) - the lowest set bit is cleared. So, while n != 0: increment the count, and set n = n & (n-1). The number of iterations equals the number of set bits. Time complexity is O(number of set bits), space complexity is O(1). Alternative approach: loop through all 32 bits and count the set bits, with O(32) time. The key insight is that n & (n-1) efficiently clears the lowest set bit, so the loop runs only as many times as there are set bits.",
+    example:
+      "Input: n = 00000000000000000000000000001011\nOutput: 3\nExplanation: The binary representation has three 1 bits",
     videoLink: "https://www.youtube.com/watch?v=hf2_2OdgeXo",
     leetcodeUrl: "https://leetcode.com/problems/number-of-1-bits/",
     difficulty: "Easy",
@@ -770,7 +1069,11 @@ export const dsaLeetcodeProblems = [
     id: 76,
     title: "Counting Bits",
     description:
-      "This problem counts the number of 1 bits for each number from 0 to n. Given an integer n, return an array of length n+1 where ans[i] is the number of 1's in the binary representation of i. Example: n = 2, output = [0,1,1]. This problem uses dynamic programming: ans[i] = ans[i >> 1] + (i & 1), where i >> 1 is the number without the last bit, and (i & 1) tells if the last bit is 1.",
+      "Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.",
+    explanation:
+      "Approach: Use dynamic programming. The key observation is that the number of set bits in i is equal to the number of set bits in (i >> 1) plus the last bit of i (i & 1). This is because i >> 1 removes the last bit, and (i & 1) tells us if the last bit is 1. So, ans[i] = ans[i >> 1] + (i & 1). For example, i = 5 (101): ans[5] = ans[2] + 1 = 1 + 1 = 2. Build the array from 0 to n. Time complexity is O(n), space complexity is O(n) for the result array. The key insight is that the set bit count of a number can be derived from a smaller number (i >> 1), making this a simple DP problem.",
+    example:
+      "Input: n = 2\nOutput: [0,1,1]\nExplanation: 0 has 0 bits, 1 has 1 bit, 2 (10) has 1 bit",
     videoLink: "https://www.youtube.com/watch?v=CcT90t2NXNg",
     leetcodeUrl: "https://leetcode.com/problems/counting-bits/",
     difficulty: "Easy",
@@ -780,7 +1083,11 @@ export const dsaLeetcodeProblems = [
     id: 77,
     title: "Missing Number",
     description:
-      "This problem finds the missing number in an array. Given an array containing n distinct numbers in range [0, n], return the only missing number. Example: nums = [3,0,1], output = 2; nums = [0,1], output = 2. This problem uses XOR operation (x ^= i ^ nums[i]) where all numbers from 0 to n cancel out with array values, leaving the missing number, or uses sum formula: (n * (n+1))/2 - sum(nums).",
+      "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.",
+    explanation:
+      "Approach: Use XOR operation. Initialize result = 0. XOR all indices from 0 to n with result, then XOR all elements in the array with result. Since XOR is commutative and associative, and a number XORed with itself is 0, all numbers that appear in both the index range and the array will cancel out. The only remaining value is the missing number. Time complexity is O(n), space complexity is O(1). Alternative approach: use the sum formula - the sum of numbers from 0 to n is n*(n+1)/2. Subtract the sum of the array elements from this to get the missing number. The key insight is that XOR of a number with itself is 0, so pairing each index with its value cancels out all present numbers.",
+    example:
+      "Input: nums = [3,0,1]\nOutput: 2\nExplanation: n = 3, the missing number in range [0,3] is 2",
     videoLink: "https://www.youtube.com/watch?v=0N75JhBXCQQ",
     leetcodeUrl: "https://leetcode.com/problems/missing-number/",
     difficulty: "Easy",
@@ -789,8 +1096,11 @@ export const dsaLeetcodeProblems = [
   {
     id: 78,
     title: "Reverse Bits",
-    description:
-      "This problem reverses the bits of a 32-bit unsigned integer. Given a 32-bit unsigned integer, reverse its bits and return the result. Example: n = 00000010100101000001111010011100, output = 964176192 (binary: 00111001011110000010100101000000). This problem uses bit manipulation: loop 32 times, extract the last bit of n, add it to result by shifting, then right shift n and left shift result.",
+    description: "Reverse bits of a given 32 bits unsigned integer.",
+    explanation:
+      "Approach: Use bit manipulation. Initialize result = 0. Loop 32 times (for a 32-bit integer): 1) Left shift result by 1 (make room for the next bit). 2) Extract the last bit of n using n & 1. 3) Add this bit to result using result |= (n & 1). 4) Right shift n by 1 (n >>= 1). After 32 iterations, result contains the reversed bits. Time complexity is O(1) since we always loop exactly 32 times, space complexity is O(1). The key insight is that by processing bits from the least significant to the most significant and building the result from the most significant to the least significant, we reverse the bit order.",
+    example:
+      "Input: n = 00000010100101000001111010011100\nOutput: 964176192\nExplanation: The reversed binary is 00111001011110000010100101000000",
     videoLink: "https://www.youtube.com/watch?v=LtN-rJLvijA",
     leetcodeUrl: "https://leetcode.com/problems/reverse-bits/",
     difficulty: "Easy",
