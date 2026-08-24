@@ -55,6 +55,7 @@ const ReactiveProgrammingInterview = lazy(
 const DSATopics = lazy(() => import("./topics/dsa/DSATopics"));
 const DSACourse = lazy(() => import("./topics/dsa/DSACourse"));
 const DSALeetcode = lazy(() => import("./pages/DSALeetcode"));
+const CompanyInterview = lazy(() => import("./pages/CompanyInterview"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -294,6 +295,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <DSALeetcode />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/company-interview"
+                  element={
+                    <RequireAuth>
+                      <CompanyInterview />
                     </RequireAuth>
                   }
                 />
