@@ -15,8 +15,11 @@ const highlightCode = (code, language) => {
       ignoreIllegals: true,
     }).value;
     return highlighted;
-  } catch (err) {
-    return code.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">");
+  } catch {
+    return code
+      .replace(/&/g, "\x26amp;")
+      .replace(/</g, "\x26lt;")
+      .replace(/>/g, "\x26gt;");
   }
 };
 

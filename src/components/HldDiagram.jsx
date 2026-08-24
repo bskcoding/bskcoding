@@ -71,8 +71,45 @@ function classifyComponent(label, tech) {
   return null;
 }
 
-export default function HldDiagram({ title = "High-Level Design (HLD)" }) {
+// Parse a component string like "Frontend → React.js / Angular" into {label, tech}
+function parseComponent(entry) {
+  const arrowIdx = entry.indexOf("\u2192");
+  if (arrowIdx < 0) return { label: entry.trim(), tech: "" };
+  return {
+    label: entry.slice(0, arrowIdx).trim(),
+    tech: entry.slice(arrowIdx + 1).trim(),
+  };
+}
+
+export default function HldDiagram({
+  title = "High-Level Design (HLD)",
+  components = [],
+}) {
   const [open, setOpen] = useState(true);
+
+  // Parse custom component lines and classify them into layers
+  const customNodesByLayer = {};
+  const unclassified = [];
+  components.forEach((entry) => {
+    const { label, tech } = parseComponent(entry);
+    if (!label) return;
+    const layer = classifyComponent(label, tech);
+    if (layer) {
+      if (!customNodesByLayer[layer]) customNodesByLayer[layer] = [];
+      customNodesByLayer[layer].push({ label, tech });
+    } else {
+      unclassified.push({ label, tech });
+    }
+  });
+
+  // For each layer, use custom nodes if available, otherwise fall back to defaults
+  const layersToShow = DEFAULT_LAYERS.map((layer) => ({
+    ...layer,
+    nodes:
+      customNodesByLayer[layer.name]?.length > 0
+        ? customNodesByLayer[layer.name]
+        : layer.nodes,
+  }));
 
   return (
     <div className="hld-wrap">
@@ -84,7 +121,7 @@ export default function HldDiagram({ title = "High-Level Design (HLD)" }) {
 
       {open && (
         <div className="hld-canvas">
-          {DEFAULT_LAYERS.map((layer, li) => (
+          {layersToShow.map((layer, li) => (
             <div key={layer.name} className="hld-layer-row">
               <div className={`hld-layer hld-layer-${li}`}>
                 <div className="hld-layer-label">
@@ -104,7 +141,7 @@ export default function HldDiagram({ title = "High-Level Design (HLD)" }) {
                   ))}
                 </div>
               </div>
-              {li < DEFAULT_LAYERS.length - 1 && (
+              {li < layersToShow.length - 1 && (
                 <div className="hld-arrows" aria-hidden="true">
                   <span className="hld-arrow">↓</span>
                   <span className="hld-arrow up">↑</span>
@@ -112,6 +149,29 @@ export default function HldDiagram({ title = "High-Level Design (HLD)" }) {
               )}
             </div>
           ))}
+
+          {unclassified.length > 0 && (
+            <div className="hld-layer-row">
+              <div className="hld-layer hld-layer-extra">
+                <div className="hld-layer-label">
+                  <span className="hld-layer-icon">📦</span>
+                  Additional Components
+                </div>
+                <div className="hld-nodes">
+                  {unclassified.map((n, i) => (
+                    <div
+                      key={`${n.label}-${i}`}
+                      className="hld-node"
+                      style={{ "--node-color": "#fbbf24" }}
+                    >
+                      <span className="hld-node-label">{n.label}</span>
+                      <span className="hld-node-tech">{n.tech}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="hld-caption">
             Request flows top → bottom; responses & async events flow back
