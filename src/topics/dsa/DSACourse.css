@@ -121,25 +121,35 @@
   margin: 0;
 }
 
+/* YouTube-logo-style play button (muted red to match theme) */
 .lesson-play-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(168, 85, 247, 0.15);
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  color: #c084fc;
-  font-size: 0.65rem;
+  width: 34px;
+  height: 24px;
+  border-radius: 7px;
+  background: rgba(185, 28, 28, 0.75);
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.lesson-play-btn svg {
+  display: block;
+}
+
+.lesson-play-btn:hover {
+  background: rgba(153, 27, 27, 0.95);
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .lesson-card:hover .lesson-play-btn {
-  background: rgba(168, 85, 247, 0.35);
-  transform: scale(1.1);
+  background: rgba(185, 28, 28, 0.75);
 }
 
 @media (max-width: 768px) {
@@ -184,8 +194,8 @@
   }
 
   .lesson-play-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 0.55rem;
+    width: 30px;
+    height: 21px;
+    border-radius: 6px;
   }
 }

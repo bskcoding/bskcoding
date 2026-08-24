@@ -64,6 +64,65 @@
   gap: 24px;
 }
 
+/* Topic-wise filter bar */
+.lc-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: rgba(16, 26, 50, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.lc-filter-label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.lc-filter-select {
+  background: rgba(7, 12, 20, 0.9);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 36px 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c084fc'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+}
+
+.lc-filter-select:hover,
+.lc-filter-select:focus {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+
+.lc-filter-select option {
+  background: #0d1526;
+  color: #e2e8f0;
+}
+
+.lc-filter-count {
+  margin-left: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
 /* LeetCode-style grid */
 .lc-problems {
   display: grid;
@@ -170,25 +229,31 @@
   border: 1px solid rgba(168, 85, 247, 0.3);
 }
 
+/* YouTube-logo-style play button (muted red to match theme) */
 .lc-play-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(168, 85, 247, 0.15);
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  color: #c084fc;
-  font-size: 0.65rem;
+  width: 34px;
+  height: 24px;
+  border-radius: 7px;
+  background: rgba(185, 28, 28, 0.75);
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
-.lc-problem:hover .lc-play-btn {
-  background: rgba(168, 85, 247, 0.35);
-  transform: scale(1.1);
+.lc-play-btn svg {
+  display: block;
+}
+
+.lc-play-btn:hover {
+  background: rgba(153, 27, 27, 0.95);
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .lc-link {
@@ -230,6 +295,15 @@
 }
 
 @media (max-width: 480px) {
+  .lc-filter-bar {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .lc-filter-count {
+    margin-left: 0;
+  }
+
   .lc-problems {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
@@ -249,9 +323,9 @@
   }
 
   .lc-play-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 0.55rem;
+    width: 30px;
+    height: 21px;
+    border-radius: 6px;
   }
 
   .lc-link {
