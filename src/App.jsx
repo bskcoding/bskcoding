@@ -14,6 +14,7 @@ import { BASENAME } from "./utils/basePath";
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const MaangPreparation = lazy(() => import("./pages/MaangPreparation"));
+const MaangDSABasic = lazy(() => import("./maang/basic-dsa/MaangDSABasic"));
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -255,6 +256,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <MaangPreparation />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/basic-dsa"
+                  element={
+                    <RequireAuth>
+                      <MaangDSABasic />
                     </RequireAuth>
                   }
                 />
