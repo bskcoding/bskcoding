@@ -146,9 +146,12 @@ export default function HldDiagram({
                         {truncate(n.label)}
                       </span>
                       {n.tech && (
-                        <span className="hld-node-tech" title={n.tech}>
-                          {truncate(n.tech, 32)}
-                        </span>
+                        <>
+                          <span className="hld-node-dot">•</span>
+                          <span className="hld-node-tech" title={n.tech}>
+                            {truncate(n.tech, 20)}
+                          </span>
+                        </>
                       )}
                     </div>
                   ))}

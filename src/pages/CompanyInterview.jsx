@@ -39,6 +39,8 @@ const extractHldComponents = (text) => {
     if (arrowIdx < 0) return;
     // Strip leading numbering (e.g. "1. ") or bullet ("- ")
     const cleaned = trimmed.replace(/^\d+\.\s+/, "").replace(/^-\s+/, "");
+    // Skip API endpoint lines (e.g. "POST /auth/register → Register new users")
+    if (/^(POST|GET|PUT|DELETE|PATCH|HEAD|OPTIONS)\s+\//i.test(cleaned)) return;
     if (cleaned && cleaned.indexOf(arrow) >= 0) {
       components.push(cleaned);
     }
