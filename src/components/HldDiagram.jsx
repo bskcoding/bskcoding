@@ -71,6 +71,12 @@ function classifyComponent(label, tech) {
   return null;
 }
 
+// Truncate text to a max length with ellipsis
+function truncate(text, max = 36) {
+  if (!text) return "";
+  return text.length <= max ? text : text.slice(0, max - 1) + "\u2026";
+}
+
 // Parse a component string like "Frontend → React.js / Angular" into {label, tech}
 function parseComponent(entry) {
   const arrowIdx = entry.indexOf("\u2192");
@@ -87,18 +93,18 @@ export default function HldDiagram({
 }) {
   const [open, setOpen] = useState(true);
 
-  // Parse custom component lines and classify them into layers
+  // Parse custom component lines and classify them into layers.
+  // De-duplicate nodes within each layer by label.
   const customNodesByLayer = {};
-  const unclassified = [];
   components.forEach((entry) => {
     const { label, tech } = parseComponent(entry);
     if (!label) return;
     const layer = classifyComponent(label, tech);
-    if (layer) {
-      if (!customNodesByLayer[layer]) customNodesByLayer[layer] = [];
+    if (!layer) return; // skip unclassifiable lines
+    if (!customNodesByLayer[layer]) customNodesByLayer[layer] = [];
+    // De-duplicate: skip if a node with this label already exists
+    if (!customNodesByLayer[layer].some((n) => n.label === label)) {
       customNodesByLayer[layer].push({ label, tech });
-    } else {
-      unclassified.push({ label, tech });
     }
   });
 
@@ -134,44 +140,30 @@ export default function HldDiagram({
                       key={n.label}
                       className="hld-node"
                       style={{ "--node-color": layer.color }}
+                      title={`${n.label} → ${n.tech}`}
                     >
-                      <span className="hld-node-label">{n.label}</span>
-                      <span className="hld-node-tech">{n.tech}</span>
+                      <span className="hld-node-label" title={n.label}>
+                        {truncate(n.label)}
+                      </span>
+                      {n.tech && (
+                        <span className="hld-node-tech" title={n.tech}>
+                          {truncate(n.tech, 32)}
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
               {li < layersToShow.length - 1 && (
-                <div className="hld-arrows" aria-hidden="true">
-                  <span className="hld-arrow">↓</span>
-                  <span className="hld-arrow up">↑</span>
+                <div className="hld-flow" aria-hidden="true">
+                  <span className="hld-flow-arrow">↓</span>
+                  <span className="hld-flow-label">request</span>
+                  <span className="hld-flow-arrow up">↑</span>
+                  <span className="hld-flow-label">response</span>
                 </div>
               )}
             </div>
           ))}
-
-          {unclassified.length > 0 && (
-            <div className="hld-layer-row">
-              <div className="hld-layer hld-layer-extra">
-                <div className="hld-layer-label">
-                  <span className="hld-layer-icon">📦</span>
-                  Additional Components
-                </div>
-                <div className="hld-nodes">
-                  {unclassified.map((n, i) => (
-                    <div
-                      key={`${n.label}-${i}`}
-                      className="hld-node"
-                      style={{ "--node-color": "#fbbf24" }}
-                    >
-                      <span className="hld-node-label">{n.label}</span>
-                      <span className="hld-node-tech">{n.tech}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
 
           <div className="hld-caption">
             Request flows top → bottom; responses & async events flow back

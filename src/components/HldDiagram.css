@@ -58,7 +58,7 @@
   margin-top: 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 /* Layer row — horizontal band for each architecture layer */
@@ -99,9 +99,6 @@
 .hld-layer-4 {
   border-color: rgba(244, 114, 182, 0.35);
 }
-.hld-layer-extra {
-  border-color: rgba(251, 191, 36, 0.35);
-}
 
 /* Layer label — colored banner at the top of each layer */
 .hld-layer-label {
@@ -137,33 +134,33 @@
   color: #f472b6;
   background: rgba(244, 114, 182, 0.06);
 }
-.hld-layer-extra .hld-layer-label {
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.06);
-}
 
 .hld-layer-icon {
   font-size: 1rem;
 }
 
-/* Nodes container — horizontal scroll when many nodes */
+/* Nodes container — compact horizontal scrolling row */
 .hld-nodes {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
   padding: 12px 14px;
+  overflow-x: auto;
 }
 
-/* Individual node card */
+/* Individual node card — compact, fixed height, single-line text */
 .hld-node {
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-left: 3px solid var(--node-color, #c084fc);
   border-radius: 10px;
-  padding: 10px 14px;
-  min-width: 140px;
-  flex: 1 1 160px;
+  padding: 8px 12px;
+  min-width: 120px;
+  flex: 0 0 140px;
+  height: 56px;
   transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hld-node:hover {
@@ -175,40 +172,54 @@
 
 .hld-node-label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #f1f5f9;
-  margin-bottom: 3px;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hld-node-tech {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   color: #94a3b8;
-  line-height: 1.4;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Arrows between layers */
-.hld-arrows {
+/* Flow connectors between layers (labeled request/response) */
+.hld-flow {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   color: #475571;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
-.hld-arrow.up {
-  color: #334158;
+.hld-flow-arrow {
+  color: #60a5fa;
+}
+
+.hld-flow-arrow.up {
+  color: #f472b6;
+}
+
+.hld-flow-label {
+  font-size: 0.6rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 /* Caption */
 .hld-caption {
   text-align: center;
-  padding: 10px 0 4px;
-  font-size: 0.76rem;
+  padding: 8px 0 4px;
+  font-size: 0.74rem;
   color: #64748b;
   line-height: 1.5;
   font-style: italic;
@@ -221,13 +232,15 @@
     gap: 8px;
   }
 
-  .hld-arrows {
+  .hld-flow {
     transform: rotate(90deg);
   }
 
   .hld-node {
-    min-width: 100%;
-    flex: 1 1 auto;
+    flex: 0 0 120px;
+    min-width: 120px;
+    height: auto;
+    min-height: 48px;
   }
 }
 
@@ -242,15 +255,21 @@
     padding: 6px 10px;
   }
 
+  .hld-node {
+    flex: 0 0 110px;
+    min-width: 110px;
+  }
+
   .hld-node-label {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
   }
 
   .hld-node-tech {
-    font-size: 0.66rem;
+    display: none;
   }
 
   .hld-nodes {
     padding: 10px 12px;
+    gap: 6px;
   }
 }
