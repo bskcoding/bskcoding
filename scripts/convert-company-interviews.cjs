@@ -1,43 +1,33 @@
 // Converts company-interview markdown files (from the user's interview kit)
-// into clean structured JS data files (src/data/companyInterviews/data-*.js).
+// into clean structured JS data files (src/data/companyInterviews/<company-id>/*.js).
 //
 // Run:  node scripts/convert-company-interviews.cjs
 //
 // Output structure per company:
+//   src/data/companyInterviews/
+//     <company-id>/
+//       <interview-slug>.js   ← one file PER interview inside the company folder
+//
+// Each generated file exports:
 //   {
 //     id: "zoho-walk-in",
 //     name: "ZOHO (walk_in)",
-//     interviews: [
-//       {
-//         name: "zoho",
-//         rounds: [
-//           {
-//             name: "1st Round: Factorial Sum",
-//             questions: [
-//               {
-//                 question: "Given a number, find the sum...",
-//                 answer: "Input: 145\nOutput: ...",
-//                 code: { language: "java", content: "..." }   // optional
-//               }
-//             ]
-//           }
-//         ]
-//       }
-//     ]
+//     interviews: [ { name, questionCount, rounds: [...] } ],   // exactly 1 interview
+//     questionCount: N
 //   }
+//
+// Because each interview lives in its own file inside the company's folder,
+// adding a future interview is as simple as dropping another file into that
+// company's folder (and re-running this script).
 
 const fs = require("fs");
 const path = require("path");
 
 // Output directory for generated structured JS data files
 const OUT_DIR = path.join(__dirname, "..", "src", "data", "companyInterviews");
-// Source directory: the user's original interview kit with per-company .md files
-const KIT_DIR = path.join(
-  __dirname,
-  "..",
-  "java-fullstack-interview-kit-main",
-  "java-fullstack-interview-kit-main",
-);
+// Source directory: the user's original interview kit with per-company .md files in Downloads
+const KIT_DIR =
+  "c:\\Users\\USER\\Downloads\\java-fullstack-interview-kit-main\\java-fullstack-interview-kit-main";
 
 /** Remove the smallest common leading indentation from a code block */
 function dedent(codeLines) {
@@ -417,26 +407,53 @@ for (const { fileName, rawPath } of mdFiles) {
 }
 
 let totalQuestions = 0;
+
+// Clean output directory of stale generated files/folders (keep index.js)
+if (fs.existsSync(OUT_DIR)) {
+  for (const entry of fs.readdirSync(OUT_DIR)) {
+    if (entry === "index.js") continue;
+    fs.rmSync(path.join(OUT_DIR, entry), { recursive: true, force: true });
+  }
+}
+
 for (const company of companiesMap.values()) {
   totalQuestions += company.questionCount;
-  const outFile = path.join(OUT_DIR, `data-${company.id}.js`);
-  const json = JSON.stringify(company, null, 2);
-  const banner =
-    "// AUTO-GENERATED file — company-wise interview data.\n" +
-    `// Source: ` +
-    company.name +
-    ` interview document(s).\n` +
-    "// Do not edit manually — regenerate with: node scripts/convert-company-interviews.cjs\n\n";
-  fs.writeFileSync(
-    outFile,
-    banner + "export const company = " + json + ";\n",
-    "utf8",
-  );
+
+  // ---- One folder per company: src/data/companyInterviews/<company-id>/ ----
+  const companyDir = path.join(OUT_DIR, company.id);
+  fs.mkdirSync(companyDir, { recursive: true });
+
+  // ---- One file per interview inside the company folder ----
+  company.interviews.forEach((interview, idx) => {
+    const safeName = slugify(interview.name || `interview-${idx + 1}`);
+    const outFile = path.join(companyDir, `${safeName}.js`);
+    // Each file exports a company object containing just this one interview,
+    // so new interviews can be added by simply dropping a new file in the folder.
+    const singleInterviewCompany = {
+      id: company.id,
+      name: company.name,
+      interviews: [interview],
+      questionCount: interview.questionCount,
+    };
+    const json = JSON.stringify(singleInterviewCompany, null, 2);
+    const banner =
+      "// AUTO-GENERATED file — company-wise interview data.\n" +
+      `// Source: ` +
+      company.name +
+      ` interview document(s).\n` +
+      "// Do not edit manually — regenerate with: node scripts/convert-company-interviews.cjs\n\n";
+    fs.writeFileSync(
+      outFile,
+      banner + "export const company = " + json + ";\n",
+      "utf8",
+    );
+  });
+
   console.log(
-    `✓ ${path.basename(outFile)}  (${company.questionCount} questions)`,
+    `✓ ${company.id}/  (${company.interviews.length} interviews, ${company.questionCount} questions)`,
   );
 }
 
 console.log(
-  `\nDone: ${companiesMap.size} companies, ${mdFiles.length} docs, ${totalQuestions} questions converted.`,
+  `\nDone: ${companiesMap.size} company folders, ${mdFiles.length} docs, ${totalQuestions} questions converted.`,
 );

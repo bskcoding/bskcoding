@@ -28,3 +28,6 @@ dist-ssr
 .env.*.local
 .env
 !.env.production
+
+# Interview kit source (raw markdown — generated data lives in src/data/companyInterviews/)
+java-fullstack-interview-kit-main/

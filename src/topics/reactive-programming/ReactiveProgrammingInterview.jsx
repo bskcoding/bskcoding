@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import "../spring-boot/SpringBootInterview.css";
-import { reactiveProgrammingQuestions } from "../../data/peactive-programming/reactiveProgramming";
+import { reactiveProgrammingQuestions } from "../../data/reactive-programming/reactiveProgramming";
 
 // Escape HTML special characters using the DOM (avoids literal HTML entities
 // in source that auto-formatters may corrupt).

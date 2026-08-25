@@ -252,25 +252,30 @@ function CompanyInterview() {
   }
 
   // -------- Interview Journey view (round by round, in order) --------
-  // Flatten all rounds across all interviews into one ordered list
-  const allRounds = [];
-  selectedCompany.interviews.forEach((interview, interviewIdx) => {
-    interview.rounds.forEach((round, roundIdx) => {
-      allRounds.push({
-        roundNumber: allRounds.length + 1,
-        interviewName:
-          selectedCompany.interviews.length > 1 ? interview.name : null,
-        interviewIdx,
-        roundIdx,
-        round,
-      });
-    });
-  });
+  // Group rounds by interview so each interview gets its own distinct section.
+  const multiInterview = selectedCompany.interviews.length > 1;
 
-  const visibleRounds =
-    filterRound === "all"
-      ? allRounds
-      : allRounds.filter((r) => roundBadge(r.round.name) === filterRound);
+  const interviewSections = selectedCompany.interviews.map(
+    (interview, interviewIdx) => ({
+      interviewIdx,
+      interview,
+      rounds: interview.rounds
+        .map((round, roundIdx) => ({ round, interviewIdx, roundIdx }))
+        .filter((r) => {
+          if (filterRound === "all") return true;
+          return roundBadge(r.round.name) === filterRound;
+        }),
+    }),
+  );
+
+  const visibleInterviewCount = interviewSections.filter(
+    (s) => s.rounds.length > 0,
+  ).length;
+
+  const totalRounds = interviewSections.reduce(
+    (sum, s) => sum + s.rounds.length,
+    0,
+  );
 
   const roundFilters = [
     { value: "all", label: "All Rounds" },
@@ -290,13 +295,22 @@ function CompanyInterview() {
           {selectedCompany.name} <span className="ci-flow">Interview Flow</span>
         </h1>
         <p className="ci-subtitle">
-          {selectedCompany.name} interview experience — rounds shown in the
-          exact order they happened. Click a question to reveal its answer.
+          {selectedCompany.name} interview experience
+          {multiInterview && " — each interview shown as a separate section"} —
+          rounds in the exact order they happened. Click a question to reveal
+          its answer.
         </p>
         <div className="ci-stats">
-          <span className="ci-stat">{allRounds.length} Rounds</span>
           <span className="ci-stat">
-            {selectedCompany.questionCount} Questions
+            {selectedCompany.interviews.length}{" "}
+            {selectedCompany.interviews.length === 1
+              ? "Interview"
+              : "Interviews"}
+          </span>
+          <span className="ci-stat">{totalRounds} Rounds</span>
+          <span className="ci-stat">
+            {selectedCompany.questionCount}{" "}
+            {selectedCompany.questionCount === 1 ? "Question" : "Questions"}
           </span>
         </div>
 
@@ -316,114 +330,151 @@ function CompanyInterview() {
         </div>
       </section>
 
-      {/* Round timeline — steps in interview order */}
-      <section className="ci-timeline">
-        {visibleRounds.map((round) => (
-          <div
-            className="ci-round-block"
-            key={`${round.interviewIdx}-${round.roundIdx}`}
-          >
-            <div className="ci-round-header">
-              <span
-                className={`ci-round-badge ci-badge-${roundBadge(round.round.name)}`}
-              >
-                Round {round.roundNumber}
-              </span>
-              <div className="ci-round-title-wrap">
-                {round.interviewName && (
-                  <div className="ci-doc-label">📄 {round.interviewName}</div>
-                )}
-                <h3 className="ci-round-title">{round.round.name}</h3>
-              </div>
-              <span className="ci-round-qcount">
-                {round.round.questions.length}{" "}
-                {round.round.questions.length === 1 ? "Q" : "Qs"}
-              </span>
-            </div>
+      {/* Interviews — each rendered as its own distinct section */}
+      <section className="ci-interviews-container">
+        {interviewSections.map((section) => {
+          if (section.rounds.length === 0) return null;
+          return (
+            <div className="ci-interview-section" key={section.interviewIdx}>
+              {/* Interview header — shown only when there are multiple interviews */}
+              {multiInterview && (
+                <div className="ci-interview-header">
+                  <div className="ci-interview-logo">
+                    {section.interview.name
+                      ? section.interview.name.charAt(0).toUpperCase()
+                      : "📄"}
+                  </div>
+                  <div className="ci-interview-info">
+                    <h2 className="ci-interview-name">
+                      {section.interview.name}
+                    </h2>
+                    <p className="ci-interview-meta">
+                      {section.rounds.length}{" "}
+                      {section.rounds.length === 1 ? "Round" : "Rounds"} ·{" "}
+                      {section.interview.questionCount}{" "}
+                      {section.interview.questionCount === 1
+                        ? "Question"
+                        : "Questions"}
+                    </p>
+                  </div>
+                </div>
+              )}
 
-            <div className="ci-questions">
-              {round.round.questions.map((q, qIdx) => {
-                const uid = `${round.interviewIdx}-${round.roundIdx}-${qIdx}`;
-                const hldComponents = extractHldComponents(q.answer);
-                return (
-                  <div
-                    key={uid}
-                    className={`ci-question ${
-                      expandedId === uid ? "active" : ""
-                    }`}
-                  >
+              {/* Rounds timeline for this interview */}
+              <div className="ci-timeline">
+                {section.rounds.map((r, rIdx) => {
+                  const { round, interviewIdx, roundIdx } = r;
+                  // Per-interview round numbering so Round 1, 2, 3 … restarts
+                  // for each distinct interview experience.
+                  const roundNumber = rIdx + 1;
+                  return (
                     <div
-                      className="ci-question-header"
-                      onClick={() => toggleQuestion(uid)}
+                      className="ci-round-block"
+                      key={`${interviewIdx}-${roundIdx}`}
                     >
-                      <span className="ci-q-number">
-                        {round.roundNumber}.{qIdx + 1}
-                      </span>
-                      <p className="ci-q-text">{q.question}</p>
-                      <span
-                        className={`ci-arrow ${
-                          expandedId === uid ? "expanded" : ""
-                        }`}
-                      >
-                        ▼
-                      </span>
-                    </div>
-                    {expandedId === uid && (
-                      <div className="ci-answer-wrap">
-                        <div className="ci-answer">
-                          <h4 className="ci-answer-title">Answer:</h4>
-                          <AnswerContent text={q.answer} />
-                          {hldComponents.length > 0 && (
-                            <HldDiagram
-                              title="Architecture Diagram"
-                              components={hldComponents}
-                            />
-                          )}
-                          {q.code && (
-                            <div className="ci-code-block">
-                              <div className="ci-code-header">
-                                <span className="ci-code-lang">
-                                  {q.code.language || "java"}
+                      <div className="ci-round-header">
+                        <span
+                          className={`ci-round-badge ci-badge-${roundBadge(round.name)}`}
+                        >
+                          Round {roundNumber}
+                        </span>
+                        <div className="ci-round-title-wrap">
+                          <h3 className="ci-round-title">{round.name}</h3>
+                        </div>
+                        <span className="ci-round-qcount">
+                          {round.questions.length}{" "}
+                          {round.questions.length === 1 ? "Q" : "Qs"}
+                        </span>
+                      </div>
+
+                      <div className="ci-questions">
+                        {round.questions.map((q, qIdx) => {
+                          const uid = `${interviewIdx}-${roundIdx}-${qIdx}`;
+                          const hldComponents = extractHldComponents(q.answer);
+                          return (
+                            <div
+                              key={uid}
+                              className={`ci-question ${
+                                expandedId === uid ? "active" : ""
+                              }`}
+                            >
+                              <div
+                                className="ci-question-header"
+                                onClick={() => toggleQuestion(uid)}
+                              >
+                                <span className="ci-q-number">
+                                  {roundNumber}.{qIdx + 1}
+                                </span>
+                                <p className="ci-q-text">{q.question}</p>
+                                <span
+                                  className={`ci-arrow ${
+                                    expandedId === uid ? "expanded" : ""
+                                  }`}
+                                >
+                                  ▼
                                 </span>
                               </div>
-                              <pre
-                                className={`language-${
-                                  q.code.language || "java"
-                                }`}
-                              >
-                                <code
-                                  className={`language-${
-                                    q.code.language || "java"
-                                  }`}
-                                  dangerouslySetInnerHTML={{
-                                    __html: highlightCode(
-                                      q.code.content,
-                                      q.code.language,
-                                    ),
-                                  }}
-                                />
-                              </pre>
+                              {expandedId === uid && (
+                                <div className="ci-answer-wrap">
+                                  <div className="ci-answer">
+                                    <h4 className="ci-answer-title">Answer:</h4>
+                                    <AnswerContent text={q.answer} />
+                                    {hldComponents.length > 0 && (
+                                      <HldDiagram
+                                        title="Architecture Diagram"
+                                        components={hldComponents}
+                                      />
+                                    )}
+                                    {q.code && (
+                                      <div className="ci-code-block">
+                                        <div className="ci-code-header">
+                                          <span className="ci-code-lang">
+                                            {q.code.language || "java"}
+                                          </span>
+                                        </div>
+                                        <pre
+                                          className={`language-${
+                                            q.code.language || "java"
+                                          }`}
+                                        >
+                                          <code
+                                            className={`language-${
+                                              q.code.language || "java"
+                                            }`}
+                                            dangerouslySetInnerHTML={{
+                                              __html: highlightCode(
+                                                q.code.content,
+                                                q.code.language,
+                                              ),
+                                            }}
+                                          />
+                                        </pre>
+                                      </div>
+                                    )}
+                                    {!q.answer && !q.code && (
+                                      <p className="ci-answer-text">
+                                        <em>
+                                          (No written answer provided — refer to
+                                          the question and prepare your own.)
+                                        </em>
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                          )}
-                          {!q.answer && !q.code && (
-                            <p className="ci-answer-text">
-                              <em>
-                                (No written answer provided — refer to the
-                                question and prepare your own.)
-                              </em>
-                            </p>
-                          )}
-                        </div>
+                          );
+                        })}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
-        {visibleRounds.length === 0 && (
+        {visibleInterviewCount === 0 && (
           <p className="ci-empty">
             No rounds in this filter. Switch to "All Rounds".
           </p>
