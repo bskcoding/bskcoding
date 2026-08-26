@@ -125,26 +125,38 @@ const ProblemCard = memo(function ProblemCard({ problem, onOpen, chip }) {
   );
 });
 
-// Assign a consistent color per topic (full master-sheet palette)
+// Assign a consistent color per topic (full 27-topic master palette)
 const topicColors = {
+  // Part 1 — Basic (Array & String algorithms)
   Arrays: "#38bdf8",
-  "Binary Search": "#f472b6",
-  "Bit Manipulation": "#a78bfa",
-  Maths: "#f59e0b",
-  Recursion: "#fb7185",
-  Sorting: "#60a5fa",
   Strings: "#34d399",
   "Sliding Window": "#22d3ee",
-  "Stacks & Queues": "#f97316",
+  "Two Pointers": "#2dd4bf",
+  "Prefix Sum": "#14b8a6",
+  "Binary Search": "#f472b6",
+  Sorting: "#60a5fa",
+  Recursion: "#fb7185",
+  Backtracking: "#fba74c",
+  Greedy: "#eab308",
+  "Bit Manipulation": "#a78bfa",
+  Math: "#f59e0b",
+  // Part 2 — Data Structures
+  Stacks: "#f97316",
+  Queues: "#fb923c",
   "Linked Lists": "#4ade80",
   Trees: "#84cc16",
-  Greedy: "#eab308",
+  Tries: "#93c5fd",
   Heaps: "#c084fc",
-  Backtracking: "#fba74c",
-  "Divide & Conquer": "#2dd4bf",
-  Trie: "#93c5fd",
-  Graph: "#f87171",
-  "Dynamic Programming": "#818cf8",
+  // Part 3 — Graphs & DP
+  "Graph Traversal": "#f87171",
+  "Graph Components": "#ef4444",
+  "1D DP": "#818cf8",
+  "2D DP": "#a855f7",
+  "String DP": "#c084fc",
+  "Grid DP": "#e879f9",
+  "Knapsack DP": "#f472b6",
+  "Partition DP": "#facc15",
+  "DP on Trees": "#4ade80",
 };
 
 function DsaSheetPage({
@@ -152,7 +164,6 @@ function DsaSheetPage({
   titleAccent = "A → Z",
   problems = BASIC_PROBLEMS,
   introLink = googleSeriesIntro.videoLink,
-  siblings = [],
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -182,6 +193,25 @@ function DsaSheetPage({
       return topicMatch && diffMatch;
     });
   }, [selectedTopic, selectedDifficulty]);
+
+  // Group problems by topic so the library can render separate grids per
+  // category (each with its own heading + accent colour) when "All" is chosen.
+  const topicOrder = useMemo(() => {
+    return Array.from(new Set(problems.map((p) => p.topic)));
+  }, [problems]);
+
+  const filteredGroups = useMemo(() => {
+    const groups = new Map();
+    for (const p of filtered) {
+      (groups.get(p.topic) || groups.set(p.topic, []).get(p.topic)).push(p);
+    }
+    // Keep a stable, predictable topic order (not insertion-from-filter order)
+    const ordered = [];
+    for (const t of topicOrder) {
+      if (groups.has(t)) ordered.push({ topic: t, color: topicColors[t] || "#60a5fa", problems: groups.get(t) });
+    }
+    return ordered;
+  }, [filtered, topicOrder]);
 
   // ---- Weekly planning --------------------------------------------------
   // Every week teaches 10 NEW questions (2 per day, Mon–Fri).
@@ -257,21 +287,6 @@ function DsaSheetPage({
         <Link to="/maang" className="mdsa-back">
           ← Back to MAANG Preparation
         </Link>
-
-        {/* Quick switch between the three sheets */}
-        <nav className="mdsa-sheet-tabs" aria-label="DSA sheets">
-          {siblings.map((s) =>
-            s.active ? (
-              <span key={s.label} className="mdsa-tab active" aria-current="page">
-                {s.label}
-              </span>
-            ) : (
-              <Link key={s.label} to={s.to} className="mdsa-tab">
-                {s.label}
-              </Link>
-            ),
-          )}
-        </nav>
 
         <div className="mdsa-hero-inner">
           <div className="mdsa-hero-text">
@@ -528,18 +543,50 @@ function DsaSheetPage({
         </div>
       </section>
 
-      {/* ===== PROBLEM GRID ===== */}
-      <section className="mdsa-topics-grid">
-        {filtered.map((p) => (
-          <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
-        ))}
-        {filtered.length === 0 && (
+      {/* ===== PROBLEM GRID (category-grouped when "All" selected) ===== */}
+      {filtered.length === 0 ? (
+        <section className="mdsa-topics-grid">
           <div className="mdsa-empty">
             No problems match your filters. Try changing the topic or
             difficulty.
           </div>
-        )}
-      </section>
+        </section>
+      ) : selectedTopic === "All" ? (
+        // Grouped view: one colourful grid per category
+        <div className="mdsa-category-groups">
+          {filteredGroups.map((grp) => (
+            <section key={grp.topic} className="mdsa-category-group">
+              <div
+                className="mdsa-category-heading"
+                style={{ "--cat-color": grp.color }}
+              >
+                <span
+                  className="mdsa-category-dot"
+                  style={{ background: grp.color }}
+                  aria-hidden="true"
+                />
+                <h3 className="mdsa-category-title">{grp.topic}</h3>
+                <span className="mdsa-category-count">
+                  {grp.problems.length} problem
+                  {grp.problems.length === 1 ? "" : "s"}
+                </span>
+              </div>
+              <div className="mdsa-topics-grid">
+                {grp.problems.map((p) => (
+                  <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : (
+        // Single category selected → one flat grid
+        <section className="mdsa-topics-grid">
+          {filtered.map((p) => (
+            <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
+          ))}
+        </section>
+      )}
       </>
       )}
 
@@ -564,11 +611,6 @@ function MaangDSABasic() {
       titleAccent="Part 1"
       problems={BASIC_PROBLEMS}
       introLink={googleSeriesIntro.videoLink}
-      siblings={[
-        { label: "📘 Basic", active: true },
-        { label: "🚀 Advanced", to: "/maang/advanced-dsa" },
-        { label: "🕸️ Graph & DP", to: "/maang/graph-dp" },
-      ]}
     />
   );
 }

@@ -17,7 +17,8 @@ import MaangLetterGrid from "../components/MaangLetterGrid";
 const subtopicRoutes = {
   "📊 DSA Foundation": "/maang/basic-dsa",
   "🌳 Advanced DSAs": "/maang/advanced-dsa",
-  "🧩 Dynamic Programming": "/maang/graph-dp",
+  "🔀 Graph Mastery": "/maang/graphs",
+  "🧩 Dynamic Programming": "/maang/dp",
 };
 
 function MaangPreparation() {
