@@ -194,7 +194,7 @@
 }
 .mdsa-section {
   padding: 2.5rem 1.5rem;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -212,7 +212,7 @@
 /* ===== FILTERS ===== */
 .mdsa-filters-section {
   padding: 1.5rem 1.5rem 0;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -226,7 +226,7 @@
   padding: 1.25rem 1.5rem;
   border-radius: 20px;
   border: 1px solid rgba(56, 189, 248, 0.15);
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto 2rem;
 }
 
@@ -319,7 +319,7 @@
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1.5rem;
   padding: 1.5rem;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   border-radius: 26px;
@@ -636,7 +636,7 @@
 
 /* ===== CATEGORY-GROUPED LIBRARY (when Topic = All) ===== */
 .mdsa-category-groups {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem 2rem;
   display: flex;
