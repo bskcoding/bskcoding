@@ -15,6 +15,10 @@ const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const MaangPreparation = lazy(() => import("./pages/MaangPreparation"));
 const MaangDSABasic = lazy(() => import("./maang/basic-dsa/MaangDSABasic"));
+const MaangDSAAdvanced = lazy(
+  () => import("./maang/advanced-dsa/MaangDSAAdvanced"),
+);
+const MaangDSAGraphDp = lazy(() => import("./maang/graph-dp/MaangDSAGraphDp"));
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -264,6 +268,22 @@ function App() {
                   element={
                     <RequireAuth>
                       <MaangDSABasic />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/advanced-dsa"
+                  element={
+                    <RequireAuth>
+                      <MaangDSAAdvanced />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/graph-dp"
+                  element={
+                    <RequireAuth>
+                      <MaangDSAGraphDp />
                     </RequireAuth>
                   }
                 />

@@ -16,6 +16,8 @@ import MaangLetterGrid from "../components/MaangLetterGrid";
 // Map MAANG sub-topics to their route paths (only the ones that exist)
 const subtopicRoutes = {
   "📊 DSA Foundation": "/maang/basic-dsa",
+  "🌳 Advanced DSAs": "/maang/advanced-dsa",
+  "🧩 Dynamic Programming": "/maang/graph-dp",
 };
 
 function MaangPreparation() {

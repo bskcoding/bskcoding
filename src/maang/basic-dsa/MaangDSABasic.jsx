@@ -1,35 +1,171 @@
-import { useState, useMemo } from "react";
+import {
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import VideoPlayerModal from "../../components/VideoPlayerModal";
-import { dsaBasicProblems, googleSeriesIntro } from "./dsaBasicProblems";
+import {
+  dsaBasicProblems as BASIC_PROBLEMS,
+  googleSeriesIntro,
+} from "./dsaBasicProblems";
 import "./MaangDSABasic.css";
-
-// Topics derived from data
-const topics = [
-  "All",
-  ...Array.from(new Set(dsaBasicProblems.map((p) => p.topic))),
-];
 const difficulties = ["All", "Easy", "Medium", "Hard"];
 
-// Assign a consistent color per topic for visual variety
+// Weekly rules: exactly 10 questions per week
+//   • Mon–Fri : QUESTIONS_PER_DAY questions each day (= 10 new/week)
+//   • Saturday: exam over THIS week's topics only
+//   • Sunday  : revision exam over ALL previously completed weeks
+const WEEKDAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const QUESTIONS_PER_DAY = 2;
+const QUESTIONS_PER_WEEK = WEEKDAY_NAMES.length * QUESTIONS_PER_DAY; // 10
+
+/**
+ * Deterministic pseudo-random picker (mulberry32-style xorshift).
+ * Same seed → same result every render, so the weekend quizzes stay
+ * stable for a given week instead of reshuffling on every re-render.
+ */
+function seededPick(items, count, seed) {
+  const arr = [...items];
+  let s = seed >>> 0 || 1;
+  const rand = () => {
+    s ^= s << 13;
+    s >>>= 0;
+    s ^= s >> 17;
+    s ^= s << 5;
+    s >>>= 0;
+    return s / 4294967296;
+  };
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, count);
+}
+
+/**
+ * Shared problem card — used by BOTH the Weekly Preparation grid and
+ * the Problem Library grid so they look identical.
+ *
+ * Props:
+ *   problem : the DSA problem object
+ *   onOpen  : opens the video modal for this problem
+ *   chip    : optional small label (e.g. "Mon") shown in the card top row
+ */
+const ProblemCard = memo(function ProblemCard({ problem, onOpen, chip }) {
+  const color = topicColors[problem.topic] || "#60a5fa";
+  const hasVideo = !!problem.videoLink;
+  return (
+    <div
+      className="mdsa-problem-card"
+      style={{ "--topic-color": color }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${problem.title} — ${problem.difficulty} ${problem.topic}`}
+      onClick={() => onOpen(problem)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen(problem);
+        }
+      }}
+    >
+      <div className="mdsa-problem-top">
+        <span
+          className={`mdsa-difficulty-badge mdsa-${problem.difficulty.toLowerCase()}`}
+        >
+          {problem.difficulty}
+        </span>
+        {chip && <span className="mdsa-extra-chip">{chip}</span>}
+        {problem.srcWeek && (
+          <span
+            className="mdsa-extra-chip"
+            title={`Asked from Week ${problem.srcWeek}`}
+          >
+            W{problem.srcWeek}
+          </span>
+        )}
+        <span
+          className="mdsa-problem-platform"
+          style={{ "--platform-color": color }}
+          title={`Solve on ${
+            problem.platform === "leetcode" ? "LeetCode" : "GeeksforGeeks"
+          }`}
+        >
+          {problem.platform === "leetcode" ? "LC" : "GFG"}
+        </span>
+      </div>
+      <div className="mdsa-problem-body">
+        <span className="mdsa-problem-id">#{problem.id}</span>
+        <h3 className="mdsa-problem-title">{problem.title}</h3>
+        <span className="mdsa-problem-topic">
+          {problem.topic}
+        </span>
+      </div>
+      <div className="mdsa-problem-footer">
+        <div
+          className={`mdsa-video-btn ${hasVideo ? "available" : "soon"}`}
+          title={hasVideo ? "Watch video solution" : "Video coming soon"}
+        >
+          {hasVideo ? "▶ Watch" : "⏳ Soon"}
+        </div>
+        <a
+          href={problem.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mdsa-solve-btn"
+          onClick={(e) => e.stopPropagation()}
+          title="Open problem"
+        >
+          Solve →
+        </a>
+      </div>
+    </div>
+  );
+});
+
+// Assign a consistent color per topic (full master-sheet palette)
 const topicColors = {
   Arrays: "#38bdf8",
-  Maths: "#f59e0b",
+  "Binary Search": "#f472b6",
   "Bit Manipulation": "#a78bfa",
-  Searching: "#4ade80",
+  Maths: "#f59e0b",
   Recursion: "#fb7185",
-  Backtracking: "#fba74c",
   Sorting: "#60a5fa",
+  Strings: "#34d399",
+  "Sliding Window": "#22d3ee",
+  "Stacks & Queues": "#f97316",
+  "Linked Lists": "#4ade80",
+  Trees: "#84cc16",
+  Greedy: "#eab308",
+  Heaps: "#c084fc",
+  Backtracking: "#fba74c",
+  "Divide & Conquer": "#2dd4bf",
+  Trie: "#93c5fd",
+  Graph: "#f87171",
+  "Dynamic Programming": "#818cf8",
 };
 
-function MaangDSABasic() {
+function DsaSheetPage({
+  sheetTitle = "Basic DSA",
+  titleAccent = "A → Z",
+  problems = BASIC_PROBLEMS,
+  introLink = googleSeriesIntro.videoLink,
+  siblings = [],
+}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState("All");
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [selectedWeek, setSelectedWeek] = useState(1);
+  const [view, setView] = useState("weekly"); // "weekly" | "library"
 
-  const problems = dsaBasicProblems;
+  const topics = useMemo(
+    () => ["All", ...Array.from(new Set(problems.map((p) => p.topic)))],
+    [problems],
+  );
+
 
   // Stats
   const easy = problems.filter((p) => p.difficulty === "Easy").length;
@@ -47,57 +183,72 @@ function MaangDSABasic() {
     });
   }, [selectedTopic, selectedDifficulty]);
 
-  // ---- Weekly planning: 12 weeks ----
-  const allSorted = [...problems].sort((a, b) => a.id - b.id);
-
+  // ---- Weekly planning --------------------------------------------------
+  // Every week teaches 10 NEW questions (2 per day, Mon–Fri).
+  //   saturday → THIS week's questions (weekly topic test)
+  //   sunday   → every question from all PREVIOUS completed weeks
   const weeklyPlan = useMemo(() => {
+    const sorted = [...problems].sort((a, b) => a.id - b.id);
     const weeks = [];
+    const allPrev = []; // tagged questions from completed previous weeks
     let idx = 0;
-    for (let w = 1; w <= 12; w++) {
-      const week = { week: w, weekdays: [], saturday: null, sunday: null };
+
+    while (idx < sorted.length) {
       const weekdaysList = [];
-      for (let d = 0; d < 5; d++) {
+      for (let d = 0; d < 5 && idx < sorted.length; d++) {
         const dayProblems = [];
-        for (let i = 0; i < 5 && idx < allSorted.length; i++) {
-          dayProblems.push(allSorted[idx]);
+        while (dayProblems.length < QUESTIONS_PER_DAY && idx < sorted.length) {
+          dayProblems.push(sorted[idx]);
           idx++;
         }
         weekdaysList.push({
-          dayName: ["Mon", "Tue", "Wed", "Thu", "Fri"][d],
+          dayName: WEEKDAY_NAMES[d],
           problems: dayProblems,
         });
       }
-      week.weekdays = weekdaysList;
 
-      const satProblems = [];
-      for (let i = 0; i < 2 && idx < allSorted.length; i++) {
-        satProblems.push(allSorted[idx]);
-        idx++;
-      }
-      week.saturday = { label: "Sat Exam 1", problems: satProblems };
+      const weekQuestions = weekdaysList.flatMap((d) => d.problems);
+      if (weekQuestions.length === 0) break;
 
-      const sunProblems = [];
-      for (let i = 0; i < 2 && idx < allSorted.length; i++) {
-        sunProblems.push(allSorted[idx]);
-        idx++;
-      }
-      week.sunday = { label: "Sun Exam 2", problems: sunProblems };
+      const weekNum = weeks.length + 1;
 
-      weeks.push(week);
+      // Sunday pool = current week + everything before it (tagged with
+      // the week they came from so the card can show a "W{n}" chip)
+      const tagged = weekQuestions.map((p) => ({ ...p, srcWeek: weekNum }));
+      const revisionPool = [...allPrev, ...tagged];
+
+      weeks.push({
+        week: weekNum,
+        weekdays: weekdaysList,
+        // Saturday: 2 problems picked from THIS week's topics
+        saturday: {
+          label: "Weekly Topic Test",
+          problems: seededPick(weekQuestions, 2, weekNum * 1013904223 + 1),
+        },
+        // Sunday: 2 random problems from current OR previous weeks
+        sunday: {
+          label: "Random Revision Quiz",
+          problems: seededPick(revisionPool, 2, weekNum * 22695477 + 7),
+        },
+      });
+
+      allPrev.push(...tagged);
     }
     return weeks;
-  }, []);
+  }, [problems]);
 
-  const openVideo = (problem) => {
+  const openVideo = useCallback((problem) => {
     setSelectedProblem(problem);
     setModalOpen(true);
-  };
-  const closeVideo = () => {
+  }, []);
+  const closeVideo = useCallback(() => {
     setSelectedProblem(null);
     setModalOpen(false);
-  };
+  }, []);
 
   const currentWeek = weeklyPlan.find((w) => w.week === selectedWeek);
+  const satCount = currentWeek?.saturday?.problems.length ?? 0;
+  const sunCount = currentWeek?.sunday?.problems.length ?? 0;
 
   return (
     <div className="mdsa-page">
@@ -106,21 +257,41 @@ function MaangDSABasic() {
         <Link to="/maang" className="mdsa-back">
           ← Back to MAANG Preparation
         </Link>
+
+        {/* Quick switch between the three sheets */}
+        <nav className="mdsa-sheet-tabs" aria-label="DSA sheets">
+          {siblings.map((s) =>
+            s.active ? (
+              <span key={s.label} className="mdsa-tab active" aria-current="page">
+                {s.label}
+              </span>
+            ) : (
+              <Link key={s.label} to={s.to} className="mdsa-tab">
+                {s.label}
+              </Link>
+            ),
+          )}
+        </nav>
+
         <div className="mdsa-hero-inner">
           <div className="mdsa-hero-text">
             <h1 className="mdsa-title">
-              MAANG DSA <span className="mdsa-title-accent">A → Z</span>
+              {sheetTitle}{" "}
+              <span className="mdsa-title-accent">{titleAccent}</span>
             </h1>
             <p className="mdsa-subtitle">
-              146 essential DSA problems — structured in 12 weekly plans with
-              daily practice + weekend mock exams. Watch video solutions in
-              Telugu, solve on LeetCode / GeeksforGeeks.
+              {problems.length} essential DSA problems — structured into{" "}
+              {weeklyPlan.length} weekly plans ({QUESTIONS_PER_DAY} questions a
+              day, Mon–Fri). Weekend quizzes: 2 questions on Sat from the
+              week&apos;s topics and 2 random on Sun from current &amp; past
+              weeks. Watch video solutions in Telugu, solve on LeetCode /
+              GeeksforGeeks.
             </p>
           </div>
           <div className="mdsa-hero-video">
             <a
               className="mdsa-intro-video"
-              href={googleSeriesIntro.videoLink}
+              href={introLink}
               target="_blank"
               rel="noopener noreferrer"
               title="Watch Google Crack Coding Series Intro"
@@ -152,12 +323,29 @@ function MaangDSABasic() {
         </div>
       </section>
 
-      {/* ===== WEEKLY PLANNER ===== */}
+      {/* ===== VIEW SWITCHER — only one section visible at a time ===== */}
+      <div className="mdsa-week-selector mdsa-view-bar">
+        <label htmlFor="mdsa-view-select">Show:</label>
+        <select
+          id="mdsa-view-select"
+          className="mdsa-week-select"
+          value={view}
+          onChange={(e) => setView(e.target.value)}
+          aria-label="Switch between weekly preparation plan and problem library"
+        >
+          <option value="weekly">📅 Weekly Preparation Plan</option>
+          <option value="library">📚 Problem Library</option>
+        </select>
+      </div>
+
+      {/* ===== WEEKLY PLANNER (Weekly view only) ===== */}
+      {view === "weekly" && (
       <section className="mdsa-weekly-section">
         <h2 className="mdsa-section-title">📅 Weekly Preparation Plan</h2>
         <p className="mdsa-section-subtitle">
-          12 weeks • 5 problems/day (Mon–Fri) • 2 coding problems (Sat & Sun) ={" "}
-          <strong> {problems.length} total problems</strong>
+          {weeklyPlan.length} weeks • {QUESTIONS_PER_DAY} questions/day
+          (Mon–Fri) = <strong>{QUESTIONS_PER_WEEK} questions every week</strong>{" "}
+          • Sat quiz: 2 from this week • Sun quiz: 2 random (current + past)
         </p>
 
         <div className="mdsa-week-selector">
@@ -178,54 +366,22 @@ function MaangDSABasic() {
         <div className="mdsa-week-card">
           <div className="mdsa-week-header">
             <span className="mdsa-week-badge">Week {currentWeek?.week}</span>
-            <h3 className="mdsa-week-title">
-              Week {currentWeek?.week} Practice Schedule
-            </h3>
+            <h3 className="mdsa-week-title">Practice Schedule</h3>
           </div>
 
-          <div className="mdsa-weekdays">
-            {currentWeek?.weekdays.map((wd, i) => (
-              <div
-                key={wd.dayName + i}
-                className="mdsa-day-block"
-                style={{
-                  "--day-color":
-                    topicColors[["Maths", "Arrays", "Searching"][i % 3]],
-                }}
-              >
-                <div className="mdsa-day-header">
-                  <span className="mdsa-day-name">{wd.dayName}</span>
-                  <span className="mdsa-day-count">
-                    {wd.problems.length} problems
-                  </span>
-                </div>
-                <div className="mdsa-day-problems">
-                  {wd.problems.map((p) => (
-                    <div key={p.id} className="mdsa-mini-problem">
-                      <span
-                        className={`mdsa-mini-difficulty mdsa-${p.difficulty.toLowerCase()}`}
-                      >
-                        {p.difficulty}
-                      </span>
-                      <span className="mdsa-mini-title">{p.title}</span>
-                      {p.videoLink && (
-                        <span
-                          className="mdsa-mini-video"
-                          title="Video available"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openVideo(p);
-                          }}
-                        >
-                          🎬
-                        </span>
-                      )}
-                      <span className="mdsa-mini-topic">{p.topic}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+          {/* Practice problems rendered as the same cards the library uses */}
+          <h4 className="mdsa-grid-heading">This Week&apos;s Practice</h4>
+          <div className="mdsa-topics-grid">
+            {currentWeek?.weekdays.map((wd) =>
+              wd.problems.map((p) => (
+                <ProblemCard
+                  key={p.id}
+                  problem={p}
+                  onOpen={openVideo}
+                  chip={wd.dayName}
+                />
+              )),
+            )}
           </div>
 
           {/* Weekend Exams */}
@@ -242,9 +398,21 @@ function MaangDSABasic() {
                   {currentWeek?.saturday?.label}
                 </span>
               </div>
+              <div className="mdsa-rev-note">
+                2 questions picked from this week&apos;s topics.
+              </div>
               <div className="mdsa-exam-problems">
                 {currentWeek?.saturday?.problems.map((p) => (
-                  <div key={"sat-" + p.id} className="mdsa-exam-problem">
+                  <div
+                    key={"sat-" + p.id}
+                    className="mdsa-exam-problem mdsa-clickable"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => openVideo(p)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") openVideo(p);
+                    }}
+                  >
                     <span
                       className={`mdsa-mini-difficulty mdsa-${p.difficulty.toLowerCase()}`}
                     >
@@ -254,7 +422,7 @@ function MaangDSABasic() {
                   </div>
                 ))}
               </div>
-              <div className="mdsa-exam-badge">2 Coding Qs</div>
+              <div className="mdsa-exam-badge">{satCount} Qs Quiz</div>
             </div>
 
             <div
@@ -267,25 +435,54 @@ function MaangDSABasic() {
                   {currentWeek?.sunday?.label}
                 </span>
               </div>
-              <div className="mdsa-exam-problems">
-                {currentWeek?.sunday?.problems.map((p) => (
-                  <div key={"sun-" + p.id} className="mdsa-exam-problem">
-                    <span
-                      className={`mdsa-mini-difficulty mdsa-${p.difficulty.toLowerCase()}`}
-                    >
-                      {p.difficulty}
-                    </span>
-                    <span className="mdsa-mini-title">{p.title}</span>
-                  </div>
-                ))}
+              <div className="mdsa-rev-note">
+                2 random questions from this week or any previous week.
               </div>
-              <div className="mdsa-exam-badge">2 Coding Qs</div>
+              <div className="mdsa-exam-problems">
+                {currentWeek?.sunday?.problems.length ? (
+                  currentWeek.sunday.problems.map((p) => (
+                    <div
+                      key={"sun-" + p.id}
+                      className="mdsa-exam-problem mdsa-clickable"
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => openVideo(p)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") openVideo(p);
+                      }}
+                    >
+                      <span
+                        className={`mdsa-mini-difficulty mdsa-${p.difficulty.toLowerCase()}`}
+                      >
+                        {p.difficulty}
+                      </span>
+                      <span className="mdsa-mini-title">{p.title}</span>
+                      {p.srcWeek && (
+                        <span
+                          className="mdsa-src-week"
+                          title={`From Week ${p.srcWeek}`}
+                        >
+                          W{p.srcWeek}
+                        </span>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <div className="mdsa-rev-note">
+                    Revision pool builds as weeks complete 💪
+                  </div>
+                )}
+              </div>
+              <div className="mdsa-exam-badge">{sunCount} Qs Random</div>
             </div>
           </div>
         </div>
       </section>
+      )}
 
-      {/* ===== FILTERS ===== */}
+      {/* ===== PROBLEM LIBRARY (Library view only) ===== */}
+      {view === "library" && (
+      <>
       <section className="mdsa-filters-section">
         <h2 className="mdsa-section-title">📚 Problem Library</h2>
         <div className="mdsa-filter-bar">
@@ -333,67 +530,9 @@ function MaangDSABasic() {
 
       {/* ===== PROBLEM GRID ===== */}
       <section className="mdsa-topics-grid">
-        {filtered.map((p) => {
-          const color = topicColors[p.topic] || "#60a5fa";
-          const hasVideo = !!p.videoLink;
-          return (
-            <div
-              key={p.id}
-              className="mdsa-problem-card"
-              style={{ "--topic-color": color }}
-              onClick={() => openVideo(p)}
-            >
-              <div className="mdsa-problem-top">
-                <span
-                  className={`mdsa-difficulty-badge mdsa-${p.difficulty.toLowerCase()}`}
-                >
-                  {p.difficulty}
-                </span>
-                <span
-                  className="mdsa-problem-platform"
-                  style={{ "--platform-color": color }}
-                  title={`Solve on ${
-                    p.platform === "leetcode" ? "LeetCode" : "GeeksforGeeks"
-                  }`}
-                >
-                  {p.platform === "leetcode" ? "LC" : "GFG"}
-                </span>
-              </div>
-              <div className="mdsa-problem-body">
-                <span className="mdsa-problem-id">#{p.id}</span>
-                <h3 className="mdsa-problem-title">{p.title}</h3>
-                <span
-                  className="mdsa-problem-topic"
-                  style={{ color: color + "cc" }}
-                >
-                  {p.topic}
-                </span>
-              </div>
-              <div className="mdsa-problem-footer">
-                <div
-                  className={`mdsa-video-btn ${
-                    hasVideo ? "available" : "soon"
-                  }`}
-                  title={
-                    hasVideo ? "Watch video solution" : "Video coming soon"
-                  }
-                >
-                  {hasVideo ? "▶ Watch" : "⏳ Soon"}
-                </div>
-                <a
-                  href={p.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mdsa-solve-btn"
-                  onClick={(e) => e.stopPropagation()}
-                  title="Open problem"
-                >
-                  Solve →
-                </a>
-              </div>
-            </div>
-          );
-        })}
+        {filtered.map((p) => (
+          <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
+        ))}
         {filtered.length === 0 && (
           <div className="mdsa-empty">
             No problems match your filters. Try changing the topic or
@@ -401,6 +540,8 @@ function MaangDSABasic() {
           </div>
         )}
       </section>
+      </>
+      )}
 
       {/* ===== Video Modal ===== */}
       <VideoPlayerModal
@@ -414,4 +555,23 @@ function MaangDSABasic() {
   );
 }
 
+/* Page wrappers ---------------------------------------------------- */
+
+function MaangDSABasic() {
+  return (
+    <DsaSheetPage
+      sheetTitle="Basic DSA"
+      titleAccent="Part 1"
+      problems={BASIC_PROBLEMS}
+      introLink={googleSeriesIntro.videoLink}
+      siblings={[
+        { label: "📘 Basic", active: true },
+        { label: "🚀 Advanced", to: "/maang/advanced-dsa" },
+        { label: "🕸️ Graph & DP", to: "/maang/graph-dp" },
+      ]}
+    />
+  );
+}
+
 export default MaangDSABasic;
+export { DsaSheetPage };
