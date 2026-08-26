@@ -290,7 +290,12 @@ function DsaSheetPage({
 
       {/* ===== PROBLEM GRID (category-grouped when "All" selected) ===== */}
       {filtered.length === 0 ? (
-        <section className="mdsa-topics-grid">
+        <section
+          className="mdsa-topics-grid"
+          style={{
+            "--topic-color": topicColors[selectedTopic] || "#60a5fa",
+          }}
+        >
           <div className="mdsa-empty">
             No problems match your filters. Try changing the topic or
             difficulty.
@@ -316,7 +321,10 @@ function DsaSheetPage({
                   {grp.problems.length === 1 ? "" : "s"}
                 </span>
               </div>
-              <div className="mdsa-topics-grid">
+              <div
+                className="mdsa-topics-grid"
+                style={{ "--topic-color": grp.color }}
+              >
                 {grp.problems.map((p) => (
                   <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
                 ))}
@@ -326,7 +334,12 @@ function DsaSheetPage({
         </div>
       ) : (
         // Single category selected → one flat grid
-        <section className="mdsa-topics-grid">
+        <section
+          className="mdsa-topics-grid"
+          style={{
+            "--topic-color": topicColors[selectedTopic] || "#60a5fa",
+          }}
+        >
           {filtered.map((p) => (
             <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
           ))}

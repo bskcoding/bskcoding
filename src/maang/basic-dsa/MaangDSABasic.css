@@ -323,42 +323,43 @@
   margin: 0 auto;
   position: relative;
   border-radius: 26px;
-  /* Colourful radial backdrop echoing the MAANG letter-grid wrapper */
+  /* Uniform DARK interior for every grid — only the outer border/glow
+     picks up the topic colour (via --topic-color set on the grid). */
   background:
     radial-gradient(
       1200px 420px at 50% 0%,
-      color-mix(in srgb, var(--topic-color, #38bdf8) 16%, transparent),
+      rgba(56, 189, 248, 0.04),
       transparent 60%
     ),
     radial-gradient(
       circle at 12% 20%,
-      rgba(255, 87, 51, 0.07),
+      rgba(255, 87, 51, 0.03),
       transparent 55%
     ),
     radial-gradient(
       circle at 88% 78%,
-      rgba(161, 51, 255, 0.07),
+      rgba(161, 51, 255, 0.03),
       transparent 55%
-    );
-  border: 1px solid rgba(59, 130, 246, 0.12);
+    ),
+    #070c16;
+  border: 1px solid
+    color-mix(in srgb, var(--topic-color, #38bdf8) 32%, rgba(59, 130, 246, 0.14));
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 18px 44px rgba(0, 0, 0, 0.45),
-    inset 0 0 60px rgba(59, 130, 246, 0.04);
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 18px 44px rgba(0, 0, 0, 0.5),
+    0 0 28px color-mix(in srgb, var(--topic-color, #38bdf8) 18%, transparent),
+    inset 0 0 60px color-mix(in srgb, var(--topic-color, #38bdf8) 4%, transparent);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
 
-/* Colourful, glossy problem cards — visually matched to the MAANG
-   letter grid (gradient tile + coloured glow + moving glare + lift). */
+/* Uniform dark problem cards — identical interior for every topic.
+   The topic colour appears only as the hover glow (and on the enclosing
+   grid's outer border/glow). */
 .mdsa-problem-card {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--topic-color, #38bdf8) 26%, #121b30 60%),
-    #0d1524 100%
-  );
-  border: 1px solid color-mix(in srgb, var(--topic-color, #38bdf8) 38%, transparent);
-  border-left: 3px solid var(--topic-color, #38bdf8);
+  /* Deep, dark panel — kept identical across all topics */
+  background: linear-gradient(145deg, #0e1526 0%, #080e1a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.18);
   border-radius: 18px;
   padding: 1.25rem;
   cursor: pointer;
@@ -372,9 +373,8 @@
   overflow: hidden;
   animation: mdsa-cardIn 0.5s ease both;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 8px 18px rgba(0, 0, 0, 0.4),
-    0 0 10px color-mix(in srgb, var(--topic-color, #38bdf8) 35%, transparent);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 18px rgba(0, 0, 0, 0.45);
 }
 .mdsa-problem-card:hover,
 .mdsa-problem-card:focus-visible {
@@ -426,7 +426,8 @@
   }
 }
 
-/* Soft pulsing glow underneath the card's content, echoing mlGlow tiles */
+/* Subtle top highlight on each card — kept very faint & neutral so every
+   card looks identical regardless of topic (colour lives on the grid frame). */
 .mdsa-problem-card::after {
   content: "";
   position: absolute;
@@ -437,10 +438,10 @@
   background: linear-gradient(
     90deg,
     transparent,
-    color-mix(in srgb, var(--topic-color, #38bdf8) 80%, #ffffff),
+    rgba(148, 163, 184, 0.28),
     transparent
   );
-  opacity: 0.75;
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -497,7 +498,7 @@
 .mdsa-problem-id {
   font-size: 0.7rem;
   font-weight: 600;
-  color: color-mix(in srgb, var(--topic-color, #38bdf8) 70%, #cbd5e1);
+  color: #94a3b8;
   display: block;
   margin-bottom: 0.3rem;
 }
@@ -514,7 +515,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  color: color-mix(in srgb, var(--topic-color, #38bdf8) 75%, #ffffff);
+  color: #7dd3fc;
 }
 
 .mdsa-problem-footer {
@@ -693,17 +694,8 @@
   white-space: nowrap;
 }
 
-/* Inside a category group, keep the card grid lighter (no heavy page backdrop
-   stacked per category) so the page stays clean and fast. */
-.mdsa-category-group .mdsa-topics-grid {
-  background: none;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  padding: 0.25rem 0 0;
-  border-radius: 0;
-}
+/* Grids inside category groups now share the same unified look as every
+   other grid (uniform dark interior + topic-coloured outer border/glow). */
 
 /* Horizontal scroll on small screens so grouped grids stay usable */
 @media (max-width: 600px) {
