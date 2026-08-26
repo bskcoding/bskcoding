@@ -694,8 +694,12 @@
   white-space: nowrap;
 }
 
-/* Grids inside category groups now share the same unified look as every
-   other grid (uniform dark interior + topic-coloured outer border/glow). */
+/* Category groups (Topic = All): no coloured outer frame on the grids —
+   cards float cleanly on the dark background instead of sitting in boxes. */
+.mdsa-category-group .mdsa-topics-grid {
+  border: none;
+  box-shadow: none;
+}
 
 /* Horizontal scroll on small screens so grouped grids stay usable */
 @media (max-width: 600px) {
