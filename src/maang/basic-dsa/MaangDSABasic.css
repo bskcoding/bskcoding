@@ -192,103 +192,10 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.mdsa-section-subtitle {
-  font-size: 1rem;
-  color: #94a3b8;
-  text-align: center;
-  margin-bottom: 2rem;
-  line-height: 1.7;
-}
 .mdsa-section {
   padding: 2.5rem 1.5rem;
   max-width: 1300px;
   margin: 0 auto;
-}
-
-/* ===== WEEKLY PLANNER ===== */
-.mdsa-week-selector {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  background: rgba(15, 23, 42, 0.6);
-  padding: 0.8rem 1.5rem;
-  border-radius: 16px;
-  border: 1px solid rgba(56, 189, 248, 0.15);
-  max-width: 340px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.mdsa-week-selector span {
-  font-size: 0.9rem;
-  color: #94a3b8;
-  font-weight: 500;
-}
-.mdsa-week-select {
-  background: rgba(15, 23, 42, 0.9);
-  color: #e2e8f0;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-radius: 10px;
-  padding: 6px 14px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.2s;
-}
-.mdsa-week-select:hover,
-.mdsa-week-select:focus {
-  border-color: rgba(56, 189, 248, 0.6);
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
-}
-
-.mdsa-week-card {
-  background:
-    radial-gradient(
-      1100px 400px at 50% 0%,
-      rgba(56, 189, 248, 0.1),
-      transparent 65%
-    ),
-    radial-gradient(
-      circle at 8% 25%,
-      rgba(251, 146, 60, 0.05),
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at 94% 80%,
-      rgba(167, 139, 250, 0.06),
-      transparent 55%
-    ),
-    rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  border-radius: 24px;
-  padding: 1.5rem;
-  max-width: 1300px;
-  margin: 0 auto;
-  backdrop-filter: blur(10px);
-  margin-bottom: 1.5rem;
-  animation: mdsa-cardIn 0.5s ease;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 14px 36px rgba(0, 0, 0, 0.4);
-  position: relative;
-}
-.mdsa-week-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 8%;
-  right: 8%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(125, 211, 252, 0.6),
-    transparent
-  );
-  opacity: 0.7;
-  pointer-events: none;
 }
 
 @keyframes mdsa-cardIn {
@@ -300,140 +207,6 @@
     opacity: 1;
     transform: scale(1);
   }
-}
-
-.mdsa-week-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid rgba(56, 189, 248, 0.2);
-}
-.mdsa-week-badge {
-  background: linear-gradient(135deg, #38bdf8, #1e3a8a);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.85rem;
-  padding: 6px 16px;
-  border-radius: 50px;
-  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-}
-.mdsa-week-title {
-  font-size: 1.3rem;
-  color: #e2e8f0;
-  margin: 0;
-}
-
-.mdsa-mini-difficulty {
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-.mdsa-mini-difficulty.easy {
-  background: rgba(144, 239, 178, 0.2);
-  color: #90efb4;
-}
-.mdsa-mini-difficulty.medium {
-  background: rgba(251, 226, 138, 0.2);
-  color: #f7e28a;
-}
-.mdsa-mini-difficulty.hard {
-  background: rgba(251, 181, 181, 0.2);
-  color: #fbb5b5;
-}
-.mdsa-mini-title {
-  color: #cbd5e1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ===== EXAM CARDS ===== */
-.mdsa-exam-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.mdsa-exam-card {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--exam-color, #ef4444) 20%, #121b30 60%),
-    #0d1524 100%
-  );
-  border: 1px solid color-mix(in srgb, var(--exam-color, #ef4444) 45%, transparent);
-  border-radius: 18px;
-  padding: 1rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 8px 20px rgba(0, 0, 0, 0.35),
-    0 0 10px color-mix(in srgb, var(--exam-color, #ef4444) 30%, transparent);
-}
-.mdsa-exam-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--exam-color, #ef4444);
-  opacity: 0.05;
-  border-radius: 18px;
-}
-.mdsa-exam-card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.45),
-    0 0 22px var(--exam-color);
-}
-
-.mdsa-exam-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-  position: relative;
-}
-.mdsa-exam-day {
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--exam-color, #ef4444);
-}
-.mdsa-exam-label {
-  font-size: 0.9rem;
-  color: #94a3b8;
-}
-
-.mdsa-exam-problems {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  position: relative;
-}
-
-.mdsa-exam-problem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  padding: 0.4rem 0;
-}
-
-.mdsa-exam-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: var(--exam-color, #ef4444);
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 /* ===== FILTERS ===== */
@@ -812,10 +585,7 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
-  .mdsa-exam-row {
-    grid-template-columns: 1fr;
-  }
-  .mdsa-hero-inner {
+    .mdsa-hero-inner {
     flex-direction: column;
     text-align: center;
   }
@@ -834,15 +604,7 @@
   }
 }
 
-/* ===== WEEKEND QUIZ NOTES, CHIPS & SHARED GRID EXTRAS ===== */
-.mdsa-rev-note {
-  font-size: 0.8rem;
-  line-height: 1.45;
-  color: #94a3b8;
-  margin: 0 0 10px;
-}
-
-/* Small label chips on cards (practice day / source week) */
+/* Small label chips on cards (source week) */
 .mdsa-extra-chip,
 .mdsa-src-week {
   font-size: 0.62rem;
@@ -870,34 +632,6 @@
 
 .mdsa-problem-top .mdsa-problem-platform {
   margin-left: auto;
-}
-
-/* "This Week's Practice" heading above the weekly card grid */
-.mdsa-grid-heading {
-  margin: 4px 0 12px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #cbd5e1;
-}
-
-.mdsa-view-bar {
-  margin-bottom: 22px;
-}
-
-/* Weekend quiz rows open the video solution */
-.mdsa-exam-problem.mdsa-clickable {
-  cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-
-.mdsa-exam-problem.mdsa-clickable:hover {
-  border-color: #3b82f6;
-  transform: translateX(2px);
-}
-
-.mdsa-exam-problem.mdsa-clickable:focus-visible {
-  outline: 2px solid #00ffaa;
-  outline-offset: 2px;
 }
 
 /* ===== CATEGORY-GROUPED LIBRARY (when Topic = All) ===== */

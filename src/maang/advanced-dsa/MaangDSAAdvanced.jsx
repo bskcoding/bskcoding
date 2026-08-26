@@ -4,7 +4,7 @@ import { googleSeriesIntro } from "../basic-dsa/dsaBasicProblems";
 
 /**
  * MaangDSAAdvanced — Part 2 of the MAANG sheet: Data Structures.
- * Stacks, Linked Lists, Trees, Tries & Heaps (57 problems · 6 weekly plans).
+  * (57 problems).
  */
 function MaangDSAAdvanced() {
   return (

@@ -13,45 +13,13 @@ import {
 import "./MaangDSABasic.css";
 const difficulties = ["All", "Easy", "Medium", "Hard"];
 
-// Weekly rules: exactly 10 questions per week
-//   • Mon–Fri : QUESTIONS_PER_DAY questions each day (= 10 new/week)
-//   • Saturday: exam over THIS week's topics only
-//   • Sunday  : revision exam over ALL previously completed weeks
-const WEEKDAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-const QUESTIONS_PER_DAY = 2;
-const QUESTIONS_PER_WEEK = WEEKDAY_NAMES.length * QUESTIONS_PER_DAY; // 10
-
 /**
- * Deterministic pseudo-random picker (mulberry32-style xorshift).
- * Same seed → same result every render, so the weekend quizzes stay
- * stable for a given week instead of reshuffling on every re-render.
- */
-function seededPick(items, count, seed) {
-  const arr = [...items];
-  let s = seed >>> 0 || 1;
-  const rand = () => {
-    s ^= s << 13;
-    s >>>= 0;
-    s ^= s >> 17;
-    s ^= s << 5;
-    s >>>= 0;
-    return s / 4294967296;
-  };
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr.slice(0, count);
-}
-
-/**
- * Shared problem card — used by BOTH the Weekly Preparation grid and
- * the Problem Library grid so they look identical.
+ * Shared problem card — used by the Problem Library grid.
  *
  * Props:
  *   problem : the DSA problem object
  *   onOpen  : opens the video modal for this problem
- *   chip    : optional small label (e.g. "Mon") shown in the card top row
+ *   chip    : optional small label shown in the card top row
  */
 const ProblemCard = memo(function ProblemCard({ problem, onOpen, chip }) {
   const color = topicColors[problem.topic] || "#60a5fa";
@@ -168,9 +136,7 @@ function DsaSheetPage({
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState("All");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
-  const [selectedWeek, setSelectedWeek] = useState(1);
-  const [view, setView] = useState("weekly"); // "weekly" | "library"
+    const [selectedDifficulty, setSelectedDifficulty] = useState("All");
 
   const topics = useMemo(
     () => ["All", ...Array.from(new Set(problems.map((p) => p.topic)))],
@@ -213,60 +179,6 @@ function DsaSheetPage({
     return ordered;
   }, [filtered, topicOrder]);
 
-  // ---- Weekly planning --------------------------------------------------
-  // Every week teaches 10 NEW questions (2 per day, Mon–Fri).
-  //   saturday → THIS week's questions (weekly topic test)
-  //   sunday   → every question from all PREVIOUS completed weeks
-  const weeklyPlan = useMemo(() => {
-    const sorted = [...problems].sort((a, b) => a.id - b.id);
-    const weeks = [];
-    const allPrev = []; // tagged questions from completed previous weeks
-    let idx = 0;
-
-    while (idx < sorted.length) {
-      const weekdaysList = [];
-      for (let d = 0; d < 5 && idx < sorted.length; d++) {
-        const dayProblems = [];
-        while (dayProblems.length < QUESTIONS_PER_DAY && idx < sorted.length) {
-          dayProblems.push(sorted[idx]);
-          idx++;
-        }
-        weekdaysList.push({
-          dayName: WEEKDAY_NAMES[d],
-          problems: dayProblems,
-        });
-      }
-
-      const weekQuestions = weekdaysList.flatMap((d) => d.problems);
-      if (weekQuestions.length === 0) break;
-
-      const weekNum = weeks.length + 1;
-
-      // Sunday pool = current week + everything before it (tagged with
-      // the week they came from so the card can show a "W{n}" chip)
-      const tagged = weekQuestions.map((p) => ({ ...p, srcWeek: weekNum }));
-      const revisionPool = [...allPrev, ...tagged];
-
-      weeks.push({
-        week: weekNum,
-        weekdays: weekdaysList,
-        // Saturday: 2 problems picked from THIS week's topics
-        saturday: {
-          label: "Weekly Topic Test",
-          problems: seededPick(weekQuestions, 2, weekNum * 1013904223 + 1),
-        },
-        // Sunday: 2 random problems from current OR previous weeks
-        sunday: {
-          label: "Random Revision Quiz",
-          problems: seededPick(revisionPool, 2, weekNum * 22695477 + 7),
-        },
-      });
-
-      allPrev.push(...tagged);
-    }
-    return weeks;
-  }, [problems]);
-
   const openVideo = useCallback((problem) => {
     setSelectedProblem(problem);
     setModalOpen(true);
@@ -275,10 +187,6 @@ function DsaSheetPage({
     setSelectedProblem(null);
     setModalOpen(false);
   }, []);
-
-  const currentWeek = weeklyPlan.find((w) => w.week === selectedWeek);
-  const satCount = currentWeek?.saturday?.problems.length ?? 0;
-  const sunCount = currentWeek?.sunday?.problems.length ?? 0;
 
   return (
     <div className="mdsa-page">
@@ -295,12 +203,8 @@ function DsaSheetPage({
               <span className="mdsa-title-accent">{titleAccent}</span>
             </h1>
             <p className="mdsa-subtitle">
-              {problems.length} essential DSA problems — structured into{" "}
-              {weeklyPlan.length} weekly plans ({QUESTIONS_PER_DAY} questions a
-              day, Mon–Fri). Weekend quizzes: 2 questions on Sat from the
-              week&apos;s topics and 2 random on Sun from current &amp; past
-              weeks. Watch video solutions in Telugu, solve on LeetCode /
-              GeeksforGeeks.
+              {problems.length} essential DSA problems. Watch video solutions
+              in Telugu, solve on LeetCode / GeeksforGeeks.
             </p>
           </div>
           <div className="mdsa-hero-video">
@@ -338,166 +242,7 @@ function DsaSheetPage({
         </div>
       </section>
 
-      {/* ===== VIEW SWITCHER — only one section visible at a time ===== */}
-      <div className="mdsa-week-selector mdsa-view-bar">
-        <label htmlFor="mdsa-view-select">Show:</label>
-        <select
-          id="mdsa-view-select"
-          className="mdsa-week-select"
-          value={view}
-          onChange={(e) => setView(e.target.value)}
-          aria-label="Switch between weekly preparation plan and problem library"
-        >
-          <option value="weekly">📅 Weekly Preparation Plan</option>
-          <option value="library">📚 Problem Library</option>
-        </select>
-      </div>
-
-      {/* ===== WEEKLY PLANNER (Weekly view only) ===== */}
-      {view === "weekly" && (
-      <section className="mdsa-weekly-section">
-        <h2 className="mdsa-section-title">📅 Weekly Preparation Plan</h2>
-        <p className="mdsa-section-subtitle">
-          {weeklyPlan.length} weeks • {QUESTIONS_PER_DAY} questions/day
-          (Mon–Fri) = <strong>{QUESTIONS_PER_WEEK} questions every week</strong>{" "}
-          • Sat quiz: 2 from this week • Sun quiz: 2 random (current + past)
-        </p>
-
-        <div className="mdsa-week-selector">
-          <span>Jump to Week:</span>
-          <select
-            value={selectedWeek}
-            onChange={(e) => setSelectedWeek(Number(e.target.value))}
-            className="mdsa-week-select"
-          >
-            {weeklyPlan.map((w) => (
-              <option key={w.week} value={w.week}>
-                Week {w.week}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mdsa-week-card">
-          <div className="mdsa-week-header">
-            <span className="mdsa-week-badge">Week {currentWeek?.week}</span>
-            <h3 className="mdsa-week-title">Practice Schedule</h3>
-          </div>
-
-          {/* Practice problems rendered as the same cards the library uses */}
-          <h4 className="mdsa-grid-heading">This Week&apos;s Practice</h4>
-          <div className="mdsa-topics-grid">
-            {currentWeek?.weekdays.map((wd) =>
-              wd.problems.map((p) => (
-                <ProblemCard
-                  key={p.id}
-                  problem={p}
-                  onOpen={openVideo}
-                  chip={wd.dayName}
-                />
-              )),
-            )}
-          </div>
-
-          {/* Weekend Exams */}
-          <div className="mdsa-exam-row">
-            <div
-              className="mdsa-exam-card"
-              style={{ "--exam-color": "#ef4444" }}
-            >
-              <div className="mdsa-exam-header">
-                <span className="mdsa-exam-day">
-                  {currentWeek?.saturday?.dayName || "Sat"}
-                </span>
-                <span className="mdsa-exam-label">
-                  {currentWeek?.saturday?.label}
-                </span>
-              </div>
-              <div className="mdsa-rev-note">
-                2 questions picked from this week&apos;s topics.
-              </div>
-              <div className="mdsa-exam-problems">
-                {currentWeek?.saturday?.problems.map((p) => (
-                  <div
-                    key={"sat-" + p.id}
-                    className="mdsa-exam-problem mdsa-clickable"
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => openVideo(p)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") openVideo(p);
-                    }}
-                  >
-                    <span
-                      className={`mdsa-mini-difficulty mdsa-${p.difficulty.toLowerCase()}`}
-                    >
-                      {p.difficulty}
-                    </span>
-                    <span className="mdsa-mini-title">{p.title}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mdsa-exam-badge">{satCount} Qs Quiz</div>
-            </div>
-
-            <div
-              className="mdsa-exam-card"
-              style={{ "--exam-color": "#a78bfa" }}
-            >
-              <div className="mdsa-exam-header">
-                <span className="mdsa-exam-day">Sun</span>
-                <span className="mdsa-exam-label">
-                  {currentWeek?.sunday?.label}
-                </span>
-              </div>
-              <div className="mdsa-rev-note">
-                2 random questions from this week or any previous week.
-              </div>
-              <div className="mdsa-exam-problems">
-                {currentWeek?.sunday?.problems.length ? (
-                  currentWeek.sunday.problems.map((p) => (
-                    <div
-                      key={"sun-" + p.id}
-                      className="mdsa-exam-problem mdsa-clickable"
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => openVideo(p)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") openVideo(p);
-                      }}
-                    >
-                      <span
-                        className={`mdsa-mini-difficulty mdsa-${p.difficulty.toLowerCase()}`}
-                      >
-                        {p.difficulty}
-                      </span>
-                      <span className="mdsa-mini-title">{p.title}</span>
-                      {p.srcWeek && (
-                        <span
-                          className="mdsa-src-week"
-                          title={`From Week ${p.srcWeek}`}
-                        >
-                          W{p.srcWeek}
-                        </span>
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  <div className="mdsa-rev-note">
-                    Revision pool builds as weeks complete 💪
-                  </div>
-                )}
-              </div>
-              <div className="mdsa-exam-badge">{sunCount} Qs Random</div>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* ===== PROBLEM LIBRARY (Library view only) ===== */}
-      {view === "library" && (
-      <>
+      {/* ===== PROBLEM LIBRARY ===== */}
       <section className="mdsa-filters-section">
         <h2 className="mdsa-section-title">📚 Problem Library</h2>
         <div className="mdsa-filter-bar">
@@ -586,8 +331,6 @@ function DsaSheetPage({
             <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
           ))}
         </section>
-      )}
-      </>
       )}
 
       {/* ===== Video Modal ===== */}

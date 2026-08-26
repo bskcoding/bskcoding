@@ -898,18 +898,5 @@ export const googleSeriesIntro = {
   videoLink: "https://www.youtube.com/watch?v=5Qqly4rxqDU",
 };
 
-// Weekday names
-export const weekDays = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-];
-export const examDays = [
-  { day: "Saturday", label: "Exam 1", emoji: "📝" },
-  { day: "Sunday", label: "Exam 2", emoji: "🏆" },
-];
-
 // Difficulty ordered set for filters
 export const difficulties = ["Easy", "Medium", "Hard"];

@@ -5,7 +5,7 @@ import { googleSeriesIntro } from "../basic-dsa/dsaBasicProblems";
 /**
  * MaangDSADp — Dynamic Programming sheet of the MAANG track.
  * DP patterns (1D, Grid, String, Knapsack, Partition, DP-on-Trees)
- * (21 problems · 3 weekly plans).
+  * (21 problems).
  */
 function MaangDSADp() {
   return (
