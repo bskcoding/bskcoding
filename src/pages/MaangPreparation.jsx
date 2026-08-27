@@ -19,6 +19,7 @@ const subtopicRoutes = {
   "🌳 Advanced DSAs": "/maang/advanced-dsa",
   "🔀 Graph Mastery": "/maang/graphs",
   "🧩 Dynamic Programming": "/maang/dp",
+  "📅 Weekly DSA Preparation": "/maang/weekly-preparation",
 };
 
 function MaangPreparation() {

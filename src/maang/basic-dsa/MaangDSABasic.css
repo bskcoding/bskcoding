@@ -710,3 +710,246 @@
     margin: 0 0.25rem 0.5rem;
   }
 }
+
+/* ===== WEEKLY PREPARATION (Mon–Fri learn · Sat/Sun assess) ===== */
+.mdsa-wp {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1rem;
+}
+
+.mdsa-wp-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.mdsa-wp-header .mdsa-section-title {
+  margin: 0;
+}
+
+.mdsa-wp-range {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+
+.mdsa-wp-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mdsa-wp-nav-btn {
+  background: rgba(15, 23, 42, 0.8);
+  color: #cbd5e1;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mdsa-wp-nav-btn:hover:not(:disabled) {
+  border-color: rgba(56, 189, 248, 0.6);
+  color: #f8fafc;
+}
+.mdsa-wp-nav-btn.active,
+.mdsa-wp-nav-btn.mdsa-wp-now.active {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.55);
+}
+.mdsa-wp-nav-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* Day sections stack top-to-bottom (Mon → Sun); each is a full-width band */
+.mdsa-wp-days {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mdsa-wp-day {
+  position: relative;
+  background: #0a111e;
+  border: 1px solid rgba(59, 130, 246, 0.16);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+}
+
+.mdsa-wp-day-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Small numbered medallion so days read as a sequence (1 · Monday, …) */
+.mdsa-wp-day-no {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+.mdsa-wp-day.test-week .mdsa-wp-day-no {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+.mdsa-wp-day.test-mixed .mdsa-wp-day-no {
+  color: #c4b5fd;
+  background: rgba(167, 139, 250, 0.12);
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.mdsa-wp-day-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.2px;
+}
+
+/* "Today" pill shown next to the day name */
+.mdsa-wp-today-chip {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 20px;
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+}
+
+.mdsa-wp-tag {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+/* Weekday practice — cool blue */
+.mdsa-wp-tag.practice {
+  color: #7dd3fc;
+  background: rgba(125, 211, 252, 0.12);
+  border: 1px solid rgba(125, 211, 252, 0.28);
+}
+/* Saturday assessment on this week's material — amber */
+.mdsa-wp-tag.test-week {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.14);
+  border: 1px solid rgba(251, 191, 36, 0.38);
+}
+/* Sunday mixed retention assessment — violet */
+.mdsa-wp-tag.test-mixed {
+  color: #c4b5fd;
+  background: rgba(167, 139, 250, 0.14);
+  border: 1px solid rgba(167, 139, 250, 0.38);
+}
+
+/*
+ * Assessment days must look clearly DIFFERENT from practice days.
+ * Practice stays dark/neutral-blue; Sat glows amber; Sun glows violet.
+ */
+.mdsa-wp-day.test-week {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 23, 8, 0.95),
+    rgba(17, 13, 4, 0.98)
+  );
+  border-color: rgba(251, 191, 36, 0.42);
+  box-shadow:
+    inset 3px 0 0 #fbbf24,
+    0 0 20px rgba(251, 191, 36, 0.08);
+}
+.mdsa-wp-day.test-week .mdsa-wp-day-name {
+  color: #fde68a;
+}
+.mdsa-wp-day.test-mixed {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 18, 40, 0.95),
+    rgba(15, 10, 26, 0.98)
+  );
+  border-color: rgba(167, 139, 250, 0.42);
+  box-shadow:
+    inset 3px 0 0 #a78bfa,
+    0 0 20px rgba(167, 139, 250, 0.08);
+}
+.mdsa-wp-day.test-mixed .mdsa-wp-day-name {
+  color: #ddd6fe;
+}
+
+/* Problems inside a day sit in a responsive row */
+.mdsa-wp-day-problems {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.85rem;
+}
+
+/* Today highlight ring (works for practice and assessment days alike) */
+.mdsa-wp-day.today {
+  box-shadow:
+    inset 3px 0 0 #38bdf8,
+    0 0 0 1px rgba(56, 189, 248, 0.55),
+    0 0 24px rgba(56, 189, 248, 0.22) !important;
+}
+
+/* The cards inside a day row are compact */
+.mdsa-wp-day .mdsa-problem-card {
+  animation: none;
+}
+
+.mdsa-wp-note {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 900px) {
+  .mdsa-wp-nav {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .mdsa-wp {
+    padding: 1.25rem 0.75rem 0.75rem;
+  }
+  /* Problems inside a day become a single column on phones */
+  .mdsa-wp-day-problems {
+    grid-template-columns: 1fr;
+  }
+  .mdsa-wp-day-head {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+  }
+  .mdsa-wp-tag {
+    margin-left: 0;
+  }
+}

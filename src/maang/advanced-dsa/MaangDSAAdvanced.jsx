@@ -4,7 +4,7 @@ import { googleSeriesIntro } from "../basic-dsa/dsaBasicProblems";
 
 /**
  * MaangDSAAdvanced — Part 2 of the MAANG sheet: Data Structures.
-  * (57 problems).
+ * (57 problems).
  */
 function MaangDSAAdvanced() {
   return (

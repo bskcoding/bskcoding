@@ -20,6 +20,9 @@ const MaangDSAAdvanced = lazy(
 );
 const MaangDSAGraph = lazy(() => import("./maang/graph/MaangDSAGraph"));
 const MaangDSADp = lazy(() => import("./maang/dp/MaangDSADp"));
+const MaangWeeklyPreparation = lazy(
+  () => import("./maang/weekly/MaangWeeklyPreparation"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -293,6 +296,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <MaangDSADp />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/weekly-preparation"
+                  element={
+                    <RequireAuth>
+                      <MaangWeeklyPreparation />
                     </RequireAuth>
                   }
                 />

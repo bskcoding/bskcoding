@@ -10,6 +10,7 @@ import {
   dsaBasicProblems as BASIC_PROBLEMS,
   googleSeriesIntro,
 } from "./dsaBasicProblems";
+import { buildWeeklyPlan } from "./weeklyPlan";
 import "./MaangDSABasic.css";
 const difficulties = ["All", "Easy", "Medium", "Hard"];
 
@@ -132,11 +133,13 @@ function DsaSheetPage({
   titleAccent = "A → Z",
   problems = BASIC_PROBLEMS,
   introLink = googleSeriesIntro.videoLink,
+  showWeeklyPlan = false,
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState("All");
     const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [weekOffset, setWeekOffset] = useState(0);
 
   const topics = useMemo(
     () => ["All", ...Array.from(new Set(problems.map((p) => p.topic)))],
@@ -187,6 +190,13 @@ function DsaSheetPage({
     setSelectedProblem(null);
     setModalOpen(false);
   }, []);
+
+  // Weekly preparation schedule (Mon–Fri learn · Sat/Sun assessments).
+  // Only rendered on pages that opt in via showWeeklyPlan.
+  const weeklyPlan = useMemo(
+    () => (showWeeklyPlan ? buildWeeklyPlan(problems, weekOffset) : null),
+    [showWeeklyPlan, problems, weekOffset],
+  );
 
   return (
     <div className="mdsa-page">
@@ -242,6 +252,100 @@ function DsaSheetPage({
         </div>
       </section>
 
+      {/* ===== WEEKLY PREPARATION (Mon–Fri learn · Sat/Sun assess) ===== */}
+      {weeklyPlan && (
+        <section className="mdsa-wp">
+          <div className="mdsa-wp-header">
+            <h2 className="mdsa-section-title">🗓️ Weekly Preparation</h2>
+            <span className="mdsa-wp-range">Week {weeklyPlan.weekNo}</span>
+            <div className="mdsa-wp-nav">
+              <button
+                className="mdsa-wp-nav-btn"
+                onClick={() => setWeekOffset((w) => w - 1)}
+                disabled={!weeklyPlan.canGoPrev}
+                aria-label="Previous week"
+              >
+                ← Prev
+              </button>
+              <button
+                className={`mdsa-wp-nav-btn mdsa-wp-now${weekOffset === 0 ? " active" : ""}`}
+                onClick={() => setWeekOffset(0)}
+                disabled={weekOffset === 0}
+              >
+                This Week
+              </button>
+              <button
+                className="mdsa-wp-nav-btn"
+                onClick={() => setWeekOffset((w) => w + 1)}
+                aria-label="Next week"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+
+          {/* One full-width section per day, top to bottom: Mon → Sun */}
+          <div className="mdsa-wp-days">
+            {weeklyPlan.days.map((day, i) => {
+              const isToday =
+                weekOffset === 0 && day.jsDay === new Date().getDay();
+              const isTest = day.type !== "practice";
+              return (
+                <article
+                  key={day.key}
+                  className={`mdsa-wp-day ${day.type}${isToday ? " today" : ""}`}
+                >
+                  <header className="mdsa-wp-day-head">
+                    <span className="mdsa-wp-day-no">{i + 1}</span>
+                    <h3 className="mdsa-wp-day-name">{day.name}</h3>
+                    <span className={`mdsa-wp-tag ${day.type}`}>
+                      {day.type === "practice"
+                        ? "Learn · 2 new"
+                        : day.type === "test-week"
+                          ? "Assessment · this week"
+                          : "Assessment · prev + this"}
+                    </span>
+                    {isToday && (
+                      <span className="mdsa-wp-today-chip">Today</span>
+                    )}
+                  </header>
+                  <div className="mdsa-wp-day-problems">
+                    {day.problems.filter(Boolean).map((p) => (
+                      <ProblemCard
+                        key={p.uid}
+                        problem={p}
+                        onOpen={openVideo}
+                        chip={
+                          p.sourceSheet === "Basic DSA"
+                            ? "Basic"
+                            : p.sourceSheet === "Advanced DSA"
+                              ? "Advanced"
+                              : p.sourceSheet === "Dynamic Programming"
+                                ? "DP"
+                                : "Graphs"
+                        }
+                      />
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {weekOffset !== 0 && (
+            <p className="mdsa-wp-note">
+              You're viewing a different week — click “This Week” to jump back
+              to today.
+            </p>
+          )}
+        </section>
+      )}
+
+      {/* Library + filter bar only make sense on the regular sheet pages.
+          On the Weekly Preparation page the schedule already curates every
+          problem day-by-day, so the whole browse UI below stays hidden. */}
+      {!showWeeklyPlan && (
+      <>
       {/* ===== PROBLEM LIBRARY ===== */}
       <section className="mdsa-filters-section">
         <h2 className="mdsa-section-title">📚 Problem Library</h2>
@@ -344,6 +448,8 @@ function DsaSheetPage({
             <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
           ))}
         </section>
+      )}
+      </>
       )}
 
       {/* ===== Video Modal ===== */}

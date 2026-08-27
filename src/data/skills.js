@@ -14,7 +14,7 @@ export const skills = [
       "🌳 Advanced DSAs",
       "🔀 Graph Mastery",
       "🧩 Dynamic Programming",
-      "📈 Advanced Topics",
+      "📅 Weekly DSA Preparation",
       "🏗️ System Design - Basics",
       "🌐 Advanced System Design",
       "🏢 Microservices & Reactive",
