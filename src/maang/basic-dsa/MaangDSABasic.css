@@ -716,6 +716,8 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1.5rem 1rem;
+  /* Only the section BACKGROUND is black — day grids keep their own styling */
+  background: #000;
 }
 
 .mdsa-wp-header {
@@ -828,17 +830,20 @@
   letter-spacing: -0.2px;
 }
 
-/* "Today" pill shown next to the day name */
+/* "Today" pill shown next to the day name — emerald */
 .mdsa-wp-today-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.6px;
   text-transform: uppercase;
   padding: 2px 9px;
   border-radius: 20px;
-  color: #7dd3fc;
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #6ee7b7;
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.5);
 }
 
 .mdsa-wp-tag {
@@ -910,12 +915,48 @@
   gap: 0.85rem;
 }
 
-/* Today highlight ring (works for practice and assessment days alike) */
+/*
+ * "Today" highlight — deliberately DIFFERENT from the Sat/Sun assessment glow.
+ * Sat = amber bar+glow, Sun = violet bar+glow, Today = emerald gradient with a
+ * pulsing halo and NO left bar, so the current day never reads as a test day.
+ */
 .mdsa-wp-day.today {
+  background: linear-gradient(
+    135deg,
+    rgba(7, 38, 30, 0.95),
+    rgba(4, 21, 17, 0.98)
+  ) !important;
+  border-color: rgba(52, 211, 153, 0.55) !important;
   box-shadow:
-    inset 3px 0 0 #38bdf8,
-    0 0 0 1px rgba(56, 189, 248, 0.55),
-    0 0 24px rgba(56, 189, 248, 0.22) !important;
+    0 0 0 1px rgba(52, 211, 153, 0.3),
+    0 0 18px rgba(52, 211, 153, 0.16);
+  animation: mdsa-wp-today-pulse 2.6s ease-in-out infinite;
+}
+.mdsa-wp-day.today .mdsa-wp-day-no {
+  color: #6ee7b7;
+  background: rgba(52, 211, 153, 0.14);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+.mdsa-wp-day.today .mdsa-wp-day-name {
+  color: #a7f3d0;
+}
+@keyframes mdsa-wp-today-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(52, 211, 153, 0.3),
+      0 0 14px rgba(52, 211, 153, 0.14);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(52, 211, 153, 0.5),
+      0 0 30px rgba(52, 211, 153, 0.28);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mdsa-wp-day.today {
+    animation: none;
+  }
 }
 
 /* The cards inside a day row are compact */

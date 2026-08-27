@@ -14,7 +14,8 @@ import { dsaProblems as graphProblems } from "../graph/dsaGraphProblems";
  *   • Weekly Preparation schedule
  *       – Mon–Fri : learn 2 new problems every day (10 / week)
  *       – Sat     : assessment on THIS week's material (2 questions)
- *       – Sun     : retention test mixing LAST week + THIS week (2 questions)
+ *       – Sun     : retention test mixing LAST week + THIS week (2 questions;
+ *                   on Week 1 both come from THIS week — no wrap-around)
  *   • Full browsable Problem Library (grouped by topic)
  *
  *   Basic DSA ..... 96 problems

@@ -1,9 +1,4 @@
-import {
-  memo,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import VideoPlayerModal from "../../components/VideoPlayerModal";
 import {
@@ -68,9 +63,7 @@ const ProblemCard = memo(function ProblemCard({ problem, onOpen, chip }) {
       <div className="mdsa-problem-body">
         <span className="mdsa-problem-id">#{problem.id}</span>
         <h3 className="mdsa-problem-title">{problem.title}</h3>
-        <span className="mdsa-problem-topic">
-          {problem.topic}
-        </span>
+        <span className="mdsa-problem-topic">{problem.topic}</span>
       </div>
       <div className="mdsa-problem-footer">
         <div
@@ -138,14 +131,13 @@ function DsaSheetPage({
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState("All");
-    const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [weekOffset, setWeekOffset] = useState(0);
 
   const topics = useMemo(
     () => ["All", ...Array.from(new Set(problems.map((p) => p.topic)))],
     [problems],
   );
-
 
   // Stats
   const easy = problems.filter((p) => p.difficulty === "Easy").length;
@@ -177,7 +169,12 @@ function DsaSheetPage({
     // Keep a stable, predictable topic order (not insertion-from-filter order)
     const ordered = [];
     for (const t of topicOrder) {
-      if (groups.has(t)) ordered.push({ topic: t, color: topicColors[t] || "#60a5fa", problems: groups.get(t) });
+      if (groups.has(t))
+        ordered.push({
+          topic: t,
+          color: topicColors[t] || "#60a5fa",
+          problems: groups.get(t),
+        });
     }
     return ordered;
   }, [filtered, topicOrder]);
@@ -213,8 +210,8 @@ function DsaSheetPage({
               <span className="mdsa-title-accent">{titleAccent}</span>
             </h1>
             <p className="mdsa-subtitle">
-              {problems.length} essential DSA problems. Watch video solutions
-              in Telugu, solve on LeetCode / GeeksforGeeks.
+              {problems.length} essential DSA problems. Watch video solutions in
+              Telugu, solve on LeetCode / GeeksforGeeks.
             </p>
           </div>
           <div className="mdsa-hero-video">
@@ -344,111 +341,113 @@ function DsaSheetPage({
           On the Weekly Preparation page the schedule already curates every
           problem day-by-day, so the whole browse UI below stays hidden. */}
       {!showWeeklyPlan && (
-      <>
-      {/* ===== PROBLEM LIBRARY ===== */}
-      <section className="mdsa-filters-section">
-        <h2 className="mdsa-section-title">📚 Problem Library</h2>
-        <div className="mdsa-filter-bar">
-          <div className="mdsa-filter-group">
-            <label>Topic:</label>
-            <select
-              value={selectedTopic}
-              onChange={(e) => setSelectedTopic(e.target.value)}
-              className="mdsa-filter-select"
-            >
-              {topics.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mdsa-filter-group">
-            <label>Difficulty:</label>
-            <div className="mdsa-difficulty-chips">
-              {difficulties.map((d) => (
-                <button
-                  key={d}
-                  className={`mdsa-diff-chip ${selectedDifficulty === d ? "active" : ""} ${
-                    d.toLowerCase() === "easy"
-                      ? "easy"
-                      : d.toLowerCase() === "medium"
-                        ? "medium"
-                        : d.toLowerCase() === "hard"
-                          ? "hard"
-                          : ""
-                  }`}
-                  onClick={() => setSelectedDifficulty(d)}
+        <>
+          {/* ===== PROBLEM LIBRARY ===== */}
+          <section className="mdsa-filters-section">
+            <h2 className="mdsa-section-title">📚 Problem Library</h2>
+            <div className="mdsa-filter-bar">
+              <div className="mdsa-filter-group">
+                <label>Topic:</label>
+                <select
+                  value={selectedTopic}
+                  onChange={(e) => setSelectedTopic(e.target.value)}
+                  className="mdsa-filter-select"
                 >
-                  {d}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <span className="mdsa-filter-count">{filtered.length} problems</span>
-        </div>
-      </section>
-
-      {/* ===== PROBLEM GRID (category-grouped when "All" selected) ===== */}
-      {filtered.length === 0 ? (
-        <section
-          className="mdsa-topics-grid"
-          style={{
-            "--topic-color": topicColors[selectedTopic] || "#60a5fa",
-          }}
-        >
-          <div className="mdsa-empty">
-            No problems match your filters. Try changing the topic or
-            difficulty.
-          </div>
-        </section>
-      ) : selectedTopic === "All" ? (
-        // Grouped view: one colourful grid per category
-        <div className="mdsa-category-groups">
-          {filteredGroups.map((grp) => (
-            <section key={grp.topic} className="mdsa-category-group">
-              <div
-                className="mdsa-category-heading"
-                style={{ "--cat-color": grp.color }}
-              >
-                <span
-                  className="mdsa-category-dot"
-                  style={{ background: grp.color }}
-                  aria-hidden="true"
-                />
-                <h3 className="mdsa-category-title">{grp.topic}</h3>
-                <span className="mdsa-category-count">
-                  {grp.problems.length} problem
-                  {grp.problems.length === 1 ? "" : "s"}
-                </span>
+                  {topics.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div
-                className="mdsa-topics-grid"
-                style={{ "--topic-color": grp.color }}
-              >
-                {grp.problems.map((p) => (
-                  <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
-                ))}
+
+              <div className="mdsa-filter-group">
+                <label>Difficulty:</label>
+                <div className="mdsa-difficulty-chips">
+                  {difficulties.map((d) => (
+                    <button
+                      key={d}
+                      className={`mdsa-diff-chip ${selectedDifficulty === d ? "active" : ""} ${
+                        d.toLowerCase() === "easy"
+                          ? "easy"
+                          : d.toLowerCase() === "medium"
+                            ? "medium"
+                            : d.toLowerCase() === "hard"
+                              ? "hard"
+                              : ""
+                      }`}
+                      onClick={() => setSelectedDifficulty(d)}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <span className="mdsa-filter-count">
+                {filtered.length} problems
+              </span>
+            </div>
+          </section>
+
+          {/* ===== PROBLEM GRID (category-grouped when "All" selected) ===== */}
+          {filtered.length === 0 ? (
+            <section
+              className="mdsa-topics-grid"
+              style={{
+                "--topic-color": topicColors[selectedTopic] || "#60a5fa",
+              }}
+            >
+              <div className="mdsa-empty">
+                No problems match your filters. Try changing the topic or
+                difficulty.
               </div>
             </section>
-          ))}
-        </div>
-      ) : (
-        // Single category selected → one flat grid
-        <section
-          className="mdsa-topics-grid"
-          style={{
-            "--topic-color": topicColors[selectedTopic] || "#60a5fa",
-          }}
-        >
-          {filtered.map((p) => (
-            <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
-          ))}
-        </section>
-      )}
-      </>
+          ) : selectedTopic === "All" ? (
+            // Grouped view: one colourful grid per category
+            <div className="mdsa-category-groups">
+              {filteredGroups.map((grp) => (
+                <section key={grp.topic} className="mdsa-category-group">
+                  <div
+                    className="mdsa-category-heading"
+                    style={{ "--cat-color": grp.color }}
+                  >
+                    <span
+                      className="mdsa-category-dot"
+                      style={{ background: grp.color }}
+                      aria-hidden="true"
+                    />
+                    <h3 className="mdsa-category-title">{grp.topic}</h3>
+                    <span className="mdsa-category-count">
+                      {grp.problems.length} problem
+                      {grp.problems.length === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                  <div
+                    className="mdsa-topics-grid"
+                    style={{ "--topic-color": grp.color }}
+                  >
+                    {grp.problems.map((p) => (
+                      <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
+            // Single category selected → one flat grid
+            <section
+              className="mdsa-topics-grid"
+              style={{
+                "--topic-color": topicColors[selectedTopic] || "#60a5fa",
+              }}
+            >
+              {filtered.map((p) => (
+                <ProblemCard key={p.id} problem={p} onOpen={openVideo} />
+              ))}
+            </section>
+          )}
+        </>
       )}
 
       {/* ===== Video Modal ===== */}

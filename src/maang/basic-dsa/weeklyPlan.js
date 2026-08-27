@@ -6,6 +6,9 @@
 //   • Saturday .... assessment: 2 problems taken from THIS week's 10
 //   • Sunday ...... assessment: 1 random from LAST week
 //                             + 1 random from THIS week (never anywhere else)
+//                   (on Week 1 there is no last week — Sunday then tests
+//                    2 problems from THIS week instead of wrapping to the
+//                    end of the bank, which would show unreached topics)
 // Same course week number ⇒ exact same schedule (stable, no flicker on
 // re-render, safe across builds/servers).
 
@@ -144,7 +147,16 @@ export function buildWeeklyPlan(bank, offset = 0) {
   });
 
   // Sunday — retention test mixing LAST week + THIS week.
-  const prevPick = seededPick(previous, 1, `sun-prev-${targetIdx}-${bank.length}`)[0];
+  // Week 1 has no previous course week: `previous` would wrap around to the
+  // tail of the bank (Graphs etc.) that the learner hasn't reached yet, so
+  // fall back to picking BOTH problems from this week's material instead.
+  const hasPrevWeek = targetIdx > 0;
+  const prevPool = hasPrevWeek ? previous : current;
+  const prevPick = seededPick(
+    prevPool,
+    1,
+    `sun-prev-${targetIdx}-${bank.length}`,
+  )[0];
   const curPool = current.filter((p) => p !== prevPick);
   const curPick = seededPick(
     curPool.length ? curPool : current,
@@ -156,6 +168,7 @@ export function buildWeeklyPlan(bank, offset = 0) {
     name: "Sunday",
     jsDay: 0,
     type: "test-mixed",
+    hasPrevWeek,
     problems: [prevPick, curPick],
   });
 
