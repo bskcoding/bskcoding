@@ -161,7 +161,7 @@ function DsaSheetPage({
         selectedDifficulty === "All" || p.difficulty === selectedDifficulty;
       return topicMatch && diffMatch;
     });
-  }, [selectedTopic, selectedDifficulty]);
+  }, [selectedTopic, selectedDifficulty, problems]);
 
   // Group problems by topic so the library can render separate grids per
   // category (each with its own heading + accent colour) when "All" is chosen.
@@ -289,7 +289,6 @@ function DsaSheetPage({
             {weeklyPlan.days.map((day, i) => {
               const isToday =
                 weekOffset === 0 && day.jsDay === new Date().getDay();
-              const isTest = day.type !== "practice";
               return (
                 <article
                   key={day.key}
