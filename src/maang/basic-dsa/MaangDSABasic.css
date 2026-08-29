@@ -351,9 +351,9 @@
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.03),
     0 18px 44px rgba(0, 0, 0, 0.5),
-    0 0 28px color-mix(in srgb, var(--topic-color, #38bdf8) 18%, transparent),
+    0 0 28px color-mix(in srgb, var(--topic-color, #250066) 18%, transparent),
     inset 0 0 60px
-      color-mix(in srgb, var(--topic-color, #38bdf8) 4%, transparent);
+      color-mix(in srgb, var(--topic-color, #032b3d) 4%, transparent);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -728,7 +728,11 @@
   padding: 2rem 1.5rem 1rem;
   /* Same panel colouring as the MAANG page hero (teal/coral/purple tints) */
   background:
-    radial-gradient(ellipse at 50% 0%, var(--dark-teal, #0d2137) 0%, transparent 70%),
+    radial-gradient(
+      ellipse at 50% 0%,
+      var(--dark-teal, #0d2137) 0%,
+      transparent 70%
+    ),
     radial-gradient(
       circle at 20% 30%,
       rgba(255, 87, 51, 0.08),
@@ -768,7 +772,11 @@
  */
 .mdsa-page-weekly .mdsa-hero {
   background:
-    radial-gradient(ellipse at 50% 0%, var(--dark-teal, #0d2137) 0%, transparent 70%),
+    radial-gradient(
+      ellipse at 50% 0%,
+      var(--dark-teal, #0d2137) 0%,
+      transparent 70%
+    ),
     radial-gradient(
       circle at 20% 30%,
       rgba(255, 87, 51, 0.08),
@@ -1060,7 +1068,11 @@
     rgba(16, 26, 48, 0.9),
     rgba(10, 18, 34, 0.85)
   );
-  border-color: color-mix(in srgb, var(--day-accent, #33a1ff) 40%, rgba(59, 130, 246, 0.15));
+  border-color: color-mix(
+    in srgb,
+    var(--day-accent, #33a1ff) 40%,
+    rgba(59, 130, 246, 0.15)
+  );
 }
 /* Reuse the card's glare pseudo-element as the rotating rainbow border */
 .mdsa-wp-day .mdsa-problem-card::before {
