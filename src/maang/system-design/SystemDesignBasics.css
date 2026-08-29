@@ -176,6 +176,17 @@
     0 0 26px color-mix(in srgb, var(--sd-accent, #33a1ff) 45%, transparent);
 }
 
+/* The OOPS pillar is a Link — keep the card's grid-item behaviour intact */
+.sdb-card-link {
+  display: flex;
+  text-decoration: none;
+}
+.sdb-card-link .sdb-card,
+.sdb-card-link:hover .sdb-card {
+  width: 100%;
+  height: 100%;
+}
+
 /* Diagonal shine sweep on hover — same as .maang-subtopic-shine */
 .sdb-card-shine {
   position: absolute;

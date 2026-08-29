@@ -61,25 +61,41 @@ function SystemDesignBasics() {
           Four foundation grids — click through as content lands
         </p>
         <div className="sdb-grids">
-          {CARDS.map((card, i) => (
-            <div
-              key={card.name}
-              className="sdb-card"
-              style={{ "--sd-accent": card.accent, "--ml-idx": i }}
-            >
-              <span className="sdb-card-shine" aria-hidden="true" />
-              <div className="sdb-card-top">
-                <span className="sdb-card-emoji" aria-hidden="true">
-                  {card.emoji}
-                </span>
-                <span className="sdb-card-num">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+          {CARDS.map((card, i) => {
+            const inner = (
+              <div
+                key={card.name}
+                className="sdb-card"
+                style={{ "--sd-accent": card.accent, "--ml-idx": i }}
+              >
+                <span className="sdb-card-shine" aria-hidden="true" />
+                <div className="sdb-card-top">
+                  <span className="sdb-card-emoji" aria-hidden="true">
+                    {card.emoji}
+                  </span>
+                  <span className="sdb-card-num">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <span className="sdb-card-name">{card.name}</span>
+                <span className="sdb-card-desc">{card.desc}</span>
               </div>
-              <span className="sdb-card-name">{card.name}</span>
-              <span className="sdb-card-desc">{card.desc}</span>
-            </div>
-          ))}
+            );
+
+            // The OOPS pillar has its full page built out — link it.
+            if (card.name === "OOPS") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/oops"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            return inner;
+          })}
         </div>
       </section>
     </div>

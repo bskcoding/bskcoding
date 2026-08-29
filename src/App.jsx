@@ -27,6 +27,7 @@ const MaangWeeklyPreparation = lazy(
 const SystemDesignBasics = lazy(
   () => import("./maang/system-design/SystemDesignBasics"),
 );
+const OopsPage = lazy(() => import("./maang/system-design/oops/OopsPage"));
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -317,6 +318,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <SystemDesignBasics />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/oops"
+                  element={
+                    <RequireAuth>
+                      <OopsPage />
                     </RequireAuth>
                   }
                 />
