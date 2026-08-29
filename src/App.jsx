@@ -28,6 +28,10 @@ const SystemDesignBasics = lazy(
   () => import("./maang/system-design/SystemDesignBasics"),
 );
 const OopsPage = lazy(() => import("./maang/system-design/oops/OopsPage"));
+const SolidPage = lazy(() => import("./maang/system-design/solid/SolidPage"));
+const DesignPatternsPage = lazy(
+  () => import("./maang/system-design/patterns/DesignPatternsPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -326,6 +330,22 @@ function App() {
                   element={
                     <RequireAuth>
                       <OopsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/solid"
+                  element={
+                    <RequireAuth>
+                      <SolidPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/patterns"
+                  element={
+                    <RequireAuth>
+                      <DesignPatternsPage />
                     </RequireAuth>
                   }
                 />

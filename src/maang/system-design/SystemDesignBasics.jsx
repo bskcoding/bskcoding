@@ -94,6 +94,30 @@ function SystemDesignBasics() {
                 </Link>
               );
             }
+            // The SOLID pillar has its full page built out — link it.
+            if (card.name === "SOLID Principles") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/solid"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Design Patterns pillar has its full page built out — link it.
+            if (card.name === "Design Patterns") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/patterns"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
             return inner;
           })}
         </div>
