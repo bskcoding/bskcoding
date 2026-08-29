@@ -6,6 +6,7 @@ import ConfigBanner from "./components/ConfigBanner";
 import RequireAuth from "./components/RequireAuth";
 import ChangePasswordModal from "./components/ChangePasswordModal";
 import ErrorBoundary from "./components/ErrorBoundary";
+import YouTubeLinkHandler from "./components/YouTubeLinkHandler";
 import { BASENAME } from "./utils/basePath";
 
 // Route-level code splitting: each page is loaded on demand, so the main
@@ -109,6 +110,7 @@ function App() {
   return (
     <BrowserRouter basename={BASENAME}>
       <ErrorBoundary>
+        <YouTubeLinkHandler />
         <RouteRestorer />
         <div className="app-shell">
           <ConfigBanner />

@@ -343,12 +343,17 @@
     ),
     #070c16;
   border: 1px solid
-    color-mix(in srgb, var(--topic-color, #38bdf8) 32%, rgba(59, 130, 246, 0.14));
+    color-mix(
+      in srgb,
+      var(--topic-color, #38bdf8) 32%,
+      rgba(59, 130, 246, 0.14)
+    );
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.03),
     0 18px 44px rgba(0, 0, 0, 0.5),
     0 0 28px color-mix(in srgb, var(--topic-color, #38bdf8) 18%, transparent),
-    inset 0 0 60px color-mix(in srgb, var(--topic-color, #38bdf8) 4%, transparent);
+    inset 0 0 60px
+      color-mix(in srgb, var(--topic-color, #38bdf8) 4%, transparent);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -363,7 +368,10 @@
   border-radius: 18px;
   padding: 1.25rem;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
@@ -586,7 +594,7 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
-    .mdsa-hero-inner {
+  .mdsa-hero-inner {
     flex-direction: column;
     text-align: center;
   }
@@ -681,7 +689,8 @@
   color: #f1f5f9;
   margin: 0;
   letter-spacing: -0.2px;
-  text-shadow: 0 0 12px color-mix(in srgb, var(--cat-color, #38bdf8) 40%, transparent);
+  text-shadow: 0 0 12px
+    color-mix(in srgb, var(--cat-color, #38bdf8) 40%, transparent);
 }
 .mdsa-category-count {
   font-size: 0.72rem;
@@ -690,7 +699,8 @@
   border-radius: 20px;
   color: color-mix(in srgb, var(--cat-color, #38bdf8) 80%, #ffffff);
   background: color-mix(in srgb, var(--cat-color, #38bdf8) 16%, transparent);
-  border: 1px solid color-mix(in srgb, var(--cat-color, #38bdf8) 35%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--cat-color, #38bdf8) 35%, transparent);
   white-space: nowrap;
 }
 
@@ -716,8 +726,87 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1.5rem 1rem;
-  /* Only the section BACKGROUND is black — day grids keep their own styling */
-  background: #000;
+  /* Same panel colouring as the MAANG page hero (teal/coral/purple tints) */
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--dark-teal, #0d2137) 0%, transparent 70%),
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 87, 51, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(161, 51, 255, 0.08),
+      transparent 55%
+    );
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Weekly title gets the same RAINBOW gradient text as the MAANG page title */
+.mdsa-wp-header .mdsa-section-title {
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    #ff5733,
+    #ffbd33,
+    #33ff57,
+    #33a1ff,
+    #a133ff
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/*
+ * Weekly Preparation page — top hero coloured exactly like the MAANG page
+ * hero (rainbow title + teal/coral/purple radial panel with blue border).
+ */
+.mdsa-page-weekly .mdsa-hero {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--dark-teal, #0d2137) 0%, transparent 70%),
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 87, 51, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(161, 51, 255, 0.08),
+      transparent 55%
+    );
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+}
+.mdsa-page-weekly .mdsa-title {
+  background: linear-gradient(
+    135deg,
+    #ff5733,
+    #ffbd33,
+    #33ff57,
+    #33a1ff,
+    #a133ff
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Stat cards on the weekly page use the MAANG subtopic-card colouring */
+.mdsa-page-weekly .mdsa-stat-card {
+  background: linear-gradient(
+    145deg,
+    rgba(16, 26, 48, 0.9),
+    rgba(10, 18, 34, 0.85)
+  );
+  border-color: rgba(59, 130, 246, 0.15);
 }
 
 .mdsa-wp-header {
@@ -735,9 +824,10 @@
 .mdsa-wp-range {
   font-size: 0.95rem;
   font-weight: 800;
-  color: #7dd3fc;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.28);
+  /* Same pill colouring as the number badge on MAANG subtopic cards */
+  color: rgba(148, 163, 184, 0.85);
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   padding: 5px 14px;
   border-radius: 20px;
 }
@@ -781,12 +871,49 @@
   gap: 1rem;
 }
 
+/*
+ * MAANG-palette day accents — Mon–Fri map to the five MAANG letter colours
+ * (M coral · A amber · A green · N blue · G purple); Sat keeps its assessment
+ * amber and Sun its assessment violet, so every day is colourful like the
+ * MAANG letter tiles while assessments stay recognisable.
+ */
+.mdsa-wp-day:nth-child(1) {
+  --day-accent: #ff5733; /* Monday — coral red (M) */
+}
+.mdsa-wp-day:nth-child(2) {
+  --day-accent: #ffbd33; /* Tuesday — amber (A) */
+}
+.mdsa-wp-day:nth-child(3) {
+  --day-accent: #33ff57; /* Wednesday — electric green (A) */
+}
+.mdsa-wp-day:nth-child(4) {
+  --day-accent: #33a1ff; /* Thursday — royal blue (N) */
+}
+.mdsa-wp-day:nth-child(5) {
+  --day-accent: #a133ff; /* Friday — royal purple (G) */
+}
+.mdsa-wp-day:nth-child(6) {
+  --day-accent: #fbbf24; /* Saturday — assessment amber */
+}
+.mdsa-wp-day:nth-child(7) {
+  --day-accent: #a78bfa; /* Sunday — assessment violet */
+}
 .mdsa-wp-day {
   position: relative;
-  background: #0a111e;
-  border: 1px solid rgba(59, 130, 246, 0.16);
+  /* HIDDEN day container — no box, border or glow. Only the coding-question
+     cards inside are visible; the day header is plain text on the page. */
+  background: transparent;
+  border: none;
   border-radius: 16px;
   padding: 0.9rem 1rem;
+  box-shadow: none;
+}
+
+/* Day content sits directly on the page (no layers needed anymore) */
+.mdsa-wp-day-head,
+.mdsa-wp-day-problems {
+  position: relative;
+  z-index: 1;
 }
 
 .mdsa-wp-day-head {
@@ -807,9 +934,10 @@
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 800;
-  color: #7dd3fc;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--day-accent, #7dd3fc);
+  background: color-mix(in srgb, var(--day-accent, #7dd3fc) 13%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--day-accent, #7dd3fc) 35%, transparent);
 }
 .mdsa-wp-day.test-week .mdsa-wp-day-no {
   color: #fbbf24;
@@ -826,11 +954,14 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 800;
-  color: #f1f5f9;
+  /* Like the letter tiles: near-white text glowing in the day's colour */
+  color: color-mix(in srgb, var(--day-accent, #33a1ff) 55%, #ffffff);
+  text-shadow: 0 0 10px
+    color-mix(in srgb, var(--day-accent, #33a1ff) 55%, transparent);
   letter-spacing: -0.2px;
 }
 
-/* "Today" pill shown next to the day name — emerald */
+/* "Today" pill shown next to the day name — MAANG electric green */
 .mdsa-wp-today-chip {
   display: inline-flex;
   align-items: center;
@@ -841,9 +972,9 @@
   text-transform: uppercase;
   padding: 2px 9px;
   border-radius: 20px;
-  color: #6ee7b7;
-  background: rgba(52, 211, 153, 0.15);
-  border: 1px solid rgba(52, 211, 153, 0.5);
+  color: #a3ffb5;
+  background: rgba(51, 255, 87, 0.13);
+  border: 1px solid rgba(51, 255, 87, 0.45);
 }
 
 .mdsa-wp-tag {
@@ -856,11 +987,12 @@
   border-radius: 20px;
   white-space: nowrap;
 }
-/* Weekday practice — cool blue */
+/* Weekday practice — follows each day's MAANG accent colour */
 .mdsa-wp-tag.practice {
-  color: #7dd3fc;
-  background: rgba(125, 211, 252, 0.12);
-  border: 1px solid rgba(125, 211, 252, 0.28);
+  color: color-mix(in srgb, var(--day-accent, #7dd3fc) 80%, #ffffff);
+  background: color-mix(in srgb, var(--day-accent, #7dd3fc) 13%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--day-accent, #7dd3fc) 35%, transparent);
 }
 /* Saturday assessment on this week's material — amber */
 .mdsa-wp-tag.test-week {
@@ -876,92 +1008,108 @@
 }
 
 /*
- * Assessment days must look clearly DIFFERENT from practice days.
- * Practice stays dark/neutral-blue; Sat glows amber; Sun glows violet.
+ * Assessment days: the day container is hidden — Sat reads amber and Sun
+ * reads violet through their TEXT + tags only.
  */
-.mdsa-wp-day.test-week {
-  background: linear-gradient(
-    135deg,
-    rgba(30, 23, 8, 0.95),
-    rgba(17, 13, 4, 0.98)
-  );
-  border-color: rgba(251, 191, 36, 0.42);
-  box-shadow:
-    inset 3px 0 0 #fbbf24,
-    0 0 20px rgba(251, 191, 36, 0.08);
-}
 .mdsa-wp-day.test-week .mdsa-wp-day-name {
   color: #fde68a;
-}
-.mdsa-wp-day.test-mixed {
-  background: linear-gradient(
-    135deg,
-    rgba(26, 18, 40, 0.95),
-    rgba(15, 10, 26, 0.98)
-  );
-  border-color: rgba(167, 139, 250, 0.42);
-  box-shadow:
-    inset 3px 0 0 #a78bfa,
-    0 0 20px rgba(167, 139, 250, 0.08);
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.45);
 }
 .mdsa-wp-day.test-mixed .mdsa-wp-day-name {
   color: #ddd6fe;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.45);
 }
 
-/* Problems inside a day sit in a responsive row */
+/* Problems inside a day stack LINE BY LINE — one card per row, full width */
 .mdsa-wp-day-problems {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 0.85rem;
 }
 
 /*
- * "Today" highlight — deliberately DIFFERENT from the Sat/Sun assessment glow.
- * Sat = amber bar+glow, Sun = violet bar+glow, Today = emerald gradient with a
- * pulsing halo and NO left bar, so the current day never reads as a test day.
+ * "Today" highlight — MAANG electric green applied to the day TEXT and the
+ * problem cards inside (the day container itself is hidden). The green glow
+ * surrounds today's coding-question cards.
  */
 .mdsa-wp-day.today {
-  background: linear-gradient(
-    135deg,
-    rgba(7, 38, 30, 0.95),
-    rgba(4, 21, 17, 0.98)
-  ) !important;
-  border-color: rgba(52, 211, 153, 0.55) !important;
-  box-shadow:
-    0 0 0 1px rgba(52, 211, 153, 0.3),
-    0 0 18px rgba(52, 211, 153, 0.16);
-  animation: mdsa-wp-today-pulse 2.6s ease-in-out infinite;
+  --day-accent: #33ff57;
 }
 .mdsa-wp-day.today .mdsa-wp-day-no {
-  color: #6ee7b7;
-  background: rgba(52, 211, 153, 0.14);
-  border-color: rgba(52, 211, 153, 0.4);
+  color: #a3ffb5;
+  background: rgba(51, 255, 87, 0.16);
+  border-color: rgba(51, 255, 87, 0.5);
 }
 .mdsa-wp-day.today .mdsa-wp-day-name {
-  color: #a7f3d0;
+  color: #a3ffb5;
+  text-shadow: 0 0 10px rgba(51, 255, 87, 0.6);
 }
-@keyframes mdsa-wp-today-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 1px rgba(52, 211, 153, 0.3),
-      0 0 14px rgba(52, 211, 153, 0.14);
-  }
-  50% {
-    box-shadow:
-      0 0 0 2px rgba(52, 211, 153, 0.5),
-      0 0 30px rgba(52, 211, 153, 0.28);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mdsa-wp-day.today {
-    animation: none;
-  }
+.mdsa-wp-day.today .mdsa-wp-day-problems .mdsa-problem-card {
+  border-color: rgba(51, 255, 87, 0.5);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.45),
+    0 0 14px rgba(51, 255, 87, 0.28);
 }
 
-/* The cards inside a day row are compact */
+/* The cards inside a day row — BLACK inside like the MAANG subtopic cards;
+   the day's colour appears only on the border + hover glow/rainbow. */
 .mdsa-wp-day .mdsa-problem-card {
   animation: none;
+  background: linear-gradient(
+    145deg,
+    rgba(16, 26, 48, 0.9),
+    rgba(10, 18, 34, 0.85)
+  );
+  border-color: color-mix(in srgb, var(--day-accent, #33a1ff) 40%, rgba(59, 130, 246, 0.15));
+}
+/* Reuse the card's glare pseudo-element as the rotating rainbow border */
+.mdsa-wp-day .mdsa-problem-card::before {
+  top: -60%;
+  left: -60%;
+  width: auto;
+  height: auto;
+  inset: -60%;
+  transform: none;
+  background: conic-gradient(
+    from var(--maang-rot, 0deg),
+    #ff5733,
+    #ffbd33,
+    #33ff57,
+    #33a1ff,
+    #a133ff,
+    #ff5733
+  );
+  animation: maangBorderSpin 4s linear infinite;
+}
+.mdsa-wp-day .mdsa-problem-card:hover::before {
+  animation: maangBorderSpin 4s linear infinite;
+  opacity: 0.55;
+}
+/* Reuse the top-highlight pseudo-element as the inner surface (BLACK inside,
+   same as the MAANG subtopic cards' inner layer) */
+.mdsa-wp-day .mdsa-problem-card::after {
+  inset: 1px;
+  height: auto;
+  border-radius: 15px;
+  background: linear-gradient(
+    150deg,
+    rgba(18, 28, 52, 0.98),
+    rgba(10, 18, 34, 0.96)
+  );
+  opacity: 1;
+}
+/* Card content must sit above the rainbow/inner layers */
+.mdsa-wp-day .mdsa-problem-card > * {
+  position: relative;
+  z-index: 1;
+}
+.mdsa-wp-day .mdsa-problem-card:hover,
+.mdsa-wp-day .mdsa-problem-card:focus-visible {
+  transform: translateY(-6px) scale(1.02);
+  border-color: color-mix(in srgb, var(--day-accent, #33a1ff) 70%, #ffffff);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.5),
+    0 0 26px color-mix(in srgb, var(--day-accent, #33a1ff) 45%, transparent);
 }
 
 .mdsa-wp-note {
@@ -981,10 +1129,6 @@
 @media (max-width: 600px) {
   .mdsa-wp {
     padding: 1.25rem 0.75rem 0.75rem;
-  }
-  /* Problems inside a day become a single column on phones */
-  .mdsa-wp-day-problems {
-    grid-template-columns: 1fr;
   }
   .mdsa-wp-day-head {
     flex-wrap: wrap;

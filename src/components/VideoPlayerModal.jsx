@@ -14,6 +14,7 @@ import "./VideoPlayerModal.css";
  *      https://www.youtube.com/watch?v=VIDEO_ID
  *      https://youtu.be/VIDEO_ID
  *      https://www.youtube.com/embed/VIDEO_ID
+ *      https://www.youtube.com/playlist?list=LIST_ID   (channel/playlist embed)
  *  - title     : string   — optional heading shown above the player
  *  - description: string  — optional problem description shown below the player
  *  - example   : string   — optional example input/output shown below the player
@@ -44,10 +45,23 @@ function VideoPlayerModal({
     return null;
   };
 
+  // Extract a playlist id (incl. channel-uploads "UU…" lists) from URL forms:
+  //   https://www.youtube.com/playlist?list=LIST_ID
+  //   https://www.youtube.com/watch?...&list=LIST_ID
+  //   https://www.youtube.com/embed/videoseries?list=LIST_ID
+  const extractListId = (url) => {
+    if (!url) return null;
+    const m = url.match(/[?&]list=([\w-]+)/);
+    return m ? m[1] : null;
+  };
+
   const videoId = extractVideoId(videoUrl);
+  const listId = videoId ? null : extractListId(videoUrl);
   const embedUrl = videoId
     ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`
-    : null;
+    : listId
+      ? `https://www.youtube-nocookie.com/embed/videoseries?list=${listId}&rel=0&modestbranding=1`
+      : null;
 
   // Close on Escape key
   const handleKeyDown = useCallback(

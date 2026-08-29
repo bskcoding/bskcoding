@@ -196,7 +196,7 @@ function DsaSheetPage({
   );
 
   return (
-    <div className="mdsa-page">
+    <div className={`mdsa-page${showWeeklyPlan ? " mdsa-page-weekly" : ""}`}>
       {/* ===== HERO ===== */}
       <section className="mdsa-hero">
         <Link to="/maang" className="mdsa-back">
