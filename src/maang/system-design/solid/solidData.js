@@ -19,7 +19,7 @@ export const solidTopics = [
     desc: "A class should have only one reason to change, i.e., only one responsibility.",
     definition:
       "SRP states that a class should have only one reason to change — one responsibility. High cohesion within a module and loose coupling between modules. Split large classes into focused, single-purpose ones.",
-    videoLink: CHANNEL_UPLOADS,
+    videoLink: "https://www.youtube.com/watch?v=EMbCnn01rxc",
     code: `// ===== SINGLE RESPONSIBILITY PRINCIPLE (SRP) =====
 // BAD: One class doing three jobs
 class ReportGenerator {
@@ -93,7 +93,7 @@ class ReportWorkflow {
     desc: "Software entities should be open for extension but closed for modification.",
     definition:
       "Classes should be open for extension (you can add new behavior) but closed for modification (you don't change existing code). Achieve this with abstractions and dependency injection.",
-    videoLink: CHANNEL_UPLOADS,
+    videoLink: "https://www.youtube.com/watch?v=j1ZxAKLonl4",
     code: `// ===== OPEN/CLOSED PRINCIPLE (OCP) =====
 import java.util.*;
 
@@ -155,7 +155,7 @@ public class Main {
     desc: "Objects of a superclass should be replaceable with objects of its subclasses without breaking.",
     definition:
       "LSP: if S is a subtype of T, objects of T may be replaced with objects of type S without altering desirable properties of the program. In practice, subclasses must honor the contract/promises of their parent.",
-    videoLink: CHANNEL_UPLOADS,
+    videoLink: "https://www.youtube.com/watch?v=irHHnn7CZAA",
     code: `// ===== LISKOV SUBSTITUTION PRINCIPLE (LSP) =====
 // BAD: Square is a Rectangle but can't honor setWidth/setHeight contract
 abstract class Rectangle {
@@ -214,7 +214,7 @@ public class Main {
     desc: "Clients should not be forced to depend on interfaces they don't use.",
     definition:
       'ISP: many client-specific interfaces are better than one general-purpose "fat" interface. Each interface should have only the methods a particular client cares about.',
-    videoLink: CHANNEL_UPLOADS,
+    videoLink: "https://www.youtube.com/watch?v=4ZdsinALUX8",
     code: `// ===== INTERFACE SEGREGATION PRINCIPLE (ISP) =====
 // BAD: One fat interface forces everyone to implement unused methods
 interface WorkerAllInOne {
@@ -272,7 +272,7 @@ class Manager implements Leader, Documenter {
     desc: "High-level modules should not depend on low-level modules. Both should depend on abstractions.",
     definition:
       "DIP: depend on abstractions (interfaces/abstract classes), not concrete implementations. Inject the concrete dependency from outside (constructor/ method injection).",
-    videoLink: CHANNEL_UPLOADS,
+    videoLink: "https://www.youtube.com/watch?v=XDRSpWS8urM",
     code: `// ===== DEPENDENCY INVERSION PRINCIPLE (DIP) =====
 // BAD: High-level class directly creates low-level class
 class OrderService {

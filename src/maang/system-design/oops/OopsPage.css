@@ -1,12 +1,38 @@
 /* ===== OOP System Design page — styling matches the original standalone HTML ===== */
 .oops-app-wrapper {
-  max-width: 1500px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 30px auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #1a1a2e;
   background: #f4f6f9;
-  padding: 15px;
+  padding: 24px 24px 40px;
   border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== BACK LINK ===== */
+.oops-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 8px 18px;
+  background: white;
+  color: #302b63;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 30px;
+  border: 1px solid #e1e8f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.oops-back:hover {
+  background: #302b63;
+  color: white;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 12px rgba(48, 43, 99, 0.25);
 }
 
 /* ===== HEADER ===== */
@@ -175,52 +201,106 @@
   background: #faf8ff;
 }
 
-/* ===== DETAIL PANEL ===== */
-.oops-detail-panel {
-  background: white;
-  border-radius: 18px;
-  padding: 30px 35px;
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.07);
-  display: none;
-  border-top: 6px solid #e94560;
-  margin-top: 10px;
+/* ===== MODAL BACKDROP ===== */
+.oops-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 12, 41, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 24px;
+  animation: oopsFadeIn 0.3s ease-out;
 }
 
-.oops-detail-panel.visible {
-  display: block;
-  animation: oopsSlideUp 0.35s ease;
+@keyframes oopsFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== DETAIL PANEL ===== */
+.oops-detail-panel {
+  display: none;
+}
+
+.oops-detail-panel.modal-visible {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 1100px;
+  max-height: 85vh;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  border-top: 6px solid #e94560;
+  overflow: hidden;
+  animation: oopsSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes oopsSlideUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.oops-modal-scroll-content {
+  overflow-y: auto;
+  padding: 0 32px 32px;
+  flex: 1;
+}
+
+.oops-modal-scroll-content::-webkit-scrollbar {
+  width: 8px;
+}
+.oops-modal-scroll-content::-webkit-scrollbar-thumb {
+  background: #ccd4e0;
+  border-radius: 10px;
+}
+.oops-modal-scroll-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .oops-detail-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
+  align-items: center;
+  padding: 24px 32px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
 }
 
 .oops-detail-header h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   display: flex;
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
   margin: 0;
+  font-weight: 700;
+  color: #1a1a2e;
 }
 
 .oops-detail-header h2 i {
   color: #e94560;
 }
 
+.oops-title-text {
+  background: linear-gradient(135deg, #1a1a2e 0%, #302b63 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .oops-detail-sub {
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: #888;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e94560;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .oops-detail-video {
@@ -241,17 +321,32 @@
 }
 
 .oops-close-btn {
-  background: none;
+  background: rgba(0, 0, 0, 0.06);
   border: none;
-  font-size: 1.6rem;
-  color: #aaa;
+  color: #444;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: color 0.2s;
-  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.oops-close-btn svg {
+  display: block;
+  stroke: #444;
 }
 
 .oops-close-btn:hover {
-  color: #e94560;
+  background: #e94560;
+}
+
+.oops-close-btn:hover svg {
+  stroke: #ffffff;
 }
 
 .oops-definition-box {
@@ -422,25 +517,63 @@
   .oops-detail-grid {
     grid-template-columns: 1fr;
   }
+  .oops-modal-backdrop {
+    padding: 16px;
+  }
+  .oops-detail-header {
+    padding: 18px 20px 14px;
+  }
+  .oops-detail-header h2 {
+    font-size: 1.5rem;
+  }
+  .oops-modal-scroll-content {
+    padding: 0 20px 24px;
+  }
 }
 
 @media (max-width: 600px) {
   .oops-app-wrapper {
-    padding: 10px;
+    margin: 12px;
+    padding: 16px 16px 24px;
+    border-radius: 14px;
   }
   .oops-main-header {
     padding: 20px;
   }
   .oops-main-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    gap: 10px;
   }
-  .oops-detail-panel {
-    padding: 20px;
+  .oops-modal-backdrop {
+    padding: 8px;
+    align-items: flex-end;
+  }
+  .oops-detail-panel.modal-visible {
+    max-height: 92vh;
+    border-top-width: 4px;
+  }
+  .oops-detail-header {
+    padding: 16px 16px 12px;
   }
   .oops-detail-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    gap: 8px;
+  }
+  .oops-detail-sub {
+    font-size: 0.8rem;
+  }
+  .oops-modal-scroll-content {
+    padding: 0 16px 20px;
   }
   .oops-topic-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .oops-main-header h1 i {
+    font-size: 1.6rem;
+  }
+  .oops-sub-info {
+    gap: 12px;
+    font-size: 0.9rem;
   }
 }

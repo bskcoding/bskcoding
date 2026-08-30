@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./SolidPage.css";
 import { solidTopics } from "./solidData";
 
@@ -45,65 +46,84 @@ function DetailPanel({ topic, onClose }) {
   const svgString = topic.diagram();
 
   return (
-    <div className="oops-detail-panel visible">
-      <div className="oops-detail-header">
-        <h2>
-          <i className={`fas ${topic.icon}`} />
-          {topic.title}
-          <span className="oops-detail-sub">— {topic.sub}</span>
-          <a
-            className="oops-detail-video"
-            href={topic.videoLink}
-            onClick={(e) => e.stopPropagation()}
-            title="Watch video"
-          >
-            <i className="fas fa-play-circle" /> Watch Video
-          </a>
-        </h2>
-        <button className="oops-close-btn" onClick={onClose}>
-          <i className="fas fa-times" />
-        </button>
-      </div>
+    <div className="oops-modal-backdrop" onClick={onClose}>
+      <div className="oops-detail-panel modal-visible" onClick={(e) => e.stopPropagation()}>
+        <div className="oops-detail-header">
+          <h2>
+            <i className={`fas ${topic.icon}`} />
+            <span className="oops-title-text">{topic.title}</span>
+            <span className="oops-detail-sub">— {topic.sub}</span>
+            <a
+              className="oops-detail-video"
+              href={topic.videoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              title="Watch video"
+            >
+              <i className="fas fa-play-circle" /> Watch Video
+            </a>
+          </h2>
+          <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
 
-      <div className="oops-definition-box">
-        <strong>📘 Definition: </strong>
-        {topic.definition}
-      </div>
+        <div className="oops-modal-scroll-content">
+          <div className="oops-definition-box">
+            <strong>📘 Definition: </strong>
+            {topic.definition}
+          </div>
 
-      <div className="oops-detail-grid">
-        <div>
-          <div className="oops-code-section">
-            <div className="oops-code-header">
-              <span>
-                <i className="fab fa-java" /> Java Code
-              </span>
-              <span className="oops-lang-badge">Java 17+</span>
+          <div className="oops-detail-grid">
+            <div>
+              <div className="oops-code-section">
+                <div className="oops-code-header">
+                  <span>
+                    <i className="fab fa-java" /> Java Code
+                  </span>
+                  <span className="oops-lang-badge">Java 17+</span>
+                </div>
+                <pre>{topic.code}</pre>
+              </div>
             </div>
-            <pre>{topic.code}</pre>
+
+            <div className="oops-diagram-section">
+              <div className="oops-diagram-title">
+                <i className="fas fa-diagram-project" /> UML Class Diagram
+              </div>
+              <div dangerouslySetInnerHTML={{ __html: svgString }} />
+              <div className="oops-diagram-caption">
+                <i className="fas fa-info-circle" />
+                <span className="oops-rel-tag">{topic.relation}</span>
+                <span>
+                  <i className="fas fa-arrow-right" /> {topic.points.join(" • ")}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="oops-key-points">
+            {topic.points.map((p, idx) => (
+              <span key={idx}>
+                <i className="fas fa-check-circle" /> {p}
+              </span>
+            ))}
           </div>
         </div>
-
-        <div className="oops-diagram-section">
-          <div className="oops-diagram-title">
-            <i className="fas fa-diagram-project" /> UML Class Diagram
-          </div>
-          <div dangerouslySetInnerHTML={{ __html: svgString }} />
-          <div className="oops-diagram-caption">
-            <i className="fas fa-info-circle" />
-            <span className="oops-rel-tag">{topic.relation}</span>
-            <span>
-              <i className="fas fa-arrow-right" /> {topic.points.join(" • ")}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="oops-key-points">
-        {topic.points.map((p, idx) => (
-          <span key={idx}>
-            <i className="fas fa-check-circle" /> {p}
-          </span>
-        ))}
       </div>
     </div>
   );
@@ -126,6 +146,9 @@ export default function SolidPage() {
 
   return (
     <div className="oops-app-wrapper">
+      <Link to="/maang/system-design-basics" className="oops-back">
+        ← Back to System Design
+      </Link>
       <header className="oops-main-header">
         <h1>
           <i className="fas fa-gem" /> SOLID Principles
@@ -147,6 +170,16 @@ export default function SolidPage() {
             <i className="fas fa-mouse-pointer" /> Click any card
           </span>
         </div>
+        <a
+          className="oops-series-link"
+          href="https://www.youtube.com/watch?v=-itY-xe2x1s"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          title="Watch the full SOLID series (Telugu)"
+        >
+          <i className="fab fa-youtube" /> Watch Full SOLID Series (Telugu)
+        </a>
       </header>
 
       <div className="oops-topic-grid">
