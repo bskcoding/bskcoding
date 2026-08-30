@@ -5,7 +5,6 @@ import {
   svgBuilder,
   svgObserver,
   svgStrategy,
-  svgAdapter,
   svgProxy,
   svgChainOfResponsibility,
 } from "./designPatternsDiagrams";
@@ -149,6 +148,7 @@ public class Main {
     icon: "fa-layer-group",
     title: "Builder",
     sub: "Creational · complex objects",
+    category: "creational",
     desc: "Separates object construction from its representation, step by step.",
     definition:
       "Builder lets you construct complex objects piece by piece with a fluent API. Useful when an object has many optional parameters or an awkward constructor.",
@@ -218,6 +218,7 @@ public class Main {
     icon: "fa-bell",
     title: "Observer",
     sub: "Behavioural · publish-subscribe",
+    category: "behavioral",
     desc: "Define a one-to-many dependency so when one object changes, its dependents are notified.",
     definition:
       "Observer (publish/subscribe): a Subject maintains a list of Observers and notifies them of state changes. Decouples producer from consumers — new observers can be added without touching the subject.",
@@ -293,6 +294,7 @@ public class Main {
     icon: "fa-bullseye",
     title: "Strategy",
     sub: "Behavioural · interchangeable algorithms",
+    category: "behavioral",
     desc: "Define a family of algorithms, encapsulate each, and make them interchangeable at runtime.",
     definition:
       "Strategy pattern lets you swap algorithms at runtime by encapsulating them behind an interface. The context delegates to the current strategy — no if/else chains for behavior selection.",
@@ -358,79 +360,178 @@ public class Main {
     ],
   },
 
-  // ---------- 6. ADAPTER ----------
+  // ---------- 6. PROXY ----------
   {
-    id: "adapter",
-    icon: "fa-plug-circle-bolt",
-    title: "Adapter",
-    sub: "Structural · make interfaces compatible",
-    desc: "Allows incompatible interfaces to work together by acting as a bridge.",
+    id: "proxy",
+    icon: "fa-shield-halved",
+    title: "Proxy",
+    sub: "Structural · controlled access",
+    category: "structural",
+    desc: "Provide a placeholder or surrogate for another object to control access to it.",
     definition:
-      "Adapter converts the interface of a class into another interface the client expects. Two equally-named classes (Thermal/ElectricalPrinter) or incompatible APIs are bridged so they can collaborate without changing either side.",
+      "Proxy provides a surrogate/placeholder for another object to control access. Common types: Virtual (lazy loading), Protection (auth checks), Remote (network), Caching (memoize). Same interface as the real object.",
     videoLink: CHANNEL_UPLOADS,
-    code: `// ===== ADAPTER PATTERN =====
-
-// Target interface the client expects
-interface USB {
-    void connect();
-}
-
-// Adaptee — existing, incompatible interface
-class LightningConnector {
-    public void plugLightning() {
-        System.out.println("🔗 Lightning cable connected");
-    }
-}
-
-// Adapter — bridges Lightning → USB
-class LightningToUSBAdapter implements USB {
-    private LightningConnector lightning;
-    public LightningToUSBAdapter(LightningConnector lightning) {
-        this.lightning = lightning;
-    }
-    public void connect() {
-        lightning.plugLightning();   // translate USB.connect → plugLightning
-    }
-}
-
-// Client
-class Laptop {
-    public void acceptUsb(USB usb) {
-        usb.connect();
-        System.out.println("💻 Laptop reading data over USB");
-    }
-}
-
-// Another example: XML → JSON adapter
-interface DataLoader { String loadData(); }
-class XMLDataService {
-    public String fetchXML() { return "<user><name>Alice</name></user>"; }
-}
-class XMLToJSONAdapter implements DataLoader {
-    private XMLDataService xmlService;
-    public XMLToJSONAdapter(XMLDataService s) { this.xmlService = s; }
-    public String loadData() {
-        String xml = xmlService.fetchXML();
-        // simplified conversion
-        return xml.replace("<", "{").replace(">", "}");
-    }
-}
+    code: `// ===== PROXY PATTERN =====
+// Proxy controls access to a real object.
+// RealImage is heavy (loads from disk); ProxyImage loads lazily + caches.
 
 public class Main {
+
+    // ---- Subject interface (both Real and Proxy implement this) ----
+    interface Image {
+        void display();
+    }
+
+    // ---- Real subject (heavy / expensive to construct) ----
+    static class RealImage implements Image {
+        private String filename;
+
+        public RealImage(String filename) {
+            this.filename = filename;
+            loadFromDisk();             // expensive operation
+        }
+
+        private void loadFromDisk() {
+            System.out.println("Loading image from disk: " + filename);
+        }
+
+        public void display() {
+            System.out.println("Displaying image: " + filename);
+        }
+    }
+
+    // ---- Proxy: lazy load + cache ----
+    static class ProxyImage implements Image {
+        private String filename;
+        private RealImage realImage;     // holds the real subject
+
+        public ProxyImage(String filename) {
+            this.filename = filename;     // NOT loading yet
+        }
+
+        public void display() {
+            // Lazy: only create RealImage when first needed
+            if (realImage == null) {
+                realImage = new RealImage(filename);
+            }
+            realImage.display();
+        }
+    }
+
     public static void main(String[] args) {
-        Laptop laptop = new Laptop();
-        // Client only knows USB — adapter translates
-        USB adapter = new LightningToUSBAdapter(new LightningConnector());
-        laptop.acceptUsb(adapter);
+        // Client uses the proxy — does NOT know about RealImage
+        Image img1 = new ProxyImage("photo1.jpg");
+        Image img2 = new ProxyImage("photo2.jpg");
+
+        // First display → triggers loading
+        img1.display();
+        img1.display();                  // already loaded, no re-load
+
+        img2.display();
     }
 }`,
-    diagram: svgAdapter,
-    relation: "🔌 Adapter bridges incompatible interfaces — no change to either side",
+    diagram: svgProxy,
+    relation: "🛡️ Proxy controls access to real subject — lazy load / cache / auth / remote",
     points: [
-      "Translates target interface to adaptee",
-      "No modification to client or adaptee",
-      "Lightning → USB, XML → JSON examples",
-      "Useful for legacy integration",
+      "Same interface as the real object",
+      "Virtual proxy = lazy initialization",
+      "Protection proxy = access control / auth",
+      "Caching & remote proxies are common",
+    ],
+  },
+
+  // ---------- 7. CHAIN OF RESPONSIBILITY ----------
+  {
+    id: "chain",
+    icon: "fa-link",
+    title: "Chain of Responsibility",
+    sub: "Behavioural · pass the request",
+    category: "behavioral",
+    desc: "Pass a request along a chain of handlers until one of them handles it.",
+    definition:
+      "Chain of Responsibility decouples sender from receiver by giving multiple objects a chance to handle the request. Each handler holds a reference to the next; if it can't handle, it forwards. Common in logging, auth, approval flows, middleware.",
+    videoLink: CHANNEL_UPLOADS,
+    code: `// ===== CHAIN OF RESPONSIBILITY PATTERN =====
+// A support ticket flows through handlers until one resolves it.
+//   $50  → Bot handles
+//   $500 → Supervisor handles
+//   else → Manager handles
+
+public class Main {
+
+    // ---- Request ----
+    static class SupportTicket {
+        private String issue;
+        private int amount;
+        public SupportTicket(String issue, int amount) {
+            this.issue = issue;
+            this.amount = amount;
+        }
+        public String getIssue() { return issue; }
+        public int    getAmount() { return amount; }
+    }
+
+    // ---- Abstract Handler ----
+    abstract static class SupportHandler {
+        protected SupportHandler next;   // link to next handler
+        public void setNext(SupportHandler next) { this.next = next; }
+        public abstract void handle(SupportTicket t);
+        protected void forward(SupportTicket t) {
+            if (next != null) next.handle(t);
+            else              System.out.println("No one could handle: " + t.getIssue());
+        }
+    }
+
+    // ---- Concrete Handler 1: Bot (small issues) ----
+    static class BotHandler extends SupportHandler {
+        public void handle(SupportTicket t) {
+            if (t.getAmount() < 100) {
+                System.out.println("[Bot]     resolved: " + t.getIssue() + " ($" + t.getAmount() + ")");
+            } else {
+                forward(t);     // pass to next
+            }
+        }
+    }
+
+    // ---- Concrete Handler 2: Supervisor ----
+    static class SupervisorHandler extends SupportHandler {
+        public void handle(SupportTicket t) {
+            if (t.getAmount() <= 1000) {
+                System.out.println("[Sup]     resolved: " + t.getIssue() + " ($" + t.getAmount() + ")");
+            } else {
+                forward(t);
+            }
+        }
+    }
+
+    // ---- Concrete Handler 3: Manager ----
+    static class ManagerHandler extends SupportHandler {
+        public void handle(SupportTicket t) {
+            System.out.println("[Mgr]     resolved: " + t.getIssue() + " ($" + t.getAmount() + ")");
+        }
+    }
+
+    public static void main(String[] args) {
+        // Build the chain: Bot → Supervisor → Manager
+        SupportHandler bot = new BotHandler();
+        SupportHandler sup = new SupervisorHandler();
+        SupportHandler mgr = new ManagerHandler();
+        bot.setNext(sup);
+        sup.setNext(mgr);
+
+        // Send tickets — each finds its handler
+        bot.handle(new SupportTicket("Reset password",  0));
+        bot.handle(new SupportTicket("Refund request",  500));
+        bot.handle(new SupportTicket("Server outage",  10000));
+    }
+}`,
+    diagram: svgChainOfResponsibility,
+    relation: "🔗 Request flows through handlers until one processes it",
+    points: [
+      "Decouples sender from receiver",
+      "Each handler decides: handle or pass on",
+      "Easy to add / remove handlers at runtime",
+      "Used in: middleware, auth, logging, approvals",
     ],
   },
 ];
