@@ -21,66 +21,58 @@ export const solidTopics = [
       "SRP states that a class should have only one reason to change — one responsibility. High cohesion within a module and loose coupling between modules. Split large classes into focused, single-purpose ones.",
     videoLink: "https://www.youtube.com/watch?v=EMbCnn01rxc",
     code: `// ===== SINGLE RESPONSIBILITY PRINCIPLE (SRP) =====
-// BAD: One class doing three jobs
-class ReportGenerator {
-    private ReportData data;
-    private Database db;
-    private EmailService emailService;
+// One class → ONE responsibility (one reason to change).
+//
+// Salary domain — split into 3 SEPARATE classes (one file each):
+//
+//   SalaryService.java     → calculate salary (business logic)
+//   SalaryRepository.java  → save salary to DB  (persistence)
+//   SalaryReport.java      → generate payslip   (reporting)
+//
+// Each class has exactly ONE reason to change.
 
-    // 1. Builds report
-    public String buildReport() {
-        return "Report: " + data.toString();
-    }
-    // 2. Saves to DB
-    public void saveToDatabase() {
-        db.save(data);
-    }
-    // 3. Sends email
-    public void sendEmail(String recipient) {
-        emailService.send(recipient, buildReport());
+// ---------- File 1: SalaryService.java ----------
+public class SalaryService {
+    public void calculateSalary() {
+        System.out.println("SalaryService  → Calculate the employee salary");
     }
 }
 
-// GOOD: Three single-responsibility classes
-class ReportBuilder {
-    public String buildReport(ReportData data) {
-        return "Report: " + data.toString();
+// ---------- File 2: SalaryRepository.java ----------
+public class SalaryRepository {
+    public void saveSalary() {
+        System.out.println("SalaryRepository → Save the salary record to DB");
     }
 }
 
-class ReportRepository {
-    private Database db = new Database();
-    public void save(ReportData data) {
-        db.save(data);
+// ---------- File 3: SalaryReport.java ----------
+public class SalaryReport {
+    public void generateReport() {
+        System.out.println("SalaryReport    → Generate the monthly payslip");
     }
 }
 
-class NotificationService {
-    private EmailService emailService = new EmailService();
-    public void sendReport(String recipient, String report) {
-        emailService.send(recipient, report);
-    }
-}
+// ---------- File 4: Main.java ----------
+public class Main {
+    public static void main(String[] args) {
 
-// Orchestrator
-class ReportWorkflow {
-    private ReportBuilder builder = new ReportBuilder();
-    private ReportRepository repo = new ReportRepository();
-    private NotificationService notifier = new NotificationService();
+        // Each class handles its OWN responsibility
+        SalaryService    salaryService = new SalaryService();
+        SalaryRepository repository    = new SalaryRepository();
+        SalaryReport     report        = new SalaryReport();
 
-    public void generateAndSend(ReportData data, String recipient) {
-        String report = builder.buildReport(data);   // 1 job
-        repo.save(data);                              // 1 job
-                notifier.sendReport(recipient, report);      // 1 job
+        salaryService.calculateSalary();   // job 1 — calculation
+        repository.saveSalary();           // job 2 — persistence
+        report.generateReport();           // job 3 — reporting
     }
 }`,
     diagram: svgSRP,
     relation: "🎯 One class = one job → one reason to change",
     points: [
-      "Single responsibility per class",
-      "Split large classes",
-      "Increases cohesion, reduces coupling",
-      "Easier to test, reuse, maintain",
+      "One class → one responsibility",
+      "3 separate files, 3 separate jobs",
+      "Change payslip format? → only SalaryReport changes",
+      "Change DB? → only SalaryRepository changes",
     ],
   },
 
@@ -95,47 +87,53 @@ class ReportWorkflow {
       "Classes should be open for extension (you can add new behavior) but closed for modification (you don't change existing code). Achieve this with abstractions and dependency injection.",
     videoLink: "https://www.youtube.com/watch?v=j1ZxAKLonl4",
     code: `// ===== OPEN/CLOSED PRINCIPLE (OCP) =====
-import java.util.*;
-
-interface DiscountStrategy {
-    double apply(double price);
-}
-
-class RegularDiscount implements DiscountStrategy {
-    public double apply(double price) { return price; }
-}
-class SeasonalDiscount implements DiscountStrategy {
-    public double apply(double price) { return price * 0.9; }
-}
-class VIPDiscount implements DiscountStrategy {
-    public double apply(double price) { return price * 0.8; }
-}
-
-class PriceCalculator {
-    private final List<DiscountStrategy> strategies = new ArrayList<>();
-    public void addStrategy(DiscountStrategy s) { strategies.add(s); }
-    public double calculate(double price) {
-        double total = price;
-        for (DiscountStrategy s : strategies) { total = s.apply(total); }
-        return total;
-    }
-}
-
-// NEW strategy added without touching PriceCalculator
-class BlackFridayDiscount implements DiscountStrategy {
-    public double apply(double price) { return price * 0.7; }
-}
+// Open for EXTENSION (add new payment type)
+// Closed for MODIFICATION (don't touch existing code)
+//
+// Payment domain: a Payment interface with 3 implementations
+//   - To add a new payment method (e.g. CryptoPayment) you just
+//     create a NEW class — no existing class is modified.
 
 public class Main {
-    public static void main(String[] args) {
-        PriceCalculator calc = new PriceCalculator();
-        calc.addStrategy(new SeasonalDiscount());
-        calc.addStrategy(new VIPDiscount());
-        System.out.println(calc.calculate(1000));  // 720.0
 
-        PriceCalculator bf = new PriceCalculator();
-        bf.addStrategy(new BlackFridayDiscount());
-            }\n}`,
+    interface Payment {
+        void pay();
+    }
+
+    static class PaypalPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using PayPal");
+        }
+    }
+
+    static class UPIPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using UPI");
+        }
+    }
+
+    static class CreditCardPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using Credit Card");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        // Same reference type (Payment), different implementations
+        Payment payment1 = new PaypalPayment();
+        payment1.pay();                       // → PayPal
+
+        Payment payment2 = new UPIPayment();
+        payment2.pay();                       // → UPI
+
+        Payment payment3 = new CreditCardPayment();
+        payment3.pay();                       // → Credit Card
+
+        // To add a new payment method → just add a new class.
+        // No existing code (PaypalPayment, UPIPayment, etc.) is modified.
+    }
+}`,
     diagram: svgOCP,
     relation: "🔓 Extend behavior via new classes/interfaces — don't edit existing code",
     points: [
@@ -157,51 +155,60 @@ public class Main {
       "LSP: if S is a subtype of T, objects of T may be replaced with objects of type S without altering desirable properties of the program. In practice, subclasses must honor the contract/promises of their parent.",
     videoLink: "https://www.youtube.com/watch?v=irHHnn7CZAA",
     code: `// ===== LISKOV SUBSTITUTION PRINCIPLE (LSP) =====
-// BAD: Square is a Rectangle but can't honor setWidth/setHeight contract
-abstract class Rectangle {
-    protected double width, height;
-    public abstract void setWidth(double w);
-    public abstract void setHeight(double h);
-    public abstract double getArea();
-}
-class BadSquare extends Rectangle {
-    public void setWidth(double w) { this.width = this.height = w; }
-    public void setHeight(double h) { this.width = this.height = h; }
-    public double getArea() { return width * width; }  // violates Rectangle contract
-}
+// Any child implementation must be replaceable with the parent
+// type WITHOUT breaking the program.
+//
+// Payment domain: a Payment interface with multiple implementations.
+// The same "Payment" reference can be swapped between PayPal, UPI,
+// Credit Card — and the program still works exactly the same.
 
-// GOOD: Shared base with proper contract
-abstract class Shape {
-    public abstract double getArea();
-}
-class RectangleGood extends Shape {
-    private double width, height;
-    public RectangleGood(double w, double h) { this.width = w; this.height = h; }
-    public double getArea() { return width * height; }
-}
-class SquareGood extends Shape {
-    private double side;
-    public SquareGood(double side) { this.side = side; }
-    public double getArea() { return side * side; }
-}
-
-// Works for both — substitution holds
 public class Main {
-    public static void printArea(Shape s) {
-        System.out.println("Area: " + s.getArea());
+
+    interface Payment {
+        void pay();
     }
+
+    static class PaypalPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using PayPal");
+        }
+    }
+
+    static class UPIPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using UPI");
+        }
+    }
+
+    static class CreditCardPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using Credit Card");
+        }
+    }
+
     public static void main(String[] args) {
-        printArea(new RectangleGood(4, 5));  // Area: 20.0
-                printArea(new SquareGood(5));        // Area: 25.0
+
+        // One parent reference (Payment) holds DIFFERENT children.
+        // This is substitutability — the LSP contract.
+        Payment payment;
+
+        payment = new PaypalPayment();
+        payment.pay();     // works for PayPal
+
+        payment = new UPIPayment();
+        payment.pay();     // works for UPI
+
+        payment = new CreditCardPayment();
+        payment.pay();     // works for Credit Card
     }
 }`,
     diagram: svgLSP,
     relation: "↪️ Subtypes must honor the parent's contract — substitutability",
     points: [
       "Subclasses must preserve invariants",
-      "Don't narrow preconditions / widen postconditions",
-      "Favor composition over inheritance when in doubt",
-      "Substitutability = behavior preserved",
+      "Any child can replace the parent safely",
+      "Same reference, different behavior",
+      "Behavior preserved → no broken program",
     ],
   },
 
@@ -216,42 +223,69 @@ public class Main {
       'ISP: many client-specific interfaces are better than one general-purpose "fat" interface. Each interface should have only the methods a particular client cares about.',
     videoLink: "https://www.youtube.com/watch?v=4ZdsinALUX8",
     code: `// ===== INTERFACE SEGREGATION PRINCIPLE (ISP) =====
-// BAD: One fat interface forces everyone to implement unused methods
-interface WorkerAllInOne {
-    void code();
-    void test();
-    void designUI();
-    void leadTeam();
-    void writeDocs();
-}
-class Developer implements WorkerAllInOne {
-    public void code() { }
-    public void test() { }
-    public void designUI() { }
-    public void leadTeam() { }       // forced — dev doesn't lead
-    public void writeDocs() { }      // forced — dev avoids docs
-}
-class TechLead implements WorkerAllInOne {
-    public void code() { }
-    // ... must still implement test, designUI, writeDocs
-}
+// Don't force a class to implement methods it doesn't need.
+// Use small, role-based interfaces instead of one "fat" interface.
+//
+// Loan domain: split operations into 3 small interfaces
+//   - ApplyLoan        → who can APPLY for a loan
+//   - CheckLoanStatus  → who can CHECK loan status
+//   - CancelLoan       → who can CANCEL a loan
+//
+// Customer needs only the first two; Admin needs all three.
 
-// GOOD: Slim, segregated interfaces
-interface Coder { void code(); }
-interface Tester { void test(); }
-interface Designer { void designUI(); }
-interface Leader  { void leadTeam(); }
-interface Documenter { void writeDocs(); }
+public class Main {
 
-class Developer implements Coder, Tester, Designer {
-    public void code() { System.out.println("Writing Java code"); }
-    public void test() { System.out.println("Writing unit tests"); }
-    public void designUI() { System.out.println("Designing screens"); }
-}
-class Manager implements Leader, Documenter {
-    public void leadTeam() { System.out.println("Leading team"); }
-    public void writeDocs() { System.out.println("Writing docs"); }
-}
+    interface ApplyLoan {
+        void applyLoan();
+    }
+
+    interface CheckLoanStatus {
+        void checkLoanStatus();
+    }
+
+    interface CancelLoan {
+        void cancelLoan();
+    }
+
+    // Customer applies for loan and checks status — but cannot cancel.
+    static class Customer implements ApplyLoan, CheckLoanStatus {
+
+        public void applyLoan() {
+            System.out.println("Customer applied for loan");
+        }
+
+        public void checkLoanStatus() {
+            System.out.println("Checking loan status");
+        }
+    }
+
+    // Admin has all 3 powers including cancelling the loan.
+    static class Admin implements ApplyLoan, CheckLoanStatus, CancelLoan {
+
+        public void applyLoan() {
+            System.out.println("Admin applied loan");
+        }
+
+        public void checkLoanStatus() {
+            System.out.println("Admin checking loan status");
+        }
+
+        public void cancelLoan() {
+            System.out.println("Admin cancelled loan");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Customer customer = new Customer();
+        customer.applyLoan();
+        customer.checkLoanStatus();
+
+        Admin admin = new Admin();
+        admin.applyLoan();
+        admin.checkLoanStatus();
+        admin.cancelLoan();
+    }
 }`,
     diagram: svgISP,
     relation: "✂️ Slim interfaces — clients implement only what they need",
@@ -274,42 +308,60 @@ class Manager implements Leader, Documenter {
       "DIP: depend on abstractions (interfaces/abstract classes), not concrete implementations. Inject the concrete dependency from outside (constructor/ method injection).",
     videoLink: "https://www.youtube.com/watch?v=XDRSpWS8urM",
     code: `// ===== DEPENDENCY INVERSION PRINCIPLE (DIP) =====
-// BAD: High-level class directly creates low-level class
-class OrderService {
-    private MySQLDatabase db = new MySQLDatabase();   // hard dependency
-    public void save(String order) {
-        db.save(order);   // tied to MySQL forever
-    }
-}
-
-// GOOD: Depend on abstraction; inject concrete impl
-interface Database {
-    void save(String data);
-}
-class MySQLDatabase implements Database {
-    public void save(String data) { System.out.println("Saved to MySQL: " + data); }
-}
-class PostgresDatabase implements Database {
-    public void save(String data) { System.out.println("Saved to Postgres: " + data); }
-}
-
-class OrderServiceGood {
-    private Database db;                          // depends on abstraction
-    public OrderServiceGood(Database db) {        // injected from outside
-        this.db = db;
-    }
-    public void save(String order) { db.save(order); }
-}
+// High-level modules must NOT depend on low-level modules.
+// Both must depend on an ABSTRACTION (interface).
+//
+// Payment domain:
+//   - PaymentService (high-level)        → depends on Payment interface
+//   - PaypalPayment / UPIPayment (low)   → implement Payment
+//   - The concrete payment is INJECTED via constructor.
 
 public class Main {
-    public static void main(String[] args) {
-        Database mysql = new MySQLDatabase();
-        OrderServiceGood service = new OrderServiceGood(mysql);
-        service.save("Order #123");
 
-        Database pg = new PostgresDatabase();     // swap — no code change to service
-        OrderServiceGood service2 = new OrderServiceGood(pg);
-        service2.save("Order #124");
+    // ---- Abstraction ----
+    interface Payment {
+        void pay();
+    }
+
+    // ---- Low-level implementations ----
+    static class PaypalPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using PayPal");
+        }
+    }
+
+    static class UPIPayment implements Payment {
+        public void pay() {
+            System.out.println("Payment using UPI");
+        }
+    }
+
+    // ---- High-level service depends on the interface, NOT on concrete classes ----
+    static class PaymentService {
+
+        private final Payment payment;   // ← abstraction
+
+        // Constructor injection: concrete impl comes from outside
+        PaymentService(Payment payment) {
+            this.payment = payment;
+        }
+
+        public void makePayment() {
+            payment.pay();   // delegate to the injected implementation
+        }
+    }
+
+    public static void main(String[] args) {
+
+        // Inject PayPal
+        Payment paypal = new PaypalPayment();
+        PaymentService service1 = new PaymentService(paypal);
+        service1.makePayment();
+
+        // Inject UPI — same PaymentService, different behavior
+        Payment upi = new UPIPayment();
+        PaymentService service2 = new PaymentService(upi);
+        service2.makePayment();
     }
 }`,
     diagram: svgDIP,
