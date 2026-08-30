@@ -7,9 +7,6 @@ import {
   svgDIP,
 } from "./solidDiagrams";
 
-const CHANNEL_UPLOADS =
-  "https://www.youtube.com/playlist?list=UUTirDqmh7EyUCB8661XdwYw";
-
 export const solidTopics = [
   {
     id: "srp",

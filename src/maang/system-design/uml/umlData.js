@@ -2,9 +2,6 @@
 import {
   svgClassDiagram,
   svgSequenceDiagram,
-  svgUseCaseDiagram,
-  svgActivityDiagram,
-  svgStateDiagram,
 } from "./umlDiagrams";
 
 const CHANNEL_UPLOADS =

@@ -212,16 +212,60 @@ export default function DesignPatternsPage() {
         </div>
       </section>
 
-      <div className="oops-topic-grid">
-        {designPatternsTopics.map((t) => (
-          <TopicCard
-            key={t.id}
-            topic={t}
-            isActive={t.id === activeId}
-            onClick={handleClick}
-          />
-        ))}
-      </div>
+      {/* ===== Patterns grouped by category ===== */}
+      {[
+        {
+          key: "creational",
+          label: "Creational Patterns",
+          sub: "How objects are created",
+          icon: "fa-cubes",
+          color: "#ff6b6b",
+        },
+        {
+          key: "structural",
+          label: "Structural Patterns",
+          sub: "How classes & objects are composed",
+          icon: "fa-shapes",
+          color: "#4ecdc4",
+        },
+        {
+          key: "behavioral",
+          label: "Behavioural Patterns",
+          sub: "How objects communicate & assign responsibility",
+          icon: "fa-people-arrows",
+          color: "#a78bfa",
+        },
+      ].map((cat) => {
+        const items = designPatternsTopics.filter((t) => t.category === cat.key);
+        if (items.length === 0) return null;
+        return (
+          <section key={cat.key} className="oops-pattern-category">
+            <div
+              className="oops-category-header"
+              style={{ "--cat-color": cat.color }}
+            >
+              <i className={`fas ${cat.icon}`} />
+              <div>
+                <h2>{cat.label}</h2>
+                <span>{cat.sub}</span>
+              </div>
+              <span className="oops-category-count">
+                {items.length} pattern{items.length === 1 ? "" : "s"}
+              </span>
+            </div>
+            <div className="oops-topic-grid">
+              {items.map((t) => (
+                <TopicCard
+                  key={t.id}
+                  topic={t}
+                  isActive={t.id === activeId}
+                  onClick={handleClick}
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })}
 
       <DetailPanel topic={activeTopic} onClose={handleClose} />
 

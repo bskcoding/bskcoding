@@ -173,6 +173,92 @@
   .oops-why-list { grid-template-columns: 1fr; }
 }
 
+/* ===== CATEGORY SECTIONS (Design Patterns) ===== */
+.oops-pattern-category {
+  margin-top: 36px;
+}
+
+.oops-category-header {
+  --cat-color: #e94560;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px;
+  margin: 0 0 18px 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--cat-color) 10%, #ffffff),
+    color-mix(in srgb, var(--cat-color) 4%, #ffffff)
+  );
+  border-left: 5px solid var(--cat-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.oops-category-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at right,
+    color-mix(in srgb, var(--cat-color) 8%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.oops-category-header > i {
+  font-size: 1.8rem;
+  color: var(--cat-color);
+  flex-shrink: 0;
+}
+
+.oops-category-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.oops-category-header span {
+  display: block;
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.oops-category-count {
+  margin-left: auto !important;
+  display: inline-block !important;
+  background: var(--cat-color);
+  color: #fff !important;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem !important;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .oops-category-header {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .oops-category-header > i { font-size: 1.4rem; }
+  .oops-category-header h2 { font-size: 1.05rem; }
+  .oops-category-header span { font-size: 0.78rem; }
+  .oops-category-count {
+    margin-left: 0 !important;
+    font-size: 0.72rem !important;
+  }
+  .oops-pattern-category { margin-top: 24px; }
+}
+
 /* ===== TOPIC GRID ===== */
 .oops-topic-grid {
   display: grid;
