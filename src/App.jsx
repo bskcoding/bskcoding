@@ -32,6 +32,7 @@ const SolidPage = lazy(() => import("./maang/system-design/solid/SolidPage"));
 const DesignPatternsPage = lazy(
   () => import("./maang/system-design/patterns/DesignPatternsPage"),
 );
+const UmlPage = lazy(() => import("./maang/system-design/uml/UmlPage"));
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -346,6 +347,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <DesignPatternsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/uml"
+                  element={
+                    <RequireAuth>
+                      <UmlPage />
                     </RequireAuth>
                   }
                 />

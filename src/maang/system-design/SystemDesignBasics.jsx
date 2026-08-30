@@ -118,6 +118,18 @@ function SystemDesignBasics() {
                 </Link>
               );
             }
+            // The UML Diagrams card has its full page built out — link it.
+            if (card.name === "UML Diagrams") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/uml"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
             return inner;
           })}
         </div>
