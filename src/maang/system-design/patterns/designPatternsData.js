@@ -5,8 +5,9 @@ import {
   svgBuilder,
   svgObserver,
   svgStrategy,
-  svgDecorator,
   svgAdapter,
+  svgProxy,
+  svgChainOfResponsibility,
 } from "./designPatternsDiagrams";
 
 const CHANNEL_UPLOADS =
@@ -19,6 +20,7 @@ export const designPatternsTopics = [
     icon: "fa-infinity",
     title: "Singleton",
     sub: "Creational · one instance",
+    category: "creational",
     desc: "Ensures a class has only one instance and provides a global point of access.",
     definition:
       "Singleton restricts instantiation to a single object with a private constructor and a static getInstance() method. Thread-safe (double-checked locking) variant included.",
@@ -80,6 +82,7 @@ public class Main {
     icon: "fa-industry",
     title: "Factory Method",
     sub: "Creational · object creation",
+    category: "creational",
     desc: "Defines an interface for creating objects but lets subclasses decide which class to instantiate.",
     definition:
       "Factory Method moves the instantiation logic away from the client into a factory. The client depends on the interface, and the factory decides the concrete type — perfect for OCP.",
@@ -355,78 +358,7 @@ public class Main {
     ],
   },
 
-  // ---------- 6. DECORATOR ----------
-  {
-    id: "decorator",
-    icon: "fa-wand-magic-sparkles",
-    title: "Decorator",
-    sub: "Structural · add behavior dynamically",
-    desc: "Attach additional responsibilities to an object dynamically at runtime.",
-    definition:
-      "Decorator wraps an object to add new behavior without modifying its class. Composing multiple decorators stacks behavior — an alternative to subclassing for adding features.",
-    videoLink: CHANNEL_UPLOADS,
-    code: `// ===== DECORATOR PATTERN =====
-
-// Component interface
-interface Coffee {
-    double cost();
-    String description();
-}
-
-// Concrete component
-class SimpleCoffee implements Coffee {
-    public double cost() { return 2.0; }
-    public String description() { return "Plain Coffee"; }
-}
-
-// Decorator base
-abstract class CoffeeDecorator implements Coffee {
-    protected Coffee coffee;
-    public CoffeeDecorator(Coffee coffee) { this.coffee = coffee; }
-}
-
-// Concrete decorators
-class MilkDecorator extends CoffeeDecorator {
-    public MilkDecorator(Coffee c) { super(c); }
-    public double cost() { return coffee.cost() + 0.5; }
-    public String description() { return coffee.description() + " + Milk"; }
-}
-class SugarDecorator extends CoffeeDecorator {
-    public SugarDecorator(Coffee c) { super(c); }
-    public double cost() { return coffee.cost() + 0.2; }
-    public String description() { return coffee.description() + " + Sugar"; }
-}
-class WhippedCreamDecorator extends CoffeeDecorator {
-    public WhippedCreamDecorator(Coffee c) { super(c); }
-    public double cost() { return coffee.cost() + 0.7; }
-    public String description() { return coffee.description() + " + Cream"; }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        // Start with base, then stack decorators at runtime
-        Coffee myCoffee = new WhippedCreamDecorator(
-                            new SugarDecorator(
-                              new MilkDecorator(
-                                new SimpleCoffee())));
-
-        System.out.println(myCoffee.description());
-        // Plain Coffee + Milk + Sugar + Cream
-        System.out.println("Cost: $" + myCoffee.cost());
-        // Cost: $3.4
-    }
-}`,
-    diagram: svgDecorator,
-    relation: "🪄 Wrap objects to stack new behavior — an alternative to subclassing",
-    points: [
-      "Add behavior dynamically at runtime",
-      "Compose multiple decorators",
-      "Avoids subclass explosion",
-      "Wraps component with same interface",
-    ],
-  },
-
-  // ---------- 7. ADAPTER ----------
+  // ---------- 6. ADAPTER ----------
   {
     id: "adapter",
     icon: "fa-plug-circle-bolt",

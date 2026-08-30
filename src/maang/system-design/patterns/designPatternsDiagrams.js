@@ -1,4 +1,4 @@
-// ===== Design Patterns — SVG Diagrams =====
+// ===== Design Patterns â€” SVG Diagrams =====
 // Each function returns an SVG string matching the page's theme.
 
 export function svgSingleton() {
@@ -14,7 +14,7 @@ export function svgSingleton() {
       </style>
     </defs>
     <rect x="30" y="20" width="240" height="220" class="sp-box" />
-    <text x="150" y="44" text-anchor="middle" class="sp-title">« singleton »</text>
+    <text x="150" y="44" text-anchor="middle" class="sp-title">Â« singleton Â»</text>
     <text x="150" y="64" text-anchor="middle" class="sp-title">DatabaseConnection</text>
     <line x1="40" y1="78" x2="260" y2="78" class="sp-divider" />
     <text x="50" y="102" class="sp-method">- instance: static volatile</text>
@@ -23,7 +23,7 @@ export function svgSingleton() {
     <text x="50" y="164" class="sp-method">- DatabaseConnection()  (private)</text>
     <text x="50" y="186" class="sp-method" fill="#2e7d32">+ getInstance(): DatabaseConnection</text>
     <text x="50" y="208" class="sp-method">+ connect(): void</text>
-    <text x="150" y="240" class="sp-label">🔒 only one instance ever</text>
+    <text x="150" y="240" class="sp-label">ðŸ”’ only one instance ever</text>
 
     <rect x="330" y="40" width="150" height="90" class="sp-box" />
     <text x="405" y="64" text-anchor="middle" class="sp-title">caller A</text>
@@ -41,7 +41,7 @@ export function svgSingleton() {
     <rect x="570" y="100" width="100" height="60" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2" rx="10" />
     <text x="620" y="124" text-anchor="middle" class="sp-title" fill="#1b5e20">SAME</text>
     <text x="620" y="144" text-anchor="middle" class="sp-method" fill="#1b5e20">instance</text>
-    <text x="420" y="340" text-anchor="middle" class="sp-ok">✅ All callers get the identical single object (a == b == c)</text>
+    <text x="420" y="340" text-anchor="middle" class="sp-ok">âœ… All callers get the identical single object (a == b == c)</text>
     <marker id="arrowSP" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
       <polygon points="0 0, 12 4, 0 8" fill="#2e7d32" />
     </marker>
@@ -70,7 +70,7 @@ export function svgFactory() {
     <text x="40" y="120" class="fy-method" font-size="10" fill="#888">decides which class</text>
 
     <rect x="250" y="20" width="160" height="90" class="fy-box" />
-    <text x="330" y="44" text-anchor="middle" class="fy-title">«interface»</text>
+    <text x="330" y="44" text-anchor="middle" class="fy-title">Â«interfaceÂ»</text>
     <text x="330" y="62" text-anchor="middle" class="fy-title">Notification</text>
     <line x1="260" y1="76" x2="410" y2="76" class="fy-divider" />
     <text x="270" y="98" class="fy-method" font-style="italic">+ send(msg)</text>
@@ -97,8 +97,8 @@ export function svgFactory() {
     <line x1="190" y1="80" x2="460" y2="280" class="fy-arrow" />
     <text x="210" y="130" class="fy-label">client never uses 'new'</text>
     <rect x="150" y="330" width="420" height="50" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" rx="8" />
-    <text x="360" y="350" text-anchor="middle" class="fy-label" fill="#2e7d32">✅ Factory encapsulates creation — add types without touching client</text>
-    <text x="360" y="370" class="fy-method" font-size="11" fill="#2e7d32">create("sms") → SMSNotification at runtime</text>
+    <text x="360" y="350" text-anchor="middle" class="fy-label" fill="#2e7d32">âœ… Factory encapsulates creation â€” add types without touching client</text>
+    <text x="360" y="370" class="fy-method" font-size="11" fill="#2e7d32">create("sms") â†’ SMSNotification at runtime</text>
   </svg>`;
 }
 export function svgBuilder() {
@@ -144,7 +144,7 @@ export function svgBuilder() {
     <text x="285" y="135" class="bd-label">build()</text>
 
     <rect x="80" y="300" width="480" height="46" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" rx="8" />
-    <text x="320" y="325" text-anchor="middle" class="bd-label" fill="#2e7d32">✅ Fluent chain → one immutable object, optional fields handled</text>
+    <text x="320" y="325" text-anchor="middle" class="bd-label" fill="#2e7d32">âœ… Fluent chain â†’ one immutable object, optional fields handled</text>
   </svg>`;
 }
 export function svgObserver() {
@@ -170,7 +170,7 @@ export function svgObserver() {
     <line x1="30" y1="128" x2="230" y2="128" class="ob-divider" />
     <text x="40" y="152" class="ob-method">+ subscribe(o): void</text>
     <text x="40" y="174" class="ob-method">+ unsubscribe(o): void</text>
-    <text x="40" y="196" class="ob-method" fill="#2e7d32">+ publish(news): void  → notify all</text>
+    <text x="40" y="196" class="ob-method" fill="#2e7d32">+ publish(news): void  â†’ notify all</text>
     <line x1="240" y1="80" x2="320" y2="60" class="ob-arrow" />
     <line x1="240" y1="120" x2="320" y2="170" class="ob-arrow" />
     <line x1="240" y1="200" x2="320" y2="280" class="ob-arrow" />
@@ -215,7 +215,7 @@ export function svgStrategy() {
     <text x="40" y="130" class="st-method">+ setStrategy(s): void</text>
     <text x="40" y="152" class="st-method" fill="#2e7d32">+ checkout(amount): void</text>
     <rect x="250" y="30" width="160" height="120" class="st-box" />
-    <text x="330" y="54" text-anchor="middle" class="st-title">«interface»</text>
+    <text x="330" y="54" text-anchor="middle" class="st-title">Â«interfaceÂ»</text>
     <text x="330" y="72" text-anchor="middle" class="st-title">PaymentStrategy</text>
     <line x1="260" y1="86" x2="400" y2="86" class="st-divider" />
     <text x="270" y="110" class="st-method" font-style="italic">+ pay(amount): void</text>
@@ -240,7 +240,7 @@ export function svgStrategy() {
     <line x1="410" y1="100" x2="460" y2="260" class="st-arrow" />
     <text x="210" y="120" class="st-label">delegates</text>
     <rect x="70" y="340" width="480" height="46" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" rx="8" />
-    <text x="310" y="365" text-anchor="middle" class="st-label" fill="#2e7d32">✅ setStrategy(…) swaps algorithm at runtime — no if/else in checkout()</text>
+    <text x="310" y="365" text-anchor="middle" class="st-label" fill="#2e7d32">âœ… setStrategy(â€¦) swaps algorithm at runtime â€” no if/else in checkout()</text>
   </svg>`;
 }
 export function svgDecorator() {
@@ -259,7 +259,7 @@ export function svgDecorator() {
       </marker>
     </defs>
     <rect x="20" y="40" width="150" height="120" class="dc-box" />
-    <text x="95" y="62" text-anchor="middle" class="dc-title">«interface» Coffee</text>
+    <text x="95" y="62" text-anchor="middle" class="dc-title">Â«interfaceÂ» Coffee</text>
     <line x1="30" y1="76" x2="160" y2="76" class="dc-divider" />
     <text x="40" y="98" class="dc-method" font-style="italic">+ cost(): double</text>
     <text x="40" y="118" class="dc-method" font-style="italic">+ description(): String</text>
@@ -295,8 +295,8 @@ export function svgDecorator() {
     <line x1="330" y1="160" x2="455" y2="205" class="dc-arrow" />
 
     <rect x="20" y="340" width="560" height="46" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" rx="8" />
-    <text x="300" y="358" text-anchor="middle" class="dc-label" fill="#2e7d32">✅ new WhippedCream(Milk(Sugar(SimpleCoffee()))) stacks behavior</text>
-    <text x="300" y="376" class="dc-method" font-size="11" fill="#2e7d32">cost = 2.0 + 0.5 + 0.2 + 0.7 → $3.4</text>
+    <text x="300" y="358" text-anchor="middle" class="dc-label" fill="#2e7d32">âœ… new WhippedCream(Milk(Sugar(SimpleCoffee()))) stacks behavior</text>
+    <text x="300" y="376" class="dc-method" font-size="11" fill="#2e7d32">cost = 2.0 + 0.5 + 0.2 + 0.7 â†’ $3.4</text>
   </svg>`;
 }
 export function svgAdapter() {
@@ -322,7 +322,7 @@ export function svgAdapter() {
     <line x1="170" y1="95" x2="250" y2="95" class="ad-arrow" />
 
     <rect x="250" y="30" width="150" height="120" class="ad-box" style="stroke:#6a1b9a;" />
-    <text x="325" y="54" text-anchor="middle" class="ad-title" fill="#6a1b9a">«interface» USB</text>
+    <text x="325" y="54" text-anchor="middle" class="ad-title" fill="#6a1b9a">Â«interfaceÂ» USB</text>
     <line x1="260" y1="68" x2="390" y2="68" class="ad-divider" />
     <text x="270" y="92" class="ad-method" font-style="italic">+ connect(): void</text>
 
@@ -330,7 +330,7 @@ export function svgAdapter() {
     <text x="515" y="54" text-anchor="middle" class="ad-title" fill="#2e7d32">Adapter</text>
     <line x1="450" y1="68" x2="580" y2="68" class="ad-divider" />
     <text x="460" y="92" class="ad-method">LightningToUSBAdapter</text>
-    <text x="460" y="114" class="ad-method">+ connect() → plugLightning()</text>
+    <text x="460" y="114" class="ad-method">+ connect() â†’ plugLightning()</text>
     <text x="460" y="136" class="ad-method">holds a LightningConnector</text>
     <line x1="400" y1="80" x2="440" y2="80" class="ad-arrow" />
     <line x1="590" y1="90" x2="650" y2="90" class="ad-arrow" />
@@ -342,11 +342,143 @@ export function svgAdapter() {
     <text x="700" y="130" text-anchor="middle" class="ad-method">+ plugLightning()</text>
 
     <rect x="60" y="190" width="560" height="46" fill="#fff3e0" stroke="#e65100" stroke-width="1.5" rx="8" />
-    <text x="340" y="208" text-anchor="middle" class="ad-label" fill="#e65100">🔌 Client only sees USB — Adapter translates to Lightning</text>
+    <text x="340" y="208" text-anchor="middle" class="ad-label" fill="#e65100">ðŸ”Œ Client only sees USB â€” Adapter translates to Lightning</text>
     <text x="340" y="226" class="ad-method" font-size="11" fill="#e65100">Neither Laptop nor LightningConnector is modified</text>
 
     <rect x="60" y="260" width="560" height="46" fill="#fff3e0" stroke="#e65100" stroke-width="1.5" rx="8" />
-    <text x="340" y="278" text-anchor="middle" class="ad-label" fill="#e65100">📄 XML → JSON: XMLToJSONAdapter implements DataLoader</text>
+    <text x="340" y="278" text-anchor="middle" class="ad-label" fill="#e65100">ðŸ“„ XML â†’ JSON: XMLToJSONAdapter implements DataLoader</text>
     <text x="340" y="296" class="ad-method" font-size="11" fill="#e65100">legacy XML service + modern JSON client, bridged by adapter</text>
+  </svg>`;
+}
+export function svgProxy() {
+  return `<svg viewBox="0 0 780 410" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        .px-real  { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 12; }
+        .px-proxy { fill: #fff3e0; stroke: #e65100; stroke-width: 2.5; rx: 12; stroke-dasharray: 5,3; }
+        .px-client{ fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; rx: 12; }
+        .px-title { font-weight: 700; font-size: 13px; font-family: Segoe UI, sans-serif; fill: #1a1a2e; }
+        .px-iface { font-style: italic; fill: #6a1b9a; }
+        .px-method{ font-size: 11px; font-family: monospace; fill: #1a1a2e; }
+        .px-divider { stroke: #ccc; stroke-width: 1; }
+        .px-arrow { stroke: #6a1b9a; stroke-width: 2.5; marker-end: url(#arrowPXY); fill: none; }
+        .px-arrow-real { stroke: #1565c0; stroke-width: 2.5; marker-end: url(#arrowPXY2); fill: none; }
+        .px-label { fill: #e94560; font-weight: 600; font-size: 11px; font-family: Segoe UI, sans-serif; }
+      </style>
+      <marker id="arrowPXY" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+        <polygon points="0 0, 12 4, 0 8" fill="#6a1b9a" />
+      </marker>
+      <marker id="arrowPXY2" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+        <polygon points="0 0, 12 4, 0 8" fill="#1565c0" />
+      </marker>
+    </defs>
+
+    <text x="390" y="22" text-anchor="middle" class="px-title" font-size="15" fill="#6a1b9a">PROXY PATTERN — Controlled Access</text>
+
+    <rect x="40" y="50" width="220" height="120" class="px-client" />
+    <text x="150" y="72" text-anchor="middle" class="px-title">Client</text>
+    <line x1="50" y1="84" x2="250" y2="84" class="px-divider" />
+    <text x="50" y="104" class="px-method">+ main()</text>
+    <text x="50" y="122" class="px-method">Image img = new ProxyImage("a.png")</text>
+    <text x="50" y="140" class="px-method">img.display();</text>
+    <text x="50" y="158" class="px-method">? lazy loads on first display</text>
+
+    <rect x="310" y="50" width="220" height="120" class="px-proxy" />
+    <text x="420" y="72" text-anchor="middle" class="px-title" fill="#e65100">ProxyImage (proxy)</text>
+    <line x1="320" y1="84" x2="520" y2="84" class="px-divider" />
+    <text x="320" y="104" class="px-method">- filename: String</text>
+    <text x="320" y="122" class="px-method">- realImage: RealImage</text>
+    <text x="320" y="140" class="px-method">+ display()  ? loads if null</text>
+    <text x="320" y="158" class="px-label">controls access / lazy load</text>
+
+    <rect x="580" y="50" width="180" height="120" class="px-real" />
+    <text x="670" y="72" text-anchor="middle" class="px-title">RealImage (real)</text>
+    <text x="570" y="380" text-anchor="middle" class="px-method" font-size="10" fill="#e65100">
+      JDK java.lang.reflect.Proxy creates dynamic proxies at runtime
+    </text>
+  </svg>`;
+}
+
+export function svgChainOfResponsibility() {
+  return `<svg viewBox="0 0 800 430" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        .cor-client   { fill: #f3e5f5; stroke: #6a1b9a; stroke-width: 2; rx: 12; }
+        .cor-handler  { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 12; }
+        .cor-abstract { fill: #fff8e1; stroke: #f57c00; stroke-width: 2; rx: 12; }
+        .cor-title    { font-weight: 700; font-size: 13px; font-family: Segoe UI, sans-serif; fill: #1a1a2e; }
+        .cor-iface    { font-style: italic; fill: #e65100; }
+        .cor-method   { font-size: 11px; font-family: monospace; fill: #1a1a2e; }
+        .cor-divider  { stroke: #ccc; stroke-width: 1; }
+        .cor-arrow    { stroke: #00695c; stroke-width: 2.5; marker-end: url(#arrowCoR); fill: none; }
+        .cor-arrow-back { stroke: #d32f2f; stroke-width: 2; stroke-dasharray: 4,3; marker-end: url(#arrowCoRback); fill: none; }
+        .cor-label    { fill: #6a1b9a; font-weight: 600; font-size: 11px; font-family: Segoe UI, sans-serif; }
+        .cor-success  { fill: #2e7d32; font-weight: 700; font-size: 12px; font-family: Segoe UI, sans-serif; }
+      </style>
+      <marker id="arrowCoR" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+        <polygon points="0 0, 12 4, 0 8" fill="#00695c" />
+      </marker>
+      <marker id="arrowCoRback" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+        <polygon points="0 0, 12 4, 0 8" fill="#d32f2f" />
+      </marker>
+    </defs>
+
+    <!-- Client -->
+    <rect x="40" y="50" width="160" height="80" class="cor-client" />
+    <text x="120" y="72" text-anchor="middle" class="cor-title" fill="#6a1b9a">Client</text>
+    <line x1="50" y1="84" x2="190" y2="84" class="cor-divider" />
+    <text x="55" y="104" class="cor-method">Request r = new Request(...)</text>
+    <text x="55" y="120" class="cor-method">handler1.handle(r)</text>
+
+    <!-- Abstract Handler -->
+    <rect x="260" y="20" width="180" height="70" class="cor-abstract" />
+    <text x="350" y="42" text-anchor="middle" class="cor-title cor-iface">«abstract» Handler</text>
+    <line x1="270" y1="54" x2="430" y2="54" class="cor-divider" />
+    <text x="275" y="76" class="cor-method" font-style="italic">+ setNext(Handler)</text>
+    <text x="275" y="92" class="cor-method" font-style="italic">+ handle(Request)</text>
+
+    <!-- Concrete handlers in a chain -->
+    <rect x="260" y="120" width="180" height="90" class="cor-handler" />
+    <text x="350" y="142" text-anchor="middle" class="cor-title">AuthHandler</text>
+    <line x1="270" y1="154" x2="430" y2="154" class="cor-divider" />
+    <text x="275" y="174" class="cor-method">if (auth ok) next.handle()</text>
+    <text x="275" y="192" class="cor-method">else return "FAIL: auth"</text>
+
+    <rect x="260" y="230" width="180" height="90" class="cor-handler" />
+    <text x="350" y="252" text-anchor="middle" class="cor-title">ValidationHandler</text>
+    <line x1="270" y1="264" x2="430" y2="264" class="cor-divider" />
+    <text x="275" y="284" class="cor-method">if (valid) next.handle()</text>
+    <text x="275" y="302" class="cor-method">else return "FAIL: invalid"</text>
+
+    <rect x="260" y="340" width="180" height="70" class="cor-handler" />
+    <text x="350" y="362" text-anchor="middle" class="cor-title">SaveHandler</text>
+    <line x1="270" y1="374" x2="430" y2="374" class="cor-divider" />
+    <text x="275" y="394" class="cor-method">return "OK: saved"</text>
+
+    <!-- Chain arrows (forward) -->
+    <line x1="180" y1="90" x2="260" y2="55" class="cor-arrow" />
+    <line x1="350" y1="90" x2="350" y2="120" class="cor-arrow" />
+    <line x1="350" y1="210" x2="350" y2="230" class="cor-arrow" />
+    <line x1="350" y1="320" x2="350" y2="340" class="cor-arrow" />
+
+    <!-- Chain-of-responsibility label -->
+    <text x="200" y="50" class="cor-label" fill="#00695c">handles or</text>
+    <text x="200" y="65" class="cor-label" fill="#00695c">passes to next</text>
+
+    <rect x="480" y="160" width="280" height="220" fill="#fff" stroke="#302b63" stroke-width="1.5" rx="10" />
+    <text x="500" y="186" class="cor-title" fill="#302b63">How the chain works:</text>
+    <text x="500" y="210" font-size="11" font-family="monospace" fill="#1a1a2e">1. Client → AuthHandler</text>
+    <text x="500" y="230" font-size="11" font-family="monospace" fill="#1a1a2e">2. Auth passes   → Validation</text>
+    <text x="500" y="250" font-size="11" font-family="monospace" fill="#1a1a2e">3. Valid         → Save</text>
+    <text x="500" y="270" font-size="11" font-family="monospace" fill="#2e7d32">4. Save returns "OK"</text>
+    <text x="500" y="296" font-size="11" font-family="Segoe UI,sans-serif" fill="#666" font-style="italic">Each handler either:</text>
+    <text x="500" y="314" font-size="11" font-family="Segoe UI,sans-serif" fill="#2e7d32">  • Handles the request, OR</text>
+    <text x="500" y="332" font-size="11" font-family="Segoe UI,sans-serif" fill="#2e7d32">  • Passes to the next handler</text>
+    <text x="500" y="358" font-size="11" font-family="Segoe UI,sans-serif" fill="#d32f2f">  • No handler knows who is next!</text>
+
+    <rect x="40" y="420" width="720" height="6" fill="#e8f5e9" />
+    <text x="400" y="416" text-anchor="middle" class="cor-success">
+      ✅ Decouples sender from receiver — each handler decides independently
+    </text>
   </svg>`;
 }

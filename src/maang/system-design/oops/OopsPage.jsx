@@ -54,14 +54,6 @@ function DetailPanel({ topic, onClose }) {
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
             <span className="oops-detail-sub">— {topic.sub}</span>
-            <a
-              className="oops-detail-video"
-              href={topic.videoLink}
-              onClick={(e) => e.stopPropagation()}
-              title="Watch video"
-            >
-              <i className="fas fa-play-circle" /> Watch Video
-            </a>
           </h2>
           <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
             <svg
@@ -175,6 +167,51 @@ export default function OopsPage() {
           </span>
         </div>
       </header>
+
+      <section className="oops-why-box">
+        <div className="oops-why-header">
+          <i className="fas fa-lightbulb" /> Why do we need OOP?
+        </div>
+        <div className="oops-why-content">
+          <p>
+            As software grows, plain functions and global variables become a
+            tangled mess. <b>Object-Oriented Programming</b> models real-world
+            entities as <b>objects</b> that bundle <i>data</i> and
+            <i> behavior</i> together — making large codebases
+            <b> organized, reusable, and easier to change</b>.
+          </p>
+          <ul className="oops-why-list">
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Modularity</b> — each object is a self-contained unit</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Reusability</b> — inherit and extend existing classes</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Security</b> — encapsulation hides internal state</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Flexibility</b> — polymorphism lets one interface, many behaviors</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Real-world mapping</b> — BankAccount, Order, User, Product → all objects</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Interview essential</b> — foundation for LLD / System Design</span>
+            </li>
+          </ul>
+          <p className="oops-why-foot">
+            👉 OOP is the <b>foundation</b> of frameworks like Spring, Hibernate,
+            and the entire Java ecosystem. Master it once, use it everywhere.
+          </p>
+        </div>
+      </section>
 
       <div className="oops-foundation-section">
         <div className="oops-section-header oops-foundation-header">

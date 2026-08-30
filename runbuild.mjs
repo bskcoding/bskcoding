@@ -1,0 +1,1 @@
+import { build } from "vite"; try { await build(); console.log("OK"); } catch (e) { console.log("---ERR---"); console.log(e.message || String(e)); if (e.errors) { for (const err of e.errors) { console.log("ERR ITEM:"); console.log(err); } } process.exit(1); }

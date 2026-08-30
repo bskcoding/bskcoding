@@ -53,14 +53,6 @@ function DetailPanel({ topic, onClose }) {
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
             <span className="oops-detail-sub">— {topic.sub}</span>
-            <a
-              className="oops-detail-video"
-              href={topic.videoLink}
-              onClick={(e) => e.stopPropagation()}
-              title="Watch video"
-            >
-              <i className="fas fa-play-circle" /> Watch Video
-            </a>
           </h2>
           <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
             <svg
@@ -167,6 +159,58 @@ export default function DesignPatternsPage() {
           </span>
         </div>
       </header>
+
+      <section className="oops-why-box">
+        <div className="oops-why-header">
+          <i className="fas fa-lightbulb" /> Why do we need Design Patterns?
+        </div>
+        <div className="oops-why-content">
+          <p>
+            Every senior developer eventually solves the same problems:
+            <i>"How do I create only one object?"</i>,
+            <i>"How do I notify many components when something changes?"</i>,
+            <i>"How do I add new features without breaking old code?"</i>.
+            Design Patterns are <b>proven, reusable solutions</b> to these
+            recurring problems — battle-tested by millions of developers.
+          </p>
+          <ul className="oops-why-list">
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Faster development</b> — don't reinvent the wheel, use a known solution</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Common vocabulary</b> — say "use a Factory" instead of explaining 50 lines</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Loose coupling</b> — components interact via interfaces, easy to swap</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Production-tested</b> — used in Spring, Hibernate, Java collections, JDK</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Interview must-know</b> — asked in every LLD / System Design round</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>3 categories</b> — Creational (how to create), Structural (how to compose), Behavioural (how to communicate)</span>
+            </li>
+          </ul>
+          <p className="oops-why-foot">
+            👉 Real-world usage: <code>Runtime.getRuntime()</code> is a
+            <b> Singleton</b>. <code>Calendar.getInstance()</code> is a
+            <b> Factory</b>. <code>StringBuilder</code> is a <b>Builder</b>.
+            <code> java.util.logging</code> uses <b>Observer</b>.
+            <code> Collections.sort(list, comparator)</code> uses
+            <b> Strategy</b>. <code>java.lang.reflect.Proxy</code> IS the
+            <b> Proxy</b> pattern. <code>Servlet filters</code> form a
+            <b> Chain of Responsibility</b>.
+          </p>
+        </div>
+      </section>
 
       <div className="oops-topic-grid">
         {designPatternsTopics.map((t) => (

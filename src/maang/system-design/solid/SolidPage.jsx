@@ -53,16 +53,6 @@ function DetailPanel({ topic, onClose }) {
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
             <span className="oops-detail-sub">— {topic.sub}</span>
-            <a
-              className="oops-detail-video"
-              href={topic.videoLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              title="Watch video"
-            >
-              <i className="fas fa-play-circle" /> Watch Video
-            </a>
           </h2>
           <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
             <svg
@@ -181,6 +171,47 @@ export default function SolidPage() {
           <i className="fab fa-youtube" /> Watch Full SOLID Series (Telugu)
         </a>
       </header>
+
+      <section className="oops-why-box">
+        <div className="oops-why-header">
+          <i className="fas fa-lightbulb" /> Why do we need SOLID Principles?
+        </div>
+        <div className="oops-why-content">
+          <p>
+            As your codebase grows, classes get tightly coupled, changes break
+            unrelated features, and testing becomes a nightmare. SOLID gives
+            you <b>5 proven rules</b> to write code that is:
+          </p>
+          <ul className="oops-why-list">
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Easy to maintain</b> — small focused classes, one reason to change</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Easy to extend</b> — add new features without touching old code</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Easy to test</b> — depend on abstractions, mock anything</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Reusable</b> — small interfaces, swappable implementations</span>
+            </li>
+            <li>
+              <i className="fas fa-check-circle" />
+              <span><b>Interview-ready</b> — asked in every LLD / Senior dev round</span>
+            </li>
+          </ul>
+          <p className="oops-why-foot">
+            👉 In real projects: SRP keeps controllers thin, OCP avoids
+            <code>if-else</code> hell, LSP prevents subtle bugs in inheritance,
+            ISP stops “fat-interface” pain, and DIP makes your code testable
+            with mocks.
+          </p>
+        </div>
+      </section>
 
       <div className="oops-topic-grid">
         {solidTopics.map((t) => (
