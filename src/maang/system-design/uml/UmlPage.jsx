@@ -4,8 +4,125 @@ import "./UmlPage.css";
 import { umlTopics } from "./umlData";
 
 /**
- * Clickable card showing a UML diagram topic summary.
+ * UML Diagrams page (Route: /maang/system-design/uml).
+ * Relationships FIRST, then Structural & Behavioural diagram types.
  */
+const UML_RELATIONSHIPS = [
+  {
+    key: "association",
+    label: "Association",
+    sub: "uses-a (loose connection)",
+    symbol: "───────►",
+    color: "#1565c0",
+    desc: "A general link between two classes. Both classes know about each other but live independently.",
+    example: "Teacher ──► Student",
+  },
+  {
+    key: "directed",
+    label: "Directed Association",
+    sub: "one-way navigation",
+    symbol: "───────►",
+    color: "#0277bd",
+    desc: "Only one class knows about / navigates to the other. The arrow shows the direction.",
+    example: "Customer ──► Order",
+  },
+  {
+    key: "aggregation",
+    label: "Aggregation",
+    sub: "has-a (weak ownership)",
+    symbol: "◇───────",
+    color: "#ef6c00",
+    desc: "Whole-part relationship where the part CAN exist without the whole. Hollow diamond at the whole side.",
+    example: "Department ◇── Employee",
+  },
+  {
+    key: "composition",
+    label: "Composition",
+    sub: "owns-a (strong ownership)",
+    symbol: "◆───────",
+    color: "#c62828",
+    desc: "Whole-part relationship where the part CANNOT exist without the whole. Filled diamond at the whole side.",
+    example: "House ◆── Room",
+  },
+  {
+    key: "dependency",
+    label: "Dependency",
+    sub: "temporary / weak usage",
+    symbol: "- - - - ►",
+    color: "#6a1b9a",
+    desc: "A class uses another only temporarily (method parameter, local variable). Dashed arrow.",
+    example: "Controller - - ► Service",
+  },
+  {
+    key: "inheritance",
+    label: "Inheritance (Generalization)",
+    sub: "is-a (extends / implements)",
+    symbol: "────────▷",
+    color: "#2e7d32",
+    desc: "Child inherits from parent. Hollow triangle arrow. Also used for interface realization.",
+    example: "Car ────▷ Vehicle",
+  },
+  {
+    key: "realization",
+    label: "Realization",
+    sub: "class implements interface",
+    symbol: "- - - - -▷",
+    color: "#00838f",
+    desc: "A class implements an interface. Dashed line with a hollow triangle arrow.",
+    example: "ArrayList - - ▷ List",
+  },
+];
+
+/* ============================================================
+   RELATIONSHIP REFERENCE CARDS
+   ============================================================ */
+function RelationshipCard({ rel }) {
+  return (
+    <div className="oops-rel-card" style={{ borderTopColor: rel.color }}>
+      <div className="oops-rel-head">
+        <span className="oops-rel-name" style={{ color: rel.color }}>
+          {rel.label}
+        </span>
+        <code
+          className="oops-rel-symbol"
+          style={{ background: rel.color + "15", color: rel.color }}
+        >
+          {rel.symbol}
+        </code>
+      </div>
+      <p className="oops-rel-sub">{rel.sub}</p>
+      <p className="oops-rel-desc">{rel.desc}</p>
+      <p className="oops-rel-example">
+        <i className="fas fa-code" style={{ color: rel.color }} /> {rel.example}
+      </p>
+    </div>
+  );
+}
+
+function RelationshipsSection() {
+  return (
+    <section className="oops-relationships-section">
+      <h2 className="oops-category-title" style={{ borderLeftColor: "#e94560" }}>
+        <i className="fas fa-link" style={{ color: "#e94560" }} />
+        UML Relationships — Quick Reference
+      </h2>
+      <p className="oops-rel-intro">
+        Before reading each diagram, learn the <strong>standard UML
+        relationships</strong>. Every arrow in UML has a specific meaning —
+        read it before reading the rest of the diagram.
+      </p>
+      <div className="oops-rel-grid">
+        {UML_RELATIONSHIPS.map((rel) => (
+          <RelationshipCard key={rel.key} rel={rel} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   TOPIC CARD (grid item on the page)
+   ============================================================ */
 function TopicCard({ topic, isActive, onClick }) {
   return (
     <div
@@ -29,7 +146,7 @@ function TopicCard({ topic, isActive, onClick }) {
         <i className="fas fa-play-circle" /> Video
       </a>
       <span className="oops-card-tag">
-        <i className="fas fa-project-diagram" /> UML
+        <i className="fas fa-diagram-project" /> UML Diagram
       </span>
       {isActive && (
         <span className="oops-active-indicator">
@@ -40,9 +157,9 @@ function TopicCard({ topic, isActive, onClick }) {
   );
 }
 
-/**
- * Modal popup showing full details for a selected UML topic.
- */
+/* ============================================================
+   DETAIL PANEL (popup / modal)
+   ============================================================ */
 function DetailPanel({ topic, onClose }) {
   if (!topic) return null;
   const svgString = topic.diagram();
@@ -57,7 +174,7 @@ function DetailPanel({ topic, onClose }) {
           <h2>
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
-            <span className="oops-detail-sub">� {topic.sub}</span>
+            <span className="oops-detail-sub">— {topic.sub}</span>
           </h2>
           <button
             className="oops-close-btn"
@@ -83,7 +200,7 @@ function DetailPanel({ topic, onClose }) {
 
         <div className="oops-modal-scroll-content">
           <div className="oops-definition-box">
-            <strong>?? Definition: </strong>
+            <strong>Definition: </strong>
             {topic.definition}
           </div>
 
@@ -134,111 +251,89 @@ function DetailPanel({ topic, onClose }) {
   );
 }
 
-/**
- * Main UML Diagrams page component (default export).
- * Renders a grid of UML diagram concept cards grouped by category,
- * plus a modal popup for full details.
- */
+/* ============================================================
+   MAIN PAGE COMPONENT
+   ============================================================ */
 export default function UmlPage() {
-  const [activeId, setActiveId] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const selected = umlTopics.find((t) => t.id === selectedId) || null;
 
-  const handleClick = (id) => {
-    setActiveId(activeId === id ? null : id);
-  };
+  const structuralTopics = umlTopics.filter((t) => t.category === "structural");
+  const behavioralTopics = umlTopics.filter((t) => t.category === "behavioral");
 
-  const handleClose = () => setActiveId(null);
-  const activeTopic = umlTopics.find((t) => t.id === activeId);
-
-  // Group topics into the standard UML categories
-  const categories = [
-    { key: "structural", label: "Structural Diagrams", icon: "fa-cubes", color: "#1565c0",
-      ids: ["class-diagram"] },
-    { key: "behavioral", label: "Behavioural Diagrams", icon: "fa-sitemap", color: "#6a1b9a",
-      ids: ["use-case-diagram", "activity-diagram", "state-machine-diagram"] },
-    { key: "interaction", label: "Interaction Diagrams", icon: "fa-exchange-alt", color: "#2e7d32",
-      ids: ["sequence-diagram"] },
-    { key: "extra", label: "Other UML Diagrams", icon: "fa-shapes", color: "#e65100",
-      ids: ["component-diagram", "deployment-diagram", "package-diagram", "object-diagram"] },
-  ];
+  const renderSection = (title, icon, subtitle, topics) => (
+    <div className="oops-relations-section">
+      <div className="oops-section-header oops-relations-header">
+        <i className={`fas ${icon}`} />
+        {title}
+        <span className="oops-section-sub">{subtitle}</span>
+      </div>
+      <div className="oops-topic-grid">
+        {topics.map((topic) => (
+          <TopicCard
+            key={topic.id}
+            topic={topic}
+            isActive={selectedId === topic.id}
+            onClick={setSelectedId}
+          />
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="oops-app-wrapper">
       <Link to="/maang/system-design-basics" className="oops-back">
-        ? Back to System Design
+        <i className="fas fa-arrow-left" /> Back to System Design
       </Link>
 
       <header className="oops-main-header">
         <h1>
           <i className="fas fa-project-diagram" /> UML Diagrams
-          <span className="oops-java-badge">
-            <i className="fas fa-pen-nib" /> Visual Modeling
-          </span>
         </h1>
-        <div className="oops-sub-info">
-          <span>
-            <i className="fas fa-shapes" /> 8 UML Diagrams
-          </span>
-          <span>
-            <i className="fas fa-eye" /> Visual Models
-          </span>
-          <span>
-            <i className="fas fa-code" /> Real Examples
-          </span>
-          <span className="oops-badge">
-            <i className="fas fa-mouse-pointer" /> Click any card
-          </span>
+        <p>
+          Unified Modeling Language - the visual language used to design,
+          document & communicate software systems. Master the relationships
+          first, then the 8 essential diagram types.
+        </p>
+        <div className="oops-stats-row">
+          <div className="oops-stat-box">
+            <strong>7</strong>
+            <span>Relationships</span>
+          </div>
+          <div className="oops-stat-box">
+            <strong>{umlTopics.length}</strong>
+            <span>Diagram Types</span>
+          </div>
+          <div className="oops-stat-box">
+            <strong>8</strong>
+            <span>With Examples</span>
+          </div>
         </div>
       </header>
 
-      {/* Why UML? intro section */}
-      <div className="oops-why-box" style={{ marginBottom: "28px" }}>
-        <h3>
-          <i className="fas fa-lightbulb" /> Why UML Diagrams?
-        </h3>
-        <ul className="oops-why-list">
-          <li>
-            <i className="fas fa-check-circle" />
-            <span><strong>Visualize</strong> software structure and behaviour before writing code.</span>
-          </li>
-          <li>
-            <i className="fas fa-check-circle" />
-            <span><strong>Communicate</strong> design ideas clearly with developers, architects, and stakeholders.</span>
-          </li>
-          <li>
-            <i className="fas fa-check-circle" />
-            <span><strong>Document</strong> complex systems so new team members can onboard quickly.</span>
-          </li>
-          <li>
-            <i className="fas fa-check-circle" />
-            <span><strong>Identify</strong> design problems early, before they become costly code changes.</span>
-          </li>
-        </ul>
-      </div>
+      <RelationshipsSection />
 
-      {categories.map((cat) => {
-        const catTopics = umlTopics.filter((t) => cat.ids.includes(t.id));
-        if (catTopics.length === 0) return null;
-        return (
-          <section key={cat.key} className="oops-category-section">
-            <h2 className="oops-category-title" style={{ borderLeftColor: cat.color }}>
-              <i className={`fas ${cat.icon}`} style={{ color: cat.color }} />
-              {cat.label}
-            </h2>
-            <div className="oops-topic-grid">
-              {catTopics.map((t) => (
-                <TopicCard
-                  key={t.id}
-                  topic={t}
-                  isActive={t.id === activeId}
-                  onClick={handleClick}
-                />
-              ))}
-            </div>
-          </section>
-        );
-      })}
+      {renderSection(
+        "Structural Diagrams",
+        "fa-cubes",
+        "What the system IS - static building blocks",
+        structuralTopics
+      )}
 
-      {activeTopic && <DetailPanel topic={activeTopic} onClose={handleClose} />}
+      {renderSection(
+        "Behavioural Diagrams",
+        "fa-play-circle",
+        "What the system DOES - dynamic behaviour & interactions",
+        behavioralTopics
+      )}
+
+      <p className="oops-footer-note">
+        <i className="fas fa-lightbulb" /> Learn the 7 relationships first -
+        then every diagram becomes easy to read.
+      </p>
+
+      <DetailPanel topic={selected} onClose={() => setSelectedId(null)} />
     </div>
   );
 }

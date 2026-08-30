@@ -27,7 +27,7 @@ export function svgClassDiagram() {
     <text x="355" y="140" font-size="11" font-family="monospace">+ manageTeam()</text>
     <text x="355" y="158" font-size="11" font-family="monospace">+ approveLeave()</text>
     <line x1="340" y1="110" x2="240" y2="110" stroke="#1565c0" stroke-width="2" marker-end="url(#umlArrInh)" />
-    <text x="248" y="100" font-size="11" font-weight="600" fill="#1565c0" font-family="Segoe UI,sans-serif">? extends</text>
+    <text x="248" y="100" font-size="11" font-weight="600" fill="#1565c0" font-family="Segoe UI,sans-serif">extends</text>
     <rect x="40" y="240" width="220" height="120" fill="#f8f9fc" stroke="#302b63" stroke-width="2" rx="10" />
     <text x="150" y="260" text-anchor="middle" font-weight="700" font-size="13" font-family="Segoe UI,sans-serif">Department</text>
     <line x1="50" y1="272" x2="250" y2="272" stroke="#ccc" />
@@ -37,14 +37,14 @@ export function svgClassDiagram() {
     <text x="55" y="342" font-size="11" font-family="monospace">+ addEmployee(e)</text>
     <text x="55" y="358" font-size="11" font-family="monospace">+ listEmployees()</text>
     <line x1="150" y1="240" x2="140" y2="180" stroke="#2e7d32" stroke-width="2" marker-end="url(#umlArrComp)" />
-    <text x="60" y="220" font-size="11" font-weight="600" fill="#2e7d32" font-family="Segoe UI,sans-serif">? contains 1..*</text>
+    <text x="60" y="220" font-size="11" font-weight="600" fill="#2e7d32" font-family="Segoe UI,sans-serif">contains 1..*</text>
     <rect x="320" y="240" width="400" height="130" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5" rx="8" />
-    <text x="335" y="262" font-size="12" font-weight="700" fill="#1565c0" font-family="Segoe UI,sans-serif">?? Class Diagram Notation</text>
+    <text x="335" y="262" font-size="12" font-weight="700" fill="#1565c0" font-family="Segoe UI,sans-serif">CLASS DIAGRAM NOTATION</text>
     <text x="335" y="285" font-size="11" font-family="monospace">+ public      - private      # protected</text>
     <text x="335" y="305" font-size="11" font-family="monospace">---&gt;   association</text>
-    <text x="335" y="323" font-size="11" font-family="monospace">?   inheritance</text>
-    <text x="335" y="341" font-size="11" font-family="monospace">?   composition  ?  aggregation</text>
-    <text x="335" y="359" font-size="11" font-family="monospace">??   dependency (dashed)</text>
+    <text x="335" y="323" font-size="11" font-family="monospace">--|>  inheritance (is-a)</text>
+    <text x="335" y="341" font-size="11" font-family="monospace">--*  composition   --o  aggregation</text>
+    <text x="335" y="359" font-size="11" font-family="monospace">..|>  dependency (dashed)</text>
     <rect x="40" y="390" width="680" height="22" fill="#e8f5e9" />
     <text x="380" y="406" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32" font-family="Segoe UI,sans-serif">Static view: classes + attributes + methods + relationships</text>
   </svg>`;
@@ -87,9 +87,9 @@ export function svgSequenceDiagram() {
     <line x1="290" y1="300" x2="100" y2="300" stroke="#1565c0" stroke-width="2" marker-end="url(#seqArr)" />
     <text x="110" y="294" font-size="10" font-family="monospace">6: confirm()</text>
     <rect x="40" y="350" width="720" height="80" fill="#fff8e1" stroke="#f57c00" stroke-width="1.5" rx="8" />
-    <text x="60" y="372" font-size="12" font-weight="700" fill="#e65100" font-family="Segoe UI,sans-serif">?? Sequence Diagram � how to read</text>
+    <text x="60" y="372" font-size="12" font-weight="700" fill="#e65100" font-family="Segoe UI,sans-serif">SEQUENCE DIAGRAM - how to read</text>
     <text x="60" y="392" font-size="11" font-family="monospace">- top-to-bottom = time order    - - - - lifelines (dashed)</text>
-    <text x="60" y="408" font-size="11" font-family="monospace">? activations (focus of control) ? call    ? return (dashed)</text>
+    <text x="60" y="408" font-size="11" font-family="monospace">|  activations (focus of control)   --->  call   - - ->  return (dashed)</text>
     <text x="60" y="424" font-size="11" font-family="monospace">numbers (1,2,3...) indicate message ordering</text>
   </svg>`;
 }
@@ -131,7 +131,7 @@ export function svgUseCaseDiagram() {
     <line x1="685" y1="190" x2="640" y2="240" stroke="#302b63" stroke-width="1.5" />
     <line x1="685" y1="200" x2="640" y2="330" stroke="#302b63" stroke-width="1.5" />
     <rect x="320" y="395" width="260" height="20" fill="#e8f5e9" />
-    <text x="450" y="410" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32" font-family="Segoe UI,sans-serif">Actors ? Use Cases ? System boundary</text>
+    <text x="450" y="410" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32" font-family="Segoe UI,sans-serif">Actors connect to Use Cases inside the System boundary</text>
   </svg>`;
 }
 

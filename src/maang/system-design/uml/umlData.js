@@ -1,4 +1,4 @@
-// ===== UML Diagrams � topic data =====
+// ===== UML Diagrams — topic data =====
 import {
   svgClassDiagram,
   svgSequenceDiagram,
@@ -19,7 +19,7 @@ export const umlTopics = [
     id: "class-diagram",
     icon: "fa-th-large",
     title: "Class Diagram",
-    sub: "Structure � static view",
+    sub: "Structure — static view",
     category: "structural",
     desc: "Shows classes, their attributes, methods, and the relationships among them.",
     definition:
