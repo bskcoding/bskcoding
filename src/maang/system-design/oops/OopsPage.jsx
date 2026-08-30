@@ -156,7 +156,13 @@ export default function OopsPage() {
         </h1>
         <div className="oops-sub-info">
           <span>
-            <i className="fas fa-diagram-project" /> 7 Core OOP Concepts
+            <i className="fas fa-gem" /> 1 Foundation
+          </span>
+          <span>
+            <i className="fas fa-crown" /> 4 Pillars of OOP
+          </span>
+          <span>
+            <i className="fas fa-project-diagram" /> 2 Class Relationships
           </span>
           <span>
             <i className="fas fa-code" /> Real Java Examples
@@ -170,21 +176,67 @@ export default function OopsPage() {
         </div>
       </header>
 
-      <div className="oops-topic-grid">
-        {oopsTopics.map((t) => (
-          <TopicCard
-            key={t.id}
-            topic={t}
-            isActive={t.id === activeId}
-            onClick={handleClick}
-          />
-        ))}
+      <div className="oops-foundation-section">
+        <div className="oops-section-header oops-foundation-header">
+          <i className="fas fa-gem" /> Foundation of OOP
+          <span className="oops-section-sub">The starting point — without this, no other OOP concept exists</span>
+        </div>
+        <div className="oops-topic-grid">
+          {oopsTopics
+            .filter((t) => t.category === "foundation")
+            .map((t) => (
+              <TopicCard
+                key={t.id}
+                topic={t}
+                isActive={t.id === activeId}
+                onClick={handleClick}
+              />
+            ))}
+        </div>
+      </div>
+
+      <div className="oops-pillars-section">
+        <div className="oops-section-header oops-pillars-header">
+          <i className="fas fa-crown" /> The 4 Pillars of OOP
+          <span className="oops-section-sub">The core building blocks of Object-Oriented Programming</span>
+        </div>
+        <div className="oops-topic-grid">
+          {oopsTopics
+            .filter((t) => t.category === "pillar")
+            .map((t) => (
+              <TopicCard
+                key={t.id}
+                topic={t}
+                isActive={t.id === activeId}
+                onClick={handleClick}
+              />
+            ))}
+        </div>
+      </div>
+
+      <div className="oops-relations-section">
+        <div className="oops-section-header oops-relations-header">
+          <i className="fas fa-project-diagram" /> Class Relationships
+          <span className="oops-section-sub">How classes connect, own, and use each other</span>
+        </div>
+        <div className="oops-topic-grid">
+          {oopsTopics
+            .filter((t) => t.category === "relation")
+            .map((t) => (
+              <TopicCard
+                key={t.id}
+                topic={t}
+                isActive={t.id === activeId}
+                onClick={handleClick}
+              />
+            ))}
+        </div>
       </div>
 
       <DetailPanel topic={activeTopic} onClose={handleClose} />
 
       <div className="oops-footer-note">
-        <i className="fas fa-graduation-cap" /> Master OOP for System Design —
+        <i className="fas fa-graduation-cap" /> Master the Foundation + 4 Pillars + Class Relationships of OOP for System Design —
         Each concept includes Java code + visual diagram
       </div>
     </div>

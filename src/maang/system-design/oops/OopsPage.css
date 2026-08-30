@@ -109,6 +109,98 @@
   margin-bottom: 25px;
 }
 
+/* ===== SECTION HEADERS (Foundation + 4 Pillars + Relations) ===== */
+.oops-foundation-section,
+.oops-pillars-section,
+.oops-relations-section {
+  margin-bottom: 32px;
+}
+
+.oops-section-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #302b63;
+  padding: 14px 22px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.3px;
+}
+
+.oops-section-header i {
+  font-size: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.oops-section-sub {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b6b8a;
+  letter-spacing: 0.2px;
+}
+
+.oops-pillars-header {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-left: 6px solid #f57c00;
+  box-shadow: 0 4px 14px rgba(245, 124, 0, 0.15);
+}
+
+.oops-foundation-header {
+  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+  border-left: 6px solid #6a1b9a;
+  box-shadow: 0 4px 14px rgba(106, 27, 154, 0.15);
+}
+
+.oops-foundation-header i {
+  background: linear-gradient(135deg, #8e24aa, #4a148c);
+  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.4);
+}
+
+.oops-pillars-header i {
+  background: linear-gradient(135deg, #f57c00, #e65100);
+  box-shadow: 0 4px 12px rgba(245, 124, 0, 0.4);
+}
+
+.oops-relations-header {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-left: 6px solid #1565c0;
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.15);
+}
+
+.oops-relations-header i {
+  background: linear-gradient(135deg, #1565c0, #0d47a1);
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.4);
+}
+
+@media (max-width: 600px) {
+  .oops-section-header {
+    font-size: 1.15rem;
+    padding: 12px 16px;
+  }
+  .oops-section-header i {
+    width: 30px;
+    height: 30px;
+    font-size: 1.1rem;
+  }
+  .oops-section-sub {
+    font-size: 0.75rem;
+    width: 100%;
+    margin-top: 2px;
+  }
+}
+
 .oops-topic-card {
   background: white;
   border-radius: 16px;

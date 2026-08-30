@@ -23,6 +23,7 @@ export const oopsTopics = [
   {
     id: "class-object",
     icon: "fa-object-group",
+    category: "foundation",
     title: "Class & Object",
     sub: "Blueprint & Instance",
     desc: "A Class is a template/blueprint. An Object is an instance of a class with actual values.",
@@ -92,6 +93,7 @@ public class Main {
   {
     id: "encapsulation",
     icon: "fa-shield-halved",
+    category: "pillar",
     title: "Encapsulation",
     sub: "Data Hiding + Access Control",
     desc: "Bundling data with methods that operate on it, hiding internal state via private fields.",
@@ -178,6 +180,7 @@ public class Main {
   {
     id: "inheritance",
     icon: "fa-sitemap",
+    category: "pillar",
     title: "Inheritance",
     sub: "IS-A Relationship",
     desc: "A child class inherits fields and methods from a parent class, enabling code reuse and hierarchy.",
@@ -273,6 +276,7 @@ public class Main {
   {
     id: "polymorphism",
     icon: "fa-shapes",
+    category: "pillar",
     title: "Polymorphism",
     sub: "Many Forms — Override + Overload",
     desc: "Objects of different types respond to the same method call in their own way. Compile-time (overloading) + Runtime (overriding).",
@@ -363,6 +367,7 @@ public class Main {
   {
     id: "abstraction",
     icon: "fa-layer-group",
+    category: "pillar",
     title: "Abstraction",
     sub: "Hide Implementation, Show Interface",
     desc: "Exposing only essential features while hiding internal details using abstract classes and interfaces.",
@@ -464,6 +469,7 @@ public class Main {
   {
     id: "association",
     icon: "fa-link",
+    category: "relation",
     title: "Association",
     sub: "Has-A: Aggregation + Composition",
     desc: "Association defines relationships between classes. Aggregation (weak, shared) and Composition (strong, owned).",
@@ -598,6 +604,7 @@ public class Main {
   {
     id: "dependency",
     icon: "fa-arrow-right-arrow-left",
+    category: "relation",
     title: "Dependency",
     sub: "Uses-A (Temporary)",
     desc: 'One class depends on another when it uses it as a method parameter, local variable, or return type. Weakest coupling.',
