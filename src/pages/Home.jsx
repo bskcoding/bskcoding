@@ -8,7 +8,6 @@ function Home() {
   const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   const linkFor = (id) => {
-    if (id === "maang") return "/maang";
     if (id === "90-day-job-roadmap") return "/roadmap";
     if (id === "java") return "/java";
     if (id === "javascript") return "/javascript";
@@ -71,16 +70,19 @@ function Home() {
           Choose your path and start building real-world skills
         </p>
         <div className="skills-grid">
-          {skills.map((skill) => {
-            const linkPath = linkFor(skill.id);
-            return (
-              <div key={skill.id} className="skill-card-container">
-                <Link to={linkPath} className="skill-card-link">
-                  <SkillCard skill={skill} />
-                </Link>
-              </div>
-            );
-          })}
+          {/* MAANG Kit moved to the dedicated Features page */}
+          {skills
+            .filter((skill) => skill.id !== "maang")
+            .map((skill) => {
+              const linkPath = linkFor(skill.id);
+              return (
+                <div key={skill.id} className="skill-card-container">
+                  <Link to={linkPath} className="skill-card-link">
+                    <SkillCard skill={skill} />
+                  </Link>
+                </div>
+              );
+            })}
         </div>
       </section>
 

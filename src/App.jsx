@@ -80,6 +80,7 @@ const Register = lazy(() => import("./pages/Register"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Profile = lazy(() => import("./pages/Profile"));
 const ResumeBuilderPage = lazy(() => import("./pages/ResumeBuilderPage"));
+const FeaturesPage = lazy(() => import("./pages/FeaturesPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Restores the original route after GitHub Pages 404 redirect.
@@ -133,143 +134,38 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
-                {/* Protected routes */}
-                <Route
-                  path="/"
-                  element={
-                    <RequireAuth>
-                      <Home />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/about"
-                  element={
-                    <RequireAuth>
-                      <About />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/roadmap"
-                  element={
-                    <RequireAuth>
-                      <Roadmap90Day />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/java"
-                  element={
-                    <RequireAuth>
-                      <JavaTopics />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/java/interview"
-                  element={
-                    <RequireAuth>
-                      <JavaInterview />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/javascript"
-                  element={
-                    <RequireAuth>
-                      <JavaScriptTopics />
-                    </RequireAuth>
-                  }
-                />
+                {/* Free routes - open to everyone, no login required */}
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/features" element={<FeaturesPage />} />
+                <Route path="/roadmap" element={<Roadmap90Day />} />
+                <Route path="/java" element={<JavaTopics />} />
+                <Route path="/java/interview" element={<JavaInterview />} />
+                <Route path="/javascript" element={<JavaScriptTopics />} />
                 <Route
                   path="/javascript/interview"
-                  element={
-                    <RequireAuth>
-                      <JavaScriptInterview />
-                    </RequireAuth>
-                  }
+                  element={<JavaScriptInterview />}
                 />
-                <Route
-                  path="/reactjs"
-                  element={
-                    <RequireAuth>
-                      <ReactJSTopics />
-                    </RequireAuth>
-                  }
-                />
+                <Route path="/reactjs" element={<ReactJSTopics />} />
                 <Route
                   path="/reactjs/interview"
-                  element={
-                    <RequireAuth>
-                      <ReactJSInterview />
-                    </RequireAuth>
-                  }
+                  element={<ReactJSInterview />}
                 />
-                <Route
-                  path="/spring-boot"
-                  element={
-                    <RequireAuth>
-                      <SpringBootTopics />
-                    </RequireAuth>
-                  }
-                />
+                <Route path="/spring-boot" element={<SpringBootTopics />} />
                 <Route
                   path="/spring-boot/interview"
-                  element={
-                    <RequireAuth>
-                      <SpringBootInterview />
-                    </RequireAuth>
-                  }
+                  element={<SpringBootInterview />}
                 />
-                <Route
-                  path="/microservices"
-                  element={
-                    <RequireAuth>
-                      <MicroservicesTopics />
-                    </RequireAuth>
-                  }
-                />
+                <Route path="/microservices" element={<MicroservicesTopics />} />
                 <Route
                   path="/microservices/interview"
-                  element={
-                    <RequireAuth>
-                      <MicroservicesInterview />
-                    </RequireAuth>
-                  }
+                  element={<MicroservicesInterview />}
                 />
-                <Route
-                  path="/sql"
-                  element={
-                    <RequireAuth>
-                      <SQLTopics />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/sql/interview"
-                  element={
-                    <RequireAuth>
-                      <SQLInterview />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/kafka"
-                  element={
-                    <RequireAuth>
-                      <KafkaTopics />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/kafka/interview"
-                  element={
-                    <RequireAuth>
-                      <KafkaInterview />
-                    </RequireAuth>
-                  }
-                />
+                <Route path="/sql" element={<SQLTopics />} />
+                <Route path="/sql/interview" element={<SQLInterview />} />
+                <Route path="/kafka" element={<KafkaTopics />} />
+                <Route path="/kafka/interview" element={<KafkaInterview />} />
+                {/* MAANG Kit — grid page and all sub-topic pages require login */}
                 <Route
                   path="/maang"
                   element={
@@ -360,68 +256,22 @@ function App() {
                 />
                 <Route
                   path="/reactive-programming"
-                  element={
-                    <RequireAuth>
-                      <ReactiveProgrammingTopics />
-                    </RequireAuth>
-                  }
+                  element={<ReactiveProgrammingTopics />}
                 />
                 <Route
                   path="/reactive-programming/interview"
-                  element={
-                    <RequireAuth>
-                      <ReactiveProgrammingInterview />
-                    </RequireAuth>
-                  }
+                  element={<ReactiveProgrammingInterview />}
                 />
-                <Route
-                  path="/dsa"
-                  element={
-                    <RequireAuth>
-                      <DSATopics />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/dsa/course"
-                  element={
-                    <RequireAuth>
-                      <DSACourse />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/dsa/leetcode"
-                  element={
-                    <RequireAuth>
-                      <DSALeetcode />
-                    </RequireAuth>
-                  }
-                />
+                <Route path="/dsa" element={<DSATopics />} />
+                <Route path="/dsa/course" element={<DSACourse />} />
+                <Route path="/dsa/leetcode" element={<DSALeetcode />} />
                 <Route
                   path="/company-interview"
-                  element={
-                    <RequireAuth>
-                      <CompanyInterview />
-                    </RequireAuth>
-                  }
+                  element={<CompanyInterview />}
                 />
-                <Route
-                  path="/contact"
-                  element={
-                    <RequireAuth>
-                      <Contact />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <RequireAuth>
-                      <Profile />
-                    </RequireAuth>
-                  }
-                />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/profile" element={<Profile />} />
+                {/* Resume builder still requires login */}
                 <Route
                   path="/resume-builder"
                   element={

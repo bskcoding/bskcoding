@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginWithEmail, loginWithGoogle } from "../utils/firebaseAuth";
 import bskimg from "../assets/bskimg.svg";
 
@@ -8,6 +8,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  // When a page requires login (resume builder, MAANG sub-topics),
+  // RequireAuth forwards the originally requested page via router state
+  // so we can send the user back there after signing in.
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ function Login() {
           email: user.email,
         }),
       );
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (err) {
       const code = err?.code || "";
       let msg = "Login failed. Please try again.";
@@ -61,7 +66,7 @@ function Login() {
           email: user.email,
         }),
       );
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (err) {
       const msg = err?.message || "Google login failed. Please try again.";
       setError(msg);

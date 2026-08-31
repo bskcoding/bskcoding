@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { getCurrentUser, logout } from "../utils/auth";
 import { auth } from "../firebase";
@@ -13,8 +13,11 @@ function NavBar({ onOpenChangePassword }) {
   const [scrolled, setScrolled] = useState(false);
   const [glowColor, setGlowColor] = useState("blue");
   const [profileOpen, setProfileOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
   const profileRef = useRef(null);
+  const featuresRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handler = () => setUser(getCurrentUser());
@@ -48,14 +51,29 @@ function NavBar({ onOpenChangePassword }) {
     };
   }, []);
 
+  // Close the MAANG Kit dropdown when clicking outside of it
+  useEffect(() => {
+    if (!featuresOpen) return;
+    const onOutsideClick = (e) => {
+      if (featuresRef.current && !featuresRef.current.contains(e.target)) {
+        setFeaturesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onOutsideClick);
+    return () => document.removeEventListener("mousedown", onOutsideClick);
+  }, [featuresOpen]);
+
   const handleLogout = async () => {
     try {
       await logout();
       localStorage.removeItem(CURRENT_USER_KEY);
       setUser(null);
-      navigate("/login");
       setMenuOpen(false);
       setProfileOpen(false);
+      // The site is free to browse, so stay on the current page after
+      // logout. If the page requires login (resume builder, MAANG
+      // sub-topics), RequireAuth redirects to /login on this re-render.
+      navigate(location.pathname + location.search, { replace: true });
     } catch (err) {
       console.error("Logout error:", err);
     }
@@ -64,6 +82,7 @@ function NavBar({ onOpenChangePassword }) {
   const closeMenu = () => {
     setMenuOpen(false);
     setProfileOpen(false);
+    setFeaturesOpen(false);
   };
 
   // Toggle profile dropdown
@@ -107,16 +126,48 @@ function NavBar({ onOpenChangePassword }) {
           <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
             <span>Contact</span>
           </NavLink>
-          {user ? (
-            <NavLink
-              to="/resume-builder"
-              className="nav-link nav-link-resume"
-              onClick={closeMenu}
+          {/* MAANG Kit dropdown — clicking the button opens quick links to
+              the two premium features: MAANG Preparation + Resume Builder */}
+          <div className="nav-dropdown" ref={featuresRef}>
+            <button
+              type="button"
+              className={`nav-link nav-dropdown-trigger${
+                location.pathname === "/maang" ||
+                location.pathname === "/resume-builder"
+                  ? " active"
+                  : ""
+              }`}
+              onClick={() => setFeaturesOpen(!featuresOpen)}
+              aria-haspopup="true"
+              aria-expanded={featuresOpen}
             >
-              <span className="nav-link-resume-icon">📄</span>
-              <span>Build Resume</span>
-            </NavLink>
-          ) : null}
+              <span className="nav-dropdown-fire">🔥</span>
+              <span>MAANG Kit</span>
+              <span className="nav-dropdown-caret-icon">▾</span>
+            </button>
+            {featuresOpen && (
+              <div className="nav-dropdown-menu">
+                <NavLink
+                  to="/maang"
+                  className="nav-dropdown-item"
+                  onClick={closeMenu}
+                >
+                  <span className="nav-dropdown-item-icon">🏆</span>
+                  <span>MAANG Preparation</span>
+                  {!user && <span className="nav-dropdown-item-lock">🔒</span>}
+                </NavLink>
+                <NavLink
+                  to="/resume-builder"
+                  className="nav-dropdown-item nav-dropdown-item-resume"
+                  onClick={closeMenu}
+                >
+                  <span className="nav-dropdown-item-icon">📄</span>
+                  <span>Resume Builder</span>
+                  {!user && <span className="nav-dropdown-item-lock">🔒</span>}
+                </NavLink>
+              </div>
+            )}
+          </div>
           <a
             href="https://topmate.io/venkatesh_bharath"
             target="_blank"
