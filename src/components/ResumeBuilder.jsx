@@ -111,6 +111,12 @@ const EMPTY_RESUME = {
   certificates: [{ name: "", url: "" }],
 };
 
+// Returns the display name of a certificate entry (handles string or {name, url} shapes).
+// An entry with a blank/missing name is considered empty and must be hidden everywhere
+// (preview, PDF export) so an empty "Certifications" headline never shows.
+const getCertName = (cert) =>
+  (typeof cert === "string" ? cert : cert?.name || "").trim();
+
 function ResumeBuilder({ onClose }) {
   const isModal = typeof onClose === "function";
   const fileInputRef = useRef(null);
@@ -1175,13 +1181,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
     }
 
     // ===== CERTIFICATES =====
-    const certs = resume.certificates.filter((c) =>
-      typeof c === "string" ? c : c.name,
-    );
+    const certs = resume.certificates.filter(getCertName);
     if (certs.length > 0) {
       addSection("Certifications");
       certs.forEach((cert) => {
-        const certName = typeof cert === "string" ? cert : cert.name || "";
+        const certName = getCertName(cert);
         const certUrl = typeof cert === "string" ? "" : cert.url || "";
         if (certUrl && certUrl.startsWith("http")) {
           // Draw clickable link for certificate
@@ -2166,15 +2170,14 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
                     ))}
                 </div>
               )}
-              {resume.certificates.filter((c) => c.name || c).length > 0 && (
+              {resume.certificates.filter(getCertName).length > 0 && (
                 <div className="rb-preview-section">
                   <h3>Certifications</h3>
                   <ul>
                     {resume.certificates
-                      .filter((c) => c.name || c)
+                      .filter(getCertName)
                       .map((cert, idx) => {
-                        const certName =
-                          typeof cert === "string" ? cert : cert.name || "";
+                        const certName = getCertName(cert);
                         const certUrl =
                           typeof cert === "string" ? "" : cert.url || "";
                         return (
