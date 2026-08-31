@@ -161,8 +161,8 @@ class OrderService {
 // Flowchart of business logic with decisions and parallelism
 //
 //   (start) -> [Login] -> <valid?> -yes-> <admin?> -yes-> [Admin Panel]
-//                                   |                  \-no-> [User Home]
-//                                   \-no-> [Show Error] -> (end)
+//                                   |                  \\-no-> [User Home]
+//                                   \\-no-> [Show Error] -> (end)
 //
 // Fork/Join bars for PARALLEL work:
 //   +----------+
@@ -201,8 +201,8 @@ class OrderService {
 // Models the LIFECYCLE of ONE object through its states
 //
 //   (start) --> [Pending] --pay()--> [Paid] --ship()--> [Shipped]
-//                                              \cancel()   |
-//                                               \--------->[Cancelled]
+//                                              \\cancel()   |
+//                                               \\--------->[Cancelled]
 //
 // States         = rounded rectangles
 // Transitions    = arrows labelled with the EVENT that triggers them
