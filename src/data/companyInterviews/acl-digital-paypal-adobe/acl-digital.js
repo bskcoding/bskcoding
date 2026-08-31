@@ -1,290 +1,208 @@
 // AUTO-GENERATED file — company-wise interview data.
 // Source: ACL Digital (Paypal,Adobe) interview document(s).
-// Do not edit manually — regenerate with: node scripts/convert-company-interviews.cjs
 
 export const company = {
   "id": "acl-digital-paypal-adobe",
   "name": "ACL Digital (Paypal,Adobe)",
   "interviews": [
     {
-      "name": "ACL DIGITAL",
-      "questionCount": 50,
+      "name": "ACL Digital",
+      "questionCount": 35,
       "rounds": [
         {
           "name": "Technical Round",
           "questions": [
             {
               "question": "Explain your recent project.",
-              "answer": "- *Provide details about your recent project, including the technology stack, your role, the objectives, challenges faced, and how you overcame those challenges.*",
+              "answer": "I worked on a Customer Registration and Banking Application for 2 years. The project used Java 8, Spring Boot, Hibernate, and ReactJS. I was a backend developer.\n- Key features: customer registration, account management, transaction processing, secure authentication.\n- Main challenges:\n1. Slow API performance - fixed with Redis caching and optimized queries\n2. Concurrent transaction issues - solved using @Transactional with proper isolation levels\n3. Data consistency across microservices - implemented Saga pattern with compensation actions",
               "code": null
             },
             {
               "question": "What are the new features in Java 8?",
-              "answer": "- *Java 8 introduced several new features, including:*\n- *Lambda expressions*\n- *Functional interfaces*\n- *Stream API*\n- *New Date and Time API (java.time)*\n- *Default methods in interfaces*\n- *Method references*\n- *Optional class*",
+              "answer": "Java 8 introduced 7 major features:\n- Lambda expressions for cleaner code\n- Stream API for collection processing\n- Functional interfaces with single abstract methods\n- New Date/Time API (LocalDate, LocalDateTime)\n- Default methods in interfaces for backward compatibility\n- Method references as shorthand for lambdas\n- Optional class to avoid null pointer exceptions",
               "code": null
             },
             {
               "question": "What is a static method in Java?",
-              "answer": "- *A static method belongs to the class rather than instances of the class. It can be called without creating an instance of the class.*",
+              "answer": "A static method belongs to the class rather than instances. It can be called without creating an object using the class name. It can only access static variables and cannot be overridden.\n- Example: Math.sqrt(16) - you don't need a Math object",
               "code": null
             },
             {
               "question": "How can we use static methods in an interface?",
-              "answer": "- *Static methods in interfaces can be used to provide utility methods that are related to the interface but do not need an instance. They are called using the interface name.*",
+              "answer": "Since Java 8, interfaces can have static methods as utility methods. They are called using the interface name.\n- Example: interface Utils { static void print(String s) { System.out.println(s); } }\n- Call: Utils.print(\"Hello\")",
               "code": null
             },
             {
               "question": "How can we call a static method?",
-              "answer": "- *Static methods can be called using the class name or the interface name if defined in an interface, e.g., ClassName.staticMethod() or InterfaceName.staticMethod().*",
-              "code": null
-            },
-            {
-              "question": "How many ways can we call static methods?",
-              "answer": "- *Static methods can be called in two ways:*\n- *Using the class name (e.g., Math.sqrt(4) for Math.sqrt)*\n- *Directly if in the same class (e.g., staticMethod())*",
+              "answer": "Static methods can be called in three ways:\n1. Using class name (recommended) - ClassName.methodName()\n2. Directly if in same class - methodName()\n3. Using object reference (not recommended) - obj.methodName()",
               "code": null
             },
             {
               "question": "What is a default method in Java?",
-              "answer": "- *Default methods are methods in interfaces that have a body. They provide a default implementation that can be used by implementing classes.*",
+              "answer": "Default methods are methods in interfaces that have a body and provide a default implementation. They were introduced in Java 8. Classes implementing the interface can use them or override them. They help maintain backward compatibility.",
               "code": null
             },
             {
-              "question": "What is the use of default methods in interfaces?",
-              "answer": "- *Default methods allow interfaces to evolve without breaking existing implementations. They enable the addition of new methods with default behavior.*",
+              "question": "What is the use of default methods?",
+              "answer": "Default methods serve three main purposes:\n1. Allow interfaces to evolve without breaking existing implementations\n2. Provide common implementations across multiple classes\n3. Enable multiple inheritance of behavior\n- Used extensively in the Collection framework like forEach() method",
               "code": null
             },
             {
-              "question": "What is a method reference in Java?",
-              "answer": "- *Method references are a shorthand notation for calling a method. They provide a way to refer to methods without invoking them.*",
+              "question": "What is a method reference?",
+              "answer": "A method reference is a shorthand notation for lambda expressions. It provides a way to refer to methods without invoking them.\n- Example: list.forEach(System.out::println) instead of list.forEach(s -> System.out.println(s))",
               "code": null
             },
             {
               "question": "How many ways can we create method references?",
-              "answer": "- *Method references can be created in the following ways:*\n- *Reference to a static method*\n- *Reference to an instance method of a specific object*\n- *Reference to an instance method of an arbitrary object*\n- *Reference to a constructor*",
-              "code": null
-            },
-            {
-              "question": "Provide a customized example of a method reference with full code and explanation.",
-              "answer": "",
+              "answer": "Four ways:\n1. Reference to static method - ClassName::staticMethod\n2. Reference to instance method of specific object - instance::method\n3. Reference to instance method of arbitrary object - ClassName::instanceMethod\n4. Reference to constructor - ClassName::new",
               "code": {
                 "language": "java",
-                "content": "import java.util.Arrays;\nimport java.util.List;\n\npublic class MethodReferenceExample {\n    public static void main(String[] args) {\n        List<String> names = Arrays.asList(\"Alice\", \"Bob\", \"Charlie\");\n\n        // Using method reference to call static method\n        names.forEach(MethodReferenceExample::printName);\n\n        // Using method reference to call instance method\n        MethodReferenceExample instance = new MethodReferenceExample();\n        names.forEach(instance::printNameInstance);\n    }\n\n    // Static method\n    public static void printName(String name) {\n        System.out.println(name);\n    }\n\n    // Instance method\n    public void printNameInstance(String name) {\n        System.out.println(name);\n    }\n}"
+                "content": "public class MethodReferenceExample {\n    public static void main(String[] args) {\n        List<String> names = Arrays.asList(\"Alice\", \"Bob\", \"Charlie\");\n        names.forEach(MethodReferenceExample::printName);\n        MethodReferenceExample instance = new MethodReferenceExample();\n        names.forEach(instance::printNameInstance);\n    }\n    public static void printName(String name) {\n        System.out.println(name);\n    }\n    public void printNameInstance(String name) {\n        System.out.println(name);\n    }\n}"
               }
             },
             {
               "question": "What is a stream in Java?",
-              "answer": "- *A stream in Java is a sequence of elements supporting sequential and parallel aggregate operations. It is used for processing collections of objects in a functional style.*",
+              "answer": "A stream is a sequence of elements that supports functional-style operations. It's not a data structure but processes collections of objects. Streams are lazy, can be parallelized, and cannot be reused after a terminal operation. Used for filtering, mapping, and collecting data.",
               "code": null
             },
             {
               "question": "What is a parallel stream?",
-              "answer": "- *A parallel stream is a type of stream that enables parallel processing of data by splitting the data into multiple chunks and processing them concurrently.*",
+              "answer": "A parallel stream enables parallel processing by splitting data into multiple chunks and processing them concurrently using multiple threads. It uses the Fork/Join framework. Useful for large datasets with CPU-intensive operations.\n- Example: list.parallelStream() instead of list.stream()",
               "code": null
             },
             {
-              "question": "What is the difference between a stream and a parallel stream?",
-              "answer": "- *A stream processes data sequentially, while a parallel stream divides the data into multiple chunks and processes them concurrently using multiple threads.*",
-              "code": null
-            },
-            {
-              "question": "How does the internal process work in parallel streams?",
-              "answer": "- *Parallel streams use the ForkJoinPool to split the data into smaller chunks, process them concurrently in multiple threads, and then merge the results.*",
+              "question": "How does parallel stream work internally?",
+              "answer": "Parallel streams work in four steps:\n1. Split - Data is divided into chunks using Spliterator\n2. Process - Each chunk is processed independently in parallel using multiple threads from ForkJoinPool\n3. Combine - Results are merged using a combine operation\n4. Return - Final result is returned",
               "code": null
             },
             {
               "question": "How many ways can we create a thread in Java?",
-              "answer": "- *Threads can be created in two main ways:*\n- *By implementing the Runnable interface*\n- *By extending the Thread class*",
-              "code": null
-            },
-            {
-              "question": "Provide example code for implementing the Runnable interface and explain how to use it.",
-              "answer": "",
+              "answer": "Three ways:\n1. Extending Thread class - class MyThread extends Thread { public void run() {} }\n2. Implementing Runnable interface - class MyRunnable implements Runnable { public void run() {} }\n3. Using Lambda expression (Java 8+) - Runnable r = () -> System.out.println(\"Running\")",
               "code": {
                 "language": "java",
-                "content": "public class RunnableExample implements Runnable {\n    @Override\n    public void run() {\n        System.out.println(\"Thread is running\");\n    }\n\n    public static void main(String[] args) {\n        RunnableExample runnable = new RunnableExample();\n        Thread thread = new Thread(runnable);\n        thread.start();\n    }\n}"
+                "content": "public class RunnableExample implements Runnable {\n    @Override\n    public void run() {\n        System.out.println(\"Thread is running\");\n    }\n    public static void main(String[] args) {\n        RunnableExample runnable = new RunnableExample();\n        Thread thread = new Thread(runnable);\n        thread.start();\n    }\n}"
               }
             },
             {
-              "question": "If MyThread implements Runnable, and I create a thread like this: Thread t = new Thread(new MyThread()), how is this different from extending the Thread class?",
-              "answer": "- *Implementing Runnable allows you to use composition and separate the thread's job from its execution. Extending Thread tightly couples the thread's job with its execution, limiting flexibility.*",
-              "code": null
-            },
-            {
-              "question": "What is ExecutorService in threads?",
-              "answer": "- *ExecutorService is a high-level replacement for managing and controlling thread execution. It provides methods for managing a pool of threads and scheduling tasks.*",
+              "question": "What is ExecutorService?",
+              "answer": "ExecutorService is a high-level framework for managing thread pools. Instead of creating threads manually, you submit tasks which are managed by the framework. It provides methods for managing thread lifecycle, scheduling tasks, and handling results.",
               "code": null
             },
             {
               "question": "How many ways can we create an ExecutorService?",
-              "answer": "- *ExecutorService can be created using:*\n- *Executors.newFixedThreadPool(int nThreads)*\n- *Executors.newSingleThreadExecutor()*\n- *Executors.newCachedThreadPool()*\n- *Executors.newScheduledThreadPool(int corePoolSize)*",
+              "answer": "Four ways:\n1. newFixedThreadPool(int n) - fixed number of threads\n2. newSingleThreadExecutor() - single thread\n3. newCachedThreadPool() - creates threads as needed\n4. newScheduledThreadPool(int n) - scheduled tasks",
               "code": null
             },
             {
               "question": "What is autowiring in Spring?",
-              "answer": "- *Autowiring is a feature in Spring that allows the framework to automatically inject dependencies into a bean.*",
+              "answer": "Autowiring is a Spring feature that automatically injects dependencies into beans. It eliminates manual object creation by letting the Spring container manage dependencies. Uses @Autowired annotation for dependency injection.",
               "code": null
             },
             {
               "question": "How many modes of autowiring are there?",
-              "answer": "- *Autowiring modes include:*\n- *@Autowired (by type)*\n- *@Qualifier (by name)*\n- *@Resource (by name)*\n- *@Inject (by type)*",
+              "answer": "Four modes:\n1. @Autowired - by type (default)\n2. @Qualifier - by name with @Autowired\n3. @Resource - by name (JSR-250)\n4. @Inject - by type (JSR-330)",
               "code": null
             },
             {
               "question": "Explain @Qualifier and @Inject.",
-              "answer": "- *@Qualifier is used to provide specific beans when multiple candidates are available. @Inject is a Java standard annotation used to inject dependencies.*",
+              "answer": "@Qualifier is used with @Autowired to specify which bean to inject when multiple beans of the same type exist. @Inject is a Java standard annotation (JSR-330) for dependency injection, similar to @Autowired but from the Java standard library.",
               "code": null
             },
             {
-              "question": "What is the difference between @Autowired and @Qualifier?",
-              "answer": "- *@Autowired is used for automatic injection by type, while @Qualifier is used in conjunction with @Autowired to specify which bean to inject when multiple beans are available.*",
-              "code": null
-            },
-            {
-              "question": "Can we use @Autowired in place of @Qualifier?",
-              "answer": "- *@Autowired alone cannot specify which bean to inject if there are multiple candidates. @Qualifier is needed to resolve such ambiguities.*",
-              "code": null
-            },
-            {
-              "question": "What are the limitations of autowiring?",
-              "answer": "- *Limitations include:*\n- *Ambiguity when multiple beans of the same type are available.*\n- *Difficulty in identifying dependencies at runtime.*\n- *Inability to inject beans based on dynamic conditions.*",
+              "question": "Difference between @Autowired and @Qualifier?",
+              "answer": "@Autowired injects dependencies by type automatically. @Qualifier works with @Autowired to specify the exact bean when multiple beans of the same type exist. @Autowired alone causes ambiguity if multiple beans are found; @Qualifier resolves it.",
               "code": null
             },
             {
               "question": "What is Spring Security?",
-              "answer": "- *Spring Security is a framework that provides comprehensive security services for Java applications, including authentication, authorization, and protection against various security threats.*",
+              "answer": "Spring Security is a framework for authentication (who you are) and authorization (what you can do). It provides protection against common security threats and integrates with various authentication providers.",
               "code": null
             },
             {
               "question": "How do you configure Spring Security?",
-              "answer": "- *Spring Security can be configured using:*\n- *Java configuration with @EnableWebSecurity and SecurityConfig classes.*\n- *XML configuration (less common in recent versions).*",
+              "answer": "Spring Security can be configured using:\n1. Java configuration with @EnableWebSecurity and SecurityConfig classes extending WebSecurityConfigurerAdapter\n2. XML configuration (less common now)\n- Java configuration is preferred for better control.",
               "code": null
             },
             {
               "question": "What is JWT token-based authentication?",
-              "answer": "- *JWT (JSON Web Token) token-based authentication is a method where authentication information is transmitted as a JSON object and is used to verify the identity of users.*",
-              "code": null
-            },
-            {
-              "question": "How many ways can you configure custom security?",
-              "answer": "- *Custom security can be configured using:*\n- *Java-based configuration with SecurityConfigurerAdapter*\n- *Custom filters and handlers*\n- *Spring Security extensions*",
+              "answer": "JWT (JSON Web Token) is a stateless authentication mechanism. User logs in, the server generates a JWT token containing user info. The user sends this token in each request. The server validates the token to authenticate the user. No session storage is needed.",
               "code": null
             },
             {
               "question": "What is an API gateway?",
-              "answer": "- *An API gateway is a server that acts as an API front-end, receiving API requests, enforcing throttling, routing requests, and aggregating results.*",
+              "answer": "An API gateway is a single entry point for microservices. It handles routing requests to appropriate services, load balancing, authentication, rate limiting, logging, and API composition. Examples: Spring Cloud Gateway, Netflix Zuul.",
               "code": null
             },
             {
-              "question": "How to implement an API gateway? Which dependency is needed?",
-              "answer": "- *To implement an API gateway, you can use tools like Spring Cloud Gateway or Netflix Zuul. Dependencies needed include:*\n- *spring-cloud-starter-gateway for Spring Cloud Gateway*\n- *zuul for Netflix Zuul*",
+              "question": "How to implement an API gateway?",
+              "answer": "Use Spring Cloud Gateway or Netflix Zuul. Dependencies: spring-cloud-starter-gateway for Gateway, zuul for Zuul. Define routes in application.yml with URI, predicates, and filters.\n- Example: routes with path /api/users/** route to user-service.",
               "code": null
             },
             {
               "question": "What is load balancing?",
-              "answer": "- *Load balancing distributes incoming network traffic across multiple servers to ensure no single server becomes overwhelmed, enhancing reliability and performance.*",
-              "code": null
-            },
-            {
-              "question": "How do you implement load balancing in microservices?",
-              "answer": "- *Load balancing in microservices can be implemented using:*\n- *Client-side load balancing with libraries like Ribbon*\n- *Server-side load balancing with tools like Nginx or HAProxy*",
+              "answer": "Load balancing distributes incoming traffic across multiple servers to prevent any single server from being overwhelmed. It improves reliability, performance, and availability. Types: client-side (Ribbon) and server-side (Nginx, HAProxy).",
               "code": null
             },
             {
               "question": "What is fault tolerance?",
-              "answer": "- *Fault tolerance refers to the ability of a system to continue operating properly in the event of a failure of some of its components.*",
+              "answer": "Fault tolerance is a system's ability to continue operating even when some components fail. Implemented through: redundancy, failover strategies, circuit breakers, retry mechanisms, and fallback methods.",
               "code": null
             },
             {
-              "question": "How do you handle fault tolerance?",
-              "answer": "- *Fault tolerance can be handled using:*\n- *Redundancy and failover strategies*\n- *Circuit breakers (e.g., using Resilience4j)*\n- *Retry mechanisms and fallback methods*\n38. **What is a circuit breaker\n?**\n- *A circuit breaker is a design pattern that prevents a system from making calls to a failing service, allowing it to recover and preventing cascading failures.*",
-              "code": null
-            },
-            {
-              "question": "How do you implement a circuit breaker?",
-              "answer": "- *A circuit breaker can be implemented using libraries like:*\n- *Resilience4j*\n- *Hystrix*",
-              "code": null
-            },
-            {
-              "question": "What is the design pattern for a circuit breaker?",
-              "answer": "- *The circuit breaker pattern consists of three states:*\n- *Closed (normal operation)*\n- *Open (service is failing)*\n- *Half-Open (test if the service has recovered)*",
-              "code": null
-            },
-            {
-              "question": "How do you handle limits in a circuit breaker?",
-              "answer": "- *Limits in a circuit breaker can be handled by:*\n- *Setting thresholds for failure rates*\n- *Defining timeout durations for service calls*\n- *Configuring retry and fallback mechanisms*",
+              "question": "What is a circuit breaker?",
+              "answer": "A circuit breaker prevents cascading failures by stopping calls to a failing service. It has three states: Closed (normal), Open (failing - requests fail immediately), Half-Open (testing recovery). Implemented using Resilience4j or Hystrix.",
               "code": null
             },
             {
               "question": "What are the features of RESTful web services?",
-              "answer": "- *Features include:*\n- *Stateless communication*\n- *Resource-based URLs*\n- *Standard HTTP methods (GET, POST, PUT, DELETE)*\n- *JSON or XML responses*\n- *HTTP status codes for responses*",
+              "answer": "Features:\n- Stateless communication\n- Resource-based URLs\n- Standard HTTP methods (GET, POST, PUT, DELETE)\n- JSON/XML responses\n- HTTP status codes\n- Cacheable responses\n- Scalable architecture\n- Layered system",
               "code": null
             },
             {
-              "question": "What are the available HTTP status codes, and why are they important?",
-              "answer": "- *Common HTTP status codes include:*\n- *200 OK*\n- *201 Created*\n- *204 No Content*\n- *400 Bad Request*\n- *401 Unauthorized*\n- *404 Not Found*\n- *500 Internal Server Error*\n- *They are important for indicating the result of an HTTP request and guiding client-side behavior.*",
+              "question": "What are HTTP status codes?",
+              "answer": "Common HTTP status codes: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Internal Server Error. They indicate the request result and guide client behavior.",
               "code": null
             },
             {
-              "question": "Which database are you using?",
-              "answer": "- *Provide the name of the database you are using (e.g., MySQL, PostgreSQL, MongoDB) and any relevant details about its configuration and usage.*",
-              "code": null
-            },
-            {
-              "question": "Write a query to get the username when the name starts with 'A' and ends with 'E'.",
-              "answer": "",
+              "question": "Write a query to get username when name starts with 'A' and ends with 'E'.",
+              "answer": "SELECT username FROM users WHERE name LIKE 'A%E'",
               "code": {
                 "language": "sql",
-                "content": "SELECT username \nFROM users \nWHERE name LIKE 'A%E';"
+                "content": "SELECT username FROM users WHERE name LIKE 'A%E'"
               }
             },
             {
-              "question": "Write an SQL query to find the 2nd maximum salary.",
-              "answer": "",
+              "question": "Write SQL query to find 2nd maximum salary.",
+              "answer": "SELECT MAX(salary) FROM employees WHERE salary < (SELECT MAX(salary) FROM employees)",
               "code": {
                 "language": "sql",
-                "content": "SELECT MAX(salary) \nFROM employees \nWHERE salary < (SELECT MAX(salary) FROM employees);"
+                "content": "SELECT MAX(salary) FROM employees WHERE salary < (SELECT MAX(salary) FROM employees)"
               }
             },
             {
-              "question": "Write an SQL query to find the 10th maximum salary.",
-              "answer": "",
+              "question": "Write SQL query to find 10th maximum salary.",
+              "answer": "SELECT salary FROM (SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 10) AS temp ORDER BY salary ASC LIMIT 1",
               "code": {
                 "language": "sql",
-                "content": "SELECT salary \nFROM (\n    SELECT DISTINCT salary \n    FROM employees \n    ORDER BY salary DESC \n    LIMIT 10\n) AS temp \nORDER BY salary ASC \nLIMIT 1;"
+                "content": "SELECT salary FROM (SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 10) AS temp ORDER BY salary ASC LIMIT 1"
               }
             },
             {
-              "question": "What is the difference between the WHERE and HAVING clauses?",
-              "answer": "- *The WHERE clause filters rows before any groupings are made, while the HAVING clause filters groups after the GROUP BY operation.*",
+              "question": "Difference between WHERE and HAVING?",
+              "answer": "WHERE filters rows before grouping and cannot use aggregate functions. HAVING filters groups after GROUP BY and can use aggregate functions. WHERE is applied first, HAVING is applied last.",
               "code": null
             },
             {
-              "question": "Give an example of using the HAVING clause.",
-              "answer": "",
-              "code": {
-                "language": "sql",
-                "content": "SELECT department, COUNT(*) \nFROM employees \nGROUP BY department \nHAVING COUNT(*) > 10;"
-              }
-            },
-            {
-              "question": "Can you use grouping in the WHERE clause?",
-              "answer": "- *No, grouping and aggregation functions must be used with the HAVING clause, not the WHERE clause.*",
+              "question": "Can you use grouping in WHERE clause?",
+              "answer": "No, grouping and aggregate functions must be used with the HAVING clause, not WHERE. This is a SQL syntax rule.",
               "code": null
             },
             {
-              "question": "Write a Java code snippet to find names starting with 'A' using streams.",
-              "answer": "",
+              "question": "Write Java code to find names starting with 'A' using streams.",
+              "answer": "Use filter with startsWith('A') and collect to a List",
               "code": {
                 "language": "java",
-                "content": "import java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class StreamExample {\n    public static void main(String[] args) {\n        List<String> names = Arrays.asList(\"Alice\", \"Bob\", \"Andrew\", \"Amanda\", \"George\");\n\n        List<String> result = names.stream()\n                                   .filter(name -> name.startsWith(\"A\"))\n                                   .collect(Collectors.toList());\n\n        System.out.println(result); // Output: [Alice, Andrew, Amanda]\n    }\n}"
-              }
-            },
-            {
-              "question": "Given the number 6178, how many iterations are required to reach 1629 and 99? Write the code logic to solve this.",
-              "answer": "Solution Explanation:\n8716 - 6178 = 2538\n8352 - 2538 = 5814\n5814 - 4185 = 1629\n9261 - 1629 = 7632\n7632 - 2367 = 5265\n5625 - 5265 = 0360\n0360 - 0036 = 0324\n0423 - 0324 = 0495\n5490 - 0495 = 4995\n5994 - 4995 = 099",
-              "code": {
-                "language": "java",
-                "content": "import java.util.Arrays;\n\npublic class KaprekarRoutine {\n    public static void main(String[] args) {\n        int number = 6178;\n        int iterations = 0;\n\n        while (number != 6174 && number != 99) {\n            number = performKaprekarIteration(number);\n            System.out.println(\"Current number: \" + number);\n            iterations++;\n        }\n\n        System.out.println(\"Total iterations: \" + iterations);\n    }\n\n    private static int performKaprekarIteration(int number) {\n        String numStr = String.format(\"%04d\", number); // Pad with zeros if necessary\n        char[] numChars = numStr.toCharArray();\n        \n        Arrays.sort(numChars); // Ascending order\n        int smallNum = Integer.parseInt(new String(numChars));\n        \n        // Reverse the order for descending\n        String largeStr = new StringBuilder(new String(numChars)).reverse().toString();\n        int largeNum = Integer.parseInt(largeStr);\n        \n        return largeNum - smallNum;\n    }\n}"
+                "content": "List<String> names = Arrays.asList(\"Alice\", \"Bob\", \"Andrew\", \"Amanda\", \"George\");\nList<String> result = names.stream()\n    .filter(name -> name.startsWith(\"A\"))\n    .collect(Collectors.toList());"
               }
             }
           ]
@@ -292,5 +210,5 @@ export const company = {
       ]
     }
   ],
-  "questionCount": 50
+  "questionCount": 35
 };
