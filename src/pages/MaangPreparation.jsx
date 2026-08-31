@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { skills } from "../data/skills";
 import MaangLetterGrid from "../components/MaangLetterGrid";
+import ColoredMaangText from "../components/ColoredMaangText";
 
 /**
  * MaangPreparation
@@ -35,7 +36,13 @@ function MaangPreparation() {
   return (
     <div className="maang-page">
       <section className="maang-page-hero">
-        <h1 className="maang-page-title">MAANG Preparation</h1>
+        <h1 className="maang-page-title">
+          <span className="maang-letters-glued">
+            <ColoredMaangText text="MAANG" colors={charColors} />
+            <span className="maang-word-gap" aria-hidden="true" />
+            <ColoredMaangText text="Preparation" colors={charColors} color="#33FF57" />
+          </span>
+        </h1>
         <p className="maang-page-subtitle">{description}</p>
 
         <div className="maang-letter-wrap maang-page-grid">

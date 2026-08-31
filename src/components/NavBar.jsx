@@ -3,9 +3,13 @@ import { useEffect, useState, useRef } from "react";
 import { getCurrentUser, logout } from "../utils/auth";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import ColoredMaangText from "./ColoredMaangText";
 import bskimg from "../assets/bskimg.svg";
 
 const CURRENT_USER_KEY = "bsk_current_user";
+
+// Same vibrant per-character palette the MAANG brand uses across the app.
+const MAANG_COLORS = ["#FF5733", "#FFBD33", "#33FF57", "#33A1FF", "#A133FF"];
 
 function NavBar({ onOpenChangePassword }) {
   const [user, setUser] = useState(getCurrentUser());
@@ -142,7 +146,11 @@ function NavBar({ onOpenChangePassword }) {
               aria-expanded={featuresOpen}
             >
               <span className="nav-dropdown-fire">🔥</span>
-              <span>MAANG Kit</span>
+              <span className="maang-letters-glued nav-maang-kit-text">
+                <ColoredMaangText text="MAANG" colors={MAANG_COLORS} />
+                <span className="maang-word-gap" aria-hidden="true" />
+                <ColoredMaangText text="Kit" colors={MAANG_COLORS} color="#33FF57" />
+              </span>
               <span className="nav-dropdown-caret-icon">▾</span>
             </button>
             {featuresOpen && (
@@ -153,7 +161,11 @@ function NavBar({ onOpenChangePassword }) {
                   onClick={closeMenu}
                 >
                   <span className="nav-dropdown-item-icon">🏆</span>
-                  <span>MAANG Preparation</span>
+                  <span className="maang-letters-glued">
+                    <ColoredMaangText text="MAANG" colors={MAANG_COLORS} />
+                    <span className="maang-word-gap" aria-hidden="true" />
+                    <ColoredMaangText text="Preparation" colors={MAANG_COLORS} color="#33FF57" />
+                  </span>
                   {!user && <span className="nav-dropdown-item-lock">🔒</span>}
                 </NavLink>
                 <NavLink

@@ -189,6 +189,16 @@
   font-size: 1.3rem;
 }
 
+/* MAANG feature card title: every MAANG + Preparation character keeps its
+   own vibrant colour (reusing the app-wide per-character treatment). */
+.feature-card-title-maang {
+  flex-wrap: wrap;
+}
+.feature-card-title-maang .maang-title-letter {
+  font-size: 1.1em;
+  letter-spacing: 0.01em;
+}
+
 .feature-card-desc {
   color: #94a3b8;
   font-size: 0.95rem;

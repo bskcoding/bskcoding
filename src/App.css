@@ -421,13 +421,42 @@
   font-family: inherit;
 }
 
-/* Fire "HOT" symbol beside the MAANG Kit button — reuses the same bouncy
-   flame treatment the featured skill card uses */
+/* Fire "HOT" symbol beside the MAANG Kit button — a lively glowing flame.
+   Reuses the bouncy treatment plus a pulsing orange flame glow. */
 .nav-dropdown-fire {
   display: inline-block;
-  font-size: 1rem;
-  animation: emojiBounce 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6));
+  font-size: 1.05rem;
+  line-height: 1;
+  animation:
+    emojiBounce 2s ease-in-out infinite,
+    navFireGlow 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 140, 0, 0.9));
+  transform-origin: center;
+}
+
+@keyframes navFireGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(255, 140, 0, 0.8))
+      drop-shadow(0 0 10px rgba(255, 87, 34, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 180, 0, 1))
+      drop-shadow(0 0 18px rgba(255, 64, 0, 0.75));
+  }
+}
+
+/* Hovering the MAANG Kit button gives the flame an extra punch */
+.nav-dropdown-trigger:hover .nav-dropdown-fire {
+  animation:
+    emojiBounce 2s ease-in-out infinite,
+    navFireGlow 0.9s ease-in-out infinite;
+}
+
+/* Coloured "MAANG Kit" label inside the navbar button */
+.nav-maang-kit-text .maang-title-letter {
+  font-size: 1em;
+  font-weight: 700;
 }
 
 .nav-dropdown-caret-icon {
@@ -494,6 +523,12 @@
   width: 22px;
   text-align: center;
   flex-shrink: 0;
+}
+
+/* MAANG dropdown option: keep the per-character colours compact inside the
+   small menu row (reuses the app-wide .maang-title-letter treatment). */
+.nav-dropdown-item .maang-title-letter {
+  font-size: 1em;
 }
 
 /* Lock hint on protected dropdown items (shown to logged-out visitors) */
@@ -3575,20 +3610,27 @@
 .maang-page-title {
   font-size: 2.4rem;
   font-weight: 800;
-  background: linear-gradient(
-    135deg,
-    #ff5733,
-    #ffbd33,
-    #33ff57,
-    #33a1ff,
-    #a133ff
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   letter-spacing: -0.5px;
   line-height: 1.2;
   margin: 0 0 14px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.maang-letters-glued {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  white-space: nowrap;
+}
+
+/* Adds a single space between the two words only (not between letters). */
+.maang-word-gap {
+  width: 0.25em;
+  flex-shrink: 0;
 }
 
 .maang-page-subtitle {

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import MaangLetterGrid from "../components/MaangLetterGrid";
+import ColoredMaangText from "../components/ColoredMaangText";
 import { getCurrentUser } from "../utils/auth";
 import "./FeaturesPage.css";
 
@@ -42,9 +43,13 @@ function FeaturesPage() {
           <div className="feature-card-visual feature-card-visual-maang">
             <MaangLetterGrid charColors={MAANG_COLORS} compact />
           </div>
-          <h2 className="feature-card-title">
-            <span className="feature-card-title-emoji">🏆</span> MAANG
-            Preparation
+          <h2 className="feature-card-title feature-card-title-maang">
+            <span className="feature-card-title-emoji">🏆</span>
+            <span className="maang-letters-glued">
+              <ColoredMaangText text="MAANG" colors={MAANG_COLORS} />
+              <span className="maang-word-gap" aria-hidden="true" />
+              <ColoredMaangText text="Preparation" colors={MAANG_COLORS} color="#33FF57" />
+            </span>
           </h2>
           <p className="feature-card-desc">
             A complete, structured interview preparation track — from DSA
