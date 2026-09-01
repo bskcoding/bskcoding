@@ -11,6 +11,19 @@ export const company = {
       "questionCount": 47,
       "rounds": [
         {
+          "name": "Coding Round",
+          "questions": [
+            {
+              "question": "Implement a Spring Boot application: REST API to list employees with pagination, sorted by age in descending order.",
+              "answer": "Full Spring Boot app: Entity → Repository → Service → Controller.\n- Entity: `Employee` with id, name, age.\n- Repository: extends JpaRepository, so `findAll(Pageable)` works out of the box.\n- Service: builds a `PageRequest` with `Sort.by(\"age\").descending()` and returns `Page<Employee>`.\n- Controller: `GET /api/employees?page=0&size=10` returns the page of employees.\n- Also supports dynamic sorting via `?sort=age,desc` since Spring resolves `Pageable` directly from query params.",
+              "code": {
+                "language": "java",
+                "content": "// ===== Employee.java =====\n@Entity\npublic class Employee {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    private String name;\n    private int age;\n    // getters / setters\n}\n\n// ===== EmployeeRepository.java =====\n@Repository\npublic interface EmployeeRepository extends JpaRepository<Employee, Long> {\n    // findAll(Pageable) is inherited from JpaRepository\n    // and applies Pageable's Sort automatically.\n}\n\n// ===== EmployeeService.java =====\n@Service\npublic class EmployeeService {\n    @Autowired\n    private EmployeeRepository repository;\n\n    public Page<Employee> listEmployees(int page, int size) {\n        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(\"age\").descending());\n        return repository.findAll(pageRequest);\n    }\n}\n\n// ===== EmployeeController.java =====\n@RestController\n@RequestMapping(\"/api/employees\")\npublic class EmployeeController {\n    @Autowired\n    private EmployeeService service;\n\n    // GET /api/employees?page=0&size=10\n    @GetMapping\n    public Page<Employee> listEmployees(\n            @RequestParam(defaultValue = \"0\") int page,\n            @RequestParam(defaultValue = \"10\") int size) {\n        return service.listEmployees(page, size);\n    }\n}\n\n// Example request:  GET /api/employees?page=0&size=10  → employees sorted by age (highest first)"
+              }
+            }
+          ]
+        },
+        {
           "name": "Technical Round - Java",
           "questions": [
             {
@@ -111,14 +124,6 @@ export const company = {
         {
           "name": "Technical Round - Spring Boot",
           "questions": [
-            {
-              "question": "Implement a Spring Boot REST API to list employees with pagination, sorted by age in descending order.",
-              "answer": "Use a Pageable parameter in the controller, pass it to a JpaRepository method that returns Page<Employee>, and apply Sort.by(\"age\").descending(). Return the paginated/sorted result so the client can iterate pages.",
-              "code": {
-                "language": "java",
-                "content": "@RestController\n@RequestMapping(\"/api/employees\")\npublic class EmployeeController {\n    @Autowired\n    private EmployeeRepository repository;\n\n    @GetMapping\n    public Page<Employee> listEmployees(Pageable pageable) {\n        return repository.findAll(pageable);\n    }\n}\n\n@Repository\npublic interface EmployeeRepository extends JpaRepository<Employee, Long> {\n    // findAll(Pageable) is provided by JpaRepository\n    // and uses Pageable's Sort automatically.\n}\n\n// Call example (sorts by age descending, page 0, size 10):\n// GET /api/employees?page=0&size=10&sort=age,desc\n\n// Or apply the sort explicitly in code:\nPageRequest pageRequest = PageRequest.of(0, 10, Sort.by(\"age\").descending());\nPage<Employee> page = repository.findAll(pageRequest);\n\n// Entity\n@Entity\npublic class Employee {\n    @Id @GeneratedValue\n    private Long id;\n    private String name;\n    private int age;\n    // getters/setters\n}"
-              }
-            },
             {
               "question": "How to use two different databases in a single Spring Boot project?",
               "answer": "Configure multiple DataSource beans and specify database details in application.properties. Use @Primary annotation to mark the default DataSource.",

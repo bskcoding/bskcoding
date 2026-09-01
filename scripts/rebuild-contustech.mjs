@@ -8,10 +8,14 @@
 //         acts purely as a source-of-truth input to this script).
 // Writes: src/data/companyInterviews/contus-tech-walk-in/contustech.js
 //
-// ContusTech is a multi-round interview — the source JSON has 4 rounds
-// (Technical Round - Java, Technical Round - Spring Boot, Final Round,
-// HR Round). The generator preserves them as separate rounds with
-// their own round-name headlines.
+// ContusTech is a multi-round interview — the source JSON now has 5 rounds,
+// with the Coding Round FIRST:
+//   1. Coding Round                              (1 implementation task)
+//      → Spring Boot employee-list app: pagination + Sort.by("age").descending()
+//   2. Technical Round - Java                    (12)
+//   3. Technical Round - Spring Boot             (17)
+//   4. Final Round - Tools, Databases & Project  (16)
+//   5. HR Round                                  (1)
 
 import fs from "node:fs";
 import path from "node:path";

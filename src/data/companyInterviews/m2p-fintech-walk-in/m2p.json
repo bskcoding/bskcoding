@@ -1,8 +1,4 @@
-// AUTO-GENERATED file — company-wise interview data.
-// Source: M2P Fintech (walk_in) interview document(s).
-// Regenerate with:  node scripts/rebuild-m2p.mjs
-
-export const company = {
+{
   "id": "m2p-fintech-walk-in",
   "name": "M2P Fintech (walk_in)",
   "interviews": [
@@ -359,4 +355,4 @@ export const company = {
     }
   ],
   "questionCount": 48
-};
+}
