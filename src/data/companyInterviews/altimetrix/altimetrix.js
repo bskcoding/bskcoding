@@ -11,7 +11,7 @@ export const company = {
       "questionCount": 30,
       "rounds": [
         {
-          "name": "Core Java",
+          "name": "Altimetrix Interview",
           "questions": [
             {
               "question": "What are the key features introduced in Java 8?",
@@ -83,12 +83,7 @@ export const company = {
                 "language": "java",
                 "content": "interface Payment { void pay(); }\nclass PaymentFactory {\n    public static Payment getPayment(String type) {\n        if (\"UPI\".equals(type)) return new UPIPayment();\n        else if (\"Card\".equals(type)) return new CardPayment();\n        return null;\n    }\n}"
               }
-            }
-          ]
-        },
-        {
-          "name": "Spring Boot",
-          "questions": [
+            },
             {
               "question": "What is a profile in Spring Boot, and how do you use it?",
               "answer": "Profile is a feature for segregating application configuration based on different environments (development, testing, production). Use @Profile annotation or specify in application.properties. Activate via command-line --spring.profiles.active=dev or environment variables.",
@@ -128,12 +123,7 @@ export const company = {
                 "language": "java",
                 "content": "@Entity\npublic class Employee {\n    @Id @GeneratedValue private Long id;\n    private String name;\n    @ManyToOne private Department department;\n    @Query(\"SELECT e FROM Employee e WHERE e.name LIKE :name\")\n    List<Employee> findByName(@Param(\"name\") String name);\n}"
               }
-            }
-          ]
-        },
-        {
-          "name": "Microservices",
-          "questions": [
+            },
             {
               "question": "What are the advantages of using microservices architecture?",
               "answer": "Advantages include: Scalability (independent scaling), Flexibility (separate development/deployment), Resilience (failure isolation), Technology Agnostic (different tech stacks per service), Faster Time to Market (small teams, quick deployment), and Better Maintainability.",
@@ -164,12 +154,7 @@ export const company = {
               "question": "How do you secure communication between microservices?",
               "answer": "Secure using: JWT for authentication/authorization, OAuth2 for secure access delegation, SSL/TLS for encrypted communication, API Gateway with security filters, and Service-to-Service authentication using mutual TLS or client credentials.",
               "code": null
-            }
-          ]
-        },
-        {
-          "name": "Coding Problems",
-          "questions": [
+            },
             {
               "question": "Find the missing numbers in a sequence using Java Streams.",
               "answer": "Use IntStream.rangeClosed to create a range and filter the numbers that are not present in the input list.\n\nExample:\n- Input: [1, 2, 4, 6, 8, 9]\n- Output: [3, 5, 7]",
@@ -201,12 +186,7 @@ export const company = {
                 "language": "java",
                 "content": "public String findMostRepeatedIP(List<String> logs) {\n    Map<String, Integer> ipCount = new HashMap<>();\n    for (String log : logs) {\n        String ip = log.split(\" \")[0];\n        ipCount.put(ip, ipCount.getOrDefault(ip, 0) + 1);\n    }\n    return Collections.max(ipCount.entrySet(), Map.Entry.comparingByValue()).getKey();\n}"
               }
-            }
-          ]
-        },
-        {
-          "name": "DevOps & Tools",
-          "questions": [
+            },
             {
               "question": "What is Jenkins, and how do you use it in your project?",
               "answer": "Jenkins is a CI/CD tool automating build and deployment. Configured to build automatically on Git commits, run unit/integration tests, and deploy to staging/production environments. Uses Jenkinsfile for pipeline as code.",
@@ -227,12 +207,7 @@ export const company = {
               "question": "What is Agile methodology? Explain your experience working in Agile.",
               "answer": "Agile is iterative software development where requirements evolve through collaboration. Experience with Scrum: sprints, daily standups, sprint planning, retrospectives. Quick adaptation to changes, incremental delivery, continuous feedback.",
               "code": null
-            }
-          ]
-        },
-        {
-          "name": "General & Behavioral",
-          "questions": [
+            },
             {
               "question": "Briefly explain the project you are currently working on.",
               "answer": "Working on a microservices-based banking application handling user registration and transaction data. Uses Spring Boot backend, ReactJS frontend, JPA for database, Spring Security with JWT for authentication.",

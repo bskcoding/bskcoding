@@ -1,0 +1,331 @@
+{
+  "id": "cognizant",
+  "name": "Cognizant",
+  "rounds": [
+    {
+      "name": "First Round - Coding Assessment",
+      "questions": [
+        {
+          "question": "Implement a React component that filters a list of transactions based on an input date and sorts the list based on the amount when the amount header is clicked.",
+          "answer": "Create a component with useState for transactions, filterDate, and sortConfig. Use useMemo for filtering and sorting. Render table with clickable header for sorting.",
+          "code": "import React, { useState, useMemo } from 'react';\n\nconst TransactionList = ({ transactions }) => {\n    const [filterDate, setFilterDate] = useState('');\n    const [sortConfig, setSortConfig] = useState({ key: 'amount', direction: 'asc' });\n\n    const filteredAndSorted = useMemo(() => {\n        let result = transactions;\n        if (filterDate) result = result.filter(t => t.date === filterDate);\n        return result.sort((a, b) => {\n            if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;\n            if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;\n            return 0;\n        });\n    }, [transactions, filterDate, sortConfig]);\n\n    const handleSort = (key) => {\n        setSortConfig({ key, direction: sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc' });\n    };\n\n    return (\n        <div>\n            <input type=\"date\" onChange={(e) => setFilterDate(e.target.value)} />\n            <table>\n                <thead><tr><th onClick={() => handleSort('amount')}>Amount</th></tr></thead>\n                <tbody>{filteredAndSorted.map(t => <tr key={t.id}><td>{t.amount}</td></tr>)}</tbody>\n            </table>\n        </div>\n    );\n};"
+        },
+        {
+          "question": "Implement a Spring Boot application with POST, GET, and DELETE APIs with proper response statuses and layered architecture.",
+          "answer": "Create Spring Boot application with layered architecture: Controller (REST endpoints), Service (business logic), Repository (data access). Use proper HTTP status codes.",
+          "code": "@RestController\n@RequestMapping(\"/api/employees\")\npublic class EmployeeController {\n    @Autowired private EmployeeService service;\n    @PostMapping public ResponseEntity<Employee> create(@RequestBody Employee emp) { return ResponseEntity.status(HttpStatus.CREATED).body(service.save(emp)); }\n    @GetMapping(\"/{id}\") public ResponseEntity<Employee> get(@PathVariable Long id) { return service.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build()); }\n    @DeleteMapping(\"/{id}\") public ResponseEntity<Void> delete(@PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }\n}\n@Service\npublic class EmployeeService {\n    @Autowired private EmployeeRepository repository;\n    public Employee save(Employee emp) { return repository.save(emp); }\n    public Optional<Employee> findById(Long id) { return repository.findById(id); }\n    public void delete(Long id) { repository.deleteById(id); }\n}\n@Repository\npublic interface EmployeeRepository extends JpaRepository<Employee, Long> { }"
+        }
+      ]
+    },
+    {
+      "name": "Technical Round 1 - React",
+      "questions": [
+        {
+          "question": "Self Introduction",
+          "answer": "I have 3+ years of experience as a Java Full Stack Developer. Currently working on a banking application using Java 8, Spring Boot, React 17, and MySQL. I handle both frontend and backend development, API design, and deployment.",
+          "code": null
+        },
+        {
+          "question": "About your project",
+          "answer": "Working on a customer registration and transaction processing system. Built REST APIs with Spring Boot, frontend with React. Implemented JWT authentication, data validation, and responsive UI.",
+          "code": null
+        },
+        {
+          "question": "Explain props in React.",
+          "answer": "Props are short for properties and are used to pass data from one component to another in React. They are read-only and immutable.",
+          "code": "// Parent Component\n<User name=\"John\" age={25} />\n// Child Component\nconst User = (props) => <div>{props.name} - {props.age}</div>"
+        },
+        {
+          "question": "How to pass data from child to parent in React.",
+          "answer": "By passing a function as a prop to the child component and then calling that function in the child component with the data you want to pass.",
+          "code": "const Parent = () => {\n    const handleData = (data) => console.log(data);\n    return <Child onSendData={handleData} />;\n};\nconst Child = ({ onSendData }) => {\n    return <button onClick={() => onSendData('Hello Parent')}>Send</button>;\n};"
+        },
+        {
+          "question": "How to validate props in React.",
+          "answer": "By using PropTypes, a library for type-checking props.",
+          "code": "import PropTypes from 'prop-types';\nconst User = ({ name, age }) => <div>{name} - {age}</div>;\nUser.propTypes = {\n    name: PropTypes.string.isRequired,\n    age: PropTypes.number\n};"
+        },
+        {
+          "question": "Have you used reusable components in React? Give an example.",
+          "answer": "Yes, for example, a Button component that can be used across different parts of an application with different variants.",
+          "code": "const Button = ({ onClick, children, variant = 'primary' }) => (\n    <button className={`btn btn-${variant}`} onClick={onClick}>\n        {children}\n    </button>\n);"
+        },
+        {
+          "question": "Explain lazy loading in React.",
+          "answer": "Lazy loading is a technique for delaying the loading of non-critical resources during the initial loading phase. Improves initial load time.",
+          "code": "const LazyComponent = React.lazy(() => import('./HeavyComponent'));\nfunction App() {\n    return (\n        <Suspense fallback={<div>Loading...</div>}>\n            <LazyComponent />\n        </Suspense>\n    );\n}"
+        },
+        {
+          "question": "What is React.lazy?",
+          "answer": "React.lazy is a function that lets you render a dynamic import as a regular component. It enables code splitting.",
+          "code": "const MyComponent = React.lazy(() => import('./MyComponent'));"
+        },
+        {
+          "question": "What are React fragments?",
+          "answer": "React fragments allow you to group a list of children without adding extra nodes to the DOM.",
+          "code": "return (\n    <React.Fragment>\n        <h1>Title</h1>\n        <p>Content</p>\n    </React.Fragment>\n);\n// Short syntax\nreturn (\n    <>\n        <h1>Title</h1>\n        <p>Content</p>\n    </>\n);"
+        },
+        {
+          "question": "Difference between fragment and div tag in React.",
+          "answer": "A fragment does not add an extra node to the DOM, whereas a div does. Using div adds unnecessary DOM nodes.",
+          "code": null
+        },
+        {
+          "question": "Which hooks have you used in React?",
+          "answer": "useState, useEffect, useContext, useReducer, useCallback, useMemo, useRef, useLayoutEffect.",
+          "code": null
+        },
+        {
+          "question": "Explain useCallback hook.",
+          "answer": "useCallback returns a memoized callback function that only changes if one of its dependencies changes. Prevents unnecessary re-renders.",
+          "code": "const memoizedCallback = useCallback(() => {\n    doSomething(a, b);\n}, [a, b]);"
+        },
+        {
+          "question": "Explain useEffect.",
+          "answer": "useEffect is a hook that runs side effects in function components. Used for data fetching, direct DOM updates, subscriptions, etc.",
+          "code": "useEffect(() => {\n    // Side effect code\n    fetchData();\n    return () => {\n        // Cleanup\n    };\n}, [dependency]);"
+        },
+        {
+          "question": "What is a dependency array in useEffect?",
+          "answer": "The dependency array in useEffect specifies when the effect should be re-run based on changes in the array items. Empty array means run once.",
+          "code": "useEffect(() => { /* Runs when dependency changes */ }, [dependency]);\nuseEffect(() => { /* Runs once on mount */ }, []);"
+        },
+        {
+          "question": "How do you call APIs in React?",
+          "answer": "By using fetch, axios, or other HTTP client libraries within a useEffect hook or event handler.",
+          "code": "useEffect(() => {\n    axios.get('/api/users')\n        .then(response => setUsers(response.data))\n        .catch(error => setError(error.message));\n}, []);"
+        },
+        {
+          "question": "What do you use for state management in React?",
+          "answer": "useState for local state, useReducer for complex state, Context API for global state, and Redux for application-wide state management.",
+          "code": null
+        },
+        {
+          "question": "What is Context API in React?",
+          "answer": "The Context API provides a way to pass data through the component tree without having to pass props down manually at every level. Used for global state like theme, user authentication.",
+          "code": "const ThemeContext = React.createContext('light');\nfunction App() {\n    return (\n        <ThemeContext.Provider value=\"dark\">\n            <Child />\n        </ThemeContext.Provider>\n    );\n}\nfunction Child() {\n    const theme = useContext(ThemeContext);\n    return <div>{theme}</div>;\n}"
+        },
+        {
+          "question": "Do you know Redux?",
+          "answer": "Yes, Redux is a state management library for JavaScript applications. Manages application state in a predictable way using actions, reducers, and store.",
+          "code": "const increment = () => ({ type: 'INCREMENT' });\nconst counter = (state = 0, action) => {\n    switch(action.type) {\n        case 'INCREMENT': return state + 1;\n        default: return state;\n    }\n};\nconst store = createStore(counter);"
+        },
+        {
+          "question": "How do you memorize in React?",
+          "answer": "By using useMemo and useCallback hooks to memoize values and functions. React.memo for component memoization.",
+          "code": "const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);\nconst MemoizedComponent = React.memo(MyComponent);"
+        },
+        {
+          "question": "What is callback hell in React?",
+          "answer": "Callback hell refers to deeply nested callbacks within other callbacks, leading to difficult-to-read and maintain code. Solved using Promises and async/await.",
+          "code": null
+        },
+        {
+          "question": "How do you handle errors in ReactJS?",
+          "answer": "Using try-catch blocks in async functions, error boundaries for component errors, and error handling in promises with .catch().",
+          "code": "class ErrorBoundary extends React.Component {\n    componentDidCatch(error, info) {\n        // Log error\n    }\n    render() { return this.props.children; }\n}"
+        },
+        {
+          "question": "If displaying employee data and employee is null, how to handle it?",
+          "answer": "Using conditional rendering to check if employee data is null before attempting to display it.",
+          "code": "return (\n    <div>\n        {employee ? (\n            <div>{employee.name} - {employee.salary}</div>\n        ) : (\n            <div>No employee data</div>\n        )}\n    </div>\n);"
+        }
+      ]
+    },
+    {
+      "name": "Technical Round 2 - Java & Spring",
+      "questions": [
+        {
+          "question": "What are the new features in Java 8?",
+          "answer": "Lambda expressions, functional interfaces, Stream API, new Date and Time API (java.time), Optional class, default methods in interfaces, method references.",
+          "code": null
+        },
+        {
+          "question": "Write a code to display today's date and the date one month before using Java 8 features.",
+          "answer": "Use LocalDate class with now() and minusMonths() methods.",
+          "code": "import java.time.LocalDate;\npublic class DateExample {\n    public static void main(String[] args) {\n        LocalDate today = LocalDate.now();\n        LocalDate oneMonthBefore = today.minusMonths(1);\n        System.out.println(\"Today: \" + today);\n        System.out.println(\"One Month Before: \" + oneMonthBefore);\n    }\n}"
+        },
+        {
+          "question": "Write code to display age difference using the Period class.",
+          "answer": "Use Period.between() to calculate difference between two dates.",
+          "code": "import java.time.LocalDate;\nimport java.time.Period;\npublic class AgeDifference {\n    public static void main(String[] args) {\n        LocalDate birthDate = LocalDate.of(1990, 1, 1);\n        LocalDate today = LocalDate.now();\n        Period age = Period.between(birthDate, today);\n        System.out.println(\"Age: \" + age.getYears() + \" years, \" + age.getMonths() + \" months, \" + age.getDays() + \" days.\");\n    }\n}"
+        },
+        {
+          "question": "What is a functional interface in Java?",
+          "answer": "A functional interface is an interface with exactly one abstract method, which can be used as a target for lambda expressions and method references.",
+          "code": "@FunctionalInterface\ninterface MyFunctionalInterface {\n    int sum(int a, int b);\n}"
+        },
+        {
+          "question": "Write a custom functional interface.",
+          "answer": "Create an interface with @FunctionalInterface annotation and one abstract method.",
+          "code": "@FunctionalInterface\npublic interface StringConcatenator {\n    String concatenate(String a, String b);\n}\nStringConcatenator concat = (a, b) -> a + b;\nString result = concat.concatenate(\"Hello \", \"World\"); // Hello World"
+        },
+        {
+          "question": "What are streams in Java?",
+          "answer": "Streams represent a sequence of elements supporting sequential and parallel aggregate operations. Used for processing collections with functional operations.",
+          "code": "List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);\nint sum = numbers.stream().filter(n -> n % 2 == 0).mapToInt(n -> n).sum();"
+        },
+        {
+          "question": "Find the first non-repeated character using streams.",
+          "answer": "Use groupingBy with LinkedHashMap to maintain order, filter count 1, find first.",
+          "code": "String input = \"swiss\";\nCharacter result = input.chars()\n    .mapToObj(c -> (char) c)\n    .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))\n    .entrySet().stream()\n    .filter(entry -> entry.getValue() == 1)\n    .map(Map.Entry::getKey)\n    .findFirst().orElse(null);\nSystem.out.println(\"First non-repeated: \" + result); // w"
+        },
+        {
+          "question": "Given two arrays arr1 = [4,2,3,4,6] and arr2 = [6,8,2], output distinct array [2,3,4,6,8].",
+          "answer": "Use TreeSet to merge and sort distinct elements.",
+          "code": "Integer[] arr1 = {4, 2, 3, 4, 6};\nInteger[] arr2 = {6, 8, 2};\nSet<Integer> resultSet = new TreeSet<>(Arrays.asList(arr1));\nresultSet.addAll(Arrays.asList(arr2));\nSystem.out.println(resultSet); // [2, 3, 4, 6, 8]"
+        },
+        {
+          "question": "What is Spring Boot?",
+          "answer": "Spring Boot is a framework for building production-ready Spring applications quickly with convention over configuration, embedded servers, and auto-configuration.",
+          "code": null
+        },
+        {
+          "question": "What are the basic annotations in Spring Boot?",
+          "answer": "@SpringBootApplication, @RestController, @RequestMapping, @Autowired, @Service, @Repository, @Component, @Configuration, @Value.",
+          "code": null
+        },
+        {
+          "question": "What is Spring Security?",
+          "answer": "Spring Security is a framework that focuses on providing authentication and authorization to Spring applications. Protects against common security threats.",
+          "code": null
+        },
+        {
+          "question": "Difference between @Component and @Bean?",
+          "answer": "@Component is used to denote a class as a Spring component (auto-detected). @Bean is used to declare a bean inside a configuration class (explicit declaration).",
+          "code": "@Component\npublic class MyComponent { }\n@Configuration\npublic class Config {\n    @Bean\n    public MyBean myBean() { return new MyBean(); }\n}"
+        },
+        {
+          "question": "Difference between @Primary and @Qualifier?",
+          "answer": "@Primary gives higher preference to a bean when multiple beans exist. @Qualifier specifies which bean to inject at the injection point.",
+          "code": "@Primary\n@Component\npublic class PrimaryBean { }\n@Component\n@Qualifier(\"secondary\")\npublic class SecondaryBean { }"
+        },
+        {
+          "question": "Difference between @Controller and @RestController?",
+          "answer": "@Controller is used for traditional MVC controllers returning views. @RestController combines @Controller and @ResponseBody, returning JSON/XML responses directly.",
+          "code": null
+        },
+        {
+          "question": "What is the @Transactional annotation in Spring?",
+          "answer": "@Transactional defines the scope of a single database transaction. Ensures all operations complete successfully before commit, rolls back on errors.",
+          "code": "@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)\npublic void transferMoney(Account from, Account to, double amount) {\n    from.setBalance(from.getBalance() - amount);\n    to.setBalance(to.getBalance() + amount);\n}"
+        }
+      ]
+    },
+    {
+      "name": "Final Round - React & Project",
+      "questions": [
+        {
+          "question": "Explain your experience in React projects and the components you have worked on.",
+          "answer": "Worked on several React projects including banking applications. Focused on user registration, transaction handling, forms, modals, tables, and custom reusable components.",
+          "code": null
+        },
+        {
+          "question": "What is the purpose of Context API?",
+          "answer": "Context API shares data across the component tree without passing props manually at every level. Used for global state like user authentication, themes, settings.",
+          "code": null
+        },
+        {
+          "question": "How do you validate data and which components have you used?",
+          "answer": "Use Formik for form state management and Yup for schema validation. Validates on change, blur, and submit.",
+          "code": "const validationSchema = Yup.object().shape({\n    email: Yup.string().email('Invalid email').required('Required'),\n    password: Yup.string().min(6, 'Too short').required('Required')\n});"
+        },
+        {
+          "question": "How do you test your React components?",
+          "answer": "Use Jest and React Testing Library for unit and integration tests. Test component rendering, user interactions, and state changes.",
+          "code": "import { render, screen, fireEvent } from '@testing-library/react';\ntest('button click changes text', () => {\n    render(<MyComponent />);\n    fireEvent.click(screen.getByText('Click me'));\n    expect(screen.getByText('Clicked')).toBeInTheDocument();\n});"
+        },
+        {
+          "question": "How do you improve performance in your components?",
+          "answer": "Use React.memo for component memoization, useCallback/useMemo for function/value memoization, lazy loading with React.lazy, and efficient state management.",
+          "code": null
+        },
+        {
+          "question": "What is the difference between state and props in React?",
+          "answer": "state is mutable data managed within a component using useState. props are read-only data passed from parent to child components. props are immutable.",
+          "code": null
+        }
+      ]
+    },
+    {
+      "name": "Ford Motor Client Interview",
+      "questions": [
+        {
+          "question": "Given String 'Win Win!!! You have got a lottery', write Java program using stream to classify as Spam or Not Spam.",
+          "answer": "Count occurrences of 'win' and 'lottery'. If count <= 2.5, classify as 'Not Spam', else 'Spam'.",
+          "code": "import java.util.Arrays;\npublic class SpamChecker {\n    public static void main(String[] args) {\n        String st = \"Win Win!!! You have got a lottery\";\n        long ans = Arrays.stream(st.toLowerCase().split(\"\\\\s+\"))\n            .map(word -> word.replaceAll(\"[^a-zA-Z]\", \"\"))\n            .filter(e -> e.equals(\"win\") || e.equals(\"lottery\"))\n            .count();\n        String result = ans <= 2.5 ? \"Not Spam\" : \"Spam\";\n        System.out.println(result); // Not Spam\n    }\n}"
+        },
+        {
+          "question": "Is count a terminal operator or intermediate operator in Java Streams?",
+          "answer": "count is a terminal operator. It triggers processing of the stream and produces a result.",
+          "code": null
+        },
+        {
+          "question": "What is upcasting and downcasting in Java?",
+          "answer": "Upcasting: Converting subclass to superclass (implicit, safe). Downcasting: Converting superclass to subclass (explicit, requires cast, can throw ClassCastException).",
+          "code": "Dog dog = new Dog();\nAnimal animal = dog; // Upcasting\nAnimal animal2 = new Dog();\nDog dog2 = (Dog) animal2; // Downcasting"
+        },
+        {
+          "question": "For a music player where you want to add and remove songs in middle, which collection is suitable?",
+          "answer": "LinkedList is suitable for frequent insertions/deletions in the middle. O(1) time complexity for insertion/deletion if reference available.",
+          "code": "LinkedList<String> playlist = new LinkedList<>();\nplaylist.add(\"Song1\");\nplaylist.add(1, \"Song2\"); // Insert at middle\nplaylist.remove(1); // Remove from middle"
+        },
+        {
+          "question": "Difference between map and flatMap in Java Streams.",
+          "answer": "map transforms each element to another object (one-to-one). flatMap transforms each element to a stream and flattens (one-to-many).",
+          "code": "list.stream().map(String::toUpperCase)\nlist.stream().flatMap(Collection::stream)"
+        },
+        {
+          "question": "What are fail-fast and fail-safe iterators?",
+          "answer": "Fail-fast throw ConcurrentModificationException if collection modified during iteration. Fail-safe work on clone, don't throw exceptions.",
+          "code": null
+        },
+        {
+          "question": "How would you design table structures for customer with multiple orders, each order with multiple products?",
+          "answer": "Create Customer, Product, Order, and OrderProduct (junction) tables.",
+          "code": "CREATE TABLE Customer (\n    customer_id INT PRIMARY KEY,\n    customer_name VARCHAR(100)\n);\nCREATE TABLE Product (\n    product_id INT PRIMARY KEY,\n    product_name VARCHAR(100),\n    price DECIMAL\n);\nCREATE TABLE `Order` (\n    order_id INT PRIMARY KEY,\n    customer_id INT,\n    order_date DATE,\n    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)\n);\nCREATE TABLE OrderProduct (\n    order_id INT,\n    product_id INT,\n    quantity INT,\n    PRIMARY KEY (order_id, product_id),\n    FOREIGN KEY (order_id) REFERENCES `Order`(order_id),\n    FOREIGN KEY (product_id) REFERENCES Product(product_id)\n);"
+        },
+        {
+          "question": "Given Spring Boot code with multiple Filter implementations, will it work?",
+          "answer": "No, Spring cannot resolve which Filter bean to inject. Need @Qualifier to specify.",
+          "code": "@Component\npublic class Controller {\n    @Autowired\n    @Qualifier(\"abc\")\n    private Filter filter;\n}\n@Component(\"abc\")\npublic class Abc implements Filter { }\n@Component(\"abc1\")\npublic class Abc1 implements Filter { }"
+        },
+        {
+          "question": "What is Mono and Flux in WebClient?",
+          "answer": "Mono represents a single asynchronous value. Flux represents a stream of 0 to N asynchronous values.",
+          "code": "Mono<User> user = webClient.get().uri(\"/users/1\").retrieve().bodyToMono(User.class);\nFlux<User> users = webClient.get().uri(\"/users\").retrieve().bodyToFlux(User.class);"
+        },
+        {
+          "question": "What is a Kafka server?",
+          "answer": "Apache Kafka is a distributed event streaming platform for building real-time data pipelines and streaming applications.",
+          "code": null
+        },
+        {
+          "question": "What is debouncing in JavaScript?",
+          "answer": "Debouncing limits the rate at which a function is executed. Ensures function is not called repeatedly in quick succession.",
+          "code": "function debounce(func, wait) {\n    let timeout;\n    return function(...args) {\n        clearTimeout(timeout);\n        timeout = setTimeout(() => func.apply(this, args), wait);\n    };\n}"
+        }
+      ]
+    },
+    {
+      "name": "HR Round",
+      "questions": [
+        {
+          "question": "Tell me about yourself.",
+          "answer": "I have 3+ years of experience as a Java Full Stack Developer. Expertise in Java, Spring Boot, React, and Microservices. Worked on banking applications and customer registration systems.",
+          "code": null
+        },
+        {
+          "question": "Why do you want to join Cognizant?",
+          "answer": "Cognizant is a global leader with strong reputation for innovation. Excited about the opportunity to work on challenging projects and grow professionally.",
+          "code": null
+        },
+        {
+          "question": "What are your salary expectations?",
+          "answer": "Based on my experience and market standards, I'm looking for a competitive package. Happy to discuss further.",
+          "code": null
+        }
+      ]
+    }
+  ]
+}

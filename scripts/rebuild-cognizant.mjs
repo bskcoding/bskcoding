@@ -1,15 +1,16 @@
-// Rebuild the Altimetrix interview data file from the structured
-// JSON source (altimetrix.json).
+// Rebuild the Cognizant interview data file from the structured
+// JSON source (cognizant.json).
 //
-// Run:  node scripts/rebuild-altimetrix.mjs
+// Run:  node scripts/rebuild-cognizant.mjs
 //
-// Reads:  src/data/companyInterviews/altimetrix/altimetrix.json  (inert to
+// Reads:  src/data/companyInterviews/cognizant/cognizant.json  (inert to
 //         the app loader — it only globs *.js — so the JSON acts purely
 //         as a source-of-truth input to this script).
-// Writes: src/data/companyInterviews/altimetrix/altimetrix.js
+// Writes: src/data/companyInterviews/cognizant/cognizant.js
 //
-// Same shape and code-normalization as rebuild-aspire.mjs so the page
-// never crashes on malformed data.
+// Same shape and code-normalization as the other rebuild-*.mjs scripts.
+// Cognizant is a single-round interview — all source sections are
+// flattened into one "Cognizant Interview" round.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -22,18 +23,19 @@ const COMPANY_DIR = path.join(
   "src",
   "data",
   "companyInterviews",
-  "altimetrix",
+  "cognizant",
 );
-const SOURCE = path.join(COMPANY_DIR, "altimetrix.json");
-const OUT = path.join(COMPANY_DIR, "altimetrix.js");
+const SOURCE = path.join(COMPANY_DIR, "cognizant.json");
+const OUT = path.join(COMPANY_DIR, "cognizant.js");
 
 const raw = JSON.parse(fs.readFileSync(SOURCE, "utf8"));
 
-// Altimetrix is a single-round interview — flatten all the source
-// sections into one round so the page shows all 30 questions under
-// a single "Altimetrix Interview" heading.
-const flatQuestions = raw.rounds.flatMap((round) =>
-  round.questions.map((q) => {
+// Cognizant is a multi-round interview — keep the 6 source sections
+// (Coding Assessment, React R1, Java R2, Final Round, Ford Motor, HR)
+// as separate rounds with their own round-name headlines.
+const rounds = raw.rounds.map((round) => ({
+  name: round.name,
+  questions: round.questions.map((q) => {
     // The source JSON sometimes stores `code` as a plain string (just the
     // raw code body) and sometimes as { language, content }. Normalize to
     // the shape CompanyInterview.jsx expects: { language, content }.
@@ -56,16 +58,12 @@ const flatQuestions = raw.rounds.flatMap((round) =>
       code,
     };
   }),
+}));
+
+const questionCount = rounds.reduce(
+  (sum, round) => sum + round.questions.length,
+  0,
 );
-
-const rounds = [
-  {
-    name: "Altimetrix Interview",
-    questions: flatQuestions,
-  },
-];
-
-const questionCount = flatQuestions.length;
 
 const company = {
   id: raw.id,
@@ -83,7 +81,7 @@ const company = {
 const banner =
   "// AUTO-GENERATED file — company-wise interview data.\n" +
   `// Source: ${raw.name} interview document(s).\n` +
-  "// Regenerate with:  node scripts/rebuild-altimetrix.mjs\n\n";
+  "// Regenerate with:  node scripts/rebuild-cognizant.mjs\n\n";
 const body =
   "export const company = " + JSON.stringify(company, null, 2) + ";\n";
 fs.writeFileSync(OUT, banner + body, "utf8");

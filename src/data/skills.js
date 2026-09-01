@@ -256,8 +256,8 @@ export const skills = [
     id: "company-interview",
     name: "Company-wise Interview Prep",
     icon: "🏢",
-    color: "#3B82F6",
-    progress: 0,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Prepare for top tech company interviews with tailored company-specific strategies.",
     subtopics: [
