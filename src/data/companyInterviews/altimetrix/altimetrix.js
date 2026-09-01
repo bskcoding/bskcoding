@@ -1,242 +1,257 @@
 // AUTO-GENERATED file — company-wise interview data.
 // Source: Altimetrix interview document(s).
-// Do not edit manually — regenerate with: node scripts/convert-company-interviews.cjs
+// Regenerate with:  node scripts/rebuild-altimetrix.mjs
 
 export const company = {
   "id": "altimetrix",
   "name": "Altimetrix",
   "interviews": [
     {
-      "name": "Altimetrix",
-      "questionCount": 44,
+      "name": "Altimetrix Interview",
+      "questionCount": 30,
       "rounds": [
         {
-          "name": "Interview Questions",
+          "name": "Core Java",
           "questions": [
             {
               "question": "What are the key features introduced in Java 8?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Lambda Expressions: Allows for concise representation of instances of single-method interfaces (functional interfaces).",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Stream API: Provides a new abstraction for processing sequences of elements, supporting operations like map, filter, and reduce.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Optional Class: A container object which may or may not contain a value, used to avoid null references.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Default Methods: Interfaces can now have methods with a body, allowing for backward compatibility.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Method References: Shortcuts to call methods using the syntax ClassName::methodName.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "New Date and Time API: A new, comprehensive API for handling dates and times (java.time package).",
-              "answer": "",
+              "answer": "Java 8 introduced several key features: Lambda Expressions for concise functional interface implementation, Stream API for sequence processing with map/filter/reduce operations, Optional class to avoid null references, Default Methods in interfaces for backward compatibility, Method References using ClassName::methodName syntax, and New Date and Time API (java.time package).",
               "code": null
             },
             {
               "question": "What are the built-in functional interfaces available in Java 8?",
-              "answer": "",
+              "answer": "Built-in functional interfaces include: Predicate<T> (boolean-valued function), Function<T,R> (takes T returns R), Consumer<T> (accepts input no return), Supplier<T> (provides results), UnaryOperator<T> (function with same type input/output), BinaryOperator<T> (two args same type returns same type).",
+              "code": {
+                "language": "java",
+                "content": "Predicate<Integer> isEven = n -> n % 2 == 0;\nFunction<String, Integer> length = String::length;\nConsumer<String> print = System.out::println;\nSupplier<Double> random = Math::random;\nUnaryOperator<Integer> square = n -> n * n;"
+              }
+            },
+            {
+              "question": "Can you explain the internal working of a HashMap in Java?",
+              "answer": "HashMap stores key-value pairs using an array of buckets. Keys are hashed to determine bucket location. Collisions are resolved using linked lists or trees (when many entries hash to same bucket). When entries exceed threshold, HashMap resizes and rehashes all entries. Average time complexity O(1) for get/put operations.",
               "code": null
             },
             {
-              "question": "Predicate<T>: Represents a boolean-valued function of one argument.",
-              "answer": "",
+              "question": "What is the difference between shallow copy and deep copy?",
+              "answer": "Shallow Copy creates a new object but copies references to the same memory addresses of internal objects - changes affect both copies. Deep Copy creates a new object and recursively copies all objects within it, making original and copied objects completely independent.",
+              "code": {
+                "language": "java",
+                "content": "// Shallow Copy\nEmployee emp1 = new Employee(\"John\");\nEmployee emp2 = emp1; // Same reference\n// Deep Copy\nEmployee emp3 = new Employee(emp1.getName()); // New object"
+              }
+            },
+            {
+              "question": "How many ways can you create an object in Java?",
+              "answer": "Five ways: 1) Using new keyword, 2) Using reflection (Class.newInstance() or Constructor.newInstance()), 3) Using clone() method (if Cloneable implemented), 4) Using serialization and deserialization, 5) Using Factory or Builder design pattern.",
+              "code": {
+                "language": "java",
+                "content": "// 1. new\nEmployee emp = new Employee();\n// 2. Reflection\nEmployee emp = Employee.class.newInstance();\n// 3. Clone\nEmployee emp = (Employee) emp1.clone();"
+              }
+            },
+            {
+              "question": "Why is the main method in Java static?",
+              "answer": "The main method is static so that the JVM can call it directly without creating an instance of the class. This allows the JVM to start the program execution before any objects are created.",
+              "code": {
+                "language": "java",
+                "content": "public static void main(String[] args) { }"
+              }
+            },
+            {
+              "question": "What is a deadlock in Java?",
+              "answer": "Deadlock occurs when two or more threads are blocked forever, waiting for each other to release locks they need to proceed. Each thread holds a resource the other thread requires, creating a cycle of dependency.",
+              "code": {
+                "language": "java",
+                "content": "// Thread 1\nsynchronized(resource1) {\n    synchronized(resource2) { }\n}\n// Thread 2\nsynchronized(resource2) {\n    synchronized(resource1) { }\n}"
+              }
+            },
+            {
+              "question": "How can we avoid deadlock in Java?",
+              "answer": "Avoid deadlock by: 1) Always acquiring locks in consistent order, 2) Using timeout for acquiring locks, 3) Using fewer synchronized blocks with minimal code, 4) Using lock hierarchy, 5) Implementing deadlock detection algorithms.",
+              "code": {
+                "language": "java",
+                "content": "// Use consistent lock order\nsynchronized(resource1) {\n    synchronized(resource2) { }\n}\n// Both threads use same order"
+              }
+            },
+            {
+              "question": "Do you know any design patterns?",
+              "answer": "Yes, I am familiar with several design patterns including Singleton, Factory, Builder, Observer, Strategy, Decorator, and Template Method patterns. Used in various projects for creating maintainable and scalable code.",
               "code": null
             },
             {
-              "question": "Function<T, R>: Represents a function that takes an argument of type T and returns a result of type R.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Consumer<T>: Represents an operation that accepts a single input argument and returns no result.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Supplier<T>: Represents a supplier of results, providing instances of type T.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "UnaryOperator<T>: A specialized form of Function that takes a single argument and returns a result of the same type.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "BinaryOperator<T>: A specialized form of Function that takes two arguments of the same type and returns a result of the same type.",
-              "answer": "",
-              "code": null
-            },
+              "question": "What is the Factory Design Pattern?",
+              "answer": "Factory Design Pattern is a creational pattern that provides an interface for creating objects in a super class, allowing subclasses to alter the type of objects created. It promotes loose coupling and is used when object creation involves logic.",
+              "code": {
+                "language": "java",
+                "content": "interface Payment { void pay(); }\nclass PaymentFactory {\n    public static Payment getPayment(String type) {\n        if (\"UPI\".equals(type)) return new UPIPayment();\n        else if (\"Card\".equals(type)) return new CardPayment();\n        return null;\n    }\n}"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Spring Boot",
+          "questions": [
             {
               "question": "What is a profile in Spring Boot, and how do you use it?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Profile: A feature that allows for the segregation of application configuration based on different environments (e.g., development, testing, production).",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Usage: Define profiles using the @Profile annotation in Spring components or specify them in application.properties or application.yml. Activate profiles via command-line arguments or environment variables (e.g., --spring.profiles.active=dev).",
-              "answer": "",
-              "code": null
+              "answer": "Profile is a feature for segregating application configuration based on different environments (development, testing, production). Use @Profile annotation or specify in application.properties. Activate via command-line --spring.profiles.active=dev or environment variables.",
+              "code": {
+                "language": "java",
+                "content": "@Profile(\"dev\")\n@Configuration\npublic class DevConfig { }\n# application.properties\nspring.profiles.active=dev"
+              }
             },
             {
               "question": "What configurations can be managed within a Spring Boot profile?",
-              "answer": "",
-              "code": null
+              "answer": "Configurations include: Data Source configurations (different databases), Service Endpoints (different API URLs), Logging Levels (different loggers), Security Settings (authentication mechanisms), and application-specific properties for different environments.",
+              "code": {
+                "language": "java",
+                "content": "# application-dev.properties\nspring.datasource.url=jdbc:mysql://localhost:3306/devdb\nlogging.level.com.service=DEBUG\n# application-prod.properties\nspring.datasource.url=jdbc:mysql://prod-server:3306/proddb"
+              }
             },
             {
-              "question": "Data Source Configurations: Define different database configurations for various environments.",
-              "answer": "",
-              "code": null
+              "question": "What tools do you use for monitoring purposes in Spring Boot?",
+              "answer": "We use Prometheus and Grafana for metrics monitoring, Spring Boot Actuator for exposing health and metrics endpoints, ELK Stack (Elasticsearch, Logstash, Kibana) for logging and real-time monitoring, and Micrometer for metrics collection.",
+              "code": {
+                "language": "java",
+                "content": "// application.yml\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: health,info,metrics,prometheus"
+              }
             },
             {
-              "question": "Service Endpoints: Configure different API endpoints or service URLs based on the active profile.",
-              "answer": "",
-              "code": null
+              "question": "What is the N+1 select problem in JPA, and how do you handle it?",
+              "answer": "N+1 select problem occurs when a query retrieves an entity and subsequent queries load related entities one by one. Handled using: FetchType.LAZY or EAGER, JOIN FETCH queries to load in single query, Entity Graphs, and Batch Fetching.",
+              "code": {
+                "language": "java",
+                "content": "// Problem: N+1 queries\nList<Employee> employees = repo.findAll(); // 1 query\nfor(Employee emp : employees) {\n    emp.getDepartment(); // N queries\n}\n// Solution: JOIN FETCH\n@Query(\"SELECT e FROM Employee e JOIN FETCH e.department\")\nList<Employee> findAllWithDepartment();"
+              }
             },
             {
-              "question": "Logging Levels: Set different logging levels or loggers for different environments.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Security Settings: Adjust security configurations such as authentication mechanisms or access controls.",
-              "answer": "",
-              "code": null
-            },
+              "question": "Have you worked with JPA?",
+              "answer": "Yes, I have used JPA in projects for managing database entities, relationships, and queries using Hibernate as JPA provider. Worked with annotations like @Entity, @OneToMany, @ManyToOne, @Query, and @Transactional for database operations.",
+              "code": {
+                "language": "java",
+                "content": "@Entity\npublic class Employee {\n    @Id @GeneratedValue private Long id;\n    private String name;\n    @ManyToOne private Department department;\n    @Query(\"SELECT e FROM Employee e WHERE e.name LIKE :name\")\n    List<Employee> findByName(@Param(\"name\") String name);\n}"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Microservices",
+          "questions": [
             {
               "question": "What are the advantages of using microservices architecture?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Scalability: Individual components can be scaled independently.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Flexibility: Different services can be developed, deployed, and maintained separately.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Resilience: Failure in one service does not necessarily impact others.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Technology Agnostic: Different services can use different technologies or frameworks.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Faster Time to Market: Smaller teams can develop and deploy services more quickly.",
-              "answer": "",
+              "answer": "Advantages include: Scalability (independent scaling), Flexibility (separate development/deployment), Resilience (failure isolation), Technology Agnostic (different tech stacks per service), Faster Time to Market (small teams, quick deployment), and Better Maintainability.",
               "code": null
             },
             {
               "question": "How do you integrate microservices in a project?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "API Gateway: Use an API gateway to handle requests and route them to the appropriate microservices.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Service Registry: Use tools like Eureka for service discovery and registration.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Inter-Service Communication: Implement communication between services using REST APIs, messaging queues, or gRPC.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Configuration Management: Use tools like Spring Cloud Config to manage configuration centrally.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Monitoring and Logging: Implement centralized logging and monitoring using tools like ELK stack or Prometheus.",
-              "answer": "",
+              "answer": "Integration involves: API Gateway for routing, Service Registry (Eureka) for service discovery, Inter-Service Communication via REST/gRPC/messaging, Centralized Configuration Management, Centralized Monitoring and Logging (ELK/Prometheus), and Circuit Breakers for fault tolerance.",
               "code": null
             },
             {
               "question": "What is a Eureka Server, and how is it used in microservices?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Eureka Server: A service discovery tool provided by Netflix, part of the Spring Cloud ecosystem.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Usage: Services register themselves with the Eureka Server, and other services can discover and communicate with them using the server's registry. It helps in managing service instances and load balancing.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Can you explain the internal working of a HashMap in Java?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "HashMap: stores key-value pairs. Internally, it uses an array of buckets, where each bucket is a linked list or a tree (if many entries hash to the same bucket).",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Hashing: Keys are hashed to determine their bucket location.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Collision Resolution: If multiple keys hash to the same bucket, they are stored in a linked list or tree structure within that bucket.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Resizing: When the number of entries exceeds a threshold, the HashMap resizes and rehashes all entries.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Given a list of integers [1, 2, 4, 6, 8, 9], with the numbers 3, 5, and 7 missing, how would you print the missing numbers using Java Streams?",
-              "answer": "",
+              "answer": "Eureka Server is Netflix's service discovery tool. Services register themselves with Eureka Server, and other services discover and communicate with them using the registry. It helps in managing service instances and provides client-side load balancing.",
               "code": {
                 "language": "java",
-                "content": "import java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\nimport java.util.stream.IntStream;\n\npublic class MissingNumbers {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 4, 6, 8, 9);\n        int min = 1;\n        int max = 9;\n\n        List<Integer> missingNumbers = IntStream.rangeClosed(min, max)\n            .filter(n -> !numbers.contains(n))\n            .boxed()\n            .collect(Collectors.toList());\n\n        System.out.println(\"Missing numbers: \" + missingNumbers);\n    }\n}"
+                "content": "@SpringBootApplication\n@EnableEurekaServer\npublic class EurekaServer { }\n\n@SpringBootApplication\n@EnableDiscoveryClient\npublic class UserService { }"
               }
             },
             {
-              "question": "Given a list of strings [\"blue\", \"green\", \"red\", \"pink\"], how would you find the longest string and print its length using Java Streams?",
-              "answer": "",
+              "question": "How do you communicate between two microservices?",
+              "answer": "Communication can be: Synchronous using REST APIs (HTTP calls) or gRPC, Asynchronous using Message Brokers (RabbitMQ, Kafka) for event-driven architecture, or Hybrid approach combining both based on use case.",
               "code": {
                 "language": "java",
-                "content": "import java.util.Arrays;\nimport java.util.List;\nimport java.util.Comparator;\n\npublic class LongestStringLength {\n    public static void main(String[] args) {\n        List<String> strings = Arrays.asList(\"blue\", \"green\", \"red\", \"pink\");\n\n        int maxLength = strings.stream()\n            .sorted(Comparator.comparingInt(String::length).reversed())\n            .findFirst()\n            .map(String::length)\n            .orElse(0);\n\n        System.out.println(\"Length of the longest string: \" + maxLength);\n    }\n}"
+                "content": "// REST Communication\nRestTemplate rest = new RestTemplate();\nUser user = rest.getForObject(\"http://user-service/users/1\", User.class);\n// Feign Client\n@FeignClient(\"user-service\")\npublic interface UserClient {\n    @GetMapping(\"/users/{id}\") User getUser(@PathVariable Long id);\n}"
+              }
+            },
+            {
+              "question": "How do you secure communication between microservices?",
+              "answer": "Secure using: JWT for authentication/authorization, OAuth2 for secure access delegation, SSL/TLS for encrypted communication, API Gateway with security filters, and Service-to-Service authentication using mutual TLS or client credentials.",
+              "code": null
+            }
+          ]
+        },
+        {
+          "name": "Coding Problems",
+          "questions": [
+            {
+              "question": "Find the missing numbers in a sequence using Java Streams.",
+              "answer": "Use IntStream.rangeClosed to create a range and filter the numbers that are not present in the input list.\n\nExample:\n- Input: [1, 2, 4, 6, 8, 9]\n- Output: [3, 5, 7]",
+              "code": {
+                "language": "java",
+                "content": "List<Integer> numbers = Arrays.asList(1, 2, 4, 6, 8, 9);\nint min = 1;\nint max = 9;\nList<Integer> missingNumbers = IntStream.rangeClosed(min, max)\n    .filter(n -> !numbers.contains(n))\n    .boxed()\n    .collect(Collectors.toList());\nSystem.out.println(\"Missing numbers: \" + missingNumbers); // [3, 5, 7]"
+              }
+            },
+            {
+              "question": "Find the longest string and its length in a list using Java Streams.",
+              "answer": "Use mapToInt(String::length).max() to get the longest length, or use max(Comparator.comparingInt(String::length)) to get the longest string itself.\n\nExample:\n- Input: [\"blue\", \"green\", \"red\", \"pink\"]\n- Output: 5",
+              "code": {
+                "language": "java",
+                "content": "List<String> strings = Arrays.asList(\"blue\", \"green\", \"red\", \"pink\");\nint maxLength = strings.stream()\n    .mapToInt(String::length)\n    .max()\n    .orElse(0);\n// Alternative\nString longest = strings.stream()\n    .max(Comparator.comparingInt(String::length))\n    .orElse(\"\");\nSystem.out.println(\"Length of longest string: \" + maxLength); // 5"
+              }
+            },
+            {
+              "question": "Check if a given string containing brackets is balanced.",
+              "answer": "Use a Stack to track open brackets and match them with closing brackets. Return false if there is a mismatch or if the stack is not empty at the end.",
+              "code": {
+                "language": "java",
+                "content": "public boolean isBalanced(String str) {\n    Stack<Character> stack = new Stack<>();\n    for (char ch : str.toCharArray()) {\n        if (ch == '(' || ch == '{' || ch == '[') {\n            stack.push(ch);\n        } else if (ch == ')' && (stack.isEmpty() || stack.pop() != '(')) {\n            return false;\n        } else if (ch == '}' && (stack.isEmpty() || stack.pop() != '{')) {\n            return false;\n        } else if (ch == ']' && (stack.isEmpty() || stack.pop() != '[')) {\n            return false;\n        }\n    }\n    return stack.isEmpty();\n}"
+              }
+            },
+            {
+              "question": "Find the most repeated IP address from logs.",
+              "answer": "Use a HashMap to count IP occurrences, then use Collections.max with Map.Entry.comparingByValue to find the IP with the highest count.",
+              "code": {
+                "language": "java",
+                "content": "public String findMostRepeatedIP(List<String> logs) {\n    Map<String, Integer> ipCount = new HashMap<>();\n    for (String log : logs) {\n        String ip = log.split(\" \")[0];\n        ipCount.put(ip, ipCount.getOrDefault(ip, 0) + 1);\n    }\n    return Collections.max(ipCount.entrySet(), Map.Entry.comparingByValue()).getKey();\n}"
+              }
+            }
+          ]
+        },
+        {
+          "name": "DevOps & Tools",
+          "questions": [
+            {
+              "question": "What is Jenkins, and how do you use it in your project?",
+              "answer": "Jenkins is a CI/CD tool automating build and deployment. Configured to build automatically on Git commits, run unit/integration tests, and deploy to staging/production environments. Uses Jenkinsfile for pipeline as code.",
+              "code": {
+                "language": "java",
+                "content": "pipeline {\n    agent any\n    stages {\n        stage('Build') { steps { sh 'mvn clean install' } }\n        stage('Test') { steps { sh 'mvn test' } }\n        stage('Deploy') { steps { sh 'kubectl apply -f deployment.yaml' } }\n    }\n}"
+              }
+            },
+            {
+              "question": "What Git commands do you commonly use in your project?",
+              "answer": "Common commands: git clone, git pull, git push, git branch, git checkout, git merge, git commit, git stash, git status, git log, git fetch, git rebase.",
+              "code": {
+                "language": "java",
+                "content": "git clone <repo-url>\ngit pull origin main\ngit push origin feature-branch\ngit checkout -b new-branch\ngit merge feature-branch\ngit commit -m \"message\""
+              }
+            },
+            {
+              "question": "What is Agile methodology? Explain your experience working in Agile.",
+              "answer": "Agile is iterative software development where requirements evolve through collaboration. Experience with Scrum: sprints, daily standups, sprint planning, retrospectives. Quick adaptation to changes, incremental delivery, continuous feedback.",
+              "code": null
+            }
+          ]
+        },
+        {
+          "name": "General & Behavioral",
+          "questions": [
+            {
+              "question": "Briefly explain the project you are currently working on.",
+              "answer": "Working on a microservices-based banking application handling user registration and transaction data. Uses Spring Boot backend, ReactJS frontend, JPA for database, Spring Security with JWT for authentication.",
+              "code": null
+            },
+            {
+              "question": "How do you approach writing unit test cases?",
+              "answer": "Use JUnit and Mockito. Test individual methods, mock external dependencies, ensure high code coverage. Write tests for positive and negative scenarios, edge cases, and boundary conditions.",
+              "code": {
+                "language": "java",
+                "content": "@ExtendWith(MockitoExtension.class)\npublic class UserServiceTest {\n    @Mock private UserRepository repository;\n    @InjectMocks private UserService service;\n    @Test\n    void testGetUser() {\n        when(repository.findById(1L)).thenReturn(Optional.of(new User()));\n        User user = service.getUser(1L);\n        assertNotNull(user);\n    }\n}"
+              }
+            },
+            {
+              "question": "How do you mock private methods in unit testing?",
+              "answer": "Private methods can be mocked using PowerMock along with Mockito, which allows mocking private, static, and final methods. Alternatively, refactor code to make private methods package-private or extract to separate class.",
+              "code": {
+                "language": "java",
+                "content": "// Using PowerMock\n@RunWith(PowerMockRunner.class)\npublic class ServiceTest {\n    @Test\n    public void testPrivateMethod() {\n        Service service = PowerMockito.spy(new Service());\n        PowerMockito.doReturn(\"mocked\").when(service, \"privateMethod\");\n    }\n}"
               }
             }
           ]
@@ -244,5 +259,5 @@ export const company = {
       ]
     }
   ],
-  "questionCount": 44
+  "questionCount": 30
 };

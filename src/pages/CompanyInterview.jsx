@@ -7,6 +7,9 @@ import "./CompanyInterview.css";
 
 // Syntax highlight code using Highlight.js (same pattern as other pages)
 const highlightCode = (code, language) => {
+  // Defensive: if either argument is missing, render an empty snippet so the
+  // page never crashes on malformed data.
+  if (typeof code !== "string" || code.length === 0) return "";
   try {
     let lang = language || "java";
     if (lang === "jsx" || lang === "tsx") lang = "javascript";
@@ -393,7 +396,7 @@ function CompanyInterview() {
                                   <div className="ci-answer">
                                     <h4 className="ci-answer-title">Answer:</h4>
                                     <AnswerContent text={q.answer} />
-                                    {q.code && (
+                                    {q.code && q.code.content && (
                                       <div className="ci-code-block">
                                         <div className="ci-code-header">
                                           <span className="ci-code-lang">
