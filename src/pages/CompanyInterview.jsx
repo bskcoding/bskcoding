@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import { companies, totalCompanyQuestions } from "../data/companyInterviews";
-import HldDiagram from "../components/HldDiagram";
 import "./CompanyInterview.css";
 
 // Syntax highlight code using Highlight.js (same pattern as other pages)
@@ -22,30 +21,6 @@ const highlightCode = (code, language) => {
       .replace(/</g, "\x26lt;")
       .replace(/>/g, "\x26gt;");
   }
-};
-
-// Extract HLD component lines (containing arrow) from answer text.
-// Strips leading numbering ("1. ") or bullets ("- ") so the cleaned
-// string can be classified by classifyComponent inside HldDiagram.
-const extractHldComponents = (text) => {
-  if (!text) return [];
-  const components = [];
-  const arrow = "\u2192";
-  text.split("\n").forEach((line) => {
-    const trimmed = line.trim();
-    // Skip table rows
-    if (/^\|/.test(trimmed)) return;
-    const arrowIdx = trimmed.indexOf(arrow);
-    if (arrowIdx < 0) return;
-    // Strip leading numbering (e.g. "1. ") or bullet ("- ")
-    const cleaned = trimmed.replace(/^\d+\.\s+/, "").replace(/^-\s+/, "");
-    // Skip API endpoint lines (e.g. "POST /auth/register → Register new users")
-    if (/^(POST|GET|PUT|DELETE|PATCH|HEAD|OPTIONS)\s+\//i.test(cleaned)) return;
-    if (cleaned && cleaned.indexOf(arrow) >= 0) {
-      components.push(cleaned);
-    }
-  });
-  return components;
 };
 
 // Render a multi-line answer with structure:
@@ -390,7 +365,6 @@ function CompanyInterview() {
                       <div className="ci-questions">
                         {round.questions.map((q, qIdx) => {
                           const uid = `${interviewIdx}-${roundIdx}-${qIdx}`;
-                          const hldComponents = extractHldComponents(q.answer);
                           return (
                             <div
                               key={uid}
@@ -419,12 +393,6 @@ function CompanyInterview() {
                                   <div className="ci-answer">
                                     <h4 className="ci-answer-title">Answer:</h4>
                                     <AnswerContent text={q.answer} />
-                                    {hldComponents.length > 0 && (
-                                      <HldDiagram
-                                        title="Architecture Diagram"
-                                        components={hldComponents}
-                                      />
-                                    )}
                                     {q.code && (
                                       <div className="ci-code-block">
                                         <div className="ci-code-header">
