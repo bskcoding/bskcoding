@@ -1,0 +1,171 @@
+{
+  "interview": "Zensar Technical Interview",
+  "rounds": [
+    {
+      "name": "Technical Interview",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Self Introduction (Project-Oriented)",
+          "answer": "I have around 4.5 years of experience as a Java Full Stack Developer. Currently working on a customer onboarding and transaction processing system. Responsibilities include: Developing REST & Reactive APIs using Spring Boot & WebFlux, Handling high-volume traffic using non-blocking architecture, Integrating Kafka for async communication, Writing unit tests using JUnit & Mockito, and Frontend development using ReactJS. Achievements: Improved API performance using reactive programming, Implemented JWT-based authentication, Optimized microservices communication.",
+          "code": null,
+          "complexity": "Basic"
+        },
+        {
+          "id": 2,
+          "question": "What is Reactive Programming? Explain Mono vs Flux.",
+          "answer": "Reactive Programming is an asynchronous, non-blocking approach. Mono represents 0 or 1 element. Flux represents 0 to N elements. Used for handling high-concurrency applications with better resource utilization.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 3,
+          "question": "Where do we use Mono?",
+          "answer": "Used when we expect a single result. Examples: Get user by ID, Login response, Payment status, Fetching bank account balance.",
+          "code": "public Mono<Double> getBalance(String accountId) {\n    return webClient.get()\n        .uri(\"/balance/\" + accountId)\n        .retrieve()\n        .bodyToMono(Double.class);\n}",
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 4,
+          "question": "How to call APIs using WebClient?",
+          "answer": "WebClient is Spring WebFlux's non-blocking HTTP client. Used to call external APIs asynchronously without blocking threads.",
+          "code": "@Service\npublic class UserService {\n    private final WebClient webClient;\n    public UserService(WebClient.Builder builder) {\n        this.webClient = builder.baseUrl(\"http://localhost:8081\").build();\n    }\n    public Mono<String> getUser() {\n        return webClient.get()\n            .uri(\"/user\")\n            .retrieve()\n            .bodyToMono(String.class)\n            .onErrorReturn(\"Fallback User\");\n    }\n}",
+          "complexity": "Advanced"
+        },
+        {
+          "id": 5,
+          "question": "How do you secure APIs?",
+          "answer": "Using Spring Security, JWT Authentication, Role-based authorization, HTTPS, Input validation, and CORS configuration.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 6,
+          "question": "Explain JWT Authentication Workflow.",
+          "answer": "1) User sends login credentials, 2) Server validates credentials, 3) JWT token generated, 4) Token sent to client, 5) Client sends token in header, 6) Server validates token using JWT Filter.",
+          "code": null,
+          "complexity": "Advanced"
+        },
+        {
+          "id": 7,
+          "question": "What are HTTP Status Codes?",
+          "answer": "200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Internal Server Error.",
+          "code": null,
+          "complexity": "Basic"
+        },
+        {
+          "id": 8,
+          "question": "Difference between 501 and 502?",
+          "answer": "501 Not Implemented - Server doesn't support functionality. 502 Bad Gateway - Invalid response from upstream server.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 9,
+          "question": "What is CORS?",
+          "answer": "CORS (Cross-Origin Resource Sharing) allows cross-origin requests. Origin = protocol + host + port.",
+          "code": "@Configuration\npublic class CorsConfig {\n    @Bean\n    public WebMvcConfigurer corsConfigurer() {\n        return registry -> registry.addMapping(\"/**\")\n            .allowedOrigins(\"*\")\n            .allowedMethods(\"*\");\n    }\n}",
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 10,
+          "question": "What are Java 17 Features?",
+          "answer": "Records, Sealed Classes, Pattern Matching, Text Blocks, Enhanced Switch, Better Garbage Collectors, Improved Security.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 11,
+          "question": "Explain Java 8 Supplier and Consumer.",
+          "answer": "Supplier provides values, Consumer consumes values.",
+          "code": "Supplier<String> supplier = () -> \"Hello\";\nConsumer<String> consumer = x -> System.out.println(x);\nconsumer.accept(supplier.get());",
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 12,
+          "question": "What is Method Reference?",
+          "answer": "Short form of lambda expression. Used for better readability and cleaner code.",
+          "code": "list.forEach(System.out::println);",
+          "complexity": "Basic"
+        },
+        {
+          "id": 13,
+          "question": "Explain CompletableFuture with example.",
+          "answer": "CompletableFuture is Java 8 feature for asynchronous programming. Supports chaining, combining multiple async computations, and exception handling.",
+          "code": "CompletableFuture.supplyAsync(() -> \"Hello\")\n    .thenApply(String::toUpperCase)\n    .thenAccept(System.out::println);",
+          "complexity": "Advanced"
+        },
+        {
+          "id": 14,
+          "question": "What is Executor Framework?",
+          "answer": "Used for background jobs, async processing, email sending, and thread pool management.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 15,
+          "question": "Explain Callable and Future.",
+          "answer": "Callable returns a value. Future holds the result of asynchronous computation.",
+          "code": "ExecutorService executor = Executors.newFixedThreadPool(1);\nFuture<Integer> future = executor.submit(() -> 10 + 20);\nSystem.out.println(future.get());",
+          "complexity": "Advanced"
+        },
+        {
+          "id": 16,
+          "question": "Difference between parallelStream and flatMap?",
+          "answer": "parallelStream enables multi-threading. flatMap flattens nested collections.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 17,
+          "question": "How to flatten List of List of List using streams?",
+          "answer": "Using multiple flatMap operations.",
+          "code": "List<Integer> result = list.stream()\n    .flatMap(List::stream)\n    .flatMap(List::stream)\n    .toList();",
+          "complexity": "Advanced"
+        },
+        {
+          "id": 18,
+          "question": "Explain flatMap with example.",
+          "answer": "flatMap transforms each element into a stream and flattens.",
+          "code": "List<List<Integer>> list = List.of(\n    List.of(1,2),\n    List.of(3,4)\n);\nList<Integer> result = list.stream()\n    .flatMap(Collection::stream)\n    .toList();",
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 19,
+          "question": "Difference between HashSet and TreeSet?",
+          "answer": "HashSet: O(1) operations, unordered. TreeSet: O(log n) operations, sorted.",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 20,
+          "question": "What is Composition vs Aggregation?",
+          "answer": "Composition - strong relationship (Car-Engine). Aggregation - weak relationship (School-Student).",
+          "code": null,
+          "complexity": "Intermediate"
+        },
+        {
+          "id": 21,
+          "question": "What are your strengths and weaknesses?",
+          "answer": "Strengths: Problem solving, Quick learner. Weakness: Sometimes focus too much on perfection.",
+          "code": null,
+          "complexity": "Basic"
+        },
+        {
+          "id": 22,
+          "question": "Why are you looking for a job change?",
+          "answer": "Looking for better growth, learning opportunities, and challenging work.",
+          "code": null,
+          "complexity": "Basic"
+        },
+        {
+          "id": 23,
+          "question": "Explain Builder vs Strategy Pattern.",
+          "answer": "Builder Pattern: Creates complex objects step by step. Strategy Pattern: Defines family of algorithms, encapsulates each one, and makes them interchangeable.",
+          "code": "// Builder Pattern\nUser user = User.builder()\n    .name(\"Venkatesh\")\n    .age(25)\n    .build();\n\n// Strategy Pattern\ninterface PaymentStrategy { void pay(); }\nclass UpiPayment implements PaymentStrategy {\n    public void pay() {\n        System.out.println(\"Paid using UPI\");\n    }\n}",
+          "complexity": "Advanced"
+        }
+      ]
+    }
+  ]
+}
