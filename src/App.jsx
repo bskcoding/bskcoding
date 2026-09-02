@@ -37,6 +37,7 @@ const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
 const JavaTopics = lazy(() => import("./topics/java/JavaTopics"));
+const JavaCourse = lazy(() => import("./topics/java/JavaCourse"));
 const JavaInterview = lazy(() => import("./topics/java/JavaInterview"));
 const JavaScriptTopics = lazy(
   () => import("./topics/javascript/JavaScriptTopics"),
@@ -52,18 +53,26 @@ const ReactJSInterview = lazy(
 const SpringBootTopics = lazy(
   () => import("./topics/spring-boot/SpringBootTopics"),
 );
+const SpringBootCourse = lazy(
+  () => import("./topics/spring-boot/SpringBootCourse"),
+);
 const SpringBootInterview = lazy(
   () => import("./topics/spring-boot/SpringBootInterview"),
 );
 const MicroservicesTopics = lazy(
   () => import("./topics/microservices/MicroservicesTopics"),
 );
+const MicroservicesCourse = lazy(
+  () => import("./topics/microservices/MicroservicesCourse"),
+);
 const MicroservicesInterview = lazy(
   () => import("./topics/microservices/MicroservicesInterview"),
 );
 const SQLTopics = lazy(() => import("./topics/sql/SQLTopics"));
+const SQLCourse = lazy(() => import("./topics/sql/SQLCourse"));
 const SQLInterview = lazy(() => import("./topics/sql/SQLInterview"));
 const KafkaTopics = lazy(() => import("./topics/kafka/KafkaTopics"));
+const KafkaCourse = lazy(() => import("./topics/kafka/KafkaCourse"));
 const KafkaInterview = lazy(() => import("./topics/kafka/KafkaInterview"));
 const ReactiveProgrammingTopics = lazy(
   () => import("./topics/reactive-programming/ReactiveProgrammingTopics"),
@@ -140,6 +149,7 @@ function App() {
                 <Route path="/features" element={<FeaturesPage />} />
                 <Route path="/roadmap" element={<Roadmap90Day />} />
                 <Route path="/java" element={<JavaTopics />} />
+                <Route path="/java/course" element={<JavaCourse />} />
                 <Route path="/java/interview" element={<JavaInterview />} />
                 <Route path="/javascript" element={<JavaScriptTopics />} />
                 <Route
@@ -152,18 +162,22 @@ function App() {
                   element={<ReactJSInterview />}
                 />
                 <Route path="/spring-boot" element={<SpringBootTopics />} />
+                <Route path="/spring-boot/course" element={<SpringBootCourse />} />
                 <Route
                   path="/spring-boot/interview"
                   element={<SpringBootInterview />}
                 />
                 <Route path="/microservices" element={<MicroservicesTopics />} />
+                <Route path="/microservices/course" element={<MicroservicesCourse />} />
                 <Route
                   path="/microservices/interview"
                   element={<MicroservicesInterview />}
                 />
                 <Route path="/sql" element={<SQLTopics />} />
+                <Route path="/sql/course" element={<SQLCourse />} />
                 <Route path="/sql/interview" element={<SQLInterview />} />
                 <Route path="/kafka" element={<KafkaTopics />} />
+                <Route path="/kafka/course" element={<KafkaCourse />} />
                 <Route path="/kafka/interview" element={<KafkaInterview />} />
                 {/* MAANG Kit — grid page and all sub-topic pages require login */}
                 <Route

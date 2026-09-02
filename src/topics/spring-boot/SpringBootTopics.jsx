@@ -26,7 +26,7 @@ function SpringBootTopics() {
         </p>
         <div className="skills-grid">
           {/* Spring Boot Full Course */}
-          <Link to="#" className="skill-card-link">
+          <Link to="/spring-boot/course" className="skill-card-link">
             <div
               className="skill-card"
               style={{ borderColor: springBootColor }}

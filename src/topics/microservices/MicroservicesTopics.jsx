@@ -26,7 +26,7 @@ function MicroservicesTopics() {
         </p>
         <div className="skills-grid">
           {/* Microservices Full Course */}
-          <Link to="#" className="skill-card-link">
+          <Link to="/microservices/course" className="skill-card-link">
             <div
               className="skill-card"
               style={{ borderColor: microservicesColor }}
