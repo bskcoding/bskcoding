@@ -7,78 +7,66 @@ export const company = {
   "name": "Ford Motor",
   "interviews": [
     {
-      "name": "FordReference",
-      "questionCount": 25,
+      "name": "Reference Interview",
       "rounds": [
         {
-          "name": "Interview Questions",
+          "name": "Core Java",
           "questions": [
             {
-              "question": "Assessment",
-              "answer": "",
+              "question": "Explain the concept of OOP in Java.",
+              "answer": "OOP is a programming paradigm based on objects containing data and code. Four main principles: Encapsulation, Inheritance, Polymorphism, and Abstraction.",
               "code": null
             },
             {
-              "question": "Spring Boot App - HackerRank Assessment",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "5 Multiple Choice Questions (MCQs)",
-              "answer": "",
-              "code": null
-            }
-          ]
-        },
-        {
-          "name": "First Round Interview",
-          "questions": [
-            {
-              "question": "Explain the concept of OOP (Object-Oriented Programming) in Java.",
-              "answer": "Answer: OOP in Java is a programming paradigm based on the concept of objects, which can contain data and code. The four main principles of OOP are encapsulation, inheritance, polymorphism, and abstraction.",
-              "code": null
-            },
-            {
-              "question": "What are the differences between == and equals() in Java?",
-              "answer": "Answer: == checks for reference equality, meaning it checks whether two references point to the same object in memory. equals() checks for value equality, meaning it checks whether two objects are meaningfully equivalent.",
-              "code": null
+              "question": "Difference between == and equals() in Java?",
+              "answer": "== checks reference equality (same object), while equals() checks value equality (same content).",
+              "code": {
+                "language": "java",
+                "content": "String s1 = new String(\"Hello\");\nString s2 = new String(\"Hello\");\nSystem.out.println(s1 == s2); // false\nSystem.out.println(s1.equals(s2)); // true"
+              }
             },
             {
               "question": "How does Java handle memory management?",
-              "answer": "Answer: Java uses an automatic garbage collection mechanism to manage memory. It allocates memory on the heap for new objects and reclaims memory from objects that are no longer referenced.",
+              "answer": "Java uses automatic garbage collection. It allocates memory on the heap for new objects and reclaims memory from unreferenced objects.",
               "code": null
             },
             {
               "question": "How do you handle exceptions in Java?",
-              "answer": "Answer: Exceptions in Java are handled using try-catch blocks, where code that might throw an exception is placed inside the try block and exception handling code is placed inside the catch block.",
+              "answer": "Using try-catch blocks — code that might throw an exception goes in the try block, handling code in the catch block.",
+              "code": {
+                "language": "java",
+                "content": "try { riskyOperation(); } catch (Exception e) { e.printStackTrace(); }"
+              }
+            },
+            {
+              "question": "What are checked and unchecked exceptions?",
+              "answer": "- Checked: must be caught or declared (IOException)\n- Unchecked: runtime exceptions (NullPointerException)",
               "code": null
             },
             {
-              "question": "What are checked and unchecked exceptions in Java?",
-              "answer": "Answer: Checked exceptions are exceptions that must be either caught or declared in the method signature using the throws keyword. Unchecked exceptions are exceptions that do not need to be explicitly handled, typically subclasses of RuntimeException.",
-              "code": null
-            },
-            {
-              "question": "How do you handle exceptions in Spring Boot applications?",
-              "answer": "Answer: Spring Boot provides the @ExceptionHandler annotation to handle exceptions in a controller. Additionally, @ControllerAdvice can be used to define global exception handlers for the entire application.",
-              "code": null
-            },
-            {
-              "question": "Given a list of employees, find the list of employees based on gender. Result should be - Male, [e1, e2, e3] Female, [e4, e5].",
-              "answer": "Answer",
+              "question": "Given a list of employees, find the list based on gender.",
+              "answer": "Use groupingBy to group employees by gender.",
               "code": {
                 "language": "java",
                 "content": "Map<String, List<Employee>> employeesByGender = employees.stream()\n    .collect(Collectors.groupingBy(Employee::getGender));"
               }
-            },
+            }
+          ]
+        },
+        {
+          "name": "Spring Boot",
+          "questions": [
             {
               "question": "Explain the basics of Spring Boot.",
-              "answer": "Answer: Spring Boot simplifies the development of Spring applications by providing a set of tools and libraries for rapid application development. It offers features like auto-configuration, standalone application configuration, and embedded servers.",
-              "code": null
+              "answer": "Spring Boot simplifies Spring development with auto-configuration, standalone configuration, and embedded servers.",
+              "code": {
+                "language": "java",
+                "content": "@SpringBootApplication\npublic class Application {\n    public static void main(String[] args) {\n        SpringApplication.run(Application.class, args);\n    }\n}"
+              }
             },
             {
-              "question": "Write a code example for a JPA repository and a derived query.",
-              "answer": "Answer",
+              "question": "Write a code example for a JPA repository and derived query.",
+              "answer": "Repository interface extending JpaRepository with a derived query method.",
               "code": {
                 "language": "java",
                 "content": "@Repository\npublic interface EmployeeRepository extends JpaRepository<Employee, Long> {\n    List<Employee> findByGender(String gender);\n}"
@@ -86,12 +74,15 @@ export const company = {
             },
             {
               "question": "Explain thread pools and their use in Java.",
-              "answer": "Answer: Thread pools manage a collection of reusable threads for executing tasks, which improves application performance by reducing the overhead of creating and destroying threads. Java provides ExecutorService to manage thread pools.",
-              "code": null
+              "answer": "Thread pools manage reusable threads for executing tasks, reducing overhead. Java provides ExecutorService.",
+              "code": {
+                "language": "java",
+                "content": "ExecutorService executor = Executors.newFixedThreadPool(10);\nexecutor.submit(() -> System.out.println(\"Task\"));\nexecutor.shutdown();"
+              }
             },
             {
               "question": "Configure HikariCP in a Spring Boot application.",
-              "answer": "Answer",
+              "answer": "Configure in application.yml for the HikariCP connection pool.",
               "code": {
                 "language": "yaml",
                 "content": "spring:\n  datasource:\n    url: jdbc:mysql://localhost:3306/db\n    username: user\n    password: pass\n    hikari:\n      maximum-pool-size: 10"
@@ -99,83 +90,89 @@ export const company = {
             },
             {
               "question": "Explain Hibernate queries and entity graphs.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Answer: Hibernate queries can be written using HQL or Criteria API. Entity graphs optimize queries by defining which related entities should be fetched, reducing the number of queries executed and improving performance.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "How do you write test cases differently for controller, data, and service layers?",
-              "answer": "Answer",
+              "answer": "Hibernate queries use HQL or the Criteria API. Entity graphs optimize queries by defining which related entities to fetch.",
               "code": {
                 "language": "java",
-                "content": "// Controller Test\n@WebMvcTest(EmployeeController.class)\npublic class EmployeeControllerTest {\n    @Autowired\n    private MockMvc mockMvc;\n\n    @MockBean\n    private EmployeeService employeeService;\n\n    @Test\n    public void testGetEmployee() throws Exception {\n        mockMvc.perform(get(\"/employees/1\"))\n            .andExpect(status().isOk())\n            .andExpect(jsonPath(\"$.name\").value(\"John\"));\n    }\n}\n\n// Service Test\n@ExtendWith(MockitoExtension.class)\npublic class EmployeeServiceTest {\n    @Mock\n    private EmployeeRepository employeeRepository;\n\n    @InjectMocks\n    private EmployeeService employeeService;\n\n    @Test\n    public void testFindEmployeeById() {\n        when(employeeRepository.findById(1L)).thenReturn(Optional.of(new Employee(\"John\")));\n        Employee employee = employeeService.findEmployeeById(1L);\n        assertEquals(\"John\", employee.getName());\n    }\n}\n\n// Repository Test\n@DataJpaTest\npublic class EmployeeRepositoryTest {\n    @Autowired\n    private EmployeeRepository employeeRepository;\n\n    @Test\n    public void testFindByGender() {\n        List<Employee> employees = employeeRepository.findByGender(\"Male\");\n        assertEquals(3, employees.size());\n    }\n}"
+                "content": "@EntityGraph(attributePaths = {\"address\"})\n@Query(\"SELECT e FROM Employee e WHERE e.id = :id\")\nOptional<Employee> findByIdWithAddress(@Param(\"id\") Long id);"
+              }
+            },
+            {
+              "question": "How do you write test cases for controller, service, and repository?",
+              "answer": "- Controller: @WebMvcTest\n- Service: @ExtendWith(MockitoExtension.class)\n- Repository: @DataJpaTest",
+              "code": {
+                "language": "java",
+                "content": "// Controller: @WebMvcTest\n// Service: @ExtendWith(MockitoExtension.class) with @Mock\n// Repository: @DataJpaTest"
               }
             },
             {
               "question": "Explain code coverage and tools like SonarQube.",
-              "answer": "Answer: Code coverage measures how much of the code is tested by unit tests. Tools like SonarQube analyze code quality, including code coverage, and provide reports to help improve code reliability and maintainability.",
+              "answer": "Code coverage measures how much of the code is tested. SonarQube analyzes code quality, coverage, and provides improvement reports.",
               "code": null
             },
             {
               "question": "What are deployment tools and how do they work?",
-              "answer": "Answer: - Answer: Deployment tools like Jenkins, Docker, and Kubernetes automate the process of deploying applications, ensuring consistent environments and simplifying scaling and management.",
+              "answer": "Deployment tools like Jenkins, Docker, and Kubernetes automate deployment, ensure consistent environments, and simplify scaling.",
               "code": null
             },
             {
-              "question": "Difference between vanilla JavaScript and React.",
-              "answer": "Answer: Vanilla JavaScript is a plain JavaScript without any libraries or frameworks. React is a library for building user interfaces, offering components, state management, and virtual DOM for efficient updates.",
-              "code": null
-            },
-            {
-              "question": "Explain useState and useEffect hooks in React.",
-              "answer": "Answer: useState is a hook that lets you add state to functional components. useEffect is a hook for performing side effects, such as data fetching or updating the DOM, in functional components.",
-              "code": null
-            },
-            {
-              "question": "Write a basic API call using React.",
-              "answer": "Answer",
+              "question": "How do you handle exceptions in Spring Boot?",
+              "answer": "Using @ExceptionHandler in controllers or @ControllerAdvice for global handling.",
               "code": {
-                "language": "javascript",
-                "content": "useEffect(() => {\n  fetch('https://api.example.com/data')\n    .then(response => response.json())\n    .then(data => setData(data));\n}, []);"
-              }
-            },
-            {
-              "question": "Transform an IP address from 192.62.255.31 to 291.26.552.13.",
-              "answer": "Answer",
-              "code": {
-                "language": "javascript",
-                "content": "function transformIP(ip) {\n    return ip.split('.').map(octet => {\n        return octet.split('').reverse().join('');\n    }).join('.');\n}\nconsole.log(transformIP('192.62.255.31')); // 291.26.552.13"
+                "language": "java",
+                "content": "@ControllerAdvice\npublic class GlobalExceptionHandler {\n    @ExceptionHandler(Exception.class)\n    public ResponseEntity<String> handleException(Exception e) {\n        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());\n    }\n}"
               }
             }
           ]
         },
         {
-          "name": "Second Round Interview: Pair Programming",
+          "name": "React",
           "questions": [
             {
-              "question": "Develop a UI page to show a list of items in the search page using React.",
-              "answer": "Answer",
+              "question": "Difference between vanilla JavaScript and React.",
+              "answer": "Vanilla JS is plain JavaScript. React is a library for building UIs with components, state management, and the virtual DOM.",
+              "code": null
+            },
+            {
+              "question": "Explain useState and useEffect hooks.",
+              "answer": "useState adds state to functional components. useEffect performs side effects like data fetching.",
               "code": {
-                "language": "javascript",
-                "content": "import React, { useState, useEffect } from 'react';\n\nconst ItemList = () => {\n    const [items, setItems] = useState([]);\n    const [searchTerm, setSearchTerm] = useState('');\n\n    useEffect(() => {\n        fetch('http://localhost:8080/api/items')\n            .then(response => response.json())\n            .then(data => setItems(data));\n    }, []);\n\n    const filteredItems = items.filter(item => item.name.includes(searchTerm));\n\n    return (\n        <div>\n            <input\n                type=\"text\"\n                placeholder=\"Search items\"\n                value={searchTerm}\n                onChange={e => setSearchTerm(e.target.value)}\n            />\n            <ul>\n                {filteredItems.map(item => (\n                    <li key={item.id}>{item.name}</li>\n                ))}\n            </ul>\n        </div>\n    );\n};\n\nexport default ItemList;"
+                "language": "jsx",
+                "content": "const [data, setData] = useState([]);\nuseEffect(() => { fetchData().then(setData); }, []);"
               }
             },
             {
-              "question": "Write an API with Spring Boot and use the API endpoint in React to show the list.",
-              "answer": "Spring Boot API\nReact Integration",
+              "question": "Write a basic API call using React.",
+              "answer": "Use fetch or axios inside useEffect.",
               "code": {
-                "language": "javascript",
-                "content": "import React, { useState, useEffect } from 'react';\n\nconst ItemList = () => {\n    const [items, setItems] = useState([]);\n\n    useEffect(() => {\n        fetch('http://localhost:8080/api/items')\n            .then(response => response.json())\n            .then(data => setItems(data));\n    }, []);\n\n    return (\n        <ul>\n            {items.map(item => (\n                <li key={item.id}>{item.name}</li>\n            ))}\n        </ul>\n    );\n};\n\nexport default ItemList;"
+                "language": "jsx",
+                "content": "useEffect(() => {\n    fetch('https://api.example.com/data')\n        .then(response => response.json())\n        .then(data => setData(data));\n}, []);"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pair Programming: Coding Problems",
+          "questions": [
+            {
+              "question": "Develop a UI page to show a list of items in a search page using React.",
+              "answer": "Create a component with a search input and a filtered list.",
+              "code": {
+                "language": "jsx",
+                "content": "const ItemList = () => {\n    const [items, setItems] = useState([]);\n    const [searchTerm, setSearchTerm] = useState('');\n\n    useEffect(() => {\n        fetch('http://localhost:8080/api/items')\n            .then(response => response.json())\n            .then(data => setItems(data));\n    }, []);\n\n    const filteredItems = items.filter(item =>\n        item.name.includes(searchTerm)\n    );\n\n    return (\n        <div>\n            <input type=\"text\" placeholder=\"Search\"\n                value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />\n            <ul>{filteredItems.map(item => <li key={item.id}>{item.name}</li>)}</ul>\n        </div>\n    );\n};"
+              }
+            },
+            {
+              "question": "Write an API with Spring Boot and use the endpoint in React to show a list.",
+              "answer": "Create a Spring Boot REST API with a GET endpoint. The React component fetches and displays the data.",
+              "code": {
+                "language": "java",
+                "content": "@RestController\n@RequestMapping(\"/api/items\")\npublic class ItemController {\n    @GetMapping\n    public List<Item> getAllItems() {\n        return itemService.getAllItems();\n    }\n}"
               }
             }
           ]
         }
-      ]
+      ],
+      "questionCount": 20
     }
-  ],
-  "questionCount": 25
+  ]
 };

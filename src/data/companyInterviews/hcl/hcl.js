@@ -1,5 +1,5 @@
 // AUTO-GENERATED file — company-wise interview data.
-// Source: HCL interview document(s).
+// Source: HCL Technologies interview document(s).
 // Do not edit manually — regenerate with: node scripts/convert-company-interviews.cjs
 
 export const company = {
@@ -7,117 +7,86 @@ export const company = {
   "name": "HCL",
   "interviews": [
     {
-      "name": "hcl",
-      "questionCount": 16,
+      "name": "HCL L1 Interview",
+      "questionCount": 10,
       "rounds": [
         {
-          "name": "Interview Questions",
+          "name": "Project & Architecture",
           "questions": [
             {
-              "question": "What are the main features introduced in Java 8?",
-              "answer": "- Lambda Expressions\n- Functional Interfaces\n- Streams API\n- Default Methods in Interfaces\n- Optional Class\n- New Date and Time API (java.time)\n- Nashorn JavaScript Engine\n- Method References",
+              "question": "Brief about the project.",
+              "answer": "The project is focused on developing a distributed banking application that handles real-time transactions using a microservices architecture. It includes features like customer registration, account management, and secure transaction processing. Technologies like Spring Boot, Kafka, Docker, and React are used, ensuring high scalability and reliability.",
               "code": null
             },
             {
-              "question": "What are the key differences between an interface and an abstract class in Java?",
-              "answer": "- Interfaces can only have abstract methods (until Java 8, which introduced default and static methods), while abstract classes can have both abstract and concrete methods.\n- A class can implement multiple interfaces but can inherit from only one abstract class.\n- Interfaces cannot have instance variables, while abstract classes can.\n- Interfaces provide a form of multiple inheritance; abstract classes provide a form of single inheritance.",
+              "question": "Explain Kafka architecture.",
+              "answer": "Kafka architecture consists of Producers, Consumers, Brokers, Topics, and Zookeeper.\n- Producers send data to Kafka topics, while Consumers read data from these topics\n- Kafka Brokers manage the storage and retrieval of messages\n- Zookeeper handles metadata, including leader election and partition management\n- Together this ensures Kafka's fault tolerance and distributed nature",
               "code": null
             },
             {
-              "question": "How do you implement Executor Services in Java?",
-              "answer": "",
+              "question": "What is Jenkins and how do you use it?",
+              "answer": "Jenkins is an open-source automation server used for continuous integration and continuous delivery (CI/CD).\n- It automates the build, test, and deployment processes, enabling faster and more reliable software delivery\n- I use Jenkins to trigger automated builds on code commits, run tests, and deploy applications to different environments",
+              "code": null
+            }
+          ]
+        },
+        {
+          "name": "Java Features",
+          "questions": [
+            {
+              "question": "What are the features of Java 17?",
+              "answer": "Java 17 includes several new features:\n- Sealed classes\n- Pattern matching for switch (preview)\n- New macOS rendering pipeline\n- Enhanced pseudo-random number generators\n- Removal of the experimental AOT and JIT compilers\n- Long-term support (LTS) for stability in enterprise applications",
+              "code": null
+            },
+            {
+              "question": "What are the features of Java 8?",
+              "answer": "Java 8 introduced several major features:\n- Lambda expressions\n- The Stream API for functional-style operations on collections\n- The new Date and Time API (java.time)\n- Default methods in interfaces\n- The Optional class to handle null values more gracefully",
+              "code": null
+            }
+          ]
+        },
+        {
+          "name": "Coding Questions",
+          "questions": [
+            {
+              "question": "Create a single thread in Java using different approaches.",
+              "answer": "Three ways to create threads: extending the Thread class, implementing the Runnable interface, or using ExecutorService.",
               "code": {
                 "language": "java",
-                "content": "import java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\n\npublic class ExecutorServiceExample {\n    public static void main(String[] args) {\n        ExecutorService executor = Executors.newFixedThreadPool(5);\n\n        for (int i = 0; i < 10; i++) {\n            Runnable worker = new WorkerThread(\"\" + i);\n            executor.execute(worker);\n        }\n        executor.shutdown();\n        while (!executor.isTerminated()) {\n        }\n        System.out.println(\"Finished all threads\");\n    }\n}\n\nclass WorkerThread implements Runnable {\n    private String command;\n\n    public WorkerThread(String s) {\n        this.command = s;\n    }\n\n    @Override\n    public void run() {\n        System.out.println(Thread.currentThread().getName() + \" Start. Command = \" + command);\n        processCommand();\n        System.out.println(Thread.currentThread().getName() + \" End.\");\n    }\n\n    private void processCommand() {\n        try {\n            Thread.sleep(5000);\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        }\n    }\n}"
+                "content": "// Using Thread class\nThread thread1 = new Thread() {\n    public void run() { System.out.println(\"Thread using Thread class\"); }\n};\nthread1.start();\n\n// Using Runnable interface\nRunnable runnable = () -> System.out.println(\"Thread using Runnable\");\nThread thread2 = new Thread(runnable);\nthread2.start();\n\n// Using ExecutorService\nExecutorService executor = Executors.newSingleThreadExecutor();\nexecutor.submit(() -> System.out.println(\"Thread using ExecutorService\"));\nexecutor.shutdown();"
               }
             },
             {
-              "question": "Which databases have you used in your projects, and what was your experience with them?",
-              "answer": "MySQL: Used for web applications; strong support for transactions and data integrity.\nPostgreSQL: Preferred for complex queries and large datasets; excellent support for JSON data types and extensions.\nMongoDB: Utilized for handling unstructured data and fast prototyping; great for horizontal scaling.\nOracle: Employed in enterprise-level applications requiring robust security and advanced features.",
-              "code": null
-            },
-            {
-              "question": "How can you declare and use functional programming constructs in Java?",
-              "answer": "",
+              "question": "Create a text input and password input in React and display them when a button is clicked.",
+              "answer": "Use useState for text and password state, and display them on button click.",
               "code": {
-                "language": "java",
-                "content": "// Lambda Expression\nList<String> names = Arrays.asList(\"John\", \"Jane\", \"Jack\");\nnames.forEach(name -> System.out.println(name));\n\n// Functional Interface Example\n@FunctionalInterface\ninterface MathOperation {\n    int operation(int a, int b);\n}\n\nMathOperation addition = (a, b) -> a + b;\nSystem.out.println(\"10 + 5 = \" + addition.operation(10, 5));"
+                "language": "jsx",
+                "content": "import React, { useState } from 'react';\n\nfunction App() {\n    const [text, setText] = useState('');\n    const [password, setPassword] = useState('');\n    const [show, setShow] = useState(false);\n\n    return (\n        <div>\n            <input type=\"text\" placeholder=\"Enter text\" value={text} onChange={(e) => setText(e.target.value)} />\n            <input type=\"password\" placeholder=\"Enter password\" value={password} onChange={(e) => setPassword(e.target.value)} />\n            <button onClick={() => setShow(true)}>Show</button>\n            {show && <div><p>Text: {text}</p><p>Password: {password}</p></div>}\n        </div>\n    );\n}\n\nexport default App;"
               }
-            },
+            }
+          ]
+        },
+        {
+          "name": "General Questions",
+          "questions": [
             {
-              "question": "What are the differences between @RestController and @Controller in Spring Boot?",
-              "answer": "- @RestController is a combination of @Controller and @ResponseBody. It automatically serializes return objects into JSON or XML and writes them into the HTTP response.\n- @Controller is used to mark classes as Spring MVC controllers. Methods in these classes typically return view names and are resolved by view resolvers.",
+              "question": "Explain your weekly tasks.",
+              "answer": "My weekly tasks typically involve developing new features, fixing bugs, and optimizing existing code for better performance.\n- Collaborate with team members in daily stand-up meetings\n- Write unit and integration tests\n- Participate in code reviews\n- Contribute to the continuous integration pipeline and ensure smooth deployments",
               "code": null
             },
             {
-              "question": "How do you schedule tasks in Spring Boot?",
-              "answer": "",
-              "code": {
-                "language": "java",
-                "content": "import org.springframework.scheduling.annotation.Scheduled;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class ScheduledTasks {\n\n    @Scheduled(fixedRate = 5000)\n    public void reportCurrentTime() {\n        System.out.println(\"The time is now \" + new Date());\n    }\n}"
-              }
-            },
-            {
-              "question": "How is Jenkins integrated with Spring Boot? What dependencies or configuration files are needed?",
-              "answer": "Jenkinsfile\nDependencies\n- Jenkins server\n- Maven or Gradle for build automation\n- Docker for containerization (if deploying with Docker)",
-              "code": {
-                "language": "groovy",
-                "content": "pipeline {\n    agent any\n    stages {\n        stage('Build') {\n            steps {\n                sh './mvnw clean package'\n            }\n        }\n        stage('Test') {\n            steps {\n                sh './mvnw test'\n            }\n        }\n        stage('Deploy') {\n            steps {\n                sh 'docker build -t spring-boot-app .'\n                sh 'docker run -d -p 8080:8080 spring-boot-app'\n            }\n        }\n    }\n}"
-              }
-            },
-            {
-              "question": "What is the difference between HashMap and ConcurrentHashMap in Java?",
-              "answer": "- HashMap is not synchronized and is not thread-safe.\n- ConcurrentHashMap is thread-safe and allows concurrent access to its segments.",
+              "question": "What is Agile methodology?",
+              "answer": "Agile methodology is an iterative approach to software development and project management.\n- Emphasizes collaboration, flexibility, and customer feedback\n- Allows teams to deliver small, functional pieces of software incrementally\n- Promotes adaptive planning, evolutionary development, early delivery, and continuous improvement",
               "code": null
             },
             {
-              "question": "What are the key classes and interfaces in the java.util.concurrent package?",
-              "answer": "Key Classes: ExecutorService, ScheduledExecutorService, Future, CountDownLatch, CyclicBarrier, Semaphore, ConcurrentHashMap, CopyOnWriteArrayList\nKey Interfaces: Executor, Callable, Future, BlockingQueue",
+              "question": "What is Jira and how do you use it?",
+              "answer": "Jira is a project management tool used for tracking tasks, bugs, and issues.\n- Supports Agile methodologies like Scrum and Kanban\n- I use Jira to manage and prioritize tasks, track progress through sprints, create and assign issues, and document project workflows\n- Jira also integrates with CI/CD pipelines for automated updates",
               "code": null
-            },
-            {
-              "question": "Describe the collections framework in Java.",
-              "answer": "Core Interfaces: Collection, List, Set, Queue, Map\nImplementations: ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue, HashMap, TreeMap\nUtilities: Collections, Arrays",
-              "code": null
-            },
-            {
-              "question": "How do you use profiles in Spring Boot?",
-              "answer": "",
-              "code": {
-                "language": "yaml",
-                "content": "# application.yml\nspring:\n  profiles:\n    active: dev\n---\n# application-dev.yml\nserver:\n  port: 8081\n---\n# application-prod.yml\nserver:\n  port: 8082"
-              }
-            },
-            {
-              "question": "If both application.properties and application.yaml are present in a Spring Boot application, which one takes precedence?",
-              "answer": "- application.properties takes precedence over application.yaml.",
-              "code": null
-            },
-            {
-              "question": "Explain the @Autowired annotation in Spring.",
-              "answer": "- @Autowired is used for automatic dependency injection. Spring's dependency injection mechanism uses this annotation to resolve and inject collaborating beans into the desired bean.",
-              "code": null
-            },
-            {
-              "question": "Using a lambda expression, write a Java program to sum the elements of an array.",
-              "answer": "",
-              "code": {
-                "language": "java",
-                "content": "import java.util.Arrays;\npublic class SumArray {\npublic static void main(String[] args) {\n    int[] array = {1, 2, 3, 4, 5};\n\n    // Using a lambda expression with Stream API\n    int sum = Arrays.stream(array)\n                     .reduce(0, (a, b) -> a + b);\n\n    System.out.println(\"Sum: \" + sum);\n  }\n}"
-              }
-            },
-            {
-              "question": "Write a Java program to generate all permutations of an array using lambda expressions.",
-              "answer": "Etc...",
-              "code": {
-                "language": "java",
-                "content": "import java.util.ArrayList;\nimport java.util.List;\nimport java.util.stream.Collectors;\nimport java.util.stream.IntStream;\n\npublic class Permutations {\n    public static void main(String[] args) {\n        int[] array = {1, 2, 3};\n        List<List<Integer>> result = permute(array);\n        result.forEach(System.out::println);\n    }\n\n    public static List<List<Integer>> permute(int[] nums) {\n        return permute(IntStream.range(0, nums.length).boxed().collect(Collectors.toList()), nums);\n    }\n\n    private static List<List<Integer>> permute(List<Integer> indices, int[] nums) {\n        if (indices.isEmpty()) {\n            List<Integer> perm = new ArrayList<>();\n            for (int num : nums) {\n                perm.add(num);\n            }\n            return List.of(perm);\n        }\n\n        return indices.stream()\n            .flatMap(i -> {\n                List<Integer> remaining = new ArrayList<>(indices);\n                remaining.remove(Integer.valueOf(i));\n                return permute(remaining, swap(nums, i)).stream();\n            })\n            .collect(Collectors.toList());\n    }\n\n    private static int[] swap(int[] array, int i) {\n        int[] newArray = array.clone();\n        int temp = newArray[i];\n        newArray[i] = newArray[0];\n        newArray[0] = temp;\n        return newArray;\n    }\n}"
-              }
             }
           ]
         }
       ]
     }
-  ],
-  "questionCount": 16
+  ]
 };
