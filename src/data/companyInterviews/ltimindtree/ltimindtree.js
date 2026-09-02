@@ -8,14 +8,14 @@ export const company = {
   "interviews": [
     {
       "name": "LtiMindtree",
-      "questionCount": 43,
+      "questionCount": 37,
       "rounds": [
         {
-          "name": "Interview Questions",
+          "name": "Technical Round",
           "questions": [
             {
               "question": "Brief explanation about your project and daily tasks.",
-              "answer": "In my current project, I am working on a [briefly describe the project’s purpose, such as \"banking application that handles customer transactions and account management\"]. My daily tasks involve designing and implementing microservices using Spring Boot, developing RESTful APIs, managing the database using JPA/Hibernate, writing unit tests with JUnit and Mockito, and deploying services to a cloud environment like AWS. I also participate in code reviews, pair programming, and daily stand-ups to ensure smooth progress.",
+              "answer": "In my current project, I am working on a banking application that handles customer transactions and account management. My daily tasks involve designing and implementing microservices using Spring Boot, developing RESTful APIs, managing the database using JPA/Hibernate, writing unit tests with JUnit and Mockito, and deploying services to a cloud environment like AWS. I also participate in code reviews, pair programming, and daily stand-ups to ensure smooth progress.",
               "code": null
             },
             {
@@ -36,11 +36,14 @@ export const company = {
             {
               "question": "How do you manage retrying, timeouts, and circuit breakers in microservices?",
               "answer": "Retries, timeouts, and circuit breakers are managed using libraries like Resilience4j or Hystrix. We configure retry logic to attempt an operation a certain number of times before failing. Timeouts are set to ensure that requests do not hang indefinitely. Circuit breakers monitor the failures and, after a threshold, trip to prevent further calls. We also implement fallback mechanisms to provide default responses when a service fails.",
-              "code": null
+              "code": {
+                "language": "java",
+                "content": "@CircuitBreaker(name = \"paymentService\", fallbackMethod = \"paymentFallback\")\npublic PaymentResult processPayment(PaymentRequest request) {\n    return paymentService.process(request);\n}\n\npublic PaymentResult paymentFallback(PaymentRequest request, Throwable t) {\n    return new PaymentResult(\"FAILED\", \"Service unavailable\");\n}"
+              }
             },
             {
               "question": "How do microservices communicate with each other?",
-              "answer": "Microservices communicate with each other using HTTP/REST, messaging queues, or RPC frameworks like gRPC. For RESTful communication, we use HTTP requests with JSON payloads. For asynchronous communication, we use messaging systems like Kafka or RabbitMQ. gRPC is used for efficient communication between services, especially when low latency and high throughput are required.",
+              "answer": "Microservices communicate with each other using HTTP/REST, messaging queues, or RPC frameworks like gRPC.\n- For RESTful communication, we use HTTP requests with JSON payloads\n- For asynchronous communication, we use messaging systems like Kafka or RabbitMQ\n- gRPC is used for efficient communication between services, especially when low latency and high throughput are required",
               "code": null
             },
             {
@@ -65,17 +68,7 @@ export const company = {
             },
             {
               "question": "What is the difference between synchronous and asynchronous communication in microservices?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Synchronous Communication: Involves direct communication between microservices where the caller waits for a response before proceeding. It is typically implemented using REST APIs or RPC. This method can lead to tight coupling and latency issues.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Asynchronous Communication: Involves message-based communication where the caller sends a message and continues its processing without waiting for a response. It is typically implemented using messaging systems like Kafka or RabbitMQ. This method promotes loose coupling and better scalability.",
-              "answer": "",
+              "answer": "- Synchronous Communication: involves direct communication where the caller waits for a response before proceeding; implemented using REST APIs or RPC; can lead to tight coupling and latency issues\n- Asynchronous Communication: involves message-based communication where the caller sends a message and continues without waiting; implemented using Kafka or RabbitMQ; promotes loose coupling and better scalability",
               "code": null
             },
             {
@@ -95,40 +88,15 @@ export const company = {
             },
             {
               "question": "Can you give some examples of design patterns?",
-              "answer": "Some common design patterns used in microservices and general software development include:",
-              "code": null
-            },
-            {
-              "question": "Singleton: Ensures a class has only one instance.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Factory Method: Creates objects without specifying the exact class.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Observer: Allows objects to subscribe and receive notifications from another object.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Strategy: Enables selecting an algorithm's behavior at runtime.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Decorator: Adds behavior to objects dynamically.",
-              "answer": "",
+              "answer": "Some common design patterns used in microservices and general software development include:\n- Singleton (ensures class has only one instance)\n- Factory Method (creates objects without specifying exact class)\n- Observer (objects subscribe and receive notifications)\n- Strategy (selects algorithm at runtime)\n- Decorator (adds behavior dynamically)",
               "code": null
             },
             {
               "question": "Write a code example of the Singleton design pattern in Java.",
-              "answer": "",
+              "answer": "Singleton pattern ensures only one instance exists, with a private constructor and a synchronized getInstance method.",
               "code": {
                 "language": "java",
-                "content": "public class Singleton {\n    // Private static instance of the class\n    private static Singleton instance;\n\n    // Private constructor to prevent instantiation\n    private Singleton() {}\n\n    // Public method to provide access to the instance\n    public static synchronized Singleton getInstance() {\n        if (instance == null) {\n            instance = new Singleton();\n        }\n        return instance;\n    }\n}"
+                "content": "public class Singleton {\n    private static Singleton instance;\n    private Singleton() {}\n\n    public static synchronized Singleton getInstance() {\n        if (instance == null) {\n            instance = new Singleton();\n        }\n        return instance;\n    }\n}\n\n// Thread-safe with double-checked locking\npublic class Singleton {\n    private static volatile Singleton instance;\n    private Singleton() {}\n\n    public static Singleton getInstance() {\n        if (instance == null) {\n            synchronized (Singleton.class) {\n                if (instance == null) {\n                    instance = new Singleton();\n                }\n            }\n        }\n        return instance;\n    }\n}"
               }
             },
             {
@@ -147,11 +115,14 @@ export const company = {
             {
               "question": "What is the Cloneable interface in Java?",
               "answer": "The Cloneable interface in Java is a marker interface that indicates that a class allows its objects to be cloned. When a class implements Cloneable, the Object.clone() method creates a shallow copy of the object. If a class does not implement Cloneable, calling clone() throws a CloneNotSupportedException.",
-              "code": null
+              "code": {
+                "language": "java",
+                "content": "class User implements Cloneable {\n    private String name;\n\n    @Override\n    protected Object clone() throws CloneNotSupportedException {\n        return super.clone();\n    }\n}"
+              }
             },
             {
               "question": "Write code to handle exceptions like ArithmeticException for division by zero.",
-              "answer": "",
+              "answer": "Use a try-catch block to handle ArithmeticException.",
               "code": {
                 "language": "java",
                 "content": "public class DivisionExample {\n    public static void main(String[] args) {\n        try {\n            int result = divide(10, 0);\n            System.out.println(\"Result: \" + result);\n        } catch (ArithmeticException e) {\n            System.out.println(\"Error: Division by zero is not allowed.\");\n        }\n    }\n\n    public static int divide(int a, int b) {\n        return a / b;\n    }\n}"
@@ -160,90 +131,119 @@ export const company = {
             {
               "question": "Why do we use the Optional class in Java?",
               "answer": "The Optional class in Java is used to represent a value that might be null. It helps avoid NullPointerException by providing a way to handle null values explicitly. Using Optional, you can define default values, perform operations only when the value is present, or throw an exception if the value is absent.",
-              "code": null
+              "code": {
+                "language": "java",
+                "content": "Optional<String> opt = Optional.ofNullable(str);\nString result = opt.orElse(\"Default Value\");\nopt.ifPresent(System.out::println);"
+              }
             },
             {
               "question": "Which methods are available in the Optional class?",
-              "answer": "Some commonly used methods in the Optional class include:\n- of(T value): Creates an Optional with the specified value.\n- ofNullable(T value): Creates an Optional that may be empty if the value is null.\n- empty(): Returns an empty Optional.\n- get(): Returns the value if present, otherwise throws an exception.\n- isPresent(): Checks if the value is present.\n- ifPresent(Consumer<? super T> action): Executes the given action if the value is present.\n- orElse(T other): Returns the value if present, otherwise returns the provided default value.\n- orElseThrow(Supplier<? extends X> exceptionSupplier): Returns the value if present, otherwise throws the provided exception.",
-              "code": null
+              "answer": "Common methods in Optional: of(T value), ofNullable(T value), empty(), get(), isPresent(), ifPresent(Consumer), orElse(T other), orElseGet(Supplier), orElseThrow(Supplier), map(), flatMap(), filter().",
+              "code": {
+                "language": "java",
+                "content": "Optional.of(\"Hello\").map(String::toUpperCase).orElse(\"Default\");"
+              }
             },
             {
-              "question": "How did you optimize a project when migrating from Java 7 to Java 8? Provide a full project explanation.",
-              "answer": "When migrating from Java 7 to Java 8, we optimized our project by leveraging Java 8's new features:",
-              "code": null
-            },
-            {
-              "question": "Lambda Expressions: Replaced anonymous inner classes with lambda expressions, making the code more concise and readable.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Streams API: Used streams to process collections in a more functional style, improving performance and reducing boilerplate code.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Optional: Replaced null checks with Optional to handle null values more safely.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Date and Time API: Migrated from the old java.util.Date and java.util.Calendar classes to the new java.time package, which offers a more robust and easy-to-use API for date and time manipulation.",
-              "answer": "For example, we refactored the code to replace loops with streams, used Collectors to accumulate results, and leveraged parallel streams to improve performance in multi-core environments.",
-              "code": null
+              "question": "How did you optimize a project when migrating from Java 7 to Java 8?",
+              "answer": "When migrating from Java 7 to Java 8, we optimized our project by leveraging Java 8's new features:\n- Lambda Expressions replaced anonymous inner classes\n- Streams API processed collections in a functional style\n- Optional handled null values safely\n- New Date and Time API replaced old Date/Calendar classes\nWe refactored loops to streams, used Collectors to accumulate results, and leveraged parallel streams to improve performance in multi-core environments.",
+              "code": {
+                "language": "java",
+                "content": "// Java 7\nList<String> result = new ArrayList<>();\nfor (String s : list) {\n    if (s.startsWith(\"A\")) {\n        result.add(s.toUpperCase());\n    }\n}\n\n// Java 8\nList<String> result = list.stream()\n    .filter(s -> s.startsWith(\"A\"))\n    .map(String::toUpperCase)\n    .collect(Collectors.toList());"
+              }
             },
             {
               "question": "What classes are available in the Java Time API?",
-              "answer": "Some of the key classes in the Java Time API (java.time package) include:\n- LocalDate: Represents a date (year, month, day) without time.\n- LocalTime: Represents a time (hours, minutes, seconds, nanoseconds) without a date.\n- LocalDateTime: Combines LocalDate and LocalTime into a single date-time object.\n- ZonedDateTime: Represents a date-time with a time zone.\n- Instant: Represents a specific point in time, typically used for timestamps.\n- Duration: Represents a duration or amount of time.\n- Period: Represents a date-based amount of time, such as \"2 years, 3 months, and 4 days.\"",
-              "code": null
+              "answer": "Key classes in Java Time API (java.time):\n- LocalDate (date without time)\n- LocalTime (time without date)\n- LocalDateTime (date and time)\n- ZonedDateTime (date-time with time zone)\n- Instant (timestamp)\n- Duration (amount of time)\n- Period (date-based amount)",
+              "code": {
+                "language": "java",
+                "content": "LocalDate today = LocalDate.now();\nLocalTime time = LocalTime.now();\nLocalDateTime dateTime = LocalDateTime.now();\nZonedDateTime zoned = ZonedDateTime.now();\nInstant instant = Instant.now();"
+              }
             },
             {
               "question": "How do you schedule tasks in Java?",
-              "answer": "Tasks in Java can be scheduled using the ScheduledExecutorService or the Timer class. The ScheduledExecutorService is preferred as it provides more flexibility and allows for multiple tasks to be scheduled concurrently.",
+              "answer": "Tasks in Java can be scheduled using ScheduledExecutorService or the Timer class. ScheduledExecutorService is preferred as it provides more flexibility and allows multiple tasks to be scheduled concurrently.",
               "code": {
                 "language": "java",
-                "content": "import java.util.concurrent.Executors;\nimport java.util.concurrent.ScheduledExecutorService;\nimport java.util.concurrent.TimeUnit;\n\npublic class TaskScheduler {\n    public static void main(String[] args) {\n        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);\n        \n        scheduler.scheduleAtFixedRate(() -> {\n            System.out.println(\"Task executed at: \" + System.currentTimeMillis());\n        }, 0, 1, TimeUnit.SECONDS);\n    }\n}"
+                "content": "ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);\nscheduler.scheduleAtFixedRate(() -> {\n    System.out.println(\"Task executed at: \" + System.currentTimeMillis());\n}, 0, 1, TimeUnit.SECONDS);\nscheduler.shutdown();"
               }
             },
             {
               "question": "What are parallel streams in Java?",
-              "answer": "Parallel streams in Java allow you to process data in parallel, taking advantage of multiple cores of the CPU. It is a feature of the Streams API where the stream's operations are divided into smaller tasks that run concurrently, potentially improving performance for large data sets.",
-              "code": null
+              "answer": "Parallel streams in Java allow processing data in parallel, taking advantage of multiple CPU cores. It is a feature of the Streams API where stream operations are divided into smaller tasks that run concurrently, potentially improving performance for large data sets.",
+              "code": {
+                "language": "java",
+                "content": "list.parallelStream().filter(n -> n % 2 == 0).forEach(System.out::println);"
+              }
             },
             {
               "question": "What are the advantages and disadvantages of parallel streams?",
-              "answer": "Advantages:",
+              "answer": "- Advantages: performance improvement for large data sets by utilizing multiple CPU cores, simplified concurrency abstraction\n- Disadvantages: overhead for small data sets may reduce performance, non-deterministic order of processing, complexity in debugging due to concurrency",
+              "code": null
+            }
+          ]
+        },
+        {
+          "name": "Manager Round",
+          "questions": [
+            {
+              "question": "Tell me about yourself and your project experience.",
+              "answer": "I am [Your Name] with 3 years of experience as a Java Full Stack Developer. I have worked on banking applications using Spring Boot, React, and Microservices. My projects involved customer registration, transaction processing, and secure authentication.",
               "code": null
             },
             {
-              "question": "Performance Improvement: Parallel streams can significantly speed up the processing of large data sets by utilizing multiple CPU cores.",
-              "answer": "",
+              "question": "How do you handle team conflicts or disagreements?",
+              "answer": "I believe in open communication and constructive feedback. When conflicts arise, I listen to all perspectives, find common ground, and propose solutions that benefit the team and project goals.",
               "code": null
             },
             {
-              "question": "Simplified Concurrency: Parallel streams abstract away the complexities of writing concurrent code, making it easier to implement parallelism.",
-              "answer": "Disadvantages:",
+              "question": "How do you prioritize tasks in a project?",
+              "answer": "I prioritize tasks based on business value, urgency, and dependencies. I use Agile methodologies to break down work into sprints and focus on delivering high-priority features first.",
               "code": null
             },
             {
-              "question": "Overhead: For small data sets, the overhead of parallelization might outweigh the benefits, leading to worse performance than sequential streams.",
-              "answer": "",
+              "question": "What is your approach to learning new technologies?",
+              "answer": "I learn new technologies through online courses, hands-on practice, reading documentation, and building personal projects. I also contribute to open-source projects to gain practical experience.",
+              "code": null
+            }
+          ]
+        },
+        {
+          "name": "HR Round",
+          "questions": [
+            {
+              "question": "Tell me about yourself.",
+              "answer": "I am [Your Name] with 3 years of experience as a Java Full Stack Developer. I specialize in Spring Boot, React, and Microservices. I am passionate about building scalable applications and learning new technologies.",
               "code": null
             },
             {
-              "question": "Non-Deterministic Order: Parallel streams do not guarantee the order of processing, which can be problematic if order matters.",
-              "answer": "",
+              "question": "Why do you want to join LTI Mindtree?",
+              "answer": "LTI Mindtree is a global leader in technology consulting. I'm excited about the opportunity to work on innovative projects, learn from industry experts, and contribute to the company's growth.",
               "code": null
             },
             {
-              "question": "Complexity in Debugging: Debugging parallel streams can be more challenging than sequential code due to the concurrency involved.",
-              "answer": "",
+              "question": "What are your salary expectations?",
+              "answer": "Based on my experience and market standards, I am looking for a competitive package. I'm flexible and happy to discuss further based on the role.",
+              "code": null
+            },
+            {
+              "question": "Where do you see yourself in 5 years?",
+              "answer": "I see myself as a technical lead, contributing to architecture decisions, mentoring junior developers, and driving technical excellence.",
+              "code": null
+            },
+            {
+              "question": "What are your strengths and weaknesses?",
+              "answer": "- Strengths: quick learner, problem-solving skills, strong technical foundation, good team player\n- Weakness: sometimes focus too much on perfection; working on delegating tasks better",
+              "code": null
+            },
+            {
+              "question": "Why are you looking for a job change?",
+              "answer": "Looking for better growth opportunities, challenging projects, and a chance to work with new technologies. LTI Mindtree offers the perfect environment for professional growth.",
               "code": null
             }
           ]
         }
       ]
     }
-  ],
-  "questionCount": 43
+  ]
 };

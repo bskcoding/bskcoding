@@ -8,14 +8,14 @@ export const company = {
   "interviews": [
     {
       "name": "KVASTechnologies",
-      "questionCount": 47,
+      "questionCount": 31,
       "rounds": [
         {
           "name": "Technical Interview",
           "questions": [
             {
               "question": "Introduce yourself with a focus on your recent projects and the technologies you've worked with.",
-              "answer": "I am BSK, a Java full stack developer with 3 years of experience in building scalable web applications. My recent project involved developing a  abc application  where I focused on the user registration page and transaction data handling. I used ReactJS for the frontend, Spring Boot for the backend, and implemented microservices architecture. My tech stack includes Java, Spring Boot, Hibernate, ReactJS, and MySQL.",
+              "answer": "I am [Your Name], a Java full stack developer with 3 years of experience in building scalable web applications. My recent project involved developing a banking application where I focused on the user registration page and transaction data handling. I used ReactJS for the frontend, Spring Boot for the backend, and implemented microservices architecture. My tech stack includes Java, Spring Boot, Hibernate, ReactJS, and MySQL.",
               "code": null
             },
             {
@@ -30,36 +30,24 @@ export const company = {
             },
             {
               "question": "Write a code example for Bubble Sort in Java.",
-              "answer": "",
+              "answer": "Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.\n- Time: O(n²), Space: O(1)\n- Input: [3,5,1,0,4,6] → Output: [0,1,3,4,5,6]",
               "code": {
                 "language": "java",
-                "content": "public class BubbleSort {\n    public static void main(String[] args) {\n        int[] arr = {3, 5, 1, 0, 4, 6};\n        bubbleSort(arr);\n        for (int num : arr) {\n            System.out.print(num + \" \");\n        }\n    }\n\n    public static void bubbleSort(int[] arr) {\n        int n = arr.length;\n        for (int i = 0; i < n - 1; i++) {\n            for (int j = 0; j < n - i - 1; j++) {\n                if (arr[j] > arr[j + 1]) {\n                    // Swap arr[j] and arr[j+1]\n                    int temp = arr[j];\n                    arr[j] = arr[j + 1];\n                    arr[j + 1] = temp;\n                }\n            }\n        }\n    }\n}"
+                "content": "public class BubbleSort {\n    public static void main(String[] args) {\n        int[] arr = {3, 5, 1, 0, 4, 6};\n        bubbleSort(arr);\n        for (int num : arr) {\n            System.out.print(num + \" \");\n        }\n    }\n\n    public static void bubbleSort(int[] arr) {\n        int n = arr.length;\n        for (int i = 0; i < n - 1; i++) {\n            for (int j = 0; j < n - i - 1; j++) {\n                if (arr[j] > arr[j + 1]) {\n                    int temp = arr[j];\n                    arr[j] = arr[j + 1];\n                    arr[j + 1] = temp;\n                }\n            }\n        }\n    }\n}\n// Input: [3,5,1,0,4,6] Output: [0,1,3,4,5,6]"
               }
             },
             {
               "question": "What is the difference between PUT, PATCH, and POST in RESTful services?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "PUT: Used to update an existing resource or create a resource if it does not exist. It is idempotent, meaning multiple identical requests should yield the same result.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "PATCH: Used to apply partial updates to a resource. It is not necessarily idempotent.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "POST: Used to create a new resource. It is not idempotent, and repeated requests may create multiple resources.",
-              "answer": "",
+              "answer": "- PUT: used to update an existing resource or create it if it does not exist; idempotent\n- PATCH: used to apply partial updates to a resource; not necessarily idempotent\n- POST: used to create a new resource; not idempotent, repeated requests may create multiple resources",
               "code": null
             },
             {
               "question": "If an API takes a long time to respond, how do you handle it in your application?",
-              "answer": "To handle long API response times, I would implement asynchronous processing using the @Async annotation in Spring Boot or use techniques like caching, timeout settings, or a circuit breaker pattern to manage delayed responses and prevent performance bottlenecks.",
-              "code": null
+              "answer": "Implement asynchronous processing using the @Async annotation in Spring Boot, or use techniques like caching, timeout settings, or a circuit breaker pattern to manage delayed responses and prevent performance bottlenecks.\n- Example: annotate a method with @Async and enable @EnableAsync to run it in a separate thread so the main thread is not blocked.",
+              "code": {
+                "language": "java",
+                "content": "@Async\npublic CompletableFuture<String> processRequest() {\n    // long-running task\n    return CompletableFuture.completedFuture(\"Done\");\n}"
+              }
             },
             {
               "question": "What is the @Async annotation in Spring Boot, and how does it work?",
@@ -94,32 +82,7 @@ export const company = {
             },
             {
               "question": "What are the different bean scopes available in Spring Boot?",
-              "answer": "The different bean scopes in Spring Boot are:",
-              "code": null
-            },
-            {
-              "question": "Singleton: One instance per Spring container.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Prototype: A new instance every time the bean is requested.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Request: One instance per HTTP request.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Session: One instance per HTTP session.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Application: One instance per ServletContext.",
-              "answer": "",
+              "answer": "- Singleton: one instance per Spring container\n- Prototype: a new instance every time the bean is requested\n- Request: one instance per HTTP request\n- Session: one instance per HTTP session\n- Application: one instance per ServletContext",
               "code": null
             },
             {
@@ -139,42 +102,12 @@ export const company = {
             },
             {
               "question": "What are the @Primary and @Qualifier annotations in Spring Boot, and when would you use them?",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "@Primary: Used to indicate the preferred bean when multiple beans of the same type exist.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "@Qualifier: Used to specify which bean should be injected when multiple beans of the same type exist and @Primary is not sufficient.",
-              "answer": "",
+              "answer": "- @Primary: used to indicate the preferred bean when multiple beans of the same type exist\n- @Qualifier: used to specify which bean should be injected when multiple beans of the same type exist and @Primary is not sufficient",
               "code": null
             },
             {
               "question": "Explain the different types of relationships in JPA (e.g., One-to-One, One-to-Many, Many-to-One, Many-to-Many).",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "One-to-One: Each entity instance is associated with one instance of another entity.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "One-to-Many: An entity instance is associated with multiple instances of another entity.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Many-to-One: Multiple instances of an entity are associated with one instance of another entity.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Many-to-Many: Multiple instances of an entity are associated with multiple instances of another entity.",
-              "answer": "",
+              "answer": "- One-to-One: each entity instance is associated with one instance of another entity\n- One-to-Many: an entity instance is associated with multiple instances of another entity\n- Many-to-One: multiple instances of an entity are associated with one instance of another entity\n- Many-to-Many: multiple instances of an entity are associated with multiple instances of another entity",
               "code": null
             },
             {
@@ -214,25 +147,15 @@ export const company = {
             },
             {
               "question": "What is a YAML file in Spring Boot, and how is it used?",
-              "answer": "A YAML file in Spring Boot is an alternative to the application.properties file for configuring the application. It\nprovides a more readable and hierarchical way to define configuration settings.",
+              "answer": "A YAML file in Spring Boot is an alternative to the application.properties file for configuring the application. It provides a more readable and hierarchical way to define configuration settings.",
               "code": null
             },
             {
               "question": "Given a string str and a substring str1, count how many times str1 appears in str.",
-              "answer": "",
-              "code": null
-            },
-            {
-              "question": "Example Input",
-              "answer": "str = \"i am good boy\"\nstr1 = \"am\"",
-              "code": null
-            },
-            {
-              "question": "Example Output",
-              "answer": "1",
+              "answer": "Use indexOf in a loop to find and count each occurrence.\n- Example: str = \"i am good boy\", str1 = \"am\" → Output: 1",
               "code": {
                 "language": "java",
-                "content": "public class SubstringCount {\n    public static void main(String[] args) {\n        String str = \"i am good boy\";\n        String str1 = \"am\";\n        int count = countOccurrences(str, str1);\n        System.out.println(count);\n    }\n\n    public static int countOccurrences(String str, String subStr) {\n        int count = 0;\n        int index = 0;\n        while ((index = str.indexOf(subStr, index)) != -1) {\n            count++;\n            index += subStr.length();\n        }\n        return count;\n    }\n}"
+                "content": "public class SubstringCount {\n    public static void main(String[] args) {\n        String str = \"i am good boy\";\n        String str1 = \"am\";\n        int count = countOccurrences(str, str1);\n        System.out.println(count); // 1\n    }\n\n    public static int countOccurrences(String str, String subStr) {\n        int count = 0;\n        int index = 0;\n        while ((index = str.indexOf(subStr, index)) != -1) {\n            count++;\n            index += subStr.length();\n        }\n        return count;\n    }\n}"
               }
             }
           ]
@@ -242,33 +165,32 @@ export const company = {
           "questions": [
             {
               "question": "Give a self-introduction and explain your project.",
-              "answer": "",
+              "answer": "I am [Your Name], a Java full stack developer with 3 years of experience. I specialize in Spring Boot, ReactJS, Hibernate, and MySQL. My recent project was a banking application where I handled the user registration flow and transaction data processing using a microservices architecture.",
               "code": null
             },
             {
               "question": "What tasks did you work on in your last project?",
-              "answer": "",
+              "answer": "I worked on building RESTful APIs with Spring Boot, designing the database schema, implementing authentication with JWT, and creating the ReactJS frontend. I also integrated Kafka for asynchronous messaging and Docker for containerization.",
               "code": null
             },
             {
               "question": "What are your salary expectations?",
-              "answer": "",
+              "answer": "Based on my experience and market standards, I am looking for a competitive package. I'm flexible and happy to discuss further based on the role.",
               "code": null
             },
             {
               "question": "Are you interested in learning new technology?",
-              "answer": "",
+              "answer": "Yes, I am always eager to learn new technologies. I regularly keep up with new tools and frameworks through online courses, documentation, and personal projects to stay current in the evolving tech landscape.",
               "code": null
             },
             {
-              "question": "Why are you looking for a new job? etc....",
-              "answer": "",
+              "question": "Why are you looking for a new job?",
+              "answer": "I am looking for better growth opportunities, more challenging projects, and a chance to work with new and emerging technologies that will help me advance my career.",
               "code": null
             }
           ]
         }
       ]
     }
-  ],
-  "questionCount": 47
+  ]
 };
