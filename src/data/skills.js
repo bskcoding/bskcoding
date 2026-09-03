@@ -235,8 +235,8 @@ export const skills = [
     id: "system-design",
     name: "System Design",
     icon: "🏗️",
-    color: "#3B82F6",
-    progress: 0,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Plan scalable systems with reliability, performance and observability.",
     subtopics: [

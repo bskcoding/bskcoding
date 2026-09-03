@@ -83,6 +83,7 @@ const ReactiveProgrammingInterview = lazy(
 const DSATopics = lazy(() => import("./topics/dsa/DSATopics"));
 const DSACourse = lazy(() => import("./topics/dsa/DSACourse"));
 const DSALeetcode = lazy(() => import("./pages/DSALeetcode"));
+const SystemDesignPage = lazy(() => import("./pages/SystemDesign"));
 const CompanyInterview = lazy(() => import("./pages/CompanyInterview"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
@@ -279,6 +280,7 @@ function App() {
                 <Route path="/dsa" element={<DSATopics />} />
                 <Route path="/dsa/course" element={<DSACourse />} />
                 <Route path="/dsa/leetcode" element={<DSALeetcode />} />
+                <Route path="/system-design" element={<SystemDesignPage />} />
                 <Route
                   path="/company-interview"
                   element={<CompanyInterview />}

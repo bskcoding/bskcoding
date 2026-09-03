@@ -18,6 +18,7 @@ function Home() {
     if (id === "apache-kafka") return "/kafka";
     if (id === "reactive-programming") return "/reactive-programming";
     if (id === "dsa") return "/dsa";
+    if (id === "system-design") return "/system-design";
     if (id === "company-interview") return "/company-interview";
     return "#";
   };
