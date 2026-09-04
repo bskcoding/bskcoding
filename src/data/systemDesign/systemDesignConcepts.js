@@ -35,7 +35,7 @@ export const systemDesignConcepts = [
 |      |                                         |
 |      v                                         |
 |  Load Balancer                                 |
-|    /    |    \                                 |
+|    /    |    \\                                 |
 |   v     v     v                                |
 |  S1    S2    S3                                |
 |                                                |
@@ -74,7 +74,7 @@ export const systemDesignConcepts = [
 | DATABASE SHARDING                              |
 |                                                |
 |      Main Database                             |
-|     /      |      \                            |
+|     /      |      \\                            |
 |    v       v       v                           |
 |  Shard1  Shard2  Shard3                        |
 |  Users   Orders  Payments                      |
@@ -95,7 +95,7 @@ export const systemDesignConcepts = [
 | MASTER-SLAVE REPLICATION                       |
 |                                                |
 |      Master (Writes)                           |
-|     /     |     \                              |
+|     /     |     \\                              |
 |    v      v      v                             |
 |  Slave1  Slave2  Slave3                        |
 |  (Read)  (Read)  (Read)                        |
@@ -116,11 +116,11 @@ export const systemDesignConcepts = [
 | CAP THEOREM                                    |
 |                                                |
 |        Consistency                             |
-|       /            \                           |
+|       /            \\                           |
 |      v              v                          |
 |    CP               CA                         |
 |  (Banking)      (Single DB)                    |
-|      \              /                          |
+|      \\              /                          |
 |       v            v                           |
 |        Availability                            |
 |                                                |
@@ -144,7 +144,7 @@ export const systemDesignConcepts = [
 |          v                                     |
 |     API GATEWAY                                |
 |   Auth + Rate + Route                          |
-|     /    |    \                                |
+|     /    |    \\                                |
 |    v     v     v                               |
 |  Auth  Orders  Payment                         |
 |  Svc   Svc     Svc                             |
@@ -165,7 +165,7 @@ export const systemDesignConcepts = [
 | Producer2 --> [M1][M2][M3][M4]                 |
 | Producer3 -->                                  |
 |                 |                              |
-|        /        |        \                     |
+|        /        |        \\                     |
 |       v         v         v                    |
 |   Consumer1  Consumer2  Consumer3              |
 |                                                |
@@ -206,7 +206,7 @@ export const systemDesignConcepts = [
 |                                                |
 |      Root Node                                 |
 |    [10][20][30]                                |
-|     /   |   \                                  |
+|     /   |   \\                                  |
 |    v    v    v                                 |
 |  [5]  [15]  [25]                               |
 |                                                |
@@ -321,7 +321,7 @@ export const systemDesignConcepts = [
 |                                                |
 | Orchestration:                                 |
 |   Order --> Orchestrator                       |
-|        /    |    \                             |
+|        /    |    \\                             |
 |       v     v     v                            |
 |   Payment Inventory Shipping                   |
 |                                                |
@@ -732,7 +732,7 @@ export const systemDesignConcepts = [
 |                                                |
 | B-Tree:                                        |
 |   Root [10][20][30]                            |
-|    /    |    \                                 |
+|    /    |    \\                                 |
 |   v     v     v                                |
 | [5]   [15]  [25]                               |
 |                                                |
