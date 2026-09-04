@@ -13,6 +13,7 @@ function MaangDSAGraph() {
       titleAccent="Graphs"
       problems={dsaProblems}
       introLink={googleSeriesIntro.videoLink}
+      pageTheme="graph"
     />
   );
 }

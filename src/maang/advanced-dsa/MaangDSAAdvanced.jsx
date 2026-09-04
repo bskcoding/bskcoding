@@ -13,6 +13,7 @@ function MaangDSAAdvanced() {
       titleAccent="Part 2"
       problems={dsaProblems}
       introLink={googleSeriesIntro.videoLink}
+      pageTheme="advanced"
     />
   );
 }

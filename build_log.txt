@@ -1,0 +1,108 @@
+
+> bskcoding@0.0.0 build
+> vite build
+
+[36mvite v8.1.4 [32mbuilding client environment for production...[36m[39m
+[2Ktransforming...✓ 637 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                           0.93 kB │ gzip:   0.47 kB
+dist/assets/bskimg-iuz938EW.svg                         364.43 kB │ gzip:  99.96 kB
+dist/assets/pdf.worker.min-CHFwMXne.mjs               1,262.39 kB
+dist/assets/Register-BK2rkQzE.css                         0.65 kB │ gzip:   0.34 kB
+dist/assets/atom-one-dark-B-oHczHB.css                    0.85 kB │ gzip:   0.40 kB
+dist/assets/DSACourse-D09g4EMu.css                        2.55 kB │ gzip:   0.94 kB
+dist/assets/SQLCourse-CweV5sFd.css                        2.59 kB │ gzip:   0.96 kB
+dist/assets/DSATopics-DyDFDg7I.css                        2.93 kB │ gzip:   0.88 kB
+dist/assets/JavaCourse-B_gzDsap.css                       3.00 kB │ gzip:   1.06 kB
+dist/assets/KafkaCourse-DR2KpGsS.css                      3.00 kB │ gzip:   1.06 kB
+dist/assets/SpringBootCourse-CHyzS24r.css                 3.01 kB │ gzip:   1.07 kB
+dist/assets/MicroservicesCourse-CxqNXHFl.css              3.02 kB │ gzip:   1.07 kB
+dist/assets/JavaScriptTopics-faeubPsP.css                 3.06 kB │ gzip:   0.91 kB
+dist/assets/JavaTopics-r99Vr_Qx.css                       3.13 kB │ gzip:   0.91 kB
+dist/assets/ReactJSTopics-BAfMcjGE.css                    3.16 kB │ gzip:   0.91 kB
+dist/assets/SpringBootTopics-Bv9yCHef.css                 3.35 kB │ gzip:   0.91 kB
+dist/assets/MicroservicesTopics-CWWkFaxK.css              3.42 kB │ gzip:   0.92 kB
+dist/assets/FeaturesPage-B32oXvqB.css                     3.84 kB │ gzip:   1.24 kB
+dist/assets/DSALeetcode-B9YWHvoa.css                      4.41 kB │ gzip:   1.41 kB
+dist/assets/SystemDesignBasics-BfuSayHa.css               4.57 kB │ gzip:   1.55 kB
+dist/assets/JavaScriptInterview-DQ-JllNc.css              5.85 kB │ gzip:   1.42 kB
+dist/assets/ReactJSInterview-D5z9raHb.css                 6.03 kB │ gzip:   1.43 kB
+dist/assets/MicroservicesInterview-DXbY-Frf.css           6.74 kB │ gzip:   1.83 kB
+dist/assets/SpringBootInterview-Cc7VN9Yl.css              7.49 kB │ gzip:   1.98 kB
+dist/assets/CompanyInterview-DUr-I1ck.css                 7.99 kB │ gzip:   2.08 kB
+dist/assets/SystemDesign-DyYFJHLa.css                     9.08 kB │ gzip:   2.30 kB
+dist/assets/SolidPage-Cm4tfYMn.css                        9.84 kB │ gzip:   2.58 kB
+dist/assets/DesignPatternsPage-9vGBiwhy.css              10.66 kB │ gzip:   2.75 kB
+dist/assets/OopsPage-CCKcq7do.css                        10.75 kB │ gzip:   2.75 kB
+dist/assets/UmlPage-DArmlaeE.css                         12.56 kB │ gzip:   3.03 kB
+dist/assets/ResumeBuilderPage-NRI-_gmz.css               12.64 kB │ gzip:   2.84 kB
+dist/assets/MaangDSABasic-BVOpuNb7.css                   17.75 kB │ gzip:   3.92 kB
+dist/assets/index-D75MeTvb.css                           54.50 kB │ gzip:  10.55 kB
+dist/assets/html2canvas-BFCsJ3aT.js                       0.07 kB │ gzip:   0.08 kB
+dist/assets/typeof-B5XbjTb1.js                            0.27 kB │ gzip:   0.16 kB
+dist/assets/MaangDSAGraph-DcEF6iOp.js                     0.29 kB │ gzip:   0.23 kB
+dist/assets/MaangDSAAdvanced-DOOZ8-6m.js                  0.30 kB │ gzip:   0.23 kB
+dist/assets/MaangDSADp-DoGgbTAO.js                        0.30 kB │ gzip:   0.24 kB
+dist/assets/NotFound-DyY62JEZ.js                          0.39 kB │ gzip:   0.26 kB
+dist/assets/rolldown-runtime-Bh1tDfsg.js                  0.56 kB │ gzip:   0.36 kB
+dist/assets/MaangWeeklyPreparation-DNy5Bq4A.js            0.71 kB │ gzip:   0.42 kB
+dist/assets/dsaGraphProblems-DAo0sP3N.js                  0.76 kB │ gzip:   0.30 kB
+dist/assets/Contact-dw7JBYB4.js                           0.94 kB │ gzip:   0.40 kB
+dist/assets/MaangLetterGrid-D1mqgpar.js                   0.96 kB │ gzip:   0.47 kB
+dist/assets/Profile-CmXesLpL.js                           1.67 kB │ gzip:   0.57 kB
+dist/assets/About-Bl8GZp9c.js                             2.33 kB │ gzip:   0.94 kB
+dist/assets/SystemDesignBasics-D0yj7tnw.js                2.46 kB │ gzip:   0.95 kB
+dist/assets/MaangPreparation-BmaVg27U.js                  2.70 kB │ gzip:   0.93 kB
+dist/assets/dsaDpProblems-CUzXW7UN.js                     3.37 kB │ gzip:   0.70 kB
+dist/assets/Register-CEhZ7kCp.js                          3.41 kB │ gzip:   1.30 kB
+dist/assets/ReactJSTopics-BiOfctsw.js                     3.41 kB │ gzip:   0.86 kB
+dist/assets/JavaScriptTopics-DYQpOYDA.js                  3.42 kB │ gzip:   0.85 kB
+dist/assets/SQLTopics-BG8ZBJNe.js                         3.44 kB │ gzip:   0.88 kB
+dist/assets/JavaTopics-BerGrjcp.js                        3.45 kB │ gzip:   0.86 kB
+dist/assets/KafkaTopics-DRYQpaT8.js                       3.47 kB │ gzip:   0.88 kB
+dist/assets/MicroservicesTopics-oOathmEm.js               3.48 kB │ gzip:   0.87 kB
+dist/assets/SpringBootTopics-B2rEx_Uv.js                  3.51 kB │ gzip:   0.88 kB
+dist/assets/FeaturesPage-BIGKxfeE.js                      3.59 kB │ gzip:   1.15 kB
+dist/assets/DSATopics-BZdSboi5.js                         3.63 kB │ gzip:   1.00 kB
+dist/assets/ReactiveProgrammingTopics-CAxqgpkL.js         3.65 kB │ gzip:   0.96 kB
+dist/assets/Login-8WxayRK9.js                             3.67 kB │ gzip:   1.57 kB
+dist/assets/skills-CS5-NG47.js                            6.70 kB │ gzip:   2.87 kB
+dist/assets/dsaAdvancedProblems-BN99_aa6.js              10.40 kB │ gzip:   1.84 kB
+dist/assets/KafkaCourse-Be7MeN1L.js                      12.13 kB │ gzip:   5.12 kB
+dist/assets/Home-BGFmzKc_.js                             13.39 kB │ gzip:   4.52 kB
+dist/assets/MicroservicesCourse-BzPnuOBS.js              24.75 kB │ gzip:   9.42 kB
+dist/assets/Roadmap90Day-B8WppmEI.js                     24.79 kB │ gzip:   3.75 kB
+dist/assets/SpringBootCourse-_TWXyIJq.js                 25.80 kB │ gzip:   9.75 kB
+dist/assets/purify.es-Bwt4ulIK.js                        27.13 kB │ gzip:  10.54 kB
+dist/assets/MaangDSABasic-W4o_XXHk.js                    28.16 kB │ gzip:   6.91 kB
+dist/assets/SQLCourse-BiQPZbrl.js                        30.84 kB │ gzip:  10.72 kB
+dist/assets/DSACourse-C8s9ztFB.js                        30.90 kB │ gzip:   9.41 kB
+dist/assets/SQLInterview-D4YvYzGt.js                     32.12 kB │ gzip:   9.22 kB
+dist/assets/MicroservicesInterview-mgQtsUBX.js           33.24 kB │ gzip:  10.88 kB
+dist/assets/SolidPage-CjhDeTMJ.js                        43.45 kB │ gzip:   9.28 kB
+dist/assets/DesignPatternsPage-BXLywCPf.js               48.48 kB │ gzip:  11.19 kB
+dist/assets/UmlPage-CrnzBXBY.js                          51.03 kB │ gzip:  10.92 kB
+dist/assets/OopsPage-1t1lW9he.js                         51.77 kB │ gzip:  11.37 kB
+dist/assets/SystemDesign-uSfC30b5.js                     60.11 kB │ gzip:  13.67 kB
+dist/assets/JavaCourse-BuBjrcbS.js                       62.48 kB │ gzip:  22.33 kB
+dist/assets/SpringBootInterview-asy2FhHE.js              63.40 kB │ gzip:  15.87 kB
+dist/assets/KafkaInterview-IuPQQ4-y.js                   65.46 kB │ gzip:  17.09 kB
+dist/assets/JavaScriptInterview-D2R_3oTZ.js              80.90 kB │ gzip:  22.84 kB
+dist/assets/DSALeetcode-C751uRss.js                     101.87 kB │ gzip:  28.30 kB
+dist/assets/JavaInterview-Cfpy8-lt.js                   105.15 kB │ gzip:  27.11 kB
+dist/assets/ReactJSInterview-BvVd6khl.js                106.93 kB │ gzip:  26.17 kB
+dist/assets/index.es-D543kx3a.js                        151.48 kB │ gzip:  48.93 kB
+dist/assets/ReactiveProgrammingInterview-DFMTxiF4.js    234.95 kB │ gzip:  54.24 kB
+dist/assets/index-B2pfr9bM.js                           263.26 kB │ gzip:  82.98 kB
+dist/assets/CompanyInterview-Bf-Gwpln.js                456.15 kB │ gzip: 129.70 kB
+dist/assets/firebase-B3Dg3goo.js                        623.57 kB │ gzip: 186.58 kB
+dist/assets/atom-one-dark-D-IhdStn.js                   914.54 kB │ gzip: 304.40 kB
+dist/assets/ResumeBuilderPage-W_Co_ZIA.js             1,427.43 kB │ gzip: 379.14 kB
+
+[32m✓ built in 1.23s[39m
+[33m[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 1000 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m

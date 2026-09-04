@@ -127,6 +127,7 @@ function DsaSheetPage({
   problems = BASIC_PROBLEMS,
   introLink = googleSeriesIntro.videoLink,
   showWeeklyPlan = false,
+  pageTheme = "basic",
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -196,7 +197,11 @@ function DsaSheetPage({
   );
 
   return (
-    <div className={`mdsa-page${showWeeklyPlan ? " mdsa-page-weekly" : ""}`}>
+    <div
+      className={`mdsa-page mdsa-page-${pageTheme}${
+        showWeeklyPlan ? " mdsa-page-weekly" : ""
+      }`}
+    >
       {/* ===== HERO ===== */}
       <section className="mdsa-hero">
         <Link to="/maang" className="mdsa-back">
@@ -231,7 +236,7 @@ function DsaSheetPage({
 
       {/* ===== STATS ===== */}
       <section className="mdsa-stats">
-        <div className="mdsa-stat-card">
+        <div className="mdsa-stat-card total">
           <span className="mdsa-stat-num">{total}</span>
           <span className="mdsa-stat-label">Total Problems</span>
         </div>
@@ -413,10 +418,15 @@ function DsaSheetPage({
                     style={{ "--cat-color": grp.color }}
                   >
                     <span
-                      className="mdsa-category-dot"
-                      style={{ background: grp.color }}
+                      className="mdsa-category-tile"
+                      style={{
+                        background: `linear-gradient(135deg, ${grp.color}, color-mix(in srgb, ${grp.color} 60%, #000000))`,
+                        boxShadow: `0 6px 18px color-mix(in srgb, ${grp.color} 50%, transparent), inset 0 1px 0 rgba(255,255,255,0.35)`,
+                      }}
                       aria-hidden="true"
-                    />
+                    >
+                      {grp.topic.charAt(0).toUpperCase()}
+                    </span>
                     <h3 className="mdsa-category-title">{grp.topic}</h3>
                     <span className="mdsa-category-count">
                       {grp.problems.length} problem
@@ -471,6 +481,7 @@ function MaangDSABasic() {
       titleAccent="Part 1"
       problems={BASIC_PROBLEMS}
       introLink={googleSeriesIntro.videoLink}
+      pageTheme="basic"
     />
   );
 }

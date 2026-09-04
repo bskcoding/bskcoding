@@ -49,6 +49,7 @@ function MaangWeeklyPreparation() {
       problems={ALL_PROBLEMS}
       introLink={googleSeriesIntro.videoLink}
       showWeeklyPlan={true}
+      pageTheme="weekly"
     />
   );
 }

@@ -14,6 +14,7 @@ function MaangDSADp() {
       titleAccent="DP Patterns"
       problems={dsaProblems}
       introLink={googleSeriesIntro.videoLink}
+      pageTheme="dp"
     />
   );
 }
