@@ -11,7 +11,7 @@ const CURRENT_USER_KEY = "bsk_current_user";
 // Same vibrant per-character palette the MAANG brand uses across the app.
 const MAANG_COLORS = ["#FF5733", "#FFBD33", "#33FF57", "#33A1FF", "#A133FF"];
 
-function NavBar({ onOpenChangePassword }) {
+function NavBar({ onOpenChangePassword, onOpenFounder }) {
   const [user, setUser] = useState(getCurrentUser());
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -124,9 +124,16 @@ function NavBar({ onOpenChangePassword }) {
           <NavLink to="/" end className="nav-link" onClick={closeMenu}>
             <span>Home</span>
           </NavLink>
-          <NavLink to="/about" className="nav-link" onClick={closeMenu}>
+          <button
+            type="button"
+            className="nav-link nav-link-btn"
+            onClick={() => {
+              closeMenu();
+              if (onOpenFounder) onOpenFounder();
+            }}
+          >
             <span>About</span>
-          </NavLink>
+          </button>
           <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
             <span>Contact</span>
           </NavLink>

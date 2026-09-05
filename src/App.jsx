@@ -7,13 +7,13 @@ import RequireAuth from "./components/RequireAuth";
 import ChangePasswordModal from "./components/ChangePasswordModal";
 import ErrorBoundary from "./components/ErrorBoundary";
 import YouTubeLinkHandler from "./components/YouTubeLinkHandler";
+import FounderProfileModal from "./components/FounderProfileModal";
 import { BASENAME } from "./utils/basePath";
 
 // Route-level code splitting: each page is loaded on demand, so the main
 // bundle stays small and large pages (interview/topic pages) are only
 // downloaded when the user actually visits them.
 const Home = lazy(() => import("./pages/Home"));
-const About = lazy(() => import("./pages/About"));
 const MaangPreparation = lazy(() => import("./pages/MaangPreparation"));
 const MaangDSABasic = lazy(() => import("./maang/basic-dsa/MaangDSABasic"));
 const MaangDSAAdvanced = lazy(
@@ -126,6 +126,7 @@ function PageLoader() {
 
 function App() {
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [founderOpen, setFounderOpen] = useState(false);
 
   return (
     <BrowserRouter basename={BASENAME}>
@@ -135,7 +136,10 @@ function App() {
         <div className="app-shell">
           <ConfigBanner />
           <div className="navbar-container">
-            <NavBar onOpenChangePassword={() => setShowChangePassword(true)} />
+            <NavBar
+              onOpenChangePassword={() => setShowChangePassword(true)}
+              onOpenFounder={() => setFounderOpen(true)}
+            />
           </div>
           <main className="page-container">
             <Suspense fallback={<PageLoader />}>
@@ -146,7 +150,6 @@ function App() {
 
                 {/* Free routes - open to everyone, no login required */}
                 <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
                 <Route path="/features" element={<FeaturesPage />} />
                 <Route path="/roadmap" element={<Roadmap90Day />} />
                 <Route path="/java" element={<JavaTopics />} />
@@ -305,6 +308,11 @@ function App() {
           <ChangePasswordModal
             isOpen={showChangePassword}
             onClose={() => setShowChangePassword(false)}
+          />
+
+          <FounderProfileModal
+            isOpen={founderOpen}
+            onClose={() => setFounderOpen(false)}
           />
         </div>
       </ErrorBoundary>

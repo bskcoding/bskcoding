@@ -39,13 +39,10 @@ function Home() {
           <Link to="/roadmap" className="cta-button primary">
             Start Learning Path
           </Link>
-          <Link to="/about" className="cta-button secondary">
-            Learn More
-          </Link>
         </div>
         <div className="hero-badges">
           <div className="hero-badge">
-            <span>7</span>
+            <span>12</span>
             <p>Expert Tracks</p>
           </div>
           <div className="hero-badge">
@@ -106,8 +103,6 @@ function Home() {
           </div>
           <div className="footer-badge">
             <span className="badge">Trusted by developers worldwide</span>
-            <span className="badge">•</span>
-            <span className="badge">Industry-recognized certificates</span>
           </div>
         </div>
       </section>
