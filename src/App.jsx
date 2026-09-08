@@ -46,6 +46,7 @@ const JavaScriptInterview = lazy(
   () => import("./topics/javascript/JavaScriptInterview"),
 );
 const ReactJSTopics = lazy(() => import("./topics/reactjs/ReactJSTopics"));
+const ReactJSCourse = lazy(() => import("./topics/reactjs/ReactJSCourse"));
 const ReactJSInterview = lazy(
   () => import("./topics/reactjs/ReactJSInterview"),
 );
@@ -161,18 +162,28 @@ function App() {
                   element={<JavaScriptInterview />}
                 />
                 <Route path="/reactjs" element={<ReactJSTopics />} />
+                <Route path="/reactjs/course" element={<ReactJSCourse />} />
                 <Route
                   path="/reactjs/interview"
                   element={<ReactJSInterview />}
                 />
                 <Route path="/spring-boot" element={<SpringBootTopics />} />
-                <Route path="/spring-boot/course" element={<SpringBootCourse />} />
+                <Route
+                  path="/spring-boot/course"
+                  element={<SpringBootCourse />}
+                />
                 <Route
                   path="/spring-boot/interview"
                   element={<SpringBootInterview />}
                 />
-                <Route path="/microservices" element={<MicroservicesTopics />} />
-                <Route path="/microservices/course" element={<MicroservicesCourse />} />
+                <Route
+                  path="/microservices"
+                  element={<MicroservicesTopics />}
+                />
+                <Route
+                  path="/microservices/course"
+                  element={<MicroservicesCourse />}
+                />
                 <Route
                   path="/microservices/interview"
                   element={<MicroservicesInterview />}

@@ -25,7 +25,7 @@ function ReactJSTopics() {
         </p>
         <div className="skills-grid">
           {/* ReactJS Full Course */}
-          <Link to="#" className="skill-card-link">
+          <Link to="/reactjs/course" className="skill-card-link">
             <div className="skill-card" style={{ borderColor: reactColor }}>
               <div className="skill-card-top">
                 <span
