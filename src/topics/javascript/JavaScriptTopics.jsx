@@ -25,7 +25,7 @@ function JavaScriptTopics() {
         </p>
         <div className="skills-grid">
           {/* JavaScript Full Course */}
-          <Link to="#" className="skill-card-link">
+          <Link to="/javascript/course" className="skill-card-link">
             <div className="skill-card" style={{ borderColor: jsColor }}>
               <div className="skill-card-top">
                 <span

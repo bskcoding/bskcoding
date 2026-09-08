@@ -42,6 +42,9 @@ const JavaInterview = lazy(() => import("./topics/java/JavaInterview"));
 const JavaScriptTopics = lazy(
   () => import("./topics/javascript/JavaScriptTopics"),
 );
+const JavaScriptCourse = lazy(
+  () => import("./topics/javascript/JavaScriptCourse"),
+);
 const JavaScriptInterview = lazy(
   () => import("./topics/javascript/JavaScriptInterview"),
 );
@@ -157,6 +160,10 @@ function App() {
                 <Route path="/java/course" element={<JavaCourse />} />
                 <Route path="/java/interview" element={<JavaInterview />} />
                 <Route path="/javascript" element={<JavaScriptTopics />} />
+                <Route
+                  path="/javascript/course"
+                  element={<JavaScriptCourse />}
+                />
                 <Route
                   path="/javascript/interview"
                   element={<JavaScriptInterview />}
