@@ -27,7 +27,7 @@ function ReactiveProgrammingTopics() {
         </p>
         <div className="skills-grid">
           {/* Reactive Programming Full Course */}
-          <Link to="#" className="skill-card-link">
+          <Link to="/reactive-programming/course" className="skill-card-link">
             <div className="skill-card" style={{ borderColor: reactiveColor }}>
               <div className="skill-card-top">
                 <span

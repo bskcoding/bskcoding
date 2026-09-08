@@ -81,6 +81,9 @@ const KafkaInterview = lazy(() => import("./topics/kafka/KafkaInterview"));
 const ReactiveProgrammingTopics = lazy(
   () => import("./topics/reactive-programming/ReactiveProgrammingTopics"),
 );
+const ReactiveProgrammingCourse = lazy(
+  () => import("./topics/reactive-programming/ReactiveProgrammingCourse"),
+);
 const ReactiveProgrammingInterview = lazy(
   () => import("./topics/reactive-programming/ReactiveProgrammingInterview"),
 );
@@ -293,6 +296,10 @@ function App() {
                 <Route
                   path="/reactive-programming"
                   element={<ReactiveProgrammingTopics />}
+                />
+                <Route
+                  path="/reactive-programming/course"
+                  element={<ReactiveProgrammingCourse />}
                 />
                 <Route
                   path="/reactive-programming/interview"
