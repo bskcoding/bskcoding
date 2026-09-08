@@ -313,7 +313,7 @@
   justify-content: space-between;
   gap: 10px;
   padding: 12px 15px;
-  background: #102a3b;
+  background: #0a111c;
 }
 .react-course-example-heading span {
   color: #7fa4af;
@@ -330,6 +330,12 @@
     "Courier New",
     monospace;
   white-space: pre-wrap;
+}
+.react-course-example pre code.hljs {
+  display: block;
+  padding: 0;
+  color: #d9f6fc;
+  background: #06101a;
 }
 .react-course-detail-nav {
   display: flex;

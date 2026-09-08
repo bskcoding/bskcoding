@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import hljs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
 import { reactjsCourseConcepts } from "../../data/reactjs/reactjsCourseConcepts";
 import "./ReactJSCourse.css";
 
@@ -8,6 +10,12 @@ const categories = [
   "all",
   ...new Set(reactjsCourseConcepts.map((item) => item.category)),
 ];
+
+const highlightCode = (code) =>
+  hljs.highlight(code, {
+    language: "javascript",
+    ignoreIllegals: true,
+  }).value;
 
 function ReactJSCourse() {
   const [selectedId, setSelectedId] = useState(1);
@@ -189,7 +197,12 @@ function ReactJSCourse() {
               <span>JSX / JavaScript</span>
             </div>
             <pre>
-              <code>{selected.code}</code>
+              <code
+                className="hljs language-javascript"
+                dangerouslySetInnerHTML={{
+                  __html: highlightCode(selected.code),
+                }}
+              />
             </pre>
           </section>
           <div className="react-course-detail-nav">
