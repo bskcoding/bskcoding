@@ -51,6 +51,11 @@ const parseQuestions = (content) => {
     ) {
       return;
     }
+    // Skip standalone label lines like "Example:", "Flow:", "Key capabilities:"
+    // — the code block / list that follows already communicates the structure.
+    if (/^[\w\s'/&()-]{1,45}:$/.test(trimmed)) {
+      return;
+    }
     if (currentQuestion) {
       currentQuestion.response.push({ type: "text", content: trimmed });
     }
@@ -140,8 +145,12 @@ const parseQuestions = (content) => {
 
     if (!currentQuestion) continue;
 
-    if (/^\*\*\*?/.test(trimmedLine) || /^\*\*/.test(trimmedLine)) {
-      pushText(trimmedLine.replace(/^\*\*\*?/, "").replace(/\*\*\*?$/, ""));
+    if (
+      trimmedLine.startsWith("**") &&
+      trimmedLine.endsWith("**") &&
+      trimmedLine.length > 4
+    ) {
+      pushText(trimmedLine.slice(2, -2));
       continue;
     }
 
@@ -195,6 +204,7 @@ const parseQuestions = (content) => {
 };
 
 const interviewCategories = parseQuestions(kafkaInterviewQuestions);
+
 const totalQuestions = interviewCategories.reduce(
   (sum, cat) => sum + cat.questions.length,
   0,
@@ -338,7 +348,10 @@ function KafkaInterview() {
                                   );
                                 }
                                 return (
-                                  <p key={index} className="answer-text">
+                                  <p
+                                    key={index}
+                                    className={`answer-text answer-${block.type}`}
+                                  >
                                     {block.content}
                                   </p>
                                 );

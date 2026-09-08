@@ -111,7 +111,9 @@ const parseQuestions = (content) => {
       if (responseText) {
         currentQuestion.response.push({
           type: "text",
-          content: responseText,
+          content: responseText
+            .replace(/\*\*(.+?)\*\*/g, "$1")
+            .replace(/`([^`]+)`/g, "$1"),
         });
       }
     } else if (currentQuestion && line.trim().startsWith("- **Example**:")) {
@@ -119,7 +121,9 @@ const parseQuestions = (content) => {
       if (responseText) {
         currentQuestion.response.push({
           type: "example",
-          content: responseText,
+          content: responseText
+            .replace(/\*\*(.+?)\*\*/g, "$1")
+            .replace(/`([^`]+)`/g, "$1"),
         });
       }
     } else if (currentQuestion && line.trim().startsWith("- **Note**:")) {
@@ -127,11 +131,22 @@ const parseQuestions = (content) => {
       if (responseText) {
         currentQuestion.response.push({
           type: "note",
-          content: responseText,
+          content: responseText
+            .replace(/\*\*(.+?)\*\*/g, "$1")
+            .replace(/`([^`]+)`/g, "$1"),
         });
       }
     } else if (currentQuestion && line.trim() && !line.trim().startsWith("#")) {
       const cleanLine = line.trim();
+
+      // Skip standalone label lines like "Example:", "Flow:", "Key capabilities:"
+      const strippedLabel = cleanLine
+        .replace(/^-\s*/, "")
+        .replace(/\*\*(.+?)\*\*/g, "$1")
+        .replace(/`([^`]+)`/g, "$1")
+        .trim();
+      if (/^[\w\s'/&()-]{1,45}:$/.test(strippedLabel)) continue;
+
       if (
         cleanLine &&
         cleanLine.length > 1 &&
@@ -156,6 +171,7 @@ const parseQuestions = (content) => {
 };
 
 const interviewCategories = parseQuestions(interviewData);
+
 const totalQuestions = interviewCategories.reduce(
   (sum, cat) => sum + cat.questions.length,
   0,
@@ -254,19 +270,28 @@ function SpringBootInterview() {
                                   );
                                 } else if (item.type === "example") {
                                   return (
-                                    <p key={idx} className="answer-text">
+                                    <p
+                                      key={idx}
+                                      className={`answer-text answer-${item.type}`}
+                                    >
                                       📘 {item.content}
                                     </p>
                                   );
                                 } else if (item.type === "note") {
                                   return (
-                                    <p key={idx} className="answer-text">
+                                    <p
+                                      key={idx}
+                                      className={`answer-text answer-${item.type}`}
+                                    >
                                       💡 {item.content}
                                     </p>
                                   );
                                 } else {
                                   return (
-                                    <p key={idx} className="answer-text">
+                                    <p
+                                      key={idx}
+                                      className={`answer-text answer-${item.type}`}
+                                    >
                                       {item.content}
                                     </p>
                                   );

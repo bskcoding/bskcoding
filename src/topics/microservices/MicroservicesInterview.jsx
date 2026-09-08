@@ -633,11 +633,22 @@ const parseQuestions = (content) => {
       if (responseText) {
         currentQuestion.response.push({
           type: "text",
-          content: responseText,
+          content: responseText
+            .replace(/\*\*(.+?)\*\*/g, "$1")
+            .replace(/`([^`]+)`/g, "$1"),
         });
       }
     } else if (currentQuestion && line.trim() && !line.trim().startsWith("#")) {
       const cleanLine = line.trim();
+
+      // Skip standalone label lines like "Example:", "Flow:", "Best Practice:"
+      const strippedLabel = cleanLine
+        .replace(/^-\s*/, "")
+        .replace(/\*\*(.+?)\*\*/g, "$1")
+        .replace(/`([^`]+)`/g, "$1")
+        .trim();
+      if (/^[\w\s'/&()-]{1,45}:$/.test(strippedLabel)) continue;
+
       if (
         cleanLine &&
         cleanLine.length > 1 &&
@@ -662,6 +673,7 @@ const parseQuestions = (content) => {
 };
 
 const interviewCategories = parseQuestions(interviewData);
+
 const totalQuestions = interviewCategories.reduce(
   (sum, cat) => sum + cat.questions.length,
   0,
@@ -757,7 +769,10 @@ function MicroservicesInterview() {
                                     </pre>
                                   </div>
                                 ) : (
-                                  <p key={idx} className="answer-text">
+                                  <p
+                                    key={idx}
+                                    className={`answer-text answer-${item.type}`}
+                                  >
                                     {item.content}
                                   </p>
                                 ),

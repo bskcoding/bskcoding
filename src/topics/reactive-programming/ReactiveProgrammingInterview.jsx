@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import "../spring-boot/SpringBootInterview.css";
+import "./ReactiveProgrammingInterview.css";
 import { reactiveProgrammingQuestions } from "../../data/reactive-programming/reactiveProgramming";
 
 // Escape HTML special characters using the DOM (avoids literal HTML entities
@@ -71,7 +72,7 @@ function ReactiveProgrammingInterview() {
   };
 
   return (
-    <div className="spring-boot-interview-page">
+    <div className="spring-boot-interview-page reactive-interview-page">
       {/* Hero Section */}
       <section className="interview-header">
         <div className="interview-header-content">
@@ -160,7 +161,7 @@ function ReactiveProgrammingInterview() {
                                   return (
                                     <p
                                       key={idx}
-                                      className="answer-text"
+                                      className={`answer-text answer-${item.type}`}
                                       style={{ whiteSpace: "pre-wrap" }}
                                     >
                                       📘 {item.content}
@@ -170,7 +171,7 @@ function ReactiveProgrammingInterview() {
                                   return (
                                     <p
                                       key={idx}
-                                      className="answer-text"
+                                      className={`answer-text answer-${item.type}`}
                                       style={{ whiteSpace: "pre-wrap" }}
                                     >
                                       💡 {item.content}
@@ -180,7 +181,7 @@ function ReactiveProgrammingInterview() {
                                   return (
                                     <p
                                       key={idx}
-                                      className="answer-text"
+                                      className={`answer-text answer-${item.type}`}
                                       style={{ whiteSpace: "pre-wrap" }}
                                     >
                                       {item.content}
