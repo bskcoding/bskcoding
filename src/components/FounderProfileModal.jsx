@@ -46,21 +46,25 @@ function FounderProfileModal({ isOpen, onClose }) {
   // Phase machine: sweep the spotlight, then materialize the card.
   useEffect(() => {
     if (!isOpen) {
-      setPhase("idle");
-      setExpanded(false);
-      return undefined;
+      const resetTimer = setTimeout(() => {
+        setPhase("idle");
+        setExpanded(false);
+      }, 0);
+      return () => clearTimeout(resetTimer);
     }
     document.body.style.overflow = "hidden";
     if (prefersReducedMotion) {
-      setPhase("reveal");
+      const revealTimer = setTimeout(() => setPhase("reveal"), 0);
       return () => {
+        clearTimeout(revealTimer);
         document.body.style.overflow = "";
       };
     }
-    setPhase("spotlight");
-    const timer = setTimeout(() => setPhase("reveal"), SPOTLIGHT_MS);
+    const spotlightTimer = setTimeout(() => setPhase("spotlight"), 0);
+    const revealTimer = setTimeout(() => setPhase("reveal"), SPOTLIGHT_MS);
     return () => {
-      clearTimeout(timer);
+      clearTimeout(spotlightTimer);
+      clearTimeout(revealTimer);
       document.body.style.overflow = "";
     };
   }, [isOpen, prefersReducedMotion]);
@@ -79,17 +83,23 @@ function FounderProfileModal({ isOpen, onClose }) {
   useEffect(() => {
     if (phase !== "reveal") return undefined;
     if (prefersReducedMotion) {
-      setTyped(HEADLINE);
-      return undefined;
+      const typedTimer = setTimeout(() => setTyped(HEADLINE), 0);
+      return () => clearTimeout(typedTimer);
     }
-    setTyped("");
     let i = 0;
-    const id = setInterval(() => {
-      i += 1;
-      setTyped(HEADLINE.slice(0, i));
-      if (i >= HEADLINE.length) clearInterval(id);
-    }, 26);
-    return () => clearInterval(id);
+    let id;
+    const resetTimer = setTimeout(() => {
+      setTyped("");
+      id = setInterval(() => {
+        i += 1;
+        setTyped(HEADLINE.slice(0, i));
+        if (i >= HEADLINE.length) clearInterval(id);
+      }, 26);
+    }, 0);
+    return () => {
+      clearTimeout(resetTimer);
+      if (id) clearInterval(id);
+    };
   }, [phase, prefersReducedMotion]);
 
   // 3D tilt + cursor glow coordinates.
@@ -146,103 +156,104 @@ function FounderProfileModal({ isOpen, onClose }) {
             onMouseMove={handleMove}
             onMouseLeave={handleLeave}
           >
-        <button
-          type="button"
-          className="founder-modal-close"
-          onClick={onClose}
-          aria-label="Close profile"
-        >
-          ✕
-        </button>
-
-        <div className="founder-avatar-wrap">
-          <span className="founder-avatar-ring" aria-hidden="true" />
-          <img
-            src="/founder.png"
-            alt="Venkatesh Bharath"
-            className="founder-avatar"
-          />
-          <span className="founder-crown-chip">👑</span>
-        </div>
-
-        <h2 className="founder-name">
-          {NAME.split("").map((ch, i) => (
-            <span
-              key={`${ch}-${i}`}
-              className="founder-letter"
-              style={{ animationDelay: `${240 + i * 34}ms` }}
+            <button
+              type="button"
+              className="founder-modal-close"
+              onClick={onClose}
+              aria-label="Close profile"
             >
-              {ch === " " ? "\u00A0" : ch}
-            </span>
-          ))}
-        </h2>
+              ✕
+            </button>
 
-        <p className="founder-headline">
-          {typed}
-          <span className="founder-caret" aria-hidden="true" />
-        </p>
-
-        {/* Three headline stats — flip in one by one */}
-        <div className="founder-headline-stats">
-          {STATS.map((stat, i) => (
-            <div
-              key={stat.label}
-              className="founder-headline-stat"
-              style={{ animationDelay: `${680 + i * 160}ms` }}
-            >
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
+            <div className="founder-avatar-wrap">
+              <span className="founder-avatar-ring" aria-hidden="true" />
+              <img
+                src="/founder.png"
+                alt="Venkatesh Bharath"
+                className="founder-avatar"
+              />
+              <span className="founder-crown-chip">👑</span>
             </div>
-          ))}
-        </div>
 
-        {!expanded ? (
-          <button
-            type="button"
-            className="founder-view-all"
-            onClick={() => setExpanded(true)}
-          >
-            See Everything →
-          </button>
-        ) : (
-          <div className="founder-expanded">
-            <p className="founder-bio">
-              Venkatesh Bharath is a passionate Technical Specialist with 5
-              years of hands-on experience in Java, Spring Boot, and backend
-              development. He created this platform to help fellow developers
-              navigate their career journey through structured roadmaps,
-              hands-on learning paths, and real-world interview preparation.
+            <h2 className="founder-name">
+              {NAME.split("").map((ch, i) => (
+                <span
+                  key={`${ch}-${i}`}
+                  className="founder-letter"
+                  style={{ animationDelay: `${240 + i * 34}ms` }}
+                >
+                  {ch === " " ? "\u00A0" : ch}
+                </span>
+              ))}
+            </h2>
+
+            <p className="founder-headline">
+              {typed}
+              <span className="founder-caret" aria-hidden="true" />
             </p>
 
-            <div className="founder-badges">
-              <span className="founder-badge">Java</span>
-              <span className="founder-badge">Spring Boot</span>
-              <span className="founder-badge">Microservices</span>
-              <span className="founder-badge">SQL</span>
-              <span className="founder-badge">DSA</span>
-              <span className="founder-badge">System Design</span>
+            {/* Three headline stats — flip in one by one */}
+            <div className="founder-headline-stats">
+              {STATS.map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className="founder-headline-stat"
+                  style={{ animationDelay: `${680 + i * 160}ms` }}
+                >
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
             </div>
 
-            <div className="founder-socials">
-              <a
-                href="https://www.youtube.com/@bskcoding"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="founder-social"
+            {!expanded ? (
+              <button
+                type="button"
+                className="founder-view-all"
+                onClick={() => setExpanded(true)}
               >
-                ▶ YouTube
-              </a>
-              <a
-                href="https://topmate.io/venkatesh_bharath"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="founder-social"
-              >
-                🤝 1:1 Call
-              </a>
-            </div>
-          </div>
-        )}
+                See Everything →
+              </button>
+            ) : (
+              <div className="founder-expanded">
+                <p className="founder-bio">
+                  Venkatesh Bharath is a passionate Technical Specialist with 5
+                  years of hands-on experience in Java, Spring Boot, and backend
+                  development. He created this platform to help fellow
+                  developers navigate their career journey through structured
+                  roadmaps, hands-on learning paths, and real-world interview
+                  preparation.
+                </p>
+
+                <div className="founder-badges">
+                  <span className="founder-badge">Java</span>
+                  <span className="founder-badge">Spring Boot</span>
+                  <span className="founder-badge">Microservices</span>
+                  <span className="founder-badge">SQL</span>
+                  <span className="founder-badge">DSA</span>
+                  <span className="founder-badge">System Design</span>
+                </div>
+
+                <div className="founder-socials">
+                  <a
+                    href="https://www.youtube.com/@bskcoding"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="founder-social"
+                  >
+                    ▶ YouTube
+                  </a>
+                  <a
+                    href="https://topmate.io/venkatesh_bharath"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="founder-social"
+                  >
+                    🤝 1:1 Call
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
