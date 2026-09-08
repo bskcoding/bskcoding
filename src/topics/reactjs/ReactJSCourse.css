@@ -2,12 +2,14 @@
   min-height: 100vh;
   background: #07111d;
   color: #eef8fb;
-  padding-bottom: 48px;
+  padding: 40px 24px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .react-course-hero {
   width: 100%;
-  padding: 48px clamp(16px, 3vw, 40px) 42px;
+  padding: 0 0 42px;
   background: linear-gradient(135deg, #07111d 0%, #102d3c 58%, #12394a 100%);
   border-bottom: 1px solid rgba(97, 218, 251, 0.2);
 }
@@ -75,7 +77,7 @@
   width: 100%;
   max-width: none;
   margin: 0 auto;
-  padding: 28px clamp(16px, 3vw, 40px);
+  padding: 28px 0 0;
 }
 
 .react-course-mobile-toggle {
@@ -381,11 +383,14 @@
   }
 }
 @media (max-width: 520px) {
+  .react-course-page {
+    padding: 24px 16px 40px;
+  }
   .react-course-hero {
-    padding: 30px 16px;
+    padding-bottom: 30px;
   }
   .react-course-workspace {
-    padding: 16px;
+    padding-top: 16px;
   }
   .react-course-detail {
     padding: 20px 16px;

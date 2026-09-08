@@ -85,7 +85,7 @@ function JavaScriptCourse() {
           aria-expanded={showMobileNavigator}
           onClick={() => setShowMobileNavigator((value) => !value)}
         >
-          {showMobileNavigator ? "↑" : "↓"}
+          {showMobileNavigator ? "←" : "→"}
         </button>
         <aside
           className={`react-course-sidebar${showMobileNavigator ? "" : " is-mobile-collapsed"}`}
