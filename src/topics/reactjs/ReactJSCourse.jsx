@@ -14,6 +14,7 @@ function ReactJSCourse() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
+  const [showMobileNavigator, setShowMobileNavigator] = useState(true);
 
   const filteredConcepts = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -46,6 +47,7 @@ function ReactJSCourse() {
 
   const chooseItem = (item) => {
     setSelectedId(item.id);
+    setShowMobileNavigator(false);
     const itemPage = Math.floor(
       filteredConcepts.findIndex((entry) => entry.id === item.id) / PAGE_SIZE,
     );
@@ -79,8 +81,21 @@ function ReactJSCourse() {
       </section>
 
       <section className="react-course-workspace">
+        <button
+          type="button"
+          className="react-course-mobile-toggle"
+          aria-label={
+            showMobileNavigator
+              ? "Hide course concepts"
+              : "Show course concepts"
+          }
+          aria-expanded={showMobileNavigator}
+          onClick={() => setShowMobileNavigator((value) => !value)}
+        >
+          {showMobileNavigator ? "↑" : "↓"}
+        </button>
         <aside
-          className="react-course-sidebar"
+          className={`react-course-sidebar${showMobileNavigator ? "" : " is-mobile-collapsed"}`}
           aria-label="React course navigation"
         >
           <div className="react-course-sidebar-top">
