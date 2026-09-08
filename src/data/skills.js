@@ -49,8 +49,8 @@ export const skills = [
     id: "sql-databases",
     name: "SQL & Databases",
     icon: "🗃️",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Gain strong database skills for backend and analytics systems.",
     subtopics: [
@@ -70,8 +70,8 @@ export const skills = [
     id: "java",
     name: "Java",
     icon: "☕",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Master Java fundamentals, OOP, multithreading, and advanced concepts.",
     subtopics: [
@@ -91,8 +91,8 @@ export const skills = [
     id: "spring-boot",
     name: "Spring Boot",
     icon: "🌱",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Build production-ready REST APIs and microservices with Spring Boot.",
     subtopics: [
@@ -112,8 +112,8 @@ export const skills = [
     id: "microservices",
     name: "Microservices",
     icon: "🔧",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description: "Design distributed systems with modern service patterns.",
     subtopics: [
       "Microservices vs Monolith",
@@ -132,8 +132,8 @@ export const skills = [
     id: "apache-kafka",
     name: "Apache Kafka",
     icon: "⚡",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description: "Master event streaming and real-time data pipelines.",
     subtopics: [
       "Kafka Architecture & Concepts",
@@ -152,8 +152,8 @@ export const skills = [
     id: "reactive-programming",
     name: "Reactive Programming",
     icon: "🔁",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Build resilient, asynchronous data streams with reactive paradigms.",
     subtopics: [
@@ -173,8 +173,8 @@ export const skills = [
     id: "javascript",
     name: "JavaScript",
     icon: "🟡",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Master JavaScript fundamentals, ES6+, async programming, and modern browser APIs.",
     subtopics: [
@@ -194,8 +194,8 @@ export const skills = [
     id: "reactjs",
     name: "ReactJS",
     icon: "⚛️",
-    color: "#3bf676",
-    progress: 50,
+    color: "#00ff1e",
+    progress: 100,
     description:
       "Build interactive user interfaces and single-page apps with React.",
     subtopics: [
