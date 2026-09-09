@@ -1,0 +1,268 @@
+import { Link } from "react-router-dom";
+import "./AcidPage.css";
+
+/**
+ * ACID Properties page (Route: /maang/system-design/acid).
+ *
+ * ACID is a database/transaction concept (Atomicity, Consistency, Isolation,
+ * Durability). This page explains it in plain, easy-to-understand language
+ * with real-world analogies (bank transfer), a clear SQL example, a simple
+ * diagram, and why it matters for system design.
+ */
+
+const PROPERTIES = [
+  {
+    id: "A",
+    name: "Atomicity",
+    tagline: "All or nothing",
+    accent: "#c2410c",
+    meaning:
+      "A transaction is a single atomic unit. Either EVERY step happens, or NONE of it happens. If one step fails, the whole transaction is rolled back — like it never ran.",
+    analogy:
+      "Bank transfer: debit ₹100 from Account A and credit ₹100 to Account B. If the credit to B fails, the debit from A is also undone. Money is never lost or created halfway.",
+    sql: `BEGIN;
+-- Step 1: debit A
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+-- Step 2: credit B
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;   -- only runs if BOTH steps succeed
+-- If anything fails during the 2 steps -> ROLLBACK;`,
+  },
+  {
+    id: "C",
+    name: "Consistency",
+    tagline: "Always a valid state",
+    accent: "#b45309",
+    meaning:
+      "A transaction moves the database from one valid state to another. Every rule, constraint, trigger, and invariant is enforced before and after — so the data always stays correct.",
+    analogy:
+      "A balance can never go negative. A CHECK constraint rejects any transfer that would push the balance below zero. The rule always holds, no matter what.",
+    sql: `-- Enforce the rule in the database
+ALTER TABLE accounts
+  ADD CONSTRAINT chk_balance CHECK (balance >= 0);
+
+-- A transfer that breaks the rule is simply rejected
+UPDATE accounts SET balance = balance - 5000
+WHERE id = 1;  -- ERROR if balance would go below 0`,
+  },
+  {
+    id: "I",
+    name: "Isolation",
+    tagline: "Transactions don't interfere",
+    accent: "#15803d",
+    meaning:
+      "Concurrent transactions behave as if they ran one after another. Each one sees a consistent snapshot and cannot see another transaction's uncommitted half-work.",
+    analogy:
+      "Two people transfer money at exactly the same time. Each transfer sees a clean, consistent balance — no double-spending and no reading partially-updated data.",
+    sql: `-- Default: each transaction is shielded from others
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+BEGIN;
+-- nothing half-done is visible to other users
+SELECT balance FROM accounts WHERE id = 1;  -- safe snapshot
+COMMIT;`,
+  },
+  {
+    id: "D",
+    name: "Durability",
+    tagline: "Survives crashes",
+    accent: "#1d4ed8",
+    meaning:
+      "Once a transaction is COMMITTED, its changes are permanent. They survive a crash, power loss, or server restart — already written to durable storage (disk / WAL).",
+    analogy:
+      "After the transfer completes, the money stays transferred. Even if the server restarts a second later, the record is still there.",
+    sql: `-- COMMIT makes the change permanent & crash-proof
+COMMIT;
+
+-- The DB wrote it to the Write-Ahead Log (WAL) on disk
+-- BEFORE COMMIT returns -> survives any crash`,
+  },
+];
+function PropertyCard({ prop, index }) {
+  return (
+    <article className="acid-card" style={{ "--acid-accent": prop.accent }}>
+      <div className="acid-card-head">
+        <span className="acid-card-letter">{prop.id}</span>
+        <div>
+          <h3 className="acid-card-name">{prop.name}</h3>
+          <span className="acid-card-tagline">{prop.tagline}</span>
+        </div>
+      </div>
+
+      <div className="acid-card-block">
+        <h4>🧠 What it means</h4>
+        <p>{prop.meaning}</p>
+      </div>
+
+      <div className="acid-card-block">
+        <h4>🖼️ Real-world analogy</h4>
+        <p>{prop.analogy}</p>
+      </div>
+
+      <div className="acid-card-block">
+        <h4>⚙️ In SQL (bank transfer)</h4>
+        <pre className="acid-code">
+          <code>{prop.sql}</code>
+        </pre>
+      </div>
+
+      <span className="acid-card-index">{index + 1} / 4</span>
+    </article>
+  );
+}
+
+function AcidPage() {
+  return (
+    <div className="acid-page">
+      {/* ===== HERO ===== */}
+      <section className="acid-hero">
+        <Link to="/maang/system-design-basics" className="acid-back">
+          ← Back to System Design Basics
+        </Link>
+        <h1 className="acid-title">
+          ACID <span>Properties</span>
+        </h1>
+        <p className="acid-subtitle">
+          The four rules that keep a database safe, consistent, and reliable —
+          explained simply with a real bank-transfer example. <strong>ACID</strong>{" "}
+          = <strong>A</strong>tomicity · <strong>C</strong>onsistency ·{" "}
+          <strong>I</strong>solation · <strong>D</strong>urability
+        </p>
+
+        <div className="acid-chip-row">
+          <span className="acid-chip">🧩 4 properties</span>
+          <span className="acid-chip">🏦 Bank transfer analogy</span>
+          <span className="acid-chip">🛢️ Every relational DB (PostgreSQL, MySQL)</span>
+        </div>
+      </section>
+
+      {/* ===== SIMPLE DEFINITION ===== */}
+      <section className="acid-define">
+        <h2>🤔 What is ACID in one line?</h2>
+        <p>
+          ACID is a set of rules that guarantees your <b>database transactions</b>{" "}
+          (a group of operations treated as one) are processed <b>reliably</b>.
+          Think of a transaction as a single logical task — like{" "}
+          <i>money moving from one account to another</i>. ACID makes sure that
+          task never leaves your data broken, partial, or lost.
+        </p>
+        <div className="acid-one-liner">
+          💡 If a transaction obeys ACID, your data is <b>never half-written</b>,{" "}
+          <b>never invalid</b>, <b>never corrupted by another user</b>, and{" "}
+          <b>never lost after a crash</b>.
+        </div>
+      </section>
+{/* ===== 4 PROPERTY CARDS ===== */}
+      <section className="acid-props">
+        <h2 className="acid-section-title">The 4 Properties</h2>
+        <p className="acid-section-sub">
+          Each property is one letter of ACID — everything explained right here.
+        </p>
+        <div className="acid-grid">
+          {PROPERTIES.map((prop, i) => (
+            <PropertyCard key={prop.id} prop={prop} index={i} />
+          ))}
+        </div>
+      </section>
+
+      {/* ===== PUTTING IT ALL TOGETHER ===== */}
+      <section className="acid-together">
+        <h2>🏦 ACID in action — one complete example</h2>
+        <div className="acid-together-wrap">
+          <div className="acid-flow">
+            <div className="acid-flow-step">
+              <span className="acid-flow-num">1</span>
+              <p>
+                <b>BEGIN</b> — start a transaction. Everything below is now one
+                unit.
+              </p>
+            </div>
+            <div className="acid-flow-step">
+              <span className="acid-flow-num">2</span>
+              <p>
+                <b>Debit ₹100 from A</b> — the database checks the rule (balance ≥ 0).{" "}
+                <span className="acid-flow-tag">Consistency</span>
+              </p>
+            </div>
+            <div className="acid-flow-step">
+              <span className="acid-flow-num">3</span>
+              <p>
+                <b>Credit ₹100 to B</b> — B's new balance is still hidden from other
+                users. <span className="acid-flow-tag">Isolation</span>
+              </p>
+            </div>
+            <div className="acid-flow-step">
+              <span className="acid-flow-num">4</span>
+              <p>
+                <b>COMMIT</b> — both changes saved permanently. Nothing is lost
+                after this. <span className="acid-flow-tag">Durability</span>
+              </p>
+            </div>
+            <div className="acid-flow-step acid-flow-step-fail">
+              <span className="acid-flow-num">✕</span>
+              <p>
+                <b>If any step fails</b> → <b>ROLLBACK</b> undoes everything, as if
+                it never happened. <span className="acid-flow-tag">Atomicity</span>
+              </p>
+            </div>
+          </div>
+
+          <pre className="acid-code acid-code-big">
+            <code>{`BEGIN;                                 -- 1. start
+UPDATE accounts SET balance = balance - 100
+  WHERE id = 1;                      -- 2. debit A
+UPDATE accounts SET balance = balance + 100
+  WHERE id = 2;                      -- 3. credit B
+COMMIT;                              -- 4. save permanently
+-- any error above -> ROLLBACK;      -- ✕ undo all`}</code>
+          </pre>
+        </div>
+      </section>
+{/* ===== WHY IT MATTERS FOR SYSTEM DESIGN ===== */}
+      <section className="acid-why">
+        <h2>🌍 Why ACID matters in System Design</h2>
+        <div className="acid-why-grid">
+          <div className="acid-why-card">
+            <h4>✅ When to prefer ACID</h4>
+            <ul>
+              <li>Banking, payments, orders, inventory — where correctness is critical.</li>
+              <li>Strong, reliable relational databases (PostgreSQL, MySQL, Oracle).</li>
+              <li>Data must never be lost or duplicated.</li>
+            </ul>
+          </div>
+          <div className="acid-why-card">
+            <h4>⚖️ ACID vs BASE</h4>
+            <ul>
+              <li>
+                <b>ACID</b> = strong consistency, strict — perfect for money &amp; orders.
+              </li>
+              <li>
+                <b>BASE</b> = eventually consistent, flexible — used by NoSQL
+                (MongoDB, Cassandra) for massive scale.
+              </li>
+              <li>
+                Choice is a trade-off: <b>strict rules</b> vs <b>scale &amp; speed</b>.
+              </li>
+            </ul>
+          </div>
+          <div className="acid-why-card">
+            <h4>🎯 Interview answer tip</h4>
+            <ul>
+              <li>Always mention the bank-transfer analogy — it shows you really get it.</li>
+              <li>Say which DBs use ACID vs BASE and why they're chosen.</li>
+              <li>Link it to transactions: "I used @Transactional to keep a payment atomic."</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FOOTER ===== */}
+      <div className="acid-footer-note">
+        <span>🧱</span> ACID keeps your data reliable — the foundation of every
+        transactional system you'll design.
+      </div>
+    </div>
+  );
+}
+
+export default AcidPage;

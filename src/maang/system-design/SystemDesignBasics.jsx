@@ -35,6 +35,12 @@ const CARDS = [
     accent: "#1d4ed8", // dark royal blue (N)
     desc: "Class · Sequence · Use-case · Activity diagrams for system modelling",
   },
+  {
+    emoji: "🗃️",
+    name: "ACID Properties",
+    accent: "#0e7490", // dark teal
+    desc: "Atomicity · Consistency · Isolation · Durability — database reliability made simple",
+  },
 ];
 
 function SystemDesignBasics() {
@@ -124,6 +130,18 @@ function SystemDesignBasics() {
                 <Link
                   key={card.name}
                   to="/maang/system-design/uml"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The ACID Properties card has its full page built out — link it.
+            if (card.name === "ACID Properties") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/acid"
                   className="sdb-card-link"
                 >
                   {inner}
