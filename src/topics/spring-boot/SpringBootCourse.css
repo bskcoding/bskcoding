@@ -114,6 +114,12 @@
   text-align: left;
   font-family: inherit;
   color: inherit;
+  /* Allow the card to shrink below its content width inside the grid —
+     prevents long unbreakable tokens (URLs, method names) from forcing
+     horizontal overflow / cut-off on mobile. */
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .lesson-card:hover {
@@ -179,6 +185,9 @@
   margin: 0;
   line-height: 1.45;
   flex: 1;
+  /* Wrap long unbreakable tokens instead of pushing the card wider */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .lesson-desc {
@@ -190,6 +199,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin: 0;
+  /* Guarantee wrapping for long tokens even in narrow/mobile columns */
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
@@ -210,7 +223,17 @@
   }
 
   .lessons-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Cap at 2 columns on small tablets/phones in landscape so cards stay
+       wide enough to be readable, and always allow shrinking below content. */
+    grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Phones — single, full-width column so cards are always clearly visible */
+  .lessons-grid {
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 }
@@ -231,5 +254,7 @@
 
   .lesson-desc {
     font-size: 0.8rem;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
   }
 }
