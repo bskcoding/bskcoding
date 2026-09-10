@@ -17,13 +17,30 @@ const difficulties = ["All", "Easy", "Medium", "Hard"];
  *   onOpen  : opens the video modal for this problem
  *   chip    : optional small label shown in the card top row
  */
-const ProblemCard = memo(function ProblemCard({ problem, onOpen, chip }) {
-  const color = topicColors[problem.topic] || "#60a5fa";
+const ProblemCard = memo(function ProblemCard({ problem, onOpen }) {
   const hasVideo = !!problem.videoLink;
+  const platformLabel = problem.platform === "leetcode" ? "LeetCode" : "GFG";
+  const platformColors =
+    problem.platform === "leetcode"
+      ? {
+          from: "#f59e0b",
+          to: "#d97706",
+          shadow: "#92400e",
+        }
+      : {
+          from: "#22c55e",
+          to: "#16a34a",
+          shadow: "#0f6b32",
+        };
+  const description =
+    problem.description ||
+    "Practice this problem and build stronger algorithmic thinking with a focused DSA approach.";
+
   return (
     <div
       className="mdsa-problem-card"
-      style={{ "--topic-color": color }}
+      data-platform={problem.platform}
+      style={{ "--topic-color": topicColors[problem.topic] || "#60a5fa" }}
       role="button"
       tabIndex={0}
       aria-label={`${problem.title} — ${problem.difficulty} ${problem.topic}`}
@@ -36,51 +53,43 @@ const ProblemCard = memo(function ProblemCard({ problem, onOpen, chip }) {
       }}
     >
       <div className="mdsa-problem-top">
+        <span className="mdsa-problem-id">#{problem.id}</span>
+      </div>
+
+      <div className="mdsa-problem-body">
+        <h3 className="mdsa-problem-title">{problem.title}</h3>
+        <p className="mdsa-problem-description">{description}</p>
         <span
           className={`mdsa-difficulty-badge mdsa-${problem.difficulty.toLowerCase()}`}
         >
           {problem.difficulty}
         </span>
-        {chip && <span className="mdsa-extra-chip">{chip}</span>}
-        {problem.srcWeek && (
-          <span
-            className="mdsa-extra-chip"
-            title={`Asked from Week ${problem.srcWeek}`}
-          >
-            W{problem.srcWeek}
-          </span>
-        )}
-        <span
-          className="mdsa-problem-platform"
-          style={{ "--platform-color": color }}
-          title={`Solve on ${
-            problem.platform === "leetcode" ? "LeetCode" : "GeeksforGeeks"
-          }`}
-        >
-          {problem.platform === "leetcode" ? "LC" : "GFG"}
-        </span>
       </div>
-      <div className="mdsa-problem-body">
-        <span className="mdsa-problem-id">#{problem.id}</span>
-        <h3 className="mdsa-problem-title">{problem.title}</h3>
-        <span className="mdsa-problem-topic">{problem.topic}</span>
-      </div>
+
       <div className="mdsa-problem-footer">
         <div
           className={`mdsa-video-btn ${hasVideo ? "available" : "soon"}`}
           title={hasVideo ? "Watch video solution" : "Video coming soon"}
         >
-          {hasVideo ? "▶ Watch" : "⏳ Soon"}
+          <span className="mdsa-btn-icon">▶</span>
+          <span>{hasVideo ? "YouTube" : "Soon"}</span>
         </div>
         <a
           href={problem.link}
           target="_blank"
           rel="noopener noreferrer"
           className="mdsa-solve-btn"
+          data-platform={problem.platform}
+          style={{
+            "--solve-from": platformColors.from,
+            "--solve-to": platformColors.to,
+            "--solve-shadow": platformColors.shadow,
+          }}
           onClick={(e) => e.stopPropagation()}
-          title="Open problem"
+          title={`Open on ${platformLabel}`}
         >
-          Solve →
+          <span className="mdsa-btn-icon">&lt;/&gt;</span>
+          <span>{platformLabel}</span>
         </a>
       </div>
     </div>
