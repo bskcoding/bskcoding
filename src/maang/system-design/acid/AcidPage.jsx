@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./AcidPage.css";
 
@@ -78,9 +79,13 @@ COMMIT;
 -- BEFORE COMMIT returns -> survives any crash`,
   },
 ];
-function PropertyCard({ prop, index }) {
+function PropertyCard({ prop, index, isActive, onClick }) {
   return (
-    <article className="acid-card" style={{ "--acid-accent": prop.accent }}>
+    <article
+      className={`acid-card ${isActive ? "active" : ""}`}
+      style={{ "--acid-accent": prop.accent }}
+      onClick={() => onClick(prop.id)}
+    >
       <div className="acid-card-head">
         <span className="acid-card-letter">{prop.id}</span>
         <div>
@@ -107,11 +112,83 @@ function PropertyCard({ prop, index }) {
       </div>
 
       <span className="acid-card-index">{index + 1} / 4</span>
+      {isActive && (
+        <span className="acid-active-indicator">
+          <i className="fas fa-check-circle" />
+        </span>
+      )}
     </article>
   );
 }
 
+function DetailPanel({ property, onClose }) {
+  if (!property) return null;
+
+  return (
+    <div className="acid-modal-backdrop" onClick={onClose}>
+      <div className="acid-detail-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="acid-detail-header">
+          <h2>
+            <span className="acid-detail-letter">{property.id}</span>
+            <span className="acid-detail-title">{property.name}</span>
+            <span className="acid-detail-sub">— {property.tagline}</span>
+          </h2>
+          <button
+            className="acid-close-btn"
+            onClick={onClose}
+            aria-label="Close details"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="acid-modal-scroll-content">
+          <div className="acid-definition-box">
+            <strong>📘 Definition:</strong> {property.meaning}
+          </div>
+
+          <div className="acid-detail-grid">
+            <div className="acid-info-box">
+              <h3>Why it matters</h3>
+              <p>{property.analogy}</p>
+            </div>
+
+            <div className="acid-code-box">
+              <h3>SQL example</h3>
+              <pre>
+                <code>{property.sql}</code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AcidPage() {
+  const [activeId, setActiveId] = useState(null);
+  const activeProperty = PROPERTIES.find(
+    (property) => property.id === activeId,
+  );
+
+  const handleClick = (id) => {
+    setActiveId((current) => (current === id ? null : id));
+  };
+
   return (
     <div className="acid-page">
       {/* ===== HERO ===== */}
@@ -124,15 +201,18 @@ function AcidPage() {
         </h1>
         <p className="acid-subtitle">
           The four rules that keep a database safe, consistent, and reliable —
-          explained simply with a real bank-transfer example. <strong>ACID</strong>{" "}
-          = <strong>A</strong>tomicity · <strong>C</strong>onsistency ·{" "}
-          <strong>I</strong>solation · <strong>D</strong>urability
+          explained simply with a real bank-transfer example.{" "}
+          <strong>ACID</strong> = <strong>A</strong>tomicity ·{" "}
+          <strong>C</strong>onsistency · <strong>I</strong>solation ·{" "}
+          <strong>D</strong>urability
         </p>
 
         <div className="acid-chip-row">
           <span className="acid-chip">🧩 4 properties</span>
           <span className="acid-chip">🏦 Bank transfer analogy</span>
-          <span className="acid-chip">🛢️ Every relational DB (PostgreSQL, MySQL)</span>
+          <span className="acid-chip">
+            🛢️ Every relational DB (PostgreSQL, MySQL)
+          </span>
         </div>
       </section>
 
@@ -140,19 +220,20 @@ function AcidPage() {
       <section className="acid-define">
         <h2>🤔 What is ACID in one line?</h2>
         <p>
-          ACID is a set of rules that guarantees your <b>database transactions</b>{" "}
-          (a group of operations treated as one) are processed <b>reliably</b>.
-          Think of a transaction as a single logical task — like{" "}
-          <i>money moving from one account to another</i>. ACID makes sure that
-          task never leaves your data broken, partial, or lost.
+          ACID is a set of rules that guarantees your{" "}
+          <b>database transactions</b> (a group of operations treated as one)
+          are processed <b>reliably</b>. Think of a transaction as a single
+          logical task — like <i>money moving from one account to another</i>.
+          ACID makes sure that task never leaves your data broken, partial, or
+          lost.
         </p>
         <div className="acid-one-liner">
-          💡 If a transaction obeys ACID, your data is <b>never half-written</b>,{" "}
-          <b>never invalid</b>, <b>never corrupted by another user</b>, and{" "}
+          💡 If a transaction obeys ACID, your data is <b>never half-written</b>
+          , <b>never invalid</b>, <b>never corrupted by another user</b>, and{" "}
           <b>never lost after a crash</b>.
         </div>
       </section>
-{/* ===== 4 PROPERTY CARDS ===== */}
+      {/* ===== 4 PROPERTY CARDS ===== */}
       <section className="acid-props">
         <h2 className="acid-section-title">The 4 Properties</h2>
         <p className="acid-section-sub">
@@ -160,10 +241,21 @@ function AcidPage() {
         </p>
         <div className="acid-grid">
           {PROPERTIES.map((prop, i) => (
-            <PropertyCard key={prop.id} prop={prop} index={i} />
+            <PropertyCard
+              key={prop.id}
+              prop={prop}
+              index={i}
+              isActive={activeId === prop.id}
+              onClick={handleClick}
+            />
           ))}
         </div>
       </section>
+
+      <DetailPanel
+        property={activeProperty}
+        onClose={() => setActiveId(null)}
+      />
 
       {/* ===== PUTTING IT ALL TOGETHER ===== */}
       <section className="acid-together">
@@ -180,15 +272,15 @@ function AcidPage() {
             <div className="acid-flow-step">
               <span className="acid-flow-num">2</span>
               <p>
-                <b>Debit ₹100 from A</b> — the database checks the rule (balance ≥ 0).{" "}
-                <span className="acid-flow-tag">Consistency</span>
+                <b>Debit ₹100 from A</b> — the database checks the rule (balance
+                ≥ 0). <span className="acid-flow-tag">Consistency</span>
               </p>
             </div>
             <div className="acid-flow-step">
               <span className="acid-flow-num">3</span>
               <p>
-                <b>Credit ₹100 to B</b> — B's new balance is still hidden from other
-                users. <span className="acid-flow-tag">Isolation</span>
+                <b>Credit ₹100 to B</b> — B's new balance is still hidden from
+                other users. <span className="acid-flow-tag">Isolation</span>
               </p>
             </div>
             <div className="acid-flow-step">
@@ -201,8 +293,9 @@ function AcidPage() {
             <div className="acid-flow-step acid-flow-step-fail">
               <span className="acid-flow-num">✕</span>
               <p>
-                <b>If any step fails</b> → <b>ROLLBACK</b> undoes everything, as if
-                it never happened. <span className="acid-flow-tag">Atomicity</span>
+                <b>If any step fails</b> → <b>ROLLBACK</b> undoes everything, as
+                if it never happened.{" "}
+                <span className="acid-flow-tag">Atomicity</span>
               </p>
             </div>
           </div>
@@ -218,15 +311,21 @@ COMMIT;                              -- 4. save permanently
           </pre>
         </div>
       </section>
-{/* ===== WHY IT MATTERS FOR SYSTEM DESIGN ===== */}
+      {/* ===== WHY IT MATTERS FOR SYSTEM DESIGN ===== */}
       <section className="acid-why">
         <h2>🌍 Why ACID matters in System Design</h2>
         <div className="acid-why-grid">
           <div className="acid-why-card">
             <h4>✅ When to prefer ACID</h4>
             <ul>
-              <li>Banking, payments, orders, inventory — where correctness is critical.</li>
-              <li>Strong, reliable relational databases (PostgreSQL, MySQL, Oracle).</li>
+              <li>
+                Banking, payments, orders, inventory — where correctness is
+                critical.
+              </li>
+              <li>
+                Strong, reliable relational databases (PostgreSQL, MySQL,
+                Oracle).
+              </li>
               <li>Data must never be lost or duplicated.</li>
             </ul>
           </div>
@@ -234,23 +333,31 @@ COMMIT;                              -- 4. save permanently
             <h4>⚖️ ACID vs BASE</h4>
             <ul>
               <li>
-                <b>ACID</b> = strong consistency, strict — perfect for money &amp; orders.
+                <b>ACID</b> = strong consistency, strict — perfect for money
+                &amp; orders.
               </li>
               <li>
                 <b>BASE</b> = eventually consistent, flexible — used by NoSQL
                 (MongoDB, Cassandra) for massive scale.
               </li>
               <li>
-                Choice is a trade-off: <b>strict rules</b> vs <b>scale &amp; speed</b>.
+                Choice is a trade-off: <b>strict rules</b> vs{" "}
+                <b>scale &amp; speed</b>.
               </li>
             </ul>
           </div>
           <div className="acid-why-card">
             <h4>🎯 Interview answer tip</h4>
             <ul>
-              <li>Always mention the bank-transfer analogy — it shows you really get it.</li>
+              <li>
+                Always mention the bank-transfer analogy — it shows you really
+                get it.
+              </li>
               <li>Say which DBs use ACID vs BASE and why they're chosen.</li>
-              <li>Link it to transactions: "I used @Transactional to keep a payment atomic."</li>
+              <li>
+                Link it to transactions: "I used @Transactional to keep a
+                payment atomic."
+              </li>
             </ul>
           </div>
         </div>

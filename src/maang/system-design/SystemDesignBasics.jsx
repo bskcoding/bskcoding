@@ -41,6 +41,12 @@ const CARDS = [
     accent: "#0e7490", // dark teal
     desc: "Atomicity · Consistency · Isolation · Durability — database reliability made simple",
   },
+  {
+    emoji: "🗄️",
+    name: "Database Concepts",
+    accent: "#4f46e5", // deep indigo
+    desc: "SQL vs NoSQL · Indexing · Joins · Normalization · Replication · Partitioning · Sharding",
+  },
 ];
 
 function SystemDesignBasics() {
@@ -142,6 +148,17 @@ function SystemDesignBasics() {
                 <Link
                   key={card.name}
                   to="/maang/system-design/acid"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            if (card.name === "Database Concepts") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/database-concepts"
                   className="sdb-card-link"
                 >
                   {inner}

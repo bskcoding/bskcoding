@@ -34,6 +34,9 @@ const DesignPatternsPage = lazy(
 );
 const UmlPage = lazy(() => import("./maang/system-design/uml/UmlPage"));
 const AcidPage = lazy(() => import("./maang/system-design/acid/AcidPage"));
+const DatabaseConceptsPage = lazy(
+  () => import("./maang/system-design/database-concepts/DatabaseConceptsPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -299,6 +302,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <AcidPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/database-concepts"
+                  element={
+                    <RequireAuth>
+                      <DatabaseConceptsPage />
                     </RequireAuth>
                   }
                 />
