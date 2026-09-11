@@ -80,6 +80,8 @@ COMMIT;
   },
 ];
 function PropertyCard({ prop, index, isActive, onClick }) {
+  const shortMeaning = `${prop.meaning.slice(0, 110)}...`;
+
   return (
     <article
       className={`acid-card ${isActive ? "active" : ""}`}
@@ -94,21 +96,20 @@ function PropertyCard({ prop, index, isActive, onClick }) {
         </div>
       </div>
 
-      <div className="acid-card-block">
-        <h4>🧠 What it means</h4>
-        <p>{prop.meaning}</p>
-      </div>
+      <p className="acid-card-summary">{shortMeaning}</p>
 
-      <div className="acid-card-block">
-        <h4>🖼️ Real-world analogy</h4>
-        <p>{prop.analogy}</p>
-      </div>
-
-      <div className="acid-card-block">
-        <h4>⚙️ In SQL (bank transfer)</h4>
-        <pre className="acid-code">
-          <code>{prop.sql}</code>
-        </pre>
+      <div className="acid-card-actions">
+        <button
+          className="acid-card-btn"
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick(prop.id);
+          }}
+        >
+          View details
+        </button>
+        <span className="acid-card-badge">DB rule</span>
       </div>
 
       <span className="acid-card-index">{index + 1} / 4</span>

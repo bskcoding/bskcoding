@@ -23,8 +23,8 @@ const CONCEPTS = [
       <div className="dbc-diagram-box">
         <div className="dbc-table-wrap">
           <div className="dbc-table-box dbc-sql-box">
-            <div className="dbc-table-title">SQL</div>
-            <div className="dbc-table-row">
+            <div className="dbc-table-title">SQL Table</div>
+            <div className="dbc-table-row dbc-head-row">
               <span>id</span>
               <span>name</span>
               <span>age</span>
@@ -34,11 +34,16 @@ const CONCEPTS = [
               <span>Alice</span>
               <span>30</span>
             </div>
+            <div className="dbc-table-row">
+              <span>2</span>
+              <span>Bob</span>
+              <span>28</span>
+            </div>
           </div>
           <div className="dbc-arrow">⇄</div>
           <div className="dbc-table-box dbc-nosql-box">
-            <div className="dbc-table-title">NoSQL</div>
-            <pre>{`{\n  "_id": 1,\n  "name": "Alice",\n  "hobbies": ["reading", "hiking"]\n}`}</pre>
+            <div className="dbc-table-title">NoSQL Document</div>
+            <pre>{`{\n  "_id": 1,\n  "name": "Alice",\n  "hobbies": ["reading", "hiking"],\n  "city": "Bengaluru"\n}`}</pre>
           </div>
         </div>
       </div>
@@ -120,6 +125,13 @@ const CONCEPTS = [
               <span className="dbc-venn-right dbc-venn-right-full" />
             </div>
           </div>
+          <div className="dbc-join-card dbc-join-card-full">
+            <div className="dbc-join-name">FULL</div>
+            <div className="dbc-venn">
+              <span className="dbc-venn-left dbc-venn-left-full" />
+              <span className="dbc-venn-right dbc-venn-right-full" />
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -172,12 +184,24 @@ const CONCEPTS = [
     videoLabel: "Soon",
     diagram: (
       <div className="dbc-diagram-box">
-        <div className="dbc-node-flow">
-          <div className="dbc-node primary">Primary</div>
-          <div className="dbc-arrow">→</div>
-          <div className="dbc-node replica">Replica A</div>
-          <div className="dbc-arrow">→</div>
-          <div className="dbc-node replica">Replica B</div>
+        <div className="dbc-replica-layout">
+          <div className="dbc-replica-box dbc-primary-box">
+            <div className="dbc-replica-label">Primary DB</div>
+            <small>Write here</small>
+          </div>
+          <div className="dbc-sync-line">
+            <span>sync</span>
+          </div>
+          <div className="dbc-replica-sides">
+            <div className="dbc-replica-box dbc-replica-box-green">
+              <div className="dbc-replica-label">Replica A</div>
+              <small>Read backup</small>
+            </div>
+            <div className="dbc-replica-box dbc-replica-box-green">
+              <div className="dbc-replica-label">Replica B</div>
+              <small>Failover</small>
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -200,10 +224,22 @@ const CONCEPTS = [
     videoLabel: "Soon",
     diagram: (
       <div className="dbc-diagram-box">
-        <div className="dbc-node-flow wrap">
-          <div className="dbc-node part">2023</div>
-          <div className="dbc-node part">2024</div>
-          <div className="dbc-node part warm">2025</div>
+        <div className="dbc-partition-board">
+          <div className="dbc-partition-header">One big table</div>
+          <div className="dbc-partition-main">
+            <div className="dbc-partition-label">Orders</div>
+            <div className="dbc-partition-rail">
+              <div className="dbc-partition-box dbc-partition-2023">2023</div>
+              <div className="dbc-partition-box dbc-partition-2024">2024</div>
+              <div className="dbc-partition-box dbc-partition-2025">2025</div>
+            </div>
+          </div>
+          <div className="dbc-partition-query">
+            <span>Query: year = 2025</span>
+            <div className="dbc-partition-pointer">
+              Only this partition is checked
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -226,10 +262,22 @@ const CONCEPTS = [
     videoLabel: "Soon",
     diagram: (
       <div className="dbc-diagram-box">
-        <div className="dbc-node-flow wrap">
-          <div className="dbc-node shard-a">Shard A</div>
-          <div className="dbc-node shard-b">Shard B</div>
-          <div className="dbc-node shard-c">Shard C</div>
+        <div className="dbc-shard-layout">
+          <div className="dbc-shard-top">hash(user_id)</div>
+          <div className="dbc-shard-row">
+            <div className="dbc-shard-box dbc-shard-a">
+              <div>Shard A</div>
+              <small>1–1000</small>
+            </div>
+            <div className="dbc-shard-box dbc-shard-b">
+              <div>Shard B</div>
+              <small>1001–2000</small>
+            </div>
+            <div className="dbc-shard-box dbc-shard-c">
+              <div>Shard C</div>
+              <small>2001–3000</small>
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -300,7 +348,11 @@ function DetailPanel({ concept, onClose }) {
             <span>{concept.title}</span>
             <span className="dbc-detail-sub">— {concept.sub}</span>
           </h2>
-          <button className="dbc-close-btn" onClick={onClose} aria-label="Close details">
+          <button
+            className="dbc-close-btn"
+            onClick={onClose}
+            aria-label="Close details"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -395,24 +447,33 @@ export default function DatabaseConceptsPage() {
           <ul className="dbc-why-list">
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Faster reads</b> with indexing and partitioning</span>
+              <span>
+                <b>Faster reads</b> with indexing and partitioning
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Cleaner data</b> with normalization</span>
+              <span>
+                <b>Cleaner data</b> with normalization
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Higher reliability</b> with replication</span>
+              <span>
+                <b>Higher reliability</b> with replication
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Better scaling</b> with sharding</span>
+              <span>
+                <b>Better scaling</b> with sharding
+              </span>
             </li>
           </ul>
           <p className="dbc-why-foot">
-            👉 In interviews, people often ask: “Which database should we choose?”
-            and “How will it scale?” This page builds the foundation for that.
+            👉 In interviews, people often ask: “Which database should we
+            choose?” and “How will it scale?” This page builds the foundation
+            for that.
           </p>
         </div>
       </section>
