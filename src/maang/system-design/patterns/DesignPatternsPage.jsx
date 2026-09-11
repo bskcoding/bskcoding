@@ -47,14 +47,21 @@ function DetailPanel({ topic, onClose }) {
 
   return (
     <div className="oops-modal-backdrop" onClick={onClose}>
-      <div className="oops-detail-panel modal-visible" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="oops-detail-panel modal-visible"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="oops-detail-header">
           <h2>
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
             <span className="oops-detail-sub">— {topic.sub}</span>
           </h2>
-          <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
+          <button
+            className="oops-close-btn"
+            onClick={onClose}
+            aria-label="Close details"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -100,7 +107,8 @@ function DetailPanel({ topic, onClose }) {
                 <i className="fas fa-info-circle" />
                 <span className="oops-rel-tag">{topic.relation}</span>
                 <span>
-                  <i className="fas fa-arrow-right" /> {topic.points.join(" • ")}
+                  <i className="fas fa-arrow-right" />{" "}
+                  {topic.points.join(" • ")}
                 </span>
               </div>
             </div>
@@ -146,7 +154,8 @@ export default function DesignPatternsPage() {
         </h1>
         <div className="oops-sub-info">
           <span>
-            <i className="fas fa-diagram-project" /> Creational · Structural · Behavioural
+            <i className="fas fa-diagram-project" /> Creational · Structural ·
+            Behavioural
           </span>
           <span>
             <i className="fas fa-code" /> Real Java Examples
@@ -170,33 +179,51 @@ export default function DesignPatternsPage() {
             <i>"How do I create only one object?"</i>,
             <i>"How do I notify many components when something changes?"</i>,
             <i>"How do I add new features without breaking old code?"</i>.
-            Design Patterns are <b>proven, reusable solutions</b> to these
+            Design patterns are <b>proven, reusable solutions</b> to these
             recurring problems — battle-tested by millions of developers.
           </p>
           <ul className="oops-why-list">
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Faster development</b> — don't reinvent the wheel, use a known solution</span>
+              <span>
+                <b>Faster development</b> — don't reinvent the wheel, use a
+                known solution
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Common vocabulary</b> — say "use a Factory" instead of explaining 50 lines</span>
+              <span>
+                <b>Common vocabulary</b> — say "use a Factory" instead of
+                explaining 50 lines
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Loose coupling</b> — components interact via interfaces, easy to swap</span>
+              <span>
+                <b>Loose coupling</b> — components interact via interfaces, easy
+                to swap
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Production-tested</b> — used in Spring, Hibernate, Java collections, JDK</span>
+              <span>
+                <b>Production-tested</b> — used in Spring, Hibernate, Java
+                collections, JDK
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Interview must-know</b> — asked in every LLD / System Design round</span>
+              <span>
+                <b>Interview must-know</b> — asked in every LLD / System Design
+                round
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>3 categories</b> — Creational (how to create), Structural (how to compose), Behavioural (how to communicate)</span>
+              <span>
+                <b>3 categories</b> — Creational (how to create), Structural
+                (how to compose), Behavioural (how to communicate)
+              </span>
             </li>
           </ul>
           <p className="oops-why-foot">
@@ -236,7 +263,9 @@ export default function DesignPatternsPage() {
           color: "#a78bfa",
         },
       ].map((cat) => {
-        const items = designPatternsTopics.filter((t) => t.category === cat.key);
+        const items = designPatternsTopics.filter(
+          (t) => t.category === cat.key,
+        );
         if (items.length === 0) return null;
         return (
           <section key={cat.key} className="oops-pattern-category">

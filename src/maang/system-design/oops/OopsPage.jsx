@@ -48,14 +48,21 @@ function DetailPanel({ topic, onClose }) {
 
   return (
     <div className="oops-modal-backdrop" onClick={onClose}>
-      <div className="oops-detail-panel modal-visible" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="oops-detail-panel modal-visible"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="oops-detail-header">
           <h2>
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
             <span className="oops-detail-sub">— {topic.sub}</span>
           </h2>
-          <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
+          <button
+            className="oops-close-btn"
+            onClick={onClose}
+            aria-label="Close details"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -101,7 +108,8 @@ function DetailPanel({ topic, onClose }) {
                 <i className="fas fa-info-circle" />
                 <span className="oops-rel-tag">{topic.relation}</span>
                 <span>
-                  <i className="fas fa-arrow-right" /> {topic.points.join(" • ")}
+                  <i className="fas fa-arrow-right" />{" "}
+                  {topic.points.join(" • ")}
                 </span>
               </div>
             </div>
@@ -148,13 +156,13 @@ export default function OopsPage() {
         </h1>
         <div className="oops-sub-info">
           <span>
-            <i className="fas fa-gem" /> 1 Foundation
+            <i className="fas fa-gem" /> OOP Foundations
           </span>
           <span>
-            <i className="fas fa-crown" /> 4 Pillars of OOP
+            <i className="fas fa-crown" /> 4 Pillars
           </span>
           <span>
-            <i className="fas fa-project-diagram" /> 2 Class Relationships
+            <i className="fas fa-project-diagram" /> Core Relationships
           </span>
           <span>
             <i className="fas fa-code" /> Real Java Examples
@@ -183,32 +191,47 @@ export default function OopsPage() {
           <ul className="oops-why-list">
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Modularity</b> — each object is a self-contained unit</span>
+              <span>
+                <b>Modularity</b> — each object is a self-contained unit
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Reusability</b> — inherit and extend existing classes</span>
+              <span>
+                <b>Reusability</b> — inherit and extend existing classes
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Security</b> — encapsulation hides internal state</span>
+              <span>
+                <b>Security</b> — encapsulation hides internal state
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Flexibility</b> — polymorphism lets one interface, many behaviors</span>
+              <span>
+                <b>Flexibility</b> — polymorphism lets one interface, many
+                behaviors
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Real-world mapping</b> — BankAccount, Order, User, Product → all objects</span>
+              <span>
+                <b>Real-world mapping</b> — BankAccount, Order, User, Product →
+                all objects
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Interview essential</b> — foundation for LLD / System Design</span>
+              <span>
+                <b>Interview essential</b> — foundation for LLD / System Design
+              </span>
             </li>
           </ul>
           <p className="oops-why-foot">
-            👉 OOP is the <b>foundation</b> of frameworks like Spring, Hibernate,
-            and the entire Java ecosystem. Master it once, use it everywhere.
+            👉 OOP is the <b>foundation</b> of frameworks like Spring,
+            Hibernate, and the entire Java ecosystem. Master it once, use it
+            everywhere.
           </p>
         </div>
       </section>
@@ -216,7 +239,9 @@ export default function OopsPage() {
       <div className="oops-foundation-section">
         <div className="oops-section-header oops-foundation-header">
           <i className="fas fa-gem" /> Foundation of OOP
-          <span className="oops-section-sub">The starting point — without this, no other OOP concept exists</span>
+          <span className="oops-section-sub">
+            The starting point — without this, no other OOP concept exists
+          </span>
         </div>
         <div className="oops-topic-grid">
           {oopsTopics
@@ -235,7 +260,9 @@ export default function OopsPage() {
       <div className="oops-pillars-section">
         <div className="oops-section-header oops-pillars-header">
           <i className="fas fa-crown" /> The 4 Pillars of OOP
-          <span className="oops-section-sub">The core building blocks of Object-Oriented Programming</span>
+          <span className="oops-section-sub">
+            The core building blocks of Object-Oriented Programming
+          </span>
         </div>
         <div className="oops-topic-grid">
           {oopsTopics
@@ -254,7 +281,9 @@ export default function OopsPage() {
       <div className="oops-relations-section">
         <div className="oops-section-header oops-relations-header">
           <i className="fas fa-project-diagram" /> Class Relationships
-          <span className="oops-section-sub">How classes connect, own, and use each other</span>
+          <span className="oops-section-sub">
+            How classes connect, own, and use each other
+          </span>
         </div>
         <div className="oops-topic-grid">
           {oopsTopics
@@ -273,8 +302,9 @@ export default function OopsPage() {
       <DetailPanel topic={activeTopic} onClose={handleClose} />
 
       <div className="oops-footer-note">
-        <i className="fas fa-graduation-cap" /> Master the Foundation + 4 Pillars + Class Relationships of OOP for System Design —
-        Each concept includes Java code + visual diagram
+        <i className="fas fa-graduation-cap" /> Master the Foundation + 4
+        Pillars + Class Relationships of OOP for System Design — Each concept
+        includes Java code + visual diagram
       </div>
     </div>
   );

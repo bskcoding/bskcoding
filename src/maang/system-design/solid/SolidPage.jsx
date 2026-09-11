@@ -47,14 +47,21 @@ function DetailPanel({ topic, onClose }) {
 
   return (
     <div className="oops-modal-backdrop" onClick={onClose}>
-      <div className="oops-detail-panel modal-visible" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="oops-detail-panel modal-visible"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="oops-detail-header">
           <h2>
             <i className={`fas ${topic.icon}`} />
             <span className="oops-title-text">{topic.title}</span>
             <span className="oops-detail-sub">— {topic.sub}</span>
           </h2>
-          <button className="oops-close-btn" onClick={onClose} aria-label="Close details">
+          <button
+            className="oops-close-btn"
+            onClick={onClose}
+            aria-label="Close details"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -100,7 +107,8 @@ function DetailPanel({ topic, onClose }) {
                 <i className="fas fa-info-circle" />
                 <span className="oops-rel-tag">{topic.relation}</span>
                 <span>
-                  <i className="fas fa-arrow-right" /> {topic.points.join(" • ")}
+                  <i className="fas fa-arrow-right" />{" "}
+                  {topic.points.join(" • ")}
                 </span>
               </div>
             </div>
@@ -178,30 +186,42 @@ export default function SolidPage() {
         </div>
         <div className="oops-why-content">
           <p>
-            As your codebase grows, classes get tightly coupled, changes break
-            unrelated features, and testing becomes a nightmare. SOLID gives
-            you <b>5 proven rules</b> to write code that is:
+            As your codebase grows, classes become tightly coupled, changes
+            break unrelated features, and testing becomes a nightmare. SOLID
+            gives you <b>5 proven rules</b> to write code that is:
           </p>
           <ul className="oops-why-list">
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Easy to maintain</b> — small focused classes, one reason to change</span>
+              <span>
+                <b>Easy to maintain</b> — small focused classes, one reason to
+                change
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Easy to extend</b> — add new features without touching old code</span>
+              <span>
+                <b>Easy to extend</b> — add new features without touching old
+                code
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Easy to test</b> — depend on abstractions, mock anything</span>
+              <span>
+                <b>Easy to test</b> — depend on abstractions, mock anything
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Reusable</b> — small interfaces, swappable implementations</span>
+              <span>
+                <b>Reusable</b> — small interfaces, swappable implementations
+              </span>
             </li>
             <li>
               <i className="fas fa-check-circle" />
-              <span><b>Interview-ready</b> — asked in every LLD / Senior dev round</span>
+              <span>
+                <b>Interview-ready</b> — asked in every LLD / Senior dev round
+              </span>
             </li>
           </ul>
           <p className="oops-why-foot">

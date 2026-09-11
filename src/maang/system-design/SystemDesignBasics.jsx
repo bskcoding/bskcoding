@@ -3,10 +3,9 @@ import "./SystemDesignBasics.css";
 
 /**
  * SystemDesignBasics — landing page for the "System Design - Basics" track
- * on the MAANG preparation path. Shows the four foundation pillars as
- * colourful grids styled exactly like the subtopic cards on the MAANG page
- * (dark inside, coloured accent border + left bar, rotating rainbow border
- * and surrounding glow on hover).
+ * on the MAANG preparation path. Shows the core foundation areas as
+ * colourful grids styled like the MAANG subtopic cards (dark inside,
+ * coloured accent border + left bar, rotating rainbow border, and glow on hover).
  */
 
 // Dark-variant accents (same hues as the MAANG letter palette, deep tones).
@@ -61,16 +60,18 @@ function SystemDesignBasics() {
           System Design <span className="sdb-title-accent">Basics</span>
         </h1>
         <p className="sdb-subtitle">
-          Master the four pillars of Low-Level Design — the foundation every
-          MAANG interviewer expects before HLD &amp; machine-coding rounds.
+          Build the core foundation of System Design — the essential concepts
+          every MAANG interviewer expects before HLD, scalability discussions,
+          and machine-coding rounds.
         </p>
       </section>
 
       {/* ===== 4 GRIDS — styled like the MAANG subtopic cards ===== */}
       <section className="sdb-section">
-        <h2 className="sdb-section-title">What You'll Master</h2>
+        <h2 className="sdb-section-title">What You'll Explore</h2>
         <p className="sdb-section-subtitle">
-          Four foundation grids — click through as content lands
+          Six core foundation areas — explore them one by one and build the base
+          for real interview-level system design thinking.
         </p>
         <div className="sdb-grids">
           {CARDS.map((card, i) => {
