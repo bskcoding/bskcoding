@@ -41,10 +41,11 @@ export function svgClassDiagram() {
     <rect x="320" y="240" width="400" height="130" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5" rx="8" />
     <text x="335" y="262" font-size="12" font-weight="700" fill="#1565c0" font-family="Segoe UI,sans-serif">CLASS DIAGRAM NOTATION</text>
     <text x="335" y="285" font-size="11" font-family="monospace">+ public      - private      # protected</text>
-    <text x="335" y="305" font-size="11" font-family="monospace">---&gt;   association</text>
-    <text x="335" y="323" font-size="11" font-family="monospace">--|>  inheritance (is-a)</text>
-    <text x="335" y="341" font-size="11" font-family="monospace">--*  composition   --o  aggregation</text>
-    <text x="335" y="359" font-size="11" font-family="monospace">..|>  dependency (dashed)</text>
+    <text x="335" y="305" font-size="11" font-family="monospace">----   association</text>
+    <text x="335" y="323" font-size="11" font-family="monospace">---->  directed association</text>
+    <text x="335" y="341" font-size="11" font-family="monospace">--|>  inheritance (is-a)</text>
+    <text x="335" y="359" font-size="11" font-family="monospace">--*  composition   --o  aggregation</text>
+    <text x="335" y="377" font-size="11" font-family="monospace">..>   dependency   ..|> realization</text>
     <rect x="40" y="390" width="680" height="22" fill="#e8f5e9" />
     <text x="380" y="406" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32" font-family="Segoe UI,sans-serif">Static view: classes + attributes + methods + relationships</text>
   </svg>`;

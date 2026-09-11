@@ -12,10 +12,10 @@ const UML_RELATIONSHIPS = [
     key: "association",
     label: "Association",
     sub: "uses-a (loose connection)",
-    symbol: "───────►",
+    symbol: "────────",
     color: "#1565c0",
     desc: "A general link between two classes. Both classes know about each other but live independently.",
-    example: "Teacher ──► Student",
+    example: "Teacher ── Student",
   },
   {
     key: "directed",
@@ -102,14 +102,17 @@ function RelationshipCard({ rel }) {
 function RelationshipsSection() {
   return (
     <section className="oops-relationships-section">
-      <h2 className="oops-category-title" style={{ borderLeftColor: "#e94560" }}>
+      <h2
+        className="oops-category-title"
+        style={{ borderLeftColor: "#e94560" }}
+      >
         <i className="fas fa-link" style={{ color: "#e94560" }} />
         UML Relationships — Quick Reference
       </h2>
       <p className="oops-rel-intro">
-        Before reading each diagram, learn the <strong>standard UML
-        relationships</strong>. Every arrow in UML has a specific meaning —
-        read it before reading the rest of the diagram.
+        Before reading each diagram, learn the{" "}
+        <strong>standard UML relationships</strong>. Every arrow in UML has a
+        specific meaning — read it before reading the rest of the diagram.
       </p>
       <div className="oops-rel-grid">
         {UML_RELATIONSHIPS.map((rel) => (
@@ -318,14 +321,14 @@ export default function UmlPage() {
         "Structural Diagrams",
         "fa-cubes",
         "What the system IS - static building blocks",
-        structuralTopics
+        structuralTopics,
       )}
 
       {renderSection(
         "Behavioural Diagrams",
         "fa-play-circle",
         "What the system DOES - dynamic behaviour & interactions",
-        behavioralTopics
+        behavioralTopics,
       )}
 
       <p className="oops-footer-note">
