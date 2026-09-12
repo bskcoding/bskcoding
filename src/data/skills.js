@@ -17,11 +17,9 @@ export const skills = [
       "📅 Weekly DSA Preparation",
       "🏗️ System Design - Basics",
       "🌐 Advanced System Design",
-      "🏢 Microservices & Reactive",
       "⚡ Reactive Deep Dive",
       "🤖 AI/ML Fundamentals",
       "🧠 Agentic AI Engineering",
-      "🎯 Mock Interviews & Offers",
     ],
   },
   {
