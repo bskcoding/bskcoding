@@ -35,6 +35,15 @@ const DesignPatternsPage = lazy(
 const UmlPage = lazy(() => import("./maang/system-design/uml/UmlPage"));
 const AcidPage = lazy(() => import("./maang/system-design/acid/AcidPage"));
 const CapPage = lazy(() => import("./maang/system-design/cap/CapPage"));
+const ScalabilityPage = lazy(
+  () => import("./maang/system-design/scalability/ScalabilityPage"),
+);
+const LoadBalancingPage = lazy(
+  () => import("./maang/system-design/load-balancing/LoadBalancingPage"),
+);
+const CachingPage = lazy(
+  () => import("./maang/system-design/caching/CachingPage"),
+);
 const DatabaseConceptsPage = lazy(
   () => import("./maang/system-design/database-concepts/DatabaseConceptsPage"),
 );
@@ -311,6 +320,30 @@ function App() {
                   element={
                     <RequireAuth>
                       <CapPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/scalability"
+                  element={
+                    <RequireAuth>
+                      <ScalabilityPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/load-balancing"
+                  element={
+                    <RequireAuth>
+                      <LoadBalancingPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/caching"
+                  element={
+                    <RequireAuth>
+                      <CachingPage />
                     </RequireAuth>
                   }
                 />

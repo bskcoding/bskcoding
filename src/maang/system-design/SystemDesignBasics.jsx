@@ -47,6 +47,24 @@ const CARDS = [
     desc: "Consistency · Availability · Partition Tolerance — pick any 2 of 3, with diagrams",
   },
   {
+    emoji: "📈",
+    name: "Scalability",
+    accent: "#0d9488", // dark teal
+    desc: "Vertical vs Horizontal scaling, load distribution",
+  },
+  {
+    emoji: "⚖️",
+    name: "Load Balancing",
+    accent: "#7c3aed", // violet
+    desc: "Load balancer, round robin, least connections",
+  },
+  {
+    emoji: "⚡",
+    name: "Caching",
+    accent: "#b45309", // dark amber
+    desc: "Redis, cache-aside, write-through, write-back, eviction",
+  },
+  {
     emoji: "🗄️",
     name: "Database Concepts",
     accent: "#4f46e5", // deep indigo
@@ -76,7 +94,7 @@ function SystemDesignBasics() {
       <section className="sdb-section">
         <h2 className="sdb-section-title">What You'll Explore</h2>
         <p className="sdb-section-subtitle">
-          Six core foundation areas — explore them one by one and build the base
+          Eight core foundation areas — explore them one by one and build the base
           for real interview-level system design thinking.
         </p>
         <div className="sdb-grids">
@@ -167,6 +185,42 @@ function SystemDesignBasics() {
                 <Link
                   key={card.name}
                   to="/maang/system-design/cap"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Scalability pillar has its full page built out — link it.
+            if (card.name === "Scalability") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/scalability"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Load Balancing pillar has its full page built out — link it.
+            if (card.name === "Load Balancing") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/load-balancing"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Caching pillar has its full page built out — link it.
+            if (card.name === "Caching") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/caching"
                   className="sdb-card-link"
                 >
                   {inner}
