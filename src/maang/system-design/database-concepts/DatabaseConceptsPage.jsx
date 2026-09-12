@@ -282,6 +282,54 @@ const CONCEPTS = [
       </div>
     ),
   },
+  {
+    id: "BASE",
+    name: "BASE",
+    icon: "🌊",
+    tagline: "The NoSQL alternative to ACID",
+    accent: "#0e7490",
+    meaning:
+      "BASE = Basically Available, Soft state, Eventually consistent. Where ACID guarantees correctness at every instant, BASE accepts temporary inconsistency in exchange for high availability and partition tolerance — the philosophy behind DynamoDB, Cassandra and MongoDB.",
+    analogy:
+      "A social media like-counter: a celebrity post may show 1.2M likes on one server and 1,200,037 on another for a few seconds. Nobody is harmed — it settles to one number eventually, and the post stays available the whole time.",
+    sql: `ACID  : correct at every instant, scales down
+BASE  : available now, correct later, scales out
+
+Basically Available    : system always responds
+Soft state             : replicas may differ
+Eventually consistent  : all copies converge
+
+# Where each fits
+bank transfer  -> ACID (Postgres/MySQL)
+likes, feeds,  -> BASE (Dynamo, Cassandra,
+carts, views            MongoDB)`,
+  },
+  {
+    id: "RWSPLIT",
+    name: "Read/Write Splitting",
+    icon: "🔀",
+    tagline: "Writes to primary, reads to replicas",
+    accent: "#4f46e5",
+    meaning:
+      "Read/Write splitting routes every write to the primary and distributes reads across read replicas. Since most apps are read-heavy (90%+ reads), this multiplies read throughput cheaply. The catch is replication lag — a read right after a write may see stale data, so critical reads (e.g. 'show my just-saved profile') go to the primary.",
+    analogy:
+      "A teacher (primary) writes the official mark sheet once, then photocopies it for all students (replicas). Everyone can read a copy simultaneously — just know a student who checks immediately after an update may see yesterday's sheet.",
+    sql: `app -> writes -> PRIMARY
+        -> reads  -> replica1, replica2
+
+# Implementation
+- proxy: ProxySQL, RDS Reader Endpoint
+- ORM: route reads/writes by query type
+
+# Replication lag (async!)
+write -> primary (ack)
+       -> replica (ms-sec later)
+
+# Fix stale reads:
+- read-your-writes: pin user to
+  primary for N seconds after write`,
+  },
+
 ];
 
 function TopicCard({ concept, isActive, onClick }) {

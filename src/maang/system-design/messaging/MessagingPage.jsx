@@ -138,7 +138,35 @@ subscribe("order.created", chargePayment);
 //   pubsub = 1 message -> ALL subscribers (fan-out)
 // Kafka does pub-sub with consumer groups
 // (each group gets the full stream).`,
+  },  {
+    id: "GUAR",
+    name: "Delivery Guarantees & DLQ",
+    icon: "📬",
+    tagline: "At-most, at-least, exactly-once + dead letters",
+    accent: "#7c3aed",
+    meaning:
+      "Delivery guarantees define what happens to messages under failure: at-most-once (may lose, never duplicate), at-least-once (never lose, may duplicate — needs idempotent consumers), exactly-once (hardest, needs transactions/dedup — Kafka transactions & idempotent producers). A Dead Letter Queue (DLQ) collects messages that repeatedly fail so poison messages don't block the pipeline.",
+    analogy:
+      "Postal options: regular mail may get lost (at-most-once), registered mail always arrives but you may receive copies (at-least-once), a notarized ledger gives exactly-once. Mail that can't be delivered after 3 attempts goes to a dead-letter office instead of blocking the mailman forever.",
+    sql: `# The three guarantees
+at-most-once  : fire & forget, may lose
+at-least-once : ack after processing,
+                duplicates possible
+                -> consumers idempotent!
+exactly-once  : producer idempotence +
+                transactions (Kafka EOS)
+
+# DLQ flow
+msg fails -> retry (3x, backoff)
+          -> still fails -> DLQ
+consumer keeps processing new msgs;
+ops inspect/replay DLQ later
+
+# Cloud: SQS DLQ, RabbitMQ
+dead-letter-exchange, Kafka retry
+topics + dead letter topic`,
   },
+
 ];
 
 function TopicCard({ topic, index, isActive, onClick, total }) {

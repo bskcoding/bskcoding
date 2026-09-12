@@ -246,7 +246,34 @@ on request:
     allow()
   else:
     reject(429)`,
+  },  {
+    id: "TRANSPORT",
+    name: "HTTP/HTTPS & TCP vs UDP",
+    icon: "🌐",
+    tagline: "The transport layer under every API",
+    accent: "#1d4ed8",
+    meaning:
+      "TCP is connection-oriented with guaranteed, ordered delivery (HTTP, gRPC, databases); UDP is connectionless fire-and-forget with no guarantees but minimal latency (video, gaming, DNS, QUIC). HTTPS is HTTP over TLS — encryption plus server identity via certificates. Interviews expect you to pick TCP vs UDP per use case.",
+    analogy:
+      "TCP is registered mail: every letter is confirmed and arrives in order. UDP is a radio broadcast: fast, no confirmation — some people may miss it, and that's fine.",
+    sql: `# TCP vs UDP
+TCP: handshake, retransmit, ordered
+     -> web, DB, file transfer, gRPC
+UDP: no handshake, no retransmit,
+     low latency, can lose packets
+     -> live video, VoIP, gaming, DNS
+
+# HTTP/1.1 vs 2 vs 3
+1.1  : one request per connection
+2    : multiplexing over one TCP conn
+3    : HTTP over QUIC (UDP) — no
+       TCP head-of-line blocking
+
+# HTTPS = HTTP + TLS
+cert proves server identity,
+keys encrypt the session.`,
   },
+
 ];
 
 function ApiDesignPage() {

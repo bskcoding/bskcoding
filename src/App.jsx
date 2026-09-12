@@ -68,6 +68,29 @@ const ObservabilityPage = lazy(
 const SecurityPage = lazy(
   () => import("./maang/system-design/security/SecurityPage"),
 );
+const CdnPage = lazy(() => import("./maang/system-design/cdn/CdnPage"));
+const SearchSystemsPage = lazy(
+  () => import("./maang/system-design/search-systems/SearchSystemsPage"),
+);
+const FileStoragePage = lazy(
+  () => import("./maang/system-design/file-storage/FileStoragePage"),
+);
+const DistributedTechniquesPage = lazy(
+  () =>
+    import(
+      "./maang/system-design/distributed-techniques/DistributedTechniquesPage"
+    ),
+);
+const DataProcessingPage = lazy(
+  () => import("./maang/system-design/data-processing/DataProcessingPage"),
+);
+const CloudInfrastructurePage = lazy(
+  () =>
+    import("./maang/system-design/cloud-infrastructure/CloudInfrastructurePage"),
+);
+const AdvancedModernPage = lazy(
+  () => import("./maang/system-design/advanced-modern/AdvancedModernPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -429,6 +452,62 @@ function App() {
                   element={
                     <RequireAuth>
                       <SecurityPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/cdn"
+                  element={
+                    <RequireAuth>
+                      <CdnPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/search-systems"
+                  element={
+                    <RequireAuth>
+                      <SearchSystemsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/file-storage"
+                  element={
+                    <RequireAuth>
+                      <FileStoragePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/distributed-techniques"
+                  element={
+                    <RequireAuth>
+                      <DistributedTechniquesPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/data-processing"
+                  element={
+                    <RequireAuth>
+                      <DataProcessingPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/cloud-infrastructure"
+                  element={
+                    <RequireAuth>
+                      <CloudInfrastructurePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/advanced-modern"
+                  element={
+                    <RequireAuth>
+                      <AdvancedModernPage />
                     </RequireAuth>
                   }
                 />

@@ -17,16 +17,16 @@ const CARDS = [
     desc: "Classes & Objects · Inheritance · Polymorphism · Abstraction · Encapsulation",
   },
   {
-    emoji: "📐",
-    name: "SOLID Principles",
-    accent: "#b45309", // dark amber (A)
-    desc: "S · O · L · I · D — five principles for maintainable, scalable design",
-  },
-  {
     emoji: "🧩",
     name: "Design Patterns",
     accent: "#15803d", // dark green (A)
     desc: "Creational · Structural · Behavioural patterns asked in LLD rounds",
+  },
+  {
+    emoji: "📐",
+    name: "SOLID Principles",
+    accent: "#b45309", // dark amber (A)
+    desc: "S · O · L · I · D — five principles for maintainable, scalable design",
   },
   {
     emoji: "📊",
@@ -39,6 +39,12 @@ const CARDS = [
     name: "ACID Properties",
     accent: "#0e7490", // dark teal
     desc: "Atomicity · Consistency · Isolation · Durability — database reliability made simple",
+  },
+  {
+    emoji: "🗄️",
+    name: "Database Concepts",
+    accent: "#4f46e5", // deep indigo
+    desc: "SQL vs NoSQL · Indexing · Joins · Normalization · Replication · Partitioning · Sharding",
   },
   {
     emoji: "⚖️",
@@ -65,12 +71,6 @@ const CARDS = [
     desc: "Redis, cache-aside, write-through, write-back, eviction",
   },
   {
-    emoji: "🗄️",
-    name: "Database Concepts",
-    accent: "#4f46e5", // deep indigo
-    desc: "SQL vs NoSQL · Indexing · Joins · Normalization · Replication · Partitioning · Sharding",
-  },
-  {
     emoji: "🌐",
     name: "API Design",
     accent: "#b45309", // dark amber
@@ -78,9 +78,9 @@ const CARDS = [
   },
   {
     emoji: "🌍",
-    name: "Distributed Systems",
-    accent: "#0e7490", // dark teal
-    desc: "Replication · Consistency · Distributed Locks · Leader Election · Fault Tolerance",
+    name: "CDN & Content Delivery",
+    accent: "#1d4ed8", // dark royal blue
+    desc: "CDN · Edge & Origin Servers · Cache-Control · Static vs Dynamic Delivery",
   },
   {
     emoji: "📨",
@@ -95,10 +95,40 @@ const CARDS = [
     desc: "API Gateway · Service Discovery · Circuit Breaker · Retry · Saga · Event-Driven Communication",
   },
   {
+    emoji: "🔎",
+    name: "Search Systems",
+    accent: "#0e7490", // dark teal
+    desc: "Elasticsearch · Inverted Index · Full-Text Search · Tokenization · Shards & Replicas",
+  },
+  {
+    emoji: "📦",
+    name: "File & Large Data Handling",
+    accent: "#c2410c", // dark coral
+    desc: "Chunking · Multipart Upload · Resume/Retry · Object Storage & S3",
+  },
+  {
+    emoji: "🔄",
+    name: "Distributed Techniques",
+    accent: "#7c3aed", // violet
+    desc: "Consistent Hashing · Bloom Filter · Merkle Tree · Snowflake ID · Gossip · Quorum",
+  },
+  {
+    emoji: "🌍",
+    name: "Distributed Systems",
+    accent: "#0e7490", // dark teal
+    desc: "Replication · Consistency · Distributed Locks · Leader Election · Fault Tolerance",
+  },
+  {
     emoji: "🛡️",
     name: "High Availability & Reliability",
     accent: "#0e7490", // dark teal
     desc: "Failover · Redundancy · Health Checks · Disaster Recovery · Backup",
+  },
+  {
+    emoji: "🔐",
+    name: "Security",
+    accent: "#b45309", // dark amber
+    desc: "Authentication · Authorization · OAuth2 · JWT · Encryption",
   },
   {
     emoji: "🔭",
@@ -107,10 +137,22 @@ const CARDS = [
     desc: "Logging · Metrics · Monitoring · Distributed Tracing",
   },
   {
-    emoji: "🔐",
-    name: "Security",
-    accent: "#b45309", // dark amber
-    desc: "Authentication · Authorization · OAuth2 · JWT · Encryption",
+    emoji: "🗄️",
+    name: "Data Processing",
+    accent: "#0d9488", // dark teal
+    desc: "Batch · Stream Processing · MapReduce · ETL & Data Pipelines",
+  },
+  {
+    emoji: "☁️",
+    name: "Cloud & Infrastructure",
+    accent: "#1d4ed8", // dark royal blue
+    desc: "Docker · Kubernetes · Service Mesh · CI/CD · Infrastructure as Code",
+  },
+  {
+    emoji: "🚀",
+    name: "Advanced & Modern",
+    accent: "#4f46e5", // deep indigo
+    desc: "CQRS · Event Sourcing · Vector DB · RAG & LLM · Serverless",
   },
 ];
 
@@ -136,7 +178,7 @@ function SystemDesignBasics() {
       <section className="sdb-section">
         <h2 className="sdb-section-title">What You'll Explore</h2>
         <p className="sdb-section-subtitle">
-          Seventeen core foundation areas — explore them one by one and build the
+          Twenty-four core foundation areas — explore them one by one and build the
           base for real interview-level system design thinking.
         </p>
         <div className="sdb-grids">
@@ -364,6 +406,27 @@ function SystemDesignBasics() {
                 </Link>
               );
             }
+            // The 7 newest pillars have full pages built out.
+            const NEW_ROUTES = {
+              "CDN & Content Delivery": "/maang/system-design/cdn",
+              "Search Systems": "/maang/system-design/search-systems",
+              "File & Large Data Handling": "/maang/system-design/file-storage",
+              "Distributed Techniques": "/maang/system-design/distributed-techniques",
+              "Data Processing": "/maang/system-design/data-processing",
+              "Cloud & Infrastructure": "/maang/system-design/cloud-infrastructure",
+              "Advanced & Modern": "/maang/system-design/advanced-modern",
+            };
+            if (NEW_ROUTES[card.name]) {
+              return (
+                <Link
+                  key={card.name}
+                  to={NEW_ROUTES[card.name]}
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
             return inner;
           })}
         </div>
@@ -373,3 +436,4 @@ function SystemDesignBasics() {
 }
 
 export default SystemDesignBasics;
+

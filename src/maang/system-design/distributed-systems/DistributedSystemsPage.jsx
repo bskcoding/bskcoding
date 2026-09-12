@@ -129,7 +129,35 @@ WRITE: consistency_level = QUORUM
 READ : consistency_level = QUORUM
 # W + R > N  => strong-ish (read overlaps
 #   the latest write quorum)`,
+  },  {
+    id: "CONSENSUS",
+    name: "Consensus",
+    icon: "🤝",
+    tagline: "Getting replicas to agree on one truth",
+    accent: "#b45309",
+    meaning:
+      "Consensus is the problem of getting multiple nodes to agree on a single value/order even with crashes and network delays — the foundation for leader election, replicated state machines and distributed locks. Algorithms: Raft (understandable, used by etcd/Consul), Paxos (classic, hard), ZAB (ZooKeeper). All need a majority (quorum) to make progress.",
+    analogy:
+      "A board of directors: a decision passes only when more than half vote yes (quorum). Even if a few directors are unreachable, the company keeps deciding — as long as a majority is in the room.",
+    sql: `# Raft, in one minute
+1. elect a leader (majority vote)
+2. leader accepts commands, appends
+   to its log
+3. replicates log to followers
+4. entry committed once a MAJORITY
+   acknowledges
+5. leader applies & replies
+
+# Guarantees
+- agreed order of operations (log)
+- survives (N/2 - 1) failures
+- split brain impossible: only the
+  majority side elects a leader
+
+# Where: etcd (K8s), Consul,
+  ZooKeeper, CockroachDB, Kafka KRaft`,
   },
+
 ];
 
 function TopicCard({ topic, index, isActive, onClick, total }) {
