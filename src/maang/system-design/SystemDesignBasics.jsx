@@ -41,6 +41,12 @@ const CARDS = [
     desc: "Atomicity · Consistency · Isolation · Durability — database reliability made simple",
   },
   {
+    emoji: "⚖️",
+    name: "CAP Theorem",
+    accent: "#7c3aed", // violet
+    desc: "Consistency · Availability · Partition Tolerance — pick any 2 of 3, with diagrams",
+  },
+  {
     emoji: "🗄️",
     name: "Database Concepts",
     accent: "#4f46e5", // deep indigo
@@ -149,6 +155,18 @@ function SystemDesignBasics() {
                 <Link
                   key={card.name}
                   to="/maang/system-design/acid"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The CAP Theorem card has its full page built out — link it.
+            if (card.name === "CAP Theorem") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/cap"
                   className="sdb-card-link"
                 >
                   {inner}

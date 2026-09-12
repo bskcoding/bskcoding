@@ -34,6 +34,7 @@ const DesignPatternsPage = lazy(
 );
 const UmlPage = lazy(() => import("./maang/system-design/uml/UmlPage"));
 const AcidPage = lazy(() => import("./maang/system-design/acid/AcidPage"));
+const CapPage = lazy(() => import("./maang/system-design/cap/CapPage"));
 const DatabaseConceptsPage = lazy(
   () => import("./maang/system-design/database-concepts/DatabaseConceptsPage"),
 );
@@ -302,6 +303,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <AcidPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/cap"
+                  element={
+                    <RequireAuth>
+                      <CapPage />
                     </RequireAuth>
                   }
                 />

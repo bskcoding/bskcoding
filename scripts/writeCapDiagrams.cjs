@@ -1,0 +1,82 @@
+const fs = require('fs');
+const path = 'c:/Users/USER/bskcoding/src/maang/system-design/cap/capDiagrams.js';
+
+const content = `// ===== CAP Theorem — SVG Diagrams =====
+// Each function returns an SVG string matching the page's theme.
+// CAP = Consistency, Availability, Partition Tolerance (Brewer's theorem)
+
+export function svgCAPOverview() {
+  return \`<svg viewBox="0 0 780 460" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        .cap-title   { font-weight: 700; font-size: 14px; font-family: Segoe UI, sans-serif; fill: #1a1a2e; }
+        .cap-text    { font-size: 12px; font-family: Segoe UI, sans-serif; fill: #1a1a2e; }
+        .cap-sub     { font-size: 11px; font-family: Segoe UI, sans-serif; fill: #555; }
+        .cap-accent  { font-weight: 700; font-size: 13px; font-family: Segoe UI, sans-serif; }
+        .cap-box     { fill: #f8f9fc; stroke: #302b63; stroke-width: 2; rx: 14; }
+        .cap-center  { fill: #fff8e1; stroke: #f57c00; stroke-width: 2.5; rx: 14; }
+      </style>
+    </defs>
+
+    <text x="390" y="34" text-anchor="middle" class="cap-title" fill="#302b63" font-size="16">
+      ⚖️ CAP Theorem — Pick Any 2 of 3
+    </text>
+    <text x="390" y="54" text-anchor="middle" class="cap-sub">
+      In a distributed system, you can simultaneously guarantee at most TWO of: Consistency, Availability, Partition Tolerance
+    </text>
+
+    <!-- C -->
+    <rect x="60" y="80" width="220" height="170" class="cap-box" />
+    <rect x="60" y="80" width="220" height="40" fill="#c2410c" rx="14" />
+    <text x="170" y="105" text-anchor="middle" class="cap-accent" fill="white">C — Consistency</text>
+    <line x1="70" y1="122" x2="270" y2="122" stroke="#302b63" stroke-width="1.5" />
+    <text x="76" y="148" class="cap-text">All nodes see the</text>
+    <text x="76" y="166" class="cap-text">same data at the</text>
+    <text x="76" y="184" class="cap-text">same time.</text>
+    <text x="76" y="206" class="cap-sub">→ Read gets latest write</text>
+    <text x="76" y="224" class="cap-sub">→ No stale reads</text>
+    <text x="170" y="250" text-anchor="middle" class="cap-sub" fill="#c2410c" font-weight="600">🗄️ RDBMS, MongoDB, HBase</text>
+
+    <!-- A -->
+    <rect x="280" y="80" width="220" height="170" class="cap-box" />
+    <rect x="280" y="80" width="220" height="40" fill="#15803d" rx="14" />
+    <text x="390" y="105" text-anchor="middle" class="cap-accent" fill="white">A — Availability</text>
+    <line x1="290" y1="122" x2="490" y2="122" stroke="#302b63" stroke-width="1.5" />
+    <text x="296" y="148" class="cap-text">Every request gets</text>
+    <text x="296" y="166" class="cap-text">a response (success or failure). No timeouts.</text>
+    <text x="296" y="206" class="cap-sub">→ System always responds</text>
+    <text x="296" y="224" class="cap-sub">→ May return stale data</text>
+    <text x="390" y="250" text-anchor="middle" class="cap-sub" fill="#15803d" font-weight="600">🌐 Cassandra, DynamoDB</text>
+
+    <!-- P -->
+    <rect x="500" y="80" width="220" height="170" class="cap-box" />
+    <rect x="500" y="80" width="220" height="40" fill="#1d4ed8" rx="14" />
+    <text x="610" y="105" text-anchor="middle" class="cap-accent" fill="white">P — Partition Tolerance</text>
+    <line x1="510" y1="122" x2="710" y2="122" stroke="#302b63" stroke-width="1.5" />
+    <text x="516" y="148" class="cap-text">System keeps working</text>
+    <text x="516" y="166" class="cap-text">even when network links break between nodes.</text>
+    <text x="516" y="206" class="cap-sub">→ Survives network splits</text>
+    <text x="516" y="224" class="cap-sub">→ Always needed in practice</text>
+    <text x="610" y="250" text-anchor="middle" class="cap-sub" fill="#1d4ed8" font-weight="600">☁️ Any distributed system</text>
+
+    <!-- Center -->
+    <rect x="240" y="290" width="300" height="60" class="cap-center" />
+    <text x="390" y="316" text-anchor="middle" class="cap-title" fill="#302b63" font-size="14">
+      You can pick AT MOST 2 of 3 — but P is mandatory in practice
+    </text>
+    <text x="390" y="338" text-anchor="middle" class="cap-sub" fill="#f57c00">
+      → Real choice: CP  vs  AP
+    </text>
+
+    <rect x="120" y="370" width="540" height="55" fill="#eef2f7" stroke="#94a3b8" stroke-width="1" rx="10" />
+    <text x="390" y="394" text-anchor="middle" class="cap-text" fill="#555">
+      CA (Consistency + Availability) = single-node / no network partitions.
+      Once you distribute across nodes, P is unavoidable — so you choose between CP or AP.
+    </text>
+  </svg>\`;
+}
+
+`;
+
+fs.writeFileSync(path, content);
+console.log('Written:', path, 'size:', fs.statSync(path).size);
