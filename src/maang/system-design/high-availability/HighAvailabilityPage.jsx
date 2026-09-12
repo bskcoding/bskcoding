@@ -140,60 +140,163 @@ incremental : changes since last (Mon-Sat)
   },
 ];
 
+function TopicCard({ topic, index, isActive, onClick, total }) {
+  const shortMeaning = `${topic.meaning.slice(0, 110)}...`;
+
+  return (
+    <article
+      className={`acid-card ${isActive ? "active" : ""}`}
+      style={{ "--acid-accent": topic.accent }}
+      onClick={() => onClick(topic.id)}
+    >
+      <div className="acid-card-head">
+        <span className="acid-card-letter">{topic.icon}</span>
+        <div>
+          <h3 className="acid-card-name">{topic.name}</h3>
+          <span className="acid-card-tagline">{topic.tagline}</span>
+        </div>
+      </div>
+
+      <p className="acid-card-summary">{shortMeaning}</p>
+
+      <div className="acid-card-actions">
+        <button
+          className="acid-card-btn"
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick(topic.id);
+          }}
+        >
+          View details
+        </button>
+        <span className="acid-card-badge">Reliability</span>
+      </div>
+
+      <span className="acid-card-index">
+        {index + 1} / {total}
+      </span>
+      {isActive && (
+        <span className="acid-active-indicator">
+          <i className="fas fa-check-circle" />
+        </span>
+      )}
+    </article>
+  );
+}
+
+function DetailPanel({ topic, onClose }) {
+  if (!topic) return null;
+
+  return (
+    <div className="acid-modal-backdrop" onClick={onClose}>
+      <div className="acid-detail-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="acid-detail-header">
+          <h2>
+            <span className="acid-detail-letter">{topic.icon}</span>
+            <span className="acid-detail-title">{topic.name}</span>
+            <span className="acid-detail-sub">— {topic.tagline}</span>
+          </h2>
+          <button
+            className="acid-close-btn"
+            onClick={onClose}
+            aria-label="Close details"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="acid-modal-scroll-content">
+          <div className="acid-definition-box">
+            <strong>📘 Definition:</strong> {topic.meaning}
+          </div>
+
+          <div className="acid-detail-grid">
+            <div className="acid-info-box">
+              <h3>Real-world analogy</h3>
+              <p>{topic.analogy}</p>
+            </div>
+
+            <div className="acid-code-box">
+              <h3>How it works</h3>
+              <pre>
+                <code>{topic.sql}</code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function HighAvailabilityPage() {
-  const [active, setActive] = useState(null);
+  const [activeId, setActiveId] = useState(null);
+  const activeTopic = TOPICS.find((topic) => topic.id === activeId);
+
+  const handleClick = (id) => {
+    setActiveId((current) => (current === id ? null : id));
+  };
 
   return (
     <div className="acid-page">
-      <header className="acid-header">
-        <Link to="/maang/system-design" className="acid-back">
-          ← Back to System Design
+      {/* ===== HERO ===== */}
+      <section className="acid-hero">
+        <Link to="/maang/system-design-basics" className="acid-back">
+          ← Back to System Design Basics
         </Link>
-        <h1>🛡️ High Availability & Reliability</h1>
+        <h1 className="acid-title">
+          🛡️ High Availability &amp; <span>Reliability</span>
+        </h1>
         <p className="acid-subtitle">
           Keeping the lights on: failover, redundancy, health checks, DR and
           backups.
         </p>
-      </header>
 
-      <div className="acid-grid">
-        {TOPICS.map((t) => (
-          <button
-            key={t.id}
-            className="acid-card"
-            style={{ borderTopColor: t.accent }}
-            onClick={() => setActive(t)}
-          >
-            <span className="acid-icon">{t.icon}</span>
-            <h2>{t.name}</h2>
-            <p>{t.tagline}</p>
-            <span className="acid-learn">Learn more →</span>
-          </button>
-        ))}
-      </div>
-
-      {active && (
-        <div className="acid-modal-backdrop" onClick={() => setActive(null)}>
-          <div className="acid-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="acid-close" onClick={() => setActive(null)}>
-              ✕
-            </button>
-            <h2 style={{ color: active.accent }}>
-              {active.icon} {active.name}
-            </h2>
-            <p className="acid-tagline">{active.tagline}</p>
-
-            <h3>What is it?</h3>
-            <p>{active.meaning}</p>
-
-            <h3>Real-world analogy</h3>
-            <p className="acid-analogy">{active.analogy}</p>
-
-            <h3>How it works</h3>
-            <pre className="acid-code">{active.sql}</pre>
-          </div>
+        <div className="acid-chip-row">
+          <span className="acid-chip">🛡️ 5 core concepts</span>
+          <span className="acid-chip">🔁 Failover &amp; redundancy</span>
+          <span className="acid-chip">🚨 DR ready</span>
         </div>
-      )}
+      </section>
+
+      {/* ===== TOPIC CARDS ===== */}
+      <section className="acid-props">
+        <h2 className="acid-section-title">
+          The 5 High Availability Concepts
+        </h2>
+        <p className="acid-section-sub">
+          Click any card to open the full explanation with a real-world analogy
+          and example.
+        </p>
+        <div className="acid-grid">
+          {TOPICS.map((topic, i) => (
+            <TopicCard
+              key={topic.id}
+              topic={topic}
+              index={i}
+              total={TOPICS.length}
+              isActive={activeId === topic.id}
+              onClick={handleClick}
+            />
+          ))}
+        </div>
+      </section>
+
+      <DetailPanel topic={activeTopic} onClose={() => setActiveId(null)} />
     </div>
   );
 }
