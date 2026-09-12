@@ -47,6 +47,27 @@ const CachingPage = lazy(
 const DatabaseConceptsPage = lazy(
   () => import("./maang/system-design/database-concepts/DatabaseConceptsPage"),
 );
+const ApiDesignPage = lazy(
+  () => import("./maang/system-design/api-design/ApiDesignPage"),
+);
+const DistributedSystemsPage = lazy(
+  () => import("./maang/system-design/distributed-systems/DistributedSystemsPage"),
+);
+const MessagingPage = lazy(
+  () => import("./maang/system-design/messaging/MessagingPage"),
+);
+const MicroservicesPage = lazy(
+  () => import("./maang/system-design/microservices/MicroservicesPage"),
+);
+const HighAvailabilityPage = lazy(
+  () => import("./maang/system-design/high-availability/HighAvailabilityPage"),
+);
+const ObservabilityPage = lazy(
+  () => import("./maang/system-design/observability/ObservabilityPage"),
+);
+const SecurityPage = lazy(
+  () => import("./maang/system-design/security/SecurityPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -352,6 +373,62 @@ function App() {
                   element={
                     <RequireAuth>
                       <DatabaseConceptsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/api-design"
+                  element={
+                    <RequireAuth>
+                      <ApiDesignPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/distributed-systems"
+                  element={
+                    <RequireAuth>
+                      <DistributedSystemsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/messaging"
+                  element={
+                    <RequireAuth>
+                      <MessagingPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/microservices"
+                  element={
+                    <RequireAuth>
+                      <MicroservicesPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/high-availability"
+                  element={
+                    <RequireAuth>
+                      <HighAvailabilityPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/observability"
+                  element={
+                    <RequireAuth>
+                      <ObservabilityPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/security"
+                  element={
+                    <RequireAuth>
+                      <SecurityPage />
                     </RequireAuth>
                   }
                 />

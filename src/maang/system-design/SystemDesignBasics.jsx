@@ -70,6 +70,48 @@ const CARDS = [
     accent: "#4f46e5", // deep indigo
     desc: "SQL vs NoSQL · Indexing · Joins · Normalization · Replication · Partitioning · Sharding",
   },
+  {
+    emoji: "🌐",
+    name: "API Design",
+    accent: "#b45309", // dark amber
+    desc: "REST · HTTP Methods · Idempotency · Pagination · API Versioning · Rate Limiting",
+  },
+  {
+    emoji: "🌍",
+    name: "Distributed Systems",
+    accent: "#0e7490", // dark teal
+    desc: "Replication · Consistency · Distributed Locks · Leader Election · Fault Tolerance",
+  },
+  {
+    emoji: "📨",
+    name: "Messaging & Event-Driven",
+    accent: "#15803d", // dark green
+    desc: "Queue · Pub/Sub · Producer/Consumer · Kafka · RabbitMQ",
+  },
+  {
+    emoji: "🧩",
+    name: "Microservices",
+    accent: "#1d4ed8", // dark royal blue
+    desc: "API Gateway · Service Discovery · Circuit Breaker · Retry · Saga · Event-Driven Communication",
+  },
+  {
+    emoji: "🛡️",
+    name: "High Availability & Reliability",
+    accent: "#0e7490", // dark teal
+    desc: "Failover · Redundancy · Health Checks · Disaster Recovery · Backup",
+  },
+  {
+    emoji: "🔭",
+    name: "Observability",
+    accent: "#7c3aed", // violet
+    desc: "Logging · Metrics · Monitoring · Distributed Tracing",
+  },
+  {
+    emoji: "🔐",
+    name: "Security",
+    accent: "#b45309", // dark amber
+    desc: "Authentication · Authorization · OAuth2 · JWT · Encryption",
+  },
 ];
 
 function SystemDesignBasics() {
@@ -94,8 +136,8 @@ function SystemDesignBasics() {
       <section className="sdb-section">
         <h2 className="sdb-section-title">What You'll Explore</h2>
         <p className="sdb-section-subtitle">
-          Eight core foundation areas — explore them one by one and build the base
-          for real interview-level system design thinking.
+          Seventeen core foundation areas — explore them one by one and build the
+          base for real interview-level system design thinking.
         </p>
         <div className="sdb-grids">
           {CARDS.map((card, i) => {
@@ -232,6 +274,90 @@ function SystemDesignBasics() {
                 <Link
                   key={card.name}
                   to="/maang/system-design/database-concepts"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The API Design pillar has its full page built out — link it.
+            if (card.name === "API Design") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/api-design"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Distributed Systems pillar has its full page built out.
+            if (card.name === "Distributed Systems") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/distributed-systems"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Messaging / Event-Driven pillar has its full page built out.
+            if (card.name === "Messaging & Event-Driven") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/messaging"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Microservices pillar has its full page built out.
+            if (card.name === "Microservices") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/microservices"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The High Availability & Reliability pillar has its full page built out.
+            if (card.name === "High Availability & Reliability") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/high-availability"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Observability pillar has its full page built out.
+            if (card.name === "Observability") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/observability"
+                  className="sdb-card-link"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+            // The Security pillar has its full page built out.
+            if (card.name === "Security") {
+              return (
+                <Link
+                  key={card.name}
+                  to="/maang/system-design/security"
                   className="sdb-card-link"
                 >
                   {inner}

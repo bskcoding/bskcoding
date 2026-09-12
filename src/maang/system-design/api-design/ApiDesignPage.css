@@ -1,0 +1,7 @@
+/* API Design page — small override on top of the shared ACID page styles:
+   the card badge shows an emoji icon instead of a single letter. */
+
+.api-topic-icon {
+  font-size: 1.5rem !important;
+  line-height: 1;
+}
