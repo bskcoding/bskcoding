@@ -152,6 +152,25 @@
   max-width: 780px;
 }
 
+/* ===== BRAND LOGOS (HLD cards) ===== */
+/* White circular badge behind each original brand logo */
+.sdb-card .sdb-card-emoji {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+.asd-brand-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+  display: block;
+}
+
 /* subtitle stays left aligned under the headline */
 @media (max-width: 768px) {
   .asd-title {

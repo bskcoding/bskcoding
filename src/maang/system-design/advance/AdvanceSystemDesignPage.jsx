@@ -12,6 +12,23 @@
  */
 
 import { Link } from "react-router-dom";
+import {
+  FaLink,
+  FaGaugeHigh,
+  FaMagnifyingGlass,
+  FaTicket,
+} from "react-icons/fa6";
+import {
+  SiYoutube,
+  SiWhatsapp,
+  SiInstagram,
+  SiUber,
+  SiNetflix,
+  SiX,
+  SiGoogle,
+  SiGoogledrive,
+  SiStripe,
+} from "react-icons/si";
 import "../SystemDesignBasics.css";
 import "./AdvanceSystemDesignPage.css";
 
@@ -109,84 +126,96 @@ const LLD_QUESTIONS = [
 // ===========================================================================
 const HLD_QUESTIONS = [
   {
-    emoji: "🔗",
+    Icon: FaLink,
+    brandColor: "#3b82f6",
     title: "URL Shortener (TinyURL)",
     topics:
       "Scalability, Hashing, Database, Cache, Sharding, Load Balancer, ID Generation, Consistent Hashing",
     accent: "#c2410c",
   },
   {
-    emoji: "⏱️",
+    Icon: FaGaugeHigh,
+    brandColor: "#f59e0b",
     title: "Rate Limiter",
     topics:
       "Distributed Systems, Redis, Token Bucket, Sliding Window, API Gateway, Scalability, High Availability",
     accent: "#15803d",
   },
   {
-    emoji: "▶️",
+    Icon: SiYoutube,
+    brandColor: "#ff0000",
     title: "YouTube",
     topics:
       "CDN, Object Storage, Video Upload, Chunking, Video Transcoding, Streaming, Metadata DB, Caching, Scalability",
     accent: "#b45309",
   },
   {
-    emoji: "💬",
+    Icon: SiWhatsapp,
+    brandColor: "#25d366",
     title: "WhatsApp / Chat System",
     topics:
       "WebSocket, Real-Time Communication, Kafka, Message Queue, Delivery Guarantees, Online/Offline Status, Push Notifications, Database, Scalability",
     accent: "#1d4ed8",
   },
   {
-    emoji: "📷",
+    Icon: SiInstagram,
+    brandColor: "#e1306c",
     title: "Instagram",
     topics:
       "Feed Generation, Fan-out, Caching, Database, Object Storage, CDN, Sharding, Ranking, Scalability",
     accent: "#0e7490",
   },
   {
-    emoji: "🚗",
+    Icon: SiUber,
+    brandColor: "#06c167",
     title: "Uber / Ride Sharing",
     topics:
       "Geospatial Indexing, Location Tracking, Driver-Rider Matching, WebSocket, Kafka, Redis, Database, Scalability, Real-Time Processing",
     accent: "#4f46e5",
   },
   {
-    emoji: "🎬",
+    Icon: SiNetflix,
+    brandColor: "#e50914",
     title: "Netflix",
     topics:
       "CDN, Video Streaming, Object Storage, Video Transcoding, Caching, Microservices, Recommendation System, Load Balancing, Scalability",
     accent: "#7c3aed",
   },
   {
-    emoji: "🐦",
+    Icon: SiX,
+    brandColor: "#e7e9ea",
     title: "Twitter / X",
     topics:
       "Feed, Fan-out on Write/Read, Caching, Kafka, Database, Sharding, Ranking, Load Balancing, Scalability",
     accent: "#0d9488",
   },
   {
-    emoji: "🔎",
+    Icon: SiGoogle,
+    brandColor: "#4285f4",
     title: "Search / Autocomplete",
     topics:
       "Elasticsearch, Inverted Index, Trie, Tokenization, Ranking, Sharding, Replication, Caching, Load Balancing",
     accent: "#c2410c",
   },
   {
-    emoji: "💳",
+    Icon: SiStripe,
+    brandColor: "#635bff",
     title: "Payment System",
     topics:
       "Idempotency, ACID, Transactions, Distributed Transactions, Payment Gateway, Kafka, Retry, Consistency, Security, Fault Tolerance",
     accent: "#15803d",
   },
   {
-    emoji: "💾",
+    Icon: SiGoogledrive,
+    brandColor: "#34a853",
     title: "File Storage / Google Drive",
     topics:
       "Chunking, Object Storage, Metadata DB, Multipart Upload, Deduplication, Sync, CDN, Sharding, Replication, Consistency",
     accent: "#1d4ed8",
   },
   {
-    emoji: "🎟️",
+    Icon: FaTicket,
+    brandColor: "#f43f5e",
     title: "Ticket Booking System",
     topics:
       "Concurrency, Distributed Lock, Database Transactions, ACID, Idempotency, Inventory Management, Cache, Queue, Scalability",
@@ -195,26 +224,37 @@ const HLD_QUESTIONS = [
 ];
 
 // Shared card-rendering helper (keeps the JSX below compact).
+// Supports EITHER `Icon` (brand logo component) OR legacy `emoji`.
 function renderGrid(questions) {
   return (
     <div className="sdb-grids">
-      {questions.map((q, i) => (
-        <div
-          key={`${q.title}-${i}`}
-          className="sdb-card"
-          style={{ "--sd-accent": q.accent, "--ml-idx": i }}
-        >
-          <span className="sdb-card-shine" aria-hidden="true" />
-          <div className="sdb-card-top">
-            <span className="sdb-card-emoji" aria-hidden="true">
-              {q.emoji}
-            </span>
-            <span className="sdb-card-num">{String(i + 1).padStart(2, "0")}</span>
+      {questions.map((q, i) => {
+        const Brand = q.Icon;
+        return (
+          <div
+            key={`${q.title}-${i}`}
+            className="sdb-card"
+            style={{ "--sd-accent": q.accent, "--ml-idx": i }}
+          >
+            <span className="sdb-card-shine" aria-hidden="true" />
+            <div className="sdb-card-top">
+              <span className="sdb-card-emoji" aria-hidden="true">
+                {Brand ? (
+                  <Brand
+                    className="asd-brand-icon"
+                    style={{ color: q.brandColor || q.accent }}
+                  />
+                ) : (
+                  q.emoji
+                )}
+              </span>
+              <span className="sdb-card-num">{String(i + 1).padStart(2, "0")}</span>
+            </div>
+            <span className="sdb-card-name">{q.title}</span>
+            <span className="sdb-card-desc">{q.topics}</span>
           </div>
-          <span className="sdb-card-name">{q.title}</span>
-          <span className="sdb-card-desc">{q.topics}</span>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
