@@ -148,7 +148,7 @@ const CARDS = [
     accent: "#1d4ed8", // dark royal blue
     desc: "Docker · Kubernetes · Service Mesh · CI/CD · Infrastructure as Code",
   },
-  {
+    {
     emoji: "🚀",
     name: "Advanced & Modern",
     accent: "#4f46e5", // deep indigo

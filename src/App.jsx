@@ -15,6 +15,9 @@ import { BASENAME } from "./utils/basePath";
 // downloaded when the user actually visits them.
 const Home = lazy(() => import("./pages/Home"));
 const MaangPreparation = lazy(() => import("./pages/MaangPreparation"));
+const AdvancedSystemDesign = lazy(
+  () => import("./maang/system-design/advance/AdvanceSystemDesignPage"),
+);
 const MaangDSABasic = lazy(() => import("./maang/basic-dsa/MaangDSABasic"));
 const MaangDSAAdvanced = lazy(
   () => import("./maang/advanced-dsa/MaangDSAAdvanced"),
@@ -511,6 +514,15 @@ function App() {
                     </RequireAuth>
                   }
                 />
+                 <Route
+                   path="/maang/system-design/advanced"
+                   element={
+                     <RequireAuth>
+                       <AdvancedSystemDesign />
+                     </RequireAuth>
+                   }
+                 />
+
                 <Route
                   path="/reactive-programming"
                   element={<ReactiveProgrammingTopics />}

@@ -22,6 +22,7 @@ const subtopicRoutes = {
   "🧩 Dynamic Programming": "/maang/dp",
   "📅 Weekly DSA Preparation": "/maang/weekly-preparation",
   "🏗️ System Design - Basics": "/maang/system-design-basics",
+  "🌐 Advanced System Design": "/maang/system-design/advanced",
 };
 
 function MaangPreparation() {
