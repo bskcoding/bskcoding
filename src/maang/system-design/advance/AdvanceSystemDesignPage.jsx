@@ -304,7 +304,15 @@ function AdvanceSystemDesignPage() {
           Object-oriented design problems that test your OOP fundamentals,
           design-pattern fluency and state-management skills.
         </p>
-        {renderGrid(LLD_QUESTIONS, (q) => q.title === "Parking Lot" ? "/maang/system-design/lld-parking-lot" : null)}
+        {renderGrid(LLD_QUESTIONS, (q) => {
+  if (q.title === "Parking Lot") return "/maang/system-design/lld-parking-lot";
+  if (q.title === "Elevator System") return "/maang/system-design/lld-elevator";
+  if (q.title === "Vending Machine") return "/maang/system-design/lld-vending";
+  if (q.title === "Splitwise") return "/maang/system-design/lld-splitwise";
+  if (q.title === "ATM") return "/maang/system-design/lld-atm";
+  if (q.title === "Chess Game") return "/maang/system-design/lld-chess";
+  return null;
+})}
       </section>
 
       {/* ===== HLD GRID ===== */}

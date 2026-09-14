@@ -66,6 +66,10 @@
   flex-wrap: wrap;
   margin: 0;
 }
+.pl-header h1 i {
+  color: #e94560;
+  font-size: 2.2rem;
+}
 .pl-badge {
   font-size: 1rem;
   background: rgba(255, 255, 255, 0.12);
@@ -95,6 +99,7 @@
 }
 .pl-sub-info i {
   color: #e94560;
+  margin-right: 6px;
 }
 
 .pl-badge-alt {

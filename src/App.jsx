@@ -97,6 +97,21 @@ const AdvancedModernPage = lazy(
 const ParkingLotPage = lazy(
   () => import("./maang/system-design/lld-parking-lot/ParkingLotPage"),
 );
+const ElevatorPage = lazy(
+  () => import("./maang/system-design/lld-elevator/ElevatorPage"),
+);
+const VendingPage = lazy(
+  () => import("./maang/system-design/lld-vending/VendingPage"),
+);
+const SplitwisePage = lazy(
+  () => import("./maang/system-design/lld-splitwise/SplitwisePage"),
+);
+const AtmPage = lazy(
+  () => import("./maang/system-design/lld-atm/AtmPage"),
+);
+const ChessPage = lazy(
+  () => import("./maang/system-design/lld-chess/ChessPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -522,6 +537,46 @@ function App() {
                   element={
                     <RequireAuth>
                       <ParkingLotPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-elevator"
+                  element={
+                    <RequireAuth>
+                      <ElevatorPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-vending"
+                  element={
+                    <RequireAuth>
+                      <VendingPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-splitwise"
+                  element={
+                    <RequireAuth>
+                      <SplitwisePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-atm"
+                  element={
+                    <RequireAuth>
+                      <AtmPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-chess"
+                  element={
+                    <RequireAuth>
+                      <ChessPage />
                     </RequireAuth>
                   }
                 />

@@ -1,0 +1,222 @@
+/* ===== ELEVATOR LLD — matches SOLID/UML OOP page look ===== */
+.atm-root {
+  max-width: 1200px;
+  margin: 30px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1a1a2e;
+  background: #f4f6f9;
+  padding: 24px 24px 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.atm-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 8px 18px;
+  background: white;
+  color: #302b63;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 30px;
+  border: 1px solid #e1e8f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+.atm-back:hover {
+  background: #302b63;
+  color: white;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 12px rgba(48, 43, 99, 0.25);
+}
+
+.atm-header {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+  padding: 30px 40px;
+  border-radius: 18px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.atm-header::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(233, 69, 96, 0.08);
+  border-radius: 50%;
+}
+.atm-header h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.atm-header h1 i { color: #e94560; font-size: 2.2rem; }
+
+.atm-badge {
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 4px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+
+.atm-sub-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 12px;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+.atm-sub-info span { display: inline-flex; align-items: center; gap: 6px; }
+.atm-sub-info i { color: #e94560; margin-right: 6px; }
+
+.atm-badge-alt {
+  background: #e94560;
+  padding: 4px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.atm-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.atm-nav a {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.2s;
+}
+.atm-nav a:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* ===== SECTION heading — matches .oops-section-header ===== */
+.atm-section { margin-bottom: 32px; }
+
+.atm-h2 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #302b63;
+  padding: 14px 22px;
+  border-radius: 14px;
+  margin: 0 0 18px;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #e8f0fe 0%, #d4e4ff 100%);
+  border-left: 6px solid #302b63;
+  box-shadow: 0 4px 14px rgba(48, 43, 99, 0.12);
+}
+.atm-h2 i {
+  font-size: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: white;
+  background: #302b63;
+  flex-shrink: 0;
+}
+
+.atm-h3 {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #302b63;
+  margin: 24px 0 12px;
+  padding-left: 8px;
+  border-left: 4px solid #e94560;
+}
+
+.atm-intro {
+  display: block;
+  font-size: 0.95rem;
+  color: #4a4a6a;
+  line-height: 1.7;
+  margin: 0 0 16px;
+  padding-left: 12px;
+}
+
+/* ===== BULLET ===== */
+.atm-bullet {
+  background: white;
+  border: 1px solid #e1e8f5;
+  border-left: 5px solid #302b63;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.atm-bullet:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+.atm-bullet b { display: block; color: #1a1a2e; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+.atm-bullet span { display: block; color: #4a4a6a; font-size: 0.9rem; line-height: 1.6; }
+.atm-bullet i { color: #777; font-size: 0.85rem; display: block; margin-top: 4px; }
+
+/* ===== TIP BOX ===== */
+.atm-tip {
+  background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+  border: 2px solid #f57c00;
+  border-left: 5px solid #f57c00;
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin: 18px 0;
+  font-size: 0.9rem;
+  color: #3a2e1f;
+  box-shadow: 0 4px 12px rgba(245, 124, 0, 0.12);
+}
+
+/* ===== TABLE ===== */
+.atm-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 16px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); }
+.atm-table th { background: linear-gradient(135deg, #0f0c29, #302b63); color: #fff; padding: 12px 14px; text-align: left; font-weight: 700; }
+.atm-table td { border: 1px solid #e1e8f5; padding: 11px 14px; color: #2d2d44; background: white; }
+.atm-table tr:nth-child(even) td { background: #f8f9fc; }
+
+/* ===== IDE CODE BLOCK ===== */
+.atm-code { margin: 18px 0 24px; background: #282c34; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+.atm-code-head { display: flex; justify-content: space-between; align-items: center; background: #21252b; padding: 10px 20px; border-bottom: 1px solid #3a3a5a; }
+.atm-code-head .dots { display: flex; gap: 6px; }
+.atm-code-head .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+.atm-code-head .dots i:nth-child(1) { background: #ff5f56; }
+.atm-code-head .dots i:nth-child(2) { background: #ffbd2e; }
+.atm-code-head .dots i:nth-child(3) { background: #27c93f; }
+.atm-lang { background: #e94560; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 3px 16px; border-radius: 30px; letter-spacing: 0.5px; }
+.atm-pre { margin: 0; padding: 20px 24px; overflow-x: auto; white-space: pre; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.82rem; line-height: 1.8; max-height: 500px; overflow-y: auto; }
+.atm-pre code { background: transparent; font-family: inherit; }
+
+/* ===== FOOTER ===== */
+.atm-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e1e8f5; }
+.atm-footer a { color: #302b63; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+.atm-footer a:hover { text-decoration: underline; }
+
+
