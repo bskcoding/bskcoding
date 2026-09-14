@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import {
   FaLink,
   FaGaugeHigh,
-  FaMagnifyingGlass,
   FaTicket,
 } from "react-icons/fa6";
 import {
