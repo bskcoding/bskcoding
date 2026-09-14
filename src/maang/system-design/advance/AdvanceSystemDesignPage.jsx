@@ -225,14 +225,13 @@ const HLD_QUESTIONS = [
 
 // Shared card-rendering helper (keeps the JSX below compact).
 // Supports EITHER `Icon` (brand logo component) OR legacy `emoji`.
-function renderGrid(questions) {
+function renderGrid(questions, linkFor) {
   return (
     <div className="sdb-grids">
       {questions.map((q, i) => {
         const Brand = q.Icon;
-        return (
+        const inner = (
           <div
-            key={`${q.title}-${i}`}
             className="sdb-card"
             style={{ "--sd-accent": q.accent, "--ml-idx": i }}
           >
@@ -253,6 +252,15 @@ function renderGrid(questions) {
             <span className="sdb-card-name">{q.title}</span>
             <span className="sdb-card-desc">{q.topics}</span>
           </div>
+        );
+        const to = linkFor ? linkFor(q) : null;
+        if (to) {
+          return (
+            <Link key={`${q.title}-${i}`} to={to} className="sdb-card-link">{inner}</Link>
+          );
+        }
+        return (
+          <div key={`${q.title}-${i}`} className="sdb-card-link" style={{ cursor: "default" }}>{inner}</div>
         );
       })}
     </div>
@@ -297,7 +305,7 @@ function AdvanceSystemDesignPage() {
           Object-oriented design problems that test your OOP fundamentals,
           design-pattern fluency and state-management skills.
         </p>
-        {renderGrid(LLD_QUESTIONS)}
+        {renderGrid(LLD_QUESTIONS, (q) => q.title === "Parking Lot" ? "/maang/system-design/lld-parking-lot" : null)}
       </section>
 
       {/* ===== HLD GRID ===== */}

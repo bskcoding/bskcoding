@@ -94,6 +94,9 @@ const CloudInfrastructurePage = lazy(
 const AdvancedModernPage = lazy(
   () => import("./maang/system-design/advanced-modern/AdvancedModernPage"),
 );
+const ParkingLotPage = lazy(
+  () => import("./maang/system-design/lld-parking-lot/ParkingLotPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -514,6 +517,15 @@ function App() {
                     </RequireAuth>
                   }
                 />
+                <Route
+                  path="/maang/system-design/lld-parking-lot"
+                  element={
+                    <RequireAuth>
+                      <ParkingLotPage />
+                    </RequireAuth>
+                  }
+                />
+
                  <Route
                    path="/maang/system-design/advanced"
                    element={
