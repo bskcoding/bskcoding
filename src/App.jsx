@@ -112,6 +112,24 @@ const AtmPage = lazy(
 const ChessPage = lazy(
   () => import("./maang/system-design/lld-chess/ChessPage"),
 );
+const TictactoePage = lazy(
+  () => import("./maang/system-design/lld-tictactoe/TictactoePage"),
+);
+const SnakePage = lazy(
+  () => import("./maang/system-design/lld-snake/SnakePage"),
+);
+const LruPage = lazy(
+  () => import("./maang/system-design/lld-lru/LruPage"),
+);
+const RatelimitPage = lazy(
+  () => import("./maang/system-design/lld-ratelimit/RatelimitPage"),
+);
+const LibraryPage = lazy(
+  () => import("./maang/system-design/lld-library/LibraryPage"),
+);
+const HotelPage = lazy(
+  () => import("./maang/system-design/lld-hotel/HotelPage"),
+);
 const Roadmap90Day = lazy(
   () => import("./topics/90-day-job-roadmap/Roadmap90Day"),
 );
@@ -577,6 +595,54 @@ function App() {
                   element={
                     <RequireAuth>
                       <ChessPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-tictactoe"
+                  element={
+                    <RequireAuth>
+                      <TictactoePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-snake"
+                  element={
+                    <RequireAuth>
+                      <SnakePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-lru"
+                  element={
+                    <RequireAuth>
+                      <LruPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-ratelimit"
+                  element={
+                    <RequireAuth>
+                      <RatelimitPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-library"
+                  element={
+                    <RequireAuth>
+                      <LibraryPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/system-design/lld-hotel"
+                  element={
+                    <RequireAuth>
+                      <HotelPage />
                     </RequireAuth>
                   }
                 />

@@ -311,6 +311,12 @@ function AdvanceSystemDesignPage() {
   if (q.title === "Splitwise") return "/maang/system-design/lld-splitwise";
   if (q.title === "ATM") return "/maang/system-design/lld-atm";
   if (q.title === "Chess Game") return "/maang/system-design/lld-chess";
+  if (q.title === "Tic-Tac-Toe") return "/maang/system-design/lld-tictactoe";
+  if (q.title === "Snake & Ladder") return "/maang/system-design/lld-snake";
+  if (q.title === "LRU Cache") return "/maang/system-design/lld-lru";
+  if (q.title === "Rate Limiter") return "/maang/system-design/lld-ratelimit";
+  if (q.title === "Library Management System") return "/maang/system-design/lld-library";
+  if (q.title === "Hotel Booking System") return "/maang/system-design/lld-hotel";
   return null;
 })}
       </section>
