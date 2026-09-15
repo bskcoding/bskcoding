@@ -92,6 +92,13 @@
   margin: 0 0 16px;
 }
 
+.error-boundary-auto {
+  color: #fbbf24;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
 .error-boundary-detail {
   background: rgba(239, 68, 68, 0.08);
   border: 1px solid rgba(239, 68, 68, 0.2);
