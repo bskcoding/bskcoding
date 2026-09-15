@@ -184,6 +184,15 @@ const ReactiveProgrammingCourse = lazy(
 const ReactiveProgrammingInterview = lazy(
   () => import("./topics/reactive-programming/ReactiveProgrammingInterview"),
 );
+const ForwardDeploymentEngineer = lazy(
+  () => import("./topics/forward-deployment-engineer/ForwardDeploymentEngineer"),
+);
+const ForwardDeploymentEngineerModule = lazy(
+  () =>
+    import(
+      "./topics/forward-deployment-engineer/ForwardDeploymentEngineerModule"
+    ),
+);
 const DSATopics = lazy(() => import("./topics/dsa/DSATopics"));
 const DSACourse = lazy(() => import("./topics/dsa/DSACourse"));
 const DSALeetcode = lazy(() => import("./pages/DSALeetcode"));
@@ -667,6 +676,22 @@ function App() {
                 <Route
                   path="/reactive-programming/interview"
                   element={<ReactiveProgrammingInterview />}
+                />
+                <Route
+                  path="/maang/forward-deployment-engineer"
+                  element={
+                    <RequireAuth>
+                      <ForwardDeploymentEngineer />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/forward-deployment-engineer/:moduleId"
+                  element={
+                    <RequireAuth>
+                      <ForwardDeploymentEngineerModule />
+                    </RequireAuth>
+                  }
                 />
                 <Route path="/dsa" element={<DSATopics />} />
                 <Route path="/dsa/course" element={<DSACourse />} />

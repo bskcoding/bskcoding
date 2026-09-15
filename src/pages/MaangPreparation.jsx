@@ -23,6 +23,7 @@ const subtopicRoutes = {
   "📅 Weekly DSA Preparation": "/maang/weekly-preparation",
   "🏗️ System Design - Basics": "/maang/system-design-basics",
   "🌐 Advanced System Design": "/maang/system-design/advanced",
+  "🚀 Forward Deployment Engineer": "/maang/forward-deployment-engineer",
 };
 
 function MaangPreparation() {

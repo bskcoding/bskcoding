@@ -19,7 +19,7 @@ export const skills = [
       "🌐 Advanced System Design",
       "⚡ Reactive Deep Dive",
       "🤖 AI/ML Fundamentals",
-      "🧠 Agentic AI Engineering",
+      "🚀 Forward Deployment Engineer",
     ],
   },
   {
