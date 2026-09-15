@@ -23,7 +23,14 @@ class ErrorBoundary extends Component {
   }
 
   handleReload = () => {
-    window.location.reload();
+    // Use a cache-busting redirect: append a unique query param so the browser
+    // is forced to re-fetch index.html (and thus the newest hashed chunks)
+    // instead of re-using a stale cached copy.
+    const url = window.location;
+    const sep = url.search ? "&" : "?";
+    window.location.replace(
+      `${url.pathname}${url.search}${sep}_r=${Date.now()}${url.hash}`,
+    );
   };
 
   componentDidMount() {
@@ -58,7 +65,7 @@ class ErrorBoundary extends Component {
   getReloadCount() {
     try {
       return parseInt(window.sessionStorage.getItem(AUTO_RELOAD_KEY) || "0", 10);
-    } catch (e) {
+    } catch {
       return 0;
     }
   }
@@ -66,7 +73,7 @@ class ErrorBoundary extends Component {
   setReloadCount(value) {
     try {
       window.sessionStorage.setItem(AUTO_RELOAD_KEY, String(value));
-    } catch (e) {
+    } catch {
       /* storage unavailable — ignore */
     }
   }
@@ -74,7 +81,7 @@ class ErrorBoundary extends Component {
   resetReloadCount() {
     try {
       window.sessionStorage.removeItem(AUTO_RELOAD_KEY);
-    } catch (e) {
+    } catch {
       /* storage unavailable — ignore */
     }
   }
