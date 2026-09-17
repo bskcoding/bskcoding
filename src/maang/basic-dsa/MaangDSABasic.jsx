@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from "react";
+﻿import { memo, useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import VideoPlayerModal from "../../components/VideoPlayerModal";
 import {
@@ -10,6 +10,9 @@ import {
   saturdayAssessment,
   sundayAssessment,
 } from "./weeklyPlan";
+import leetcodeLogo from "../../assets/leetcode-logo.png";
+import gfgLogo from "../../assets/gfg-logo.png";
+import youtubeLogo from "../../assets/youtube-logo.svg";
 import "./MaangDSABasic.css";
 const difficulties = ["All", "Easy", "Medium", "Hard"];
 
@@ -27,31 +30,42 @@ const HIDDEN_DAY = { shown: false, nonce: 0 };
  */
 const ProblemCard = memo(function ProblemCard({ problem, onOpen }) {
   const hasVideo = !!problem.videoLink;
-  const platformLabel = problem.platform === "leetcode" ? "LeetCode" : "GFG";
-  const platformColors =
-    problem.platform === "leetcode"
-      ? {
-          from: "#f59e0b",
-          to: "#d97706",
-          shadow: "#92400e",
-        }
-      : {
-          from: "#22c55e",
-          to: "#16a34a",
-          shadow: "#0f6b32",
-        };
   const description =
     problem.description ||
     "Practice this problem and build stronger algorithmic thinking with a focused DSA approach.";
 
+  const difficultyLong = problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1);
+  const difficultyLabel = difficultyLong === "Hard" ? "HARD" : difficultyLong;
+  const platformColors =
+    problem.platform === "leetcode"
+      ? { bg: "linear-gradient(135deg,#f59e0b,#d97706)", text: "#ffffff" }
+      : problem.platform === "gfg"
+      ? { bg: "linear-gradient(135deg,#22c55e,#16a34a)", text: "#ffffff" }
+      : { bg: "linear-gradient(135deg,#ef4444,#dc2626)", text: "#ffffff" };
+  const platformLabel =
+    problem.platform === "leetcode"
+      ? "LeetCode"
+      : problem.platform === "gfg"
+      ? "GFG"
+      : "YouTube";
+  const platformLogo =
+    problem.platform === "leetcode"
+      ? leetcodeLogo
+      : problem.platform === "gfg"
+      ? gfgLogo
+      : youtubeLogo;
+
   return (
     <div
       className="mdsa-problem-card"
-      data-platform={problem.platform}
-      style={{ "--topic-color": topicColors[problem.topic] || "#60a5fa" }}
+      style={{
+        "--topic-color": topicColors[problem.topic] || "#60a5fa",
+        "--platform-bg": platformColors.bg,
+        "--platform-text": platformColors.text,
+      }}
       role="button"
       tabIndex={0}
-      aria-label={`${problem.title} — ${problem.difficulty} ${problem.topic}`}
+      aria-label={`${problem.title} - ${problem.difficulty} ${problem.topic}`}
       onClick={() => onOpen(problem)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -70,7 +84,7 @@ const ProblemCard = memo(function ProblemCard({ problem, onOpen }) {
         <span
           className={`mdsa-difficulty-badge mdsa-${problem.difficulty.toLowerCase()}`}
         >
-          {problem.difficulty}
+          {difficultyLabel}
         </span>
       </div>
 
@@ -79,31 +93,36 @@ const ProblemCard = memo(function ProblemCard({ problem, onOpen }) {
           className={`mdsa-video-btn ${hasVideo ? "available" : "soon"}`}
           title={hasVideo ? "Watch video solution" : "Video coming soon"}
         >
-          <span className="mdsa-btn-icon">▶</span>
-          <span>{hasVideo ? "YouTube" : "Soon"}</span>
+          <img
+            className="mdsa-video-logo"
+            src={youtubeLogo}
+            alt="YouTube"
+          />
+          <span className="mdsa-solve-text">
+            {hasVideo ? "YouTube" : "Soon"}
+          </span>
         </div>
         <a
           href={problem.link}
           target="_blank"
           rel="noopener noreferrer"
           className="mdsa-solve-btn"
-          data-platform={problem.platform}
-          style={{
-            "--solve-from": platformColors.from,
-            "--solve-to": platformColors.to,
-            "--solve-shadow": platformColors.shadow,
-          }}
           onClick={(e) => e.stopPropagation()}
-          title={`Open on ${platformLabel}`}
+          title="Solve this problem"
+          data-platform={problem.platform}
+          style={{ background: platformColors.bg, color: platformColors.text }}
         >
-          <span className="mdsa-btn-icon">&lt;/&gt;</span>
-          <span>{platformLabel}</span>
+          <img
+            className="mdsa-solve-logo"
+            src={platformLogo}
+            alt={platformLabel}
+          />
+          <span className="mdsa-solve-text">{platformLabel}</span>
         </a>
       </div>
     </div>
   );
 });
-
 // Assign a consistent color per topic (full 27-topic master palette)
 const topicColors = {
   // Part 1 — Basic (Array & String algorithms)
