@@ -103,6 +103,54 @@ function slotsForWeek(order, weekIdx) {
   return out;
 }
 
+// ---------------------------------------------------------------------------
+// Randomized assessment builders (Sat / Sun)
+//
+// These keep the exact same RULES as before, but let the caller pass a `nonce`
+// so the actual questions can change every time the learner taps reveal /
+// "get new questions" on the Weekly Preparation page. nonce = 0 reproduces the
+// original deterministic plan (used by buildWeeklyPlan's default and tests).
+// ---------------------------------------------------------------------------
+
+/**
+ * Saturday assessment — 2 problems drawn from THIS week's 10 practice slots.
+ * Rules: both problems belong to the current week, and they are distinct.
+ */
+export function saturdayAssessment(bank, weekIdx, nonce = 0) {
+  const current = slotsForWeek(bank, weekIdx);
+  const seedTail = nonce ? `-${nonce}` : "";
+  return seededPick(
+    current,
+    2,
+    `sat-${weekIdx}-${bank.length}${seedTail}`,
+  );
+}
+
+/**
+ * Sunday assessment — 1 problem from LAST week + 1 from THIS week.
+ * On Week 1 (no previous week) both come from THIS week instead of wrapping to
+ * the far end of the bank. Rule: the two problems are always different.
+ */
+export function sundayAssessment(bank, weekIdx, nonce = 0) {
+  const current = slotsForWeek(bank, weekIdx);
+  const previous = slotsForWeek(bank, weekIdx - 1);
+  const hasPrevWeek = weekIdx > 0;
+  const prevPool = hasPrevWeek ? previous : current;
+  const seedTail = nonce ? `-${nonce}` : "";
+  const prevPick = seededPick(
+    prevPool,
+    1,
+    `sun-prev-${weekIdx}-${bank.length}${seedTail}`,
+  )[0];
+  const curPool = current.filter((p) => p !== prevPick);
+  const curPick = seededPick(
+    curPool.length ? curPool : current,
+    1,
+    `sun-cur-${weekIdx}-${bank.length}${seedTail}`,
+  )[0];
+  return { hasPrevWeek, problems: [prevPick, curPick] };
+}
+
 /**
  * Build the plan for `offset` weeks relative to the user's CURRENT course
  * week (0 = this week, -1 = last week, +1 = next week …).
@@ -111,7 +159,7 @@ function slotsForWeek(order, weekIdx) {
  * { key, name, jsDay, type, problems[2] } and type is one of:
  * "practice" | "test-week" (Sat) | "test-mixed" (Sun).
  */
-export function buildWeeklyPlan(bank, offset = 0) {
+export function buildWeeklyPlan(bank, offset = 0, nonce = 0) {
   if (!bank || bank.length === 0) return null;
 
   // Natural track order — NO shuffling. The bank is already assembled as
@@ -126,7 +174,6 @@ export function buildWeeklyPlan(bank, offset = 0) {
   const targetIdx = currentIdx + offset;
 
   const current = slotsForWeek(order, targetIdx);
-  const previous = slotsForWeek(order, targetIdx - 1);
 
   const PRACTICE_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const days = PRACTICE_DAYS.map((name, i) => ({
@@ -137,43 +184,36 @@ export function buildWeeklyPlan(bank, offset = 0) {
     problems: [current[i * 2], current[i * 2 + 1]],
   }));
 
-  // Saturday — assessment on THIS week's practice material.
+  // Saturday — assessment on THIS week's practice material (randomized per
+  // nonce; rules unchanged: 2 problems taken from this week's 10).
   days.push({
     key: "sat",
     name: "Saturday",
     jsDay: 6,
     type: "test-week",
-    problems: seededPick(current, 2, `sat-${targetIdx}-${bank.length}`),
+    problems: saturdayAssessment(order, targetIdx, nonce),
   });
 
-  // Sunday — retention test mixing LAST week + THIS week.
-  // Week 1 has no previous course week: `previous` would wrap around to the
-  // tail of the bank (Graphs etc.) that the learner hasn't reached yet, so
-  // fall back to picking BOTH problems from this week's material instead.
-  const hasPrevWeek = targetIdx > 0;
-  const prevPool = hasPrevWeek ? previous : current;
-  const prevPick = seededPick(
-    prevPool,
-    1,
-    `sun-prev-${targetIdx}-${bank.length}`,
-  )[0];
-  const curPool = current.filter((p) => p !== prevPick);
-  const curPick = seededPick(
-    curPool.length ? curPool : current,
-    1,
-    `sun-cur-${targetIdx}-${bank.length}`,
-  )[0];
+  // Sunday — retention test mixing LAST week + THIS week (randomized per
+  // nonce; rules unchanged). Week 1 has no previous week so it falls back to
+  // two problems from THIS week — no wrap-around to unreached topics.
+  const { hasPrevWeek, problems: sunProblems } = sundayAssessment(
+    order,
+    targetIdx,
+    nonce,
+  );
   days.push({
     key: "sun",
     name: "Sunday",
     jsDay: 0,
     type: "test-mixed",
     hasPrevWeek,
-    problems: [prevPick, curPick],
+    problems: sunProblems,
   });
 
   return {
     weekNo: Math.max(1, targetIdx + 1), // course-style: starts at Week 1
+    weekIdx: targetIdx,                 // 0-based index for the assessment builders
     canGoPrev: targetIdx > 0,           // nothing before Week 1
     days,
   };

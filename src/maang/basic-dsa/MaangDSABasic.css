@@ -193,45 +193,37 @@
   }
 }
 
-/* ===== STATS — vibrant colored cards ===== */
+/* ===== STATS — small boxes, top-right of the header ===== */
 .mdsa-stats {
+  position: absolute;
+  top: 1.15rem;
+  right: 1.5rem;
+  z-index: 5;
   display: flex;
-  justify-content: center;
-  gap: 1.25rem;
-  padding: 2rem 1.5rem 0;
-  max-width: 1200px;
-  margin: 0 auto;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 
 .mdsa-stat-card {
-  /* Vivid card with strong colored top border */
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.04),
-    rgba(255, 255, 255, 0.02)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-top: 3px solid;
   border-top-color: inherit;
-  border-radius: 18px;
-  padding: 1.5rem 2.25rem;
-  text-align: center;
-  min-width: 140px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  border-radius: 10px;
+  padding: 0.3rem 0.7rem 0.5rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
   animation: mdsa-fadeInUp 0.6s ease both;
   position: relative;
-  overflow: hidden;
 }
 .mdsa-stat-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, currentColor, transparent 60%);
-  opacity: 0.08;
-  pointer-events: none;
+  content: none;
 }
 .mdsa-stat-card.easy {
   border-top-color: #10b981;
@@ -251,33 +243,27 @@
 }
 
 .mdsa-stat-card:hover {
-  transform: translateY(-6px) scale(1.04);
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, currentColor 12%, rgba(255, 255, 255, 0.04)),
-    rgba(255, 255, 255, 0.02)
-  );
+  transform: translateY(-2px);
   box-shadow:
-    0 8px 24px color-mix(in srgb, currentColor 35%, transparent),
-    0 0 0 1px color-mix(in srgb, currentColor 30%, transparent);
+    0 6px 16px color-mix(in srgb, currentColor 30%, transparent),
+    0 0 0 1px color-mix(in srgb, currentColor 25%, transparent);
 }
 
 .mdsa-stat-num {
   display: block;
-  font-size: 2.5rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: currentColor;
-  letter-spacing: -1px;
+  letter-spacing: -0.3px;
   line-height: 1.1;
-  margin-bottom: 0.4rem;
-  text-shadow: 0 0 18px color-mix(in srgb, currentColor 40%, transparent);
+  margin-bottom: 0.1rem;
 }
 
 .mdsa-stat-label {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.5rem;
+  color: rgba(255, 255, 255, 0.72);
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
 }
 
@@ -1093,6 +1079,16 @@
   overflow: hidden;
 }
 
+/* Weekly Preparation — HIDE the white panel box. The plan content (day rows
+   and question cards) stays exactly where it is; only the large white
+   background box is removed so the weekly page has no white block. */
+.mdsa-page-weekly .mdsa-wp {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 /* Weekly title gets the same RAINBOW gradient text as the MAANG page title */
 .mdsa-wp-header .mdsa-section-title {
   margin: 0;
@@ -1114,30 +1110,21 @@
 
 .mdsa-wp-header {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
 }
 
 .mdsa-wp-header .mdsa-section-title {
   margin: 0;
 }
 
-.mdsa-wp-range {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: color-mix(in srgb, var(--page-accent, #ff5733) 75%, #0f172a);
-  background: color-mix(in srgb, var(--page-accent, #ff5733) 18%, #ffffff);
-  border: 1px solid
-    color-mix(in srgb, var(--page-accent, #ff5733) 45%, transparent);
-  padding: 6px 16px;
-  border-radius: 20px;
-}
-
+/* Navigation row — its own separate line below the title */
 .mdsa-wp-nav {
-  margin-left: auto;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 0.5rem;
 }
 
@@ -1181,6 +1168,17 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+/* Every day after the first gets a thin divider line on top, so the weekly
+   plan reads as clear separate rows (one line between each day). */
+.mdsa-wp-days .mdsa-wp-day:not(:first-child) {
+  border-top: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+/* While still keeping a tidy gap above the divider */
+.mdsa-wp-days .mdsa-wp-day + .mdsa-wp-day {
+  margin-top: 0.35rem;
 }
 
 /*
@@ -1252,12 +1250,12 @@
     color-mix(in srgb, var(--day-accent, #7dd3fc) 55%, transparent);
 }
 .mdsa-wp-day.test-week .mdsa-wp-day-no {
-  color: #b45309;
+  color: #fbbf24;
   background: rgba(245, 158, 11, 0.22);
   border-color: rgba(245, 158, 11, 0.55);
 }
 .mdsa-wp-day.test-mixed .mdsa-wp-day-no {
-  color: #6d28d9;
+  color: #a78bfa;
   background: rgba(167, 139, 250, 0.22);
   border-color: rgba(167, 139, 250, 0.55);
 }
@@ -1266,8 +1264,8 @@
   margin: 0;
   font-size: 1.05rem;
   font-weight: 800;
-  /* Day accent colour — readable on the white weekly panel */
-  color: color-mix(in srgb, var(--day-accent, #33a1ff) 80%, #0f172a);
+  /* Day accent colour — brightened for the dark page background */
+  color: color-mix(in srgb, var(--day-accent, #33a1ff) 80%, #ffffff);
   letter-spacing: -0.2px;
 }
 
@@ -1282,7 +1280,7 @@
   text-transform: uppercase;
   padding: 2px 9px;
   border-radius: 20px;
-  color: #047857;
+  color: #34d399;
   background: rgba(16, 185, 129, 0.18);
   border: 1px solid rgba(16, 185, 129, 0.5);
 }
@@ -1299,20 +1297,20 @@
 }
 /* Weekday practice — follows each day's accent colour */
 .mdsa-wp-tag.practice {
-  color: color-mix(in srgb, var(--day-accent, #7dd3fc) 75%, #0f172a);
+  color: color-mix(in srgb, var(--day-accent, #7dd3fc) 80%, #ffffff);
   background: color-mix(in srgb, var(--day-accent, #7dd3fc) 18%, transparent);
   border: 1px solid
     color-mix(in srgb, var(--day-accent, #7dd3fc) 45%, transparent);
 }
 /* Saturday assessment on this week's material — amber */
 .mdsa-wp-tag.test-week {
-  color: #b45309;
+  color: #fbbf24;
   background: rgba(245, 158, 11, 0.18);
   border: 1px solid rgba(245, 158, 11, 0.5);
 }
 /* Sunday mixed retention assessment — violet */
 .mdsa-wp-tag.test-mixed {
-  color: #6d28d9;
+  color: #a78bfa;
   background: rgba(167, 139, 250, 0.2);
   border: 1px solid rgba(167, 139, 250, 0.5);
 }
@@ -1322,10 +1320,10 @@
  * reads violet through their TEXT + tags only.
  */
 .mdsa-wp-day.test-week .mdsa-wp-day-name {
-  color: #b45309;
+  color: #fbbf24;
 }
 .mdsa-wp-day.test-mixed .mdsa-wp-day-name {
-  color: #6d28d9;
+  color: #a78bfa;
 }
 
 /* Problems inside a day stack LINE BY LINE — one card per row, full width */
@@ -1344,12 +1342,12 @@
   --day-accent: #10b981;
 }
 .mdsa-wp-day.today .mdsa-wp-day-no {
-  color: #047857;
+  color: #34d399;
   background: rgba(16, 185, 129, 0.18);
   border-color: rgba(16, 185, 129, 0.5);
 }
 .mdsa-wp-day.today .mdsa-wp-day-name {
-  color: #047857;
+  color: #34d399;
 }
 .mdsa-wp-day.today .mdsa-wp-day-problems .mdsa-problem-card {
   border-color: #10b981;
@@ -1402,6 +1400,51 @@
     0 0 56px color-mix(in srgb, var(--day-accent, #33a1ff) 60%, transparent);
 }
 
+/* Randomized-assessment reveal note + button (Sat amber / Sun violet) */
+.mdsa-wp-day-assess .mdsa-wp-random-note {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+.mdsa-wp-reveal-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  padding: 0.62rem 1.15rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.2s;
+}
+.mdsa-wp-reveal-btn:active {
+  transform: translateY(1px);
+}
+.mdsa-wp-reveal-btn.test-week {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.55);
+}
+.mdsa-wp-reveal-btn.test-week:hover {
+  background: rgba(245, 158, 11, 0.24);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3);
+}
+.mdsa-wp-reveal-btn.test-mixed {
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.16);
+  border-color: rgba(167, 139, 250, 0.55);
+}
+.mdsa-wp-reveal-btn.test-mixed:hover {
+  background: rgba(167, 139, 250, 0.26);
+  box-shadow: 0 6px 16px rgba(167, 139, 250, 0.3);
+}
+
 .mdsa-wp-note {
   margin-top: 1rem;
   text-align: center;
@@ -1414,6 +1457,16 @@
   .mdsa-wp-nav {
     margin-left: 0;
     width: 100%;
+  }
+}
+
+/* On small screens the top-right stat boxes would overlap the title, so let
+   them flow normally and sit centered under the back button instead. */
+@media (max-width: 768px) {
+  .mdsa-stats {
+    position: static;
+    justify-content: center;
+    margin-top: 1rem;
   }
 }
 

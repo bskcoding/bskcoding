@@ -5,9 +5,17 @@ import {
   dsaBasicProblems as BASIC_PROBLEMS,
   googleSeriesIntro,
 } from "./dsaBasicProblems";
-import { buildWeeklyPlan } from "./weeklyPlan";
+import {
+  buildWeeklyPlan,
+  saturdayAssessment,
+  sundayAssessment,
+} from "./weeklyPlan";
 import "./MaangDSABasic.css";
 const difficulties = ["All", "Easy", "Medium", "Hard"];
+
+// Default hidden state for each assessment day (Sat / Sun) in a week's plan.
+// Kept at module scope so it stays a stable reference for the reveal logic.
+const HIDDEN_DAY = { shown: false, nonce: 0 };
 
 /**
  * Shared problem card — used by the Problem Library grid.
@@ -144,6 +152,16 @@ function DsaSheetPage({
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [weekOffset, setWeekOffset] = useState(0);
 
+  // Saturday/Sunday assessment questions are HIDDEN by default and only shown
+  // when the learner taps the reveal button. Each reveal/"get new questions"
+  // tap rolls a fresh random seed (nonce) so the exact questions change, while
+  // the RULES (Sat → this week's 10, Sun → last week + this week) stay fixed.
+  //
+  // The state is keyed by 0-based week index, so switching weeks automatically
+  // starts that week hidden again — nobody can memorise a week's assessment
+  // from a previously-opened pane.
+  const [assessmentReveal, setAssessmentReveal] = useState({});
+
   const topics = useMemo(
     () => ["All", ...Array.from(new Set(problems.map((p) => p.topic)))],
     [problems],
@@ -205,6 +223,35 @@ function DsaSheetPage({
     [showWeeklyPlan, problems, weekOffset],
   );
 
+  // Reveal state for the week currently on screen (fresh week → both hidden).
+  const currentReveal = weeklyPlan
+    ? (assessmentReveal[weeklyPlan.weekIdx] || {
+        sat: HIDDEN_DAY,
+        sun: HIDDEN_DAY,
+      })
+    : null;
+
+  const rollAssessment = useCallback(
+    (key) => {
+      // Guard for the (non-weekly) pages where weeklyPlan is null.
+      if (!weeklyPlan) return;
+      // Fresh random nonce → different questions on every tap, same rules.
+      const nonce = Math.floor(Math.random() * 1_000_000_000) + 1;
+      const weekIdx = weeklyPlan.weekIdx;
+      setAssessmentReveal((prev) => {
+        const weekAll = prev?.[weekIdx] || {
+          sat: HIDDEN_DAY,
+          sun: HIDDEN_DAY,
+        };
+        return {
+          ...prev,
+          [weekIdx]: { ...weekAll, [key]: { shown: true, nonce } },
+        };
+      });
+    },
+    [weeklyPlan],
+  );
+
   return (
     <div
       className={`mdsa-page mdsa-page-${pageTheme}${
@@ -216,6 +263,26 @@ function DsaSheetPage({
         <Link to="/maang" className="mdsa-back">
           ← Back to MAANG Preparation
         </Link>
+
+        {/* Small stat boxes, top-right of the header */}
+        <section className="mdsa-stats">
+          <div className="mdsa-stat-card total">
+            <span className="mdsa-stat-num">{total}</span>
+            <span className="mdsa-stat-label">Total Problems</span>
+          </div>
+          <div className="mdsa-stat-card easy">
+            <span className="mdsa-stat-num">{easy}</span>
+            <span className="mdsa-stat-label">Easy</span>
+          </div>
+          <div className="mdsa-stat-card medium">
+            <span className="mdsa-stat-num">{medium}</span>
+            <span className="mdsa-stat-label">Medium</span>
+          </div>
+          <div className="mdsa-stat-card hard">
+            <span className="mdsa-stat-num">{hard}</span>
+            <span className="mdsa-stat-label">Hard</span>
+          </div>
+        </section>
 
         <div className="mdsa-hero-inner">
           <div className="mdsa-hero-text">
@@ -243,32 +310,11 @@ function DsaSheetPage({
         </div>
       </section>
 
-      {/* ===== STATS ===== */}
-      <section className="mdsa-stats">
-        <div className="mdsa-stat-card total">
-          <span className="mdsa-stat-num">{total}</span>
-          <span className="mdsa-stat-label">Total Problems</span>
-        </div>
-        <div className="mdsa-stat-card easy">
-          <span className="mdsa-stat-num">{easy}</span>
-          <span className="mdsa-stat-label">Easy</span>
-        </div>
-        <div className="mdsa-stat-card medium">
-          <span className="mdsa-stat-num">{medium}</span>
-          <span className="mdsa-stat-label">Medium</span>
-        </div>
-        <div className="mdsa-stat-card hard">
-          <span className="mdsa-stat-num">{hard}</span>
-          <span className="mdsa-stat-label">Hard</span>
-        </div>
-      </section>
-
       {/* ===== WEEKLY PREPARATION (Mon–Fri learn · Sat/Sun assess) ===== */}
       {weeklyPlan && (
         <section className="mdsa-wp">
           <div className="mdsa-wp-header">
-            <h2 className="mdsa-section-title">🗓️ Weekly Preparation</h2>
-            <span className="mdsa-wp-range">Week {weeklyPlan.weekNo}</span>
+            <h2 className="mdsa-section-title">Week {weeklyPlan.weekNo}</h2>
             <div className="mdsa-wp-nav">
               <button
                 className="mdsa-wp-nav-btn"
@@ -300,10 +346,43 @@ function DsaSheetPage({
             {weeklyPlan.days.map((day, i) => {
               const isToday =
                 weekOffset === 0 && day.jsDay === new Date().getDay();
+              // Weekend days are assessments — hidden until revealed.
+              const isAssessment =
+                day.type === "test-week" || day.type === "test-mixed";
+              const revealInfo = isAssessment
+                ? currentReveal?.[day.key]
+                : null;
+              const shown = revealInfo ? revealInfo.shown : true;
+
+              // Randomized assessment problems — generated fresh on every
+              // reveal / "get new questions" click. The RULES stay identical:
+              // Sat → this week's 10, Sun → last week + this week (never
+              // duplicates). Practice days (Mon–Fri) stay in track order.
+              let dayProblems;
+              if (!isAssessment) {
+                dayProblems = day.problems;
+              } else if (!shown) {
+                dayProblems = [];
+              } else if (day.key === "sat") {
+                dayProblems = saturdayAssessment(
+                  problems,
+                  weeklyPlan.weekIdx,
+                  revealInfo.nonce,
+                );
+              } else {
+                dayProblems = sundayAssessment(
+                  problems,
+                  weeklyPlan.weekIdx,
+                  revealInfo.nonce,
+                ).problems;
+              }
+
               return (
                 <article
                   key={day.key}
-                  className={`mdsa-wp-day ${day.type}${isToday ? " today" : ""}`}
+                  className={`mdsa-wp-day ${day.type}${isToday ? " today" : ""}${
+                    isAssessment ? " mdsa-wp-day-assess" : ""
+                  }`}
                 >
                   <header className="mdsa-wp-day-head">
                     <span className="mdsa-wp-day-no">{i + 1}</span>
@@ -319,23 +398,52 @@ function DsaSheetPage({
                       <span className="mdsa-wp-today-chip">Today</span>
                     )}
                   </header>
+
                   <div className="mdsa-wp-day-problems">
-                    {day.problems.filter(Boolean).map((p) => (
-                      <ProblemCard
-                        key={p.uid}
-                        problem={p}
-                        onOpen={openVideo}
-                        chip={
-                          p.sourceSheet === "Basic DSA"
-                            ? "Basic"
-                            : p.sourceSheet === "Advanced DSA"
-                              ? "Advanced"
-                              : p.sourceSheet === "Dynamic Programming"
-                                ? "DP"
-                                : "Graphs"
-                        }
-                      />
-                    ))}
+                    {isAssessment && !shown && (
+                      <p className="mdsa-wp-random-note">
+                        Questions are chosen at random — your set appears below
+                        when you tap reveal.
+                      </p>
+                    )}
+
+                    {isAssessment && !shown ? (
+                      <button
+                        type="button"
+                        className={`mdsa-wp-reveal-btn ${day.type}`}
+                        onClick={() => rollAssessment(day.key)}
+                      >
+                        🔒 Reveal assessment questions
+                      </button>
+                    ) : (
+                      <>
+                        {dayProblems.filter(Boolean).map((p) => (
+                          <ProblemCard
+                            key={p.uid}
+                            problem={p}
+                            onOpen={openVideo}
+                            chip={
+                              p.sourceSheet === "Basic DSA"
+                                ? "Basic"
+                                : p.sourceSheet === "Advanced DSA"
+                                  ? "Advanced"
+                                  : p.sourceSheet === "Dynamic Programming"
+                                    ? "DP"
+                                    : "Graphs"
+                            }
+                          />
+                        ))}
+                        {isAssessment && shown && (
+                          <button
+                            type="button"
+                            className={`mdsa-wp-reveal-btn ${day.type}`}
+                            onClick={() => rollAssessment(day.key)}
+                          >
+                            🔀 Get new questions
+                          </button>
+                        )}
+                      </>
+                    )}
                   </div>
                 </article>
               );
