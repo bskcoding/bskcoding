@@ -1,0 +1,29 @@
+/* HLD interactive diagram styles */
+.usd-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; background: #1a1f2b; border-radius: 8px; overflow: hidden; }
+.usd-table th { text-align: left; padding: 11px 14px; background: #0d1117; color: #8b949e; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #232a38; }
+.usd-table td { padding: 11px 14px; border-bottom: 1px solid #232a38; color: #8b949e; vertical-align: top; }
+.usd-table td strong { color: #e6edf3; font-weight: 500; }
+.usd-table tr:last-child td { border-bottom: none; }
+.usd-table code { font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #58a6ff; }
+.usd-hld { background: #12161f; border: 1px solid #232a38; border-radius: 10px; padding: 24px; }
+.usd-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.usd-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #232a38; background: #1a1f2b; color: #8b949e; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+.usd-tab:hover { border-color: #2f3849; color: #e6edf3; }
+.usd-tab.active { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+.usd-tab.red.active { background: #f85149; border-color: #f85149; }
+.usd-stage { background: #0d1117; border: 1px solid #232a38; border-radius: 10px; padding: 40px 24px; position: relative; overflow-x: auto; min-height: 340px; }
+.usd-track { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; position: relative; z-index: 2; }
+.usd-node { background: #1a1f2b; border: 1.5px solid #2f3849; border-radius: 10px; padding: 14px 12px; min-width: 100px; text-align: center; transition: all 0.3s; flex-shrink: 0; }
+.usd-node.active { border-color: #58a6ff; background: rgba(88,166,255,0.08); box-shadow: 0 0 0 3px rgba(88,166,255,0.12), 0 0 20px rgba(88,166,255,0.15); transform: translateY(-2px); }
+.usd-node.done { border-color: #3fb950; background: rgba(63,185,80,0.06); opacity: 0.75; }
+.usd-node.danger { border-color: rgba(248,81,73,0.4); }
+.usd-node.danger.active { border-color: #f85149; background: rgba(248,81,73,0.08); box-shadow: 0 0 0 3px rgba(248,81,73,0.12), 0 0 20px rgba(248,81,73,0.15); }
+.usd-icon { font-size: 22px; display: block; margin-bottom: 4px; line-height: 1; }
+.usd-name { font-size: 11.5px; font-weight: 600; color: #e6edf3; text-transform: uppercase; letter-spacing: 0.03em; }
+.usd-sub { font-size: 10.5px; color: #6e7681; margin-top: 2px; font-family: 'SF Mono', Monaco, monospace; }
+.usd-arrow { color: #2f3849; font-size: 16px; padding: 0 6px; transition: color 0.3s; flex-shrink: 0; }
+.usd-arrow.active { color: #58a6ff; }
+.usd-arrow.done { color: #3fb950; }
+.usd-divider { text-align: center; color: #6e7681; font-size: 14px; padding: 10px 0; letter-spacing: 2px; }
+.usd-divider.active { color: #58a6ff; }
+.usd-divider.done { color: #3fb950; }

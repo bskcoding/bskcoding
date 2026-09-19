@@ -1,0 +1,142 @@
+/* LLM Fundamentals Course Page */
+.llm-course-page {
+  min-height: 100vh;
+  background: #070c14;
+  color: #f8fafc;
+  padding: 40px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.llm-course-page.llm-course-embedded {
+  min-height: 0;
+  background: transparent;
+  padding: 24px 0 0;
+  max-width: none;
+  margin: 0;
+}
+
+.course-hero {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  display: inline-block;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+}
+
+.back-button:hover {
+  color: #a78bfa;
+}
+
+.course-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #a78bfa, #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.course-subtitle {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.lessons-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.lesson-category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lesson-category-count {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.lesson-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 14px;
+  padding: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: #f8fafc;
+}
+
+.lesson-card:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: #a78bfa;
+  transform: translateY(-2px);
+}
+
+.lesson-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.lesson-category-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #a78bfa, #fbbf24);
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.lesson-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.15);
+  color: #a78bfa;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.lesson-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #f8fafc;
+}
+
+.lesson-desc {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

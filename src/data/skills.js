@@ -1,4 +1,4 @@
-export const skills = [
+﻿export const skills = [
   {
     id: "maang",
     name: "🏆 MAANG Preparation",
@@ -9,7 +9,7 @@ export const skills = [
     charColors: ["#FF5733", "#FFBD33", "#33FF57", "#33A1FF", "#A133FF"],
     description:
       "Master DSA + System Design + Reactive + Agentic AI to crack top product-based companies",
-    subtopics: [
+         subtopics: [
       "📊 DSA Foundation",
       "🌳 Advanced DSAs",
       "🔀 Graph Mastery",
@@ -250,7 +250,7 @@ export const skills = [
       "Cloud Architecture Fundamentals",
     ],
   },
-  {
+    {
     id: "company-interview",
     name: "Company-wise Interview Prep",
     icon: "🏢",

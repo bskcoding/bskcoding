@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { fdeModules } from "../../data/fde/forwardDeploymentEngineerModules";
+import LLMCourse from "../llm/LLMCourse";
 import "./ForwardDeploymentEngineer.css";
 
 function ForwardDeploymentEngineerModule() {
@@ -72,6 +73,9 @@ function ForwardDeploymentEngineerModule() {
                 <li key={item}>{item}</li>
               ))}
             </ul>
+            {mod.id === 1 && section.heading === "LLM Fundamentals" && (
+              <LLMCourse embedded />
+            )}
           </section>
         ))}
       </div>

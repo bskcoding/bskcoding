@@ -127,6 +127,9 @@ const RatelimitPage = lazy(
 const LibraryPage = lazy(
   () => import("./maang/system-design/lld-library/LibraryPage"),
 );
+const UrlShortenerPage = lazy(() =>
+  import("./maang/system-design/hld-url-shortener/UrlShortenerPage"),
+);
 const HotelPage = lazy(
   () => import("./maang/system-design/lld-hotel/HotelPage"),
 );
@@ -184,6 +187,7 @@ const ReactiveProgrammingCourse = lazy(
 const ReactiveProgrammingInterview = lazy(
   () => import("./topics/reactive-programming/ReactiveProgrammingInterview"),
 );
+const LLMCourse = lazy(() => import("./topics/llm/LLMCourse"));
 const ForwardDeploymentEngineer = lazy(
   () => import("./topics/forward-deployment-engineer/ForwardDeploymentEngineer"),
 );
@@ -648,6 +652,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/maang/system-design/hld-url-shortener"
+                  element={
+                    <RequireAuth>
+                      <UrlShortenerPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
                   path="/maang/system-design/lld-hotel"
                   element={
                     <RequireAuth>
@@ -673,9 +685,17 @@ function App() {
                   path="/reactive-programming/course"
                   element={<ReactiveProgrammingCourse />}
                 />
-                <Route
+                                                                <Route
                   path="/reactive-programming/interview"
                   element={<ReactiveProgrammingInterview />}
+                />
+                <Route
+                  path="/maang/llm-fundamentals"
+                  element={
+                    <RequireAuth>
+                      <LLMCourse />
+                    </RequireAuth>
+                  }
                 />
                 <Route
                   path="/maang/forward-deployment-engineer"

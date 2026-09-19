@@ -1,0 +1,27 @@
+/* URL Shortener HLD doc — dark theme */
+.usd-doc { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; background: #0a0e14; color: #e6edf3; line-height: 1.6; font-size: 15px; }
+.usd-back { display: inline-block; color: #8b949e; text-decoration: none; font-size: 13.5px; margin-bottom: 14px; }
+.usd-back:hover { color: #58a6ff; }
+.usd-header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid #232a38; }
+.usd-header h1 { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+.usd-header p { color: #8b949e; font-size: 14.5px; margin: 0; }
+.usd-section { margin-bottom: 64px; scroll-margin-top: 24px; }
+.usd-sec-head { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #232a38; }
+.usd-sec-head h2 { font-size: 24px; font-weight: 600; display: flex; align-items: center; gap: 12px; margin: 0; }
+.usd-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: #1f6feb; color: #fff; font-size: 15px; font-weight: 600; flex-shrink: 0; }
+.usd-sec-head p { color: #8b949e; font-size: 14px; margin: 8px 0 0 44px; }
+.usd-card { background: #12161f; border: 1px solid #232a38; border-radius: 10px; padding: 22px; margin-bottom: 16px; }
+.usd-card h3 { font-size: 16px; font-weight: 600; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.usd-tag { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 10px; background: #1a1f2b; color: #8b949e; border: 1px solid #232a38; }
+.usd-card p { font-size: 14px; color: #8b949e; margin: 0 0 10px; line-height: 1.7; }
+.usd-card p:last-child { margin-bottom: 0; }
+.usd-card p code, .usd-list li code { font-family: 'SF Mono', Monaco, monospace; font-size: 12.5px; background: #1a1f2b; padding: 1px 6px; border-radius: 4px; color: #58a6ff; border: 1px solid #232a38; }
+.usd-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.usd-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .usd-grid2, .usd-grid3 { grid-template-columns: 1fr; } }
+.usd-list { list-style: none; margin: 0; padding: 0; }
+.usd-list li { padding: 9px 0; font-size: 13.5px; color: #8b949e; border-bottom: 1px solid #232a38; display: flex; gap: 12px; line-height: 1.55; }
+.usd-list li:last-child { border-bottom: none; }
+.usd-bullet { color: #58a6ff; flex-shrink: 0; font-weight: 600; font-size: 13px; margin-top: 1px; min-width: 44px; }
+.usd-list li strong { color: #e6edf3; font-weight: 600; }
+.usd-pre { background: #0d1117; border: 1px solid #232a38; border-radius: 8px; padding: 16px 18px; font-family: 'SF Mono', Monaco, monospace; font-size: 12.5px; line-height: 1.65; overflow-x: auto; color: #c9d1d9; margin-top: 12px; white-space: pre-wrap; margin-bottom: 0; }

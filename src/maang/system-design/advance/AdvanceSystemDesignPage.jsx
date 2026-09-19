@@ -339,7 +339,10 @@ function AdvanceSystemDesignPage() {
           High-scale architecture problems that test scalability, data
           modelling, caching, sharding and distributed-systems thinking.
         </p>
-        {renderGrid(HLD_QUESTIONS)}
+        {renderGrid(HLD_QUESTIONS, (q) => {
+          if (q.title === "URL Shortener (TinyURL)") return "/maang/system-design/hld-url-shortener";
+          return null;
+        })}
       </section>
     </div>
   );
