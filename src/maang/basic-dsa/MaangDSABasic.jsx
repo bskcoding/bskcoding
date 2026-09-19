@@ -322,8 +322,16 @@ function DsaSheetPage({
               rel="noopener noreferrer"
               title="Watch Google Crack Coding Series Intro"
             >
-              <span className="mdsa-video-play">▶</span>
-              <span className="mdsa-video-label">Intro Video</span>
+              <img
+                className="mdsa-intro-logo"
+                src={youtubeLogo}
+                alt="YouTube"
+              />
+              <span className="mdsa-video-text">
+                <span className="mdsa-video-label">Watch Intro</span>
+                <span className="mdsa-video-sub">Start here · 2 min</span>
+              </span>
+              <span className="mdsa-video-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </div>

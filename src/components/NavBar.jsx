@@ -67,6 +67,38 @@ function NavBar({ onOpenChangePassword, onOpenFounder }) {
     return () => document.removeEventListener("mousedown", onOutsideClick);
   }, [featuresOpen]);
 
+  // Close the profile dropdown when clicking outside of it
+  useEffect(() => {
+    if (!profileOpen) return;
+    const onOutsideClick = (e) => {
+      // Both desktop + mobile dropdowns share these classes, so one check
+      // covers both wrappers (profileRef only points at the desktop one).
+      if (e.target.closest?.(".nav-user-wrapper, .profile-dropdown")) return;
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false);
+      } else if (!profileRef.current) {
+        setProfileOpen(false);
+      }
+    };
+    const onEscape = (e) => {
+      if (e.key === "Escape") setProfileOpen(false);
+    };
+    document.addEventListener("mousedown", onOutsideClick);
+    document.addEventListener("keydown", onEscape);
+    return () => {
+      document.removeEventListener("mousedown", onOutsideClick);
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, [profileOpen]);
+
+  // Close profile + mobile menus whenever the route changes so the
+  // dropdown never stays open after navigating to another page
+  useEffect(() => {
+    setProfileOpen(false);
+    setMenuOpen(false);
+    setFeaturesOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = async () => {
     try {
       await logout();
