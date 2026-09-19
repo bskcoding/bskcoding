@@ -11,7 +11,9 @@
 .usd-tab:hover { border-color: #2f3849; color: #e6edf3; }
 .usd-tab.active { background: #1f6feb; border-color: #58a6ff; color: #fff; }
 .usd-tab.red.active { background: #f85149; border-color: #f85149; }
-.usd-stage { background: #0d1117; border: 1px solid #232a38; border-radius: 10px; padding: 40px 24px; position: relative; overflow-x: auto; min-height: 340px; }
+.usd-stage { background: #0d1117; border: 1px solid #232a38; border-radius: 10px; padding: 40px 24px 64px; position: relative; overflow-x: auto; min-height: 340px; }
+.usd-stage-controls { position: absolute; right: 16px; bottom: 14px; display: flex; gap: 8px; z-index: 5; }
+.usd-btn-sm { padding: 7px 14px; font-size: 12px; }
 .usd-track { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; position: relative; z-index: 2; }
 .usd-node { background: #1a1f2b; border: 1.5px solid #2f3849; border-radius: 10px; padding: 14px 12px; min-width: 100px; text-align: center; transition: all 0.3s; flex-shrink: 0; }
 .usd-node.active { border-color: #58a6ff; background: rgba(88,166,255,0.08); box-shadow: 0 0 0 3px rgba(88,166,255,0.12), 0 0 20px rgba(88,166,255,0.15); transform: translateY(-2px); }

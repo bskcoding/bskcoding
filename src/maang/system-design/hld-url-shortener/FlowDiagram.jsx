@@ -78,6 +78,11 @@ export default function FlowDiagram({ nodes, steps, red = false, dividerLabel })
             );
           })}
         </div>
+        <div className="usd-stage-controls">
+          <button className="usd-btn usd-btn-sm" disabled={current <= 0} onClick={() => setCurrent((c) => c - 1)}>&larr; Previous</button>
+          <button className={`usd-btn usd-btn-sm${red ? " danger" : " primary"}`} disabled={current >= total - 1} onClick={() => setCurrent((c) => c + 1)}>Next Step &rarr;</button>
+          <button className="usd-btn usd-btn-sm" onClick={() => setCurrent(-1)}>Reset</button>
+        </div>
       </div>
       <div className="usd-panel">
         {current === -1 ? (
@@ -100,10 +105,7 @@ export default function FlowDiagram({ nodes, steps, red = false, dividerLabel })
           </>
         )}
       </div>
-      <div className="usd-controls">
-        <button className="usd-btn" disabled={current <= 0} onClick={() => setCurrent((c) => c - 1)}>&larr; Previous</button>
-        <button className={`usd-btn${red ? " danger" : " primary"}`} disabled={current >= total - 1} onClick={() => setCurrent((c) => c + 1)}>Next Step &rarr;</button>
-        <button className="usd-btn" onClick={() => setCurrent(-1)}>Reset</button>
+      <div className="usd-controls usd-controls-below">
         <span className="usd-counter">{current === -1 ? "Ready" : `Step ${current + 1} / ${total}`}</span>
       </div>
     </div>

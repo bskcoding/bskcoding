@@ -27,6 +27,8 @@
 .usd-outcome { background: rgba(63,185,80,0.06); border-left: 3px solid #3fb950; padding: 10px 14px; border-radius: 4px; font-size: 13px; color: #3fb950; }
 .usd-outcome.red { background: rgba(248,81,73,0.06); border-left-color: #f85149; color: #ffa198; }
 .usd-controls { display: flex; align-items: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.usd-controls-below { justify-content: flex-end; }
+.usd-controls-below .usd-counter { margin-left: 0; }
 .usd-btn { padding: 9px 18px; border-radius: 8px; border: 1px solid #232a38; background: #1a1f2b; color: #e6edf3; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: inherit; }
 .usd-btn:hover:not(:disabled) { background: #232a38; border-color: #2f3849; }
 .usd-btn:disabled { opacity: 0.35; cursor: not-allowed; }
