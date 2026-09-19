@@ -1,5 +1,5 @@
 import "./UrlShortener.css";
-import { SecHead, List } from "./UrlStatic1";
+import { List } from "./UrlStatic1";
 
 export function DiveTop() {
   return (
