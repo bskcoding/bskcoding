@@ -24,4 +24,24 @@
 .usd-list li:last-child { border-bottom: none; }
 .usd-bullet { color: #302b63; flex-shrink: 0; font-weight: 700; font-size: 13px; margin-top: 1px; min-width: 44px; }
 .usd-list li strong { color: #1a1a2e; font-weight: 700; }
-.usd-pre { background: #282c34; border: 1px solid #21252b; border-radius: 14px; padding: 20px 24px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.82rem; line-height: 1.8; overflow-x: auto; color: #e6edf3; margin-top: 12px; white-space: pre-wrap; margin-bottom: 0; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+.usd-pre { background: #282c34; border: 1px solid #21252b; border-radius: 14px; padding: 20px 24px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.82rem; line-height: 1.8; overflow-x: auto; color: #e6edf3; margin-top: 12px; white-space: pre-wrap; word-break: break-word; margin-bottom: 0; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+
+/* ===== Mobile responsive ===== */
+@media (max-width: 768px) {
+  .usd-doc { margin: 12px 12px 24px; padding: 16px 14px 28px; font-size: 14px; border-radius: 14px; overflow-x: hidden; }
+  .usd-header { padding: 22px 18px; margin-bottom: 20px; border-radius: 14px; }
+  .usd-header h1 { font-size: 1.35rem; line-height: 1.35; }
+  .usd-header p { font-size: 0.88rem; }
+  .usd-sec-head h2 { font-size: 1.15rem; gap: 10px; }
+  .usd-sec-head p { margin: 8px 0 0 0; font-size: 0.84rem; }
+  .usd-card { padding: 14px 14px; overflow-x: hidden; }
+  .usd-card h3 { font-size: 0.92rem; }
+  .usd-list li { font-size: 0.84rem; flex-wrap: wrap; }
+  .usd-bullet { min-width: 32px; }
+  .usd-pre { padding: 14px 14px; font-size: 0.72rem; line-height: 1.65; }
+}
+@media (max-width: 480px) {
+  .usd-doc { margin: 8px 8px 20px; padding: 14px 12px 24px; }
+  .usd-header h1 { font-size: 1.15rem; }
+  .usd-back { font-size: 0.8rem; padding: 7px 14px; }
+}

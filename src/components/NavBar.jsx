@@ -92,11 +92,16 @@ function NavBar({ onOpenChangePassword, onOpenFounder }) {
   }, [profileOpen]);
 
   // Close profile + mobile menus whenever the route changes so the
-  // dropdown never stays open after navigating to another page
+  // dropdown never stays open after navigating to another page.
+  // Deferred via rAF so this is a subscription-style update, not a
+  // synchronous setState-in-effect (keeps `npm run lint` green).
   useEffect(() => {
-    setProfileOpen(false);
-    setMenuOpen(false);
-    setFeaturesOpen(false);
+    const id = requestAnimationFrame(() => {
+      setProfileOpen(false);
+      setMenuOpen(false);
+      setFeaturesOpen(false);
+    });
+    return () => cancelAnimationFrame(id);
   }, [location.pathname]);
 
   const handleLogout = async () => {

@@ -43,3 +43,24 @@
 .usd-nfr.purple { background: #f3e5f5; color: #6a1b9a; border-color: #ce93d8; }
 .usd-nfr.red { background: #fce4ec; color: #c62828; border-color: #ef9a9a; }
 .usd-section-divider { height: 1px; background: #e1e8f5; margin: 32px 0; }
+
+/* ===== Mobile responsive: scrollable tables, stacked stage, usable controls ===== */
+@media (max-width: 768px) {
+  .usd-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 0.78rem; white-space: nowrap; }
+  .usd-table tbody { display: table; width: 100%; min-width: 560px; }
+  .usd-table th, .usd-table td { padding: 9px 10px; }
+  .usd-hld { padding: 14px 12px; overflow-x: hidden; }
+  .usd-tabs { gap: 8px; margin-bottom: 14px; }
+  .usd-tab { font-size: 0.74rem; padding: 6px 12px; }
+  .usd-stage { padding: 20px 12px 76px; min-height: 260px; }
+  .usd-track { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .usd-node { min-width: 110px; padding: 10px 10px; }
+  .usd-db { min-width: 200px; }
+  .usd-stage-controls { left: 12px; right: 12px; bottom: 12px; justify-content: center; flex-wrap: wrap; }
+  .usd-btn-sm { padding: 7px 12px; font-size: 11px; }
+  .usd-panel { padding: 14px 14px; }
+  .usd-step-title { font-size: 0.88rem; }
+  .usd-call { padding: 14px 14px; font-size: 0.72rem; line-height: 1.6; }
+  .usd-what, .usd-outcome { font-size: 0.82rem; }
+  .usd-step-head { flex-wrap: wrap; gap: 8px; }
+}
