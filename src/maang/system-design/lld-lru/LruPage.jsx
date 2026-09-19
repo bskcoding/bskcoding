@@ -30,7 +30,7 @@ export default function LruPage() {
   return (
     <div className="lru-root">
       <header className="lru-header">
-        <Link to="/maang/system-design/advanced" className="lru-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="lru-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-database" /> LRU Cache — LLD <span className="lru-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="lru-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

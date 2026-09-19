@@ -458,7 +458,7 @@ export default function DatabaseConceptsPage() {
   return (
     <div className="dbc-app-wrapper">
       <Link to="/maang/system-design-basics" className="dbc-back">
-        ← Back to System Design
+        ← Back to System Design Basics
       </Link>
 
       <header className="dbc-main-header">

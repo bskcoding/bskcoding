@@ -30,7 +30,7 @@ export default function SnakePage() {
   return (
     <div className="sn-root">
       <header className="sn-header">
-        <Link to="/maang/system-design/advanced" className="sn-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="sn-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-worm" /> Snake and Ladder — LLD <span className="sn-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="sn-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

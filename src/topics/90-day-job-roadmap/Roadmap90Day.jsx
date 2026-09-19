@@ -7,27 +7,42 @@ function Roadmap90Day() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              justifyContent: "center",
               flexWrap: "wrap",
-              justifyContent: "space-between",
+              gap: "8px 16px",
+              marginBottom: "16px",
             }}
           >
-            <div className="main-headline" style={{ margin: 0 }}>
-              3 Months Job Change Preparation
-              <br />
-              for Java Backend Developer
-            </div>
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "6px 14px",
+                borderRadius: "999px",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#93c5fd",
+                background: "rgba(59,130,246,0.12)",
+                border: "1px solid rgba(59,130,246,0.3)",
+              }}
+            >
+              🗺️ 90-Day Roadmap
+            </span>
             <a
               href="https://youtube.com/@bsktrending"
               target="_blank"
               rel="noopener noreferrer"
               className="yt-round"
-              aria-label="YouTube Channel"
+              aria-label="Subscribe on YouTube"
+              title="Subscribe on YouTube"
             >
               <svg
                 viewBox="0 0 24 24"
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -35,8 +50,19 @@ function Roadmap90Day() {
                   fill="white"
                 />
               </svg>
+              <span>Subscribe</span>
             </a>
           </div>
+          <div className="main-headline">
+            3 Months Job Change Preparation
+            <br />
+            for Java Backend Developer
+          </div>
+          <p className="hero-subtitle">
+            A week-by-week battle plan — DSA, Java, Spring Boot, System Design,
+            Mock Interviews &amp; Job Applications. Follow it daily and walk
+            into your next role with confidence.
+          </p>
         </div>
 
         <div className="roadmap-grid">

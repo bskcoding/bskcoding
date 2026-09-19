@@ -58,7 +58,7 @@ function CachingPage() {
   const active = cachingTopics.find((t) => t.id === activeId) || null;
   return (
     <div className="cache-page">
-      <Link to="/maang/system-design-basics" className="cache-back">Back to System Design Basics</Link>
+      <Link to="/maang/system-design-basics" className="cache-back">← Back to System Design Basics</Link>
       <header className="cache-hero">
         <h1 className="cache-title">Caching <span>Strategies</span></h1>
         <p className="cache-subtitle">Speed up reads and reduce database load with Redis and proven cache patterns.</p>

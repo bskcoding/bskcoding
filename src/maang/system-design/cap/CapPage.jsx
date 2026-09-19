@@ -57,7 +57,7 @@ function CapPage() {
   const active = capTopics.find((t) => t.id === activeId) || null;
   return (
     <div className="cap-page">
-      <Link to="/maang/system-design-basics" className="cap-back">Back to System Design Basics</Link>
+      <Link to="/maang/system-design-basics" className="cap-back">← Back to System Design Basics</Link>
       <header className="cap-hero">
         <h1 className="cap-title">CAP <span>Theorem</span></h1>
         <p className="cap-subtitle">Your data on many computers - pick any 2 of 3. Simple diagrams plus bank vs Instagram interview answer.</p>

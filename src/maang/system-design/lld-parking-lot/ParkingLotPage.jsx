@@ -52,7 +52,7 @@ export default function ParkingLotPage() {
   return (
     <div className="pl-root">
       <header className="pl-header">
-        <Link to="/maang/system-design/advanced" className="pl-back">← Back</Link>
+        <Link to="/maang/system-design/advanced" className="pl-back">← Back to Advanced System Design</Link>
         <h1>
           <i className="fas fa-square-parking" /> Parking Lot — LLD
           <span className="pl-badge">

@@ -30,7 +30,7 @@ export default function ChessPage() {
   return (
     <div className="ch-root">
       <header className="ch-header">
-        <Link to="/maang/system-design/advanced" className="ch-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="ch-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-chess" /> Chess Game — LLD <span className="ch-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="ch-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

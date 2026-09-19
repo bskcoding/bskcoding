@@ -30,7 +30,7 @@ export default function SplitwisePage() {
   return (
     <div className="sw-root">
       <header className="sw-header">
-        <Link to="/maang/system-design/advanced" className="sw-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="sw-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-money-bill-transfer" /> Splitwise — LLD <span className="sw-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="sw-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

@@ -30,7 +30,7 @@ export default function LibraryPage() {
   return (
     <div className="lib-root">
       <header className="lib-header">
-        <Link to="/maang/system-design/advanced" className="lib-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="lib-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-book-open" /> Library Management — LLD <span className="lib-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="lib-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

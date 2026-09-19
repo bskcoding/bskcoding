@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
@@ -241,12 +241,21 @@ function PageLoader() {
   );
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [founderOpen, setFounderOpen] = useState(false);
 
   return (
     <BrowserRouter basename={BASENAME}>
+      <ScrollToTop />
       <ErrorBoundary>
         <YouTubeLinkHandler />
         <RouteRestorer />

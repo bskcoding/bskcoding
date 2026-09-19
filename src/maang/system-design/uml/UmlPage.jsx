@@ -287,7 +287,7 @@ export default function UmlPage() {
   return (
     <div className="oops-app-wrapper">
       <Link to="/maang/system-design-basics" className="oops-back">
-        <i className="fas fa-arrow-left" /> Back to System Design
+        <i className="fas fa-arrow-left" /> Back to System Design Basics
       </Link>
 
       <header className="oops-main-header">

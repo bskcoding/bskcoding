@@ -30,7 +30,7 @@ export default function HotelPage() {
   return (
     <div className="ht-root">
       <header className="ht-header">
-        <Link to="/maang/system-design/advanced" className="ht-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="ht-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-hotel" /> Hotel Booking — LLD <span className="ht-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="ht-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

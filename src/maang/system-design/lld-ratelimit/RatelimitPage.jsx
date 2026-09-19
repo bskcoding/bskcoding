@@ -30,7 +30,7 @@ export default function RatelimitPage() {
   return (
     <div className="rl-root">
       <header className="rl-header">
-        <Link to="/maang/system-design/advanced" className="rl-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="rl-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-gauge-high" /> Rate Limiter — LLD <span className="rl-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="rl-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

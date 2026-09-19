@@ -30,7 +30,7 @@ export default function AtmPage() {
   return (
     <div className="atm-root">
       <header className="atm-header">
-        <Link to="/maang/system-design/advanced" className="atm-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="atm-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-money-check-dollar" /> ATM — LLD <span className="atm-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="atm-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

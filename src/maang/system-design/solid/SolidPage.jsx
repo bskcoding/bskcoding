@@ -145,7 +145,7 @@ export default function SolidPage() {
   return (
     <div className="oops-app-wrapper">
       <Link to="/maang/system-design-basics" className="oops-back">
-        ← Back to System Design
+        ← Back to System Design Basics
       </Link>
       <header className="oops-main-header">
         <h1>

@@ -30,7 +30,7 @@ export default function TictactoePage() {
   return (
     <div className="tt-root">
       <header className="tt-header">
-        <Link to="/maang/system-design/advanced" className="tt-back">Back</Link>
+        <Link to="/maang/system-design/advanced" className="tt-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-hashtag" /> Tic-Tac-Toe — LLD <span className="tt-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="tt-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>

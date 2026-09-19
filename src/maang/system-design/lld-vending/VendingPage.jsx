@@ -30,7 +30,7 @@ export default function VendingPage() {
   return (
     <div className="vm-root">
       <header className="vm-header">
-        <Link to="/maang/system-design/advanced" className="vm-back">← Back</Link>
+        <Link to="/maang/system-design/advanced" className="vm-back">← Back to Advanced System Design</Link>
         <h1><i className="fas fa-candy-cane" /> Vending Machine — LLD <span className="vm-badge"><i className="fab fa-java" /> Java + UML</span></h1>
         <div className="vm-sub-info">
           <span><i className="fas fa-list-check" /> 6 Steps</span>
