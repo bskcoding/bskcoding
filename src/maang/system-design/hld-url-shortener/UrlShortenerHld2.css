@@ -19,7 +19,7 @@
 .usd-badge { background: #302b63; color: #fff; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 30px; flex-shrink: 0; }
 .usd-badge.red { background: #e94560; }
 .usd-step-title { font-size: 1rem; font-weight: 700; color: #1a1a2e; }
-.usd-call { background: #282c34; border: 1px solid #21252b; border-radius: 14px; padding: 20px 24px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.82rem; color: #e6edf3; line-height: 1.8; margin-bottom: 14px; white-space: pre-wrap; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+.usd-call { background: #282c34; border: 1px solid #21252b; border-radius: 14px; padding: 20px 24px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.82rem; color: #e6edf3; line-height: 1.8; margin-bottom: 14px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow-x: auto; max-width: 100%; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
 .usd-call.red { color: #ffb3c1; border-color: rgba(233,69,96,0.4); }
 .usd-what { font-size: 0.9rem; color: #4a4a6a; line-height: 1.6; margin-bottom: 14px; }
 .usd-what strong { color: #1a1a2e; }
@@ -44,11 +44,13 @@
 .usd-nfr.red { background: #fce4ec; color: #c62828; border-color: #ef9a9a; }
 .usd-section-divider { height: 1px; background: #e1e8f5; margin: 32px 0; }
 
-/* ===== Mobile responsive: scrollable tables, stacked stage, usable controls ===== */
+/* ===== Mobile responsive: tables wrap, stage scrolls, controls usable ===== */
 @media (max-width: 768px) {
-  .usd-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 0.78rem; white-space: nowrap; }
-  .usd-table tbody { display: table; width: 100%; min-width: 560px; }
-  .usd-table th, .usd-table td { padding: 9px 10px; }
+  /* Let wide tables scroll inside their card instead of breaking the page.
+     Table keeps its semantics so headers/columns stay aligned. */
+  .usd-card { overflow-x: auto; }
+  .usd-table { font-size: 0.78rem; width: 100%; }
+  .usd-table th, .usd-table td { padding: 9px 10px; overflow-wrap: anywhere; word-break: break-word; white-space: normal; }
   .usd-hld { padding: 14px 12px; overflow-x: hidden; }
   .usd-tabs { gap: 8px; margin-bottom: 14px; }
   .usd-tab { font-size: 0.74rem; padding: 6px 12px; }

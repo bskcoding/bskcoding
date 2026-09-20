@@ -48,6 +48,11 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
+  /* Flex/grid children default to min-width:auto which lets long
+     unbreakable strings (URLs, tokens) force the page wider.
+     Reset to 0 so content can shrink; explicit min-widths set by
+     component classes still win (higher specificity). */
+  min-width: 0;
 }
 
 #root {
@@ -130,6 +135,43 @@ a:hover {
   }
 }
 
+/* ===== Global overflow safety net (all viewports, all pages) =====
+   Long unbreakable strings (URLs, tokens, codes) must wrap instead of
+   pushing the page wider. Code/pre/table/media can never exceed their
+   container. Flex/grid children may shrink (min-width: 0). */
+p, li, td, th, h1, h2, h3, h4 {
+  overflow-wrap: break-word;
+}
+code, a {
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+pre, code {
+  max-width: 100%;
+}
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+table {
+  max-width: 100%;
+}
+td, th {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+img, video, svg, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+}
+/* Media / code containers must shrink inside flex & grid parents —
+   a fixed-width canvas/iframe/img or long code line otherwise forces
+   the whole column (and page) wider on mobile. */
+div, section, article, main, aside, header, footer, ul, ol, li, table {
+  min-width: 0;
+  max-width: 100%;
+}
 /* ===== Global mobile safety net: no page should overflow horizontally ===== */
 @media (max-width: 768px) {
   img, video, svg, canvas, iframe, table, pre {
@@ -140,7 +182,11 @@ a:hover {
     word-break: break-word;
     overflow-x: auto;
   }
-  table {
+  /* Wide tables scroll inside their container instead of breaking layout.
+     NOTE: keep `table` semantics (no display:block) so headers/columns
+     stay aligned; the wrapper scrolls. `.table-scroll` can be used by
+     any page that needs it explicitly. */
+  .table-scroll {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
