@@ -689,6 +689,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
             clonedEl.style.maxHeight = "none";
             clonedEl.style.overflow = "visible";
             clonedEl.style.overflowY = "visible";
+            // FIX (mobile): capture at desktop width so the top headline /
+            // contact row never mixes/overlaps in the exported PDF.
+            clonedEl.style.width = "780px";
+            clonedEl.style.maxWidth = "780px";
+            clonedEl.style.minWidth = "780px";
           }
           clonedDoc.querySelectorAll(constraintSelectors).forEach((p) => {
             p.style.maxHeight = "none";
@@ -1964,6 +1969,9 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation.`;
             >
               <div className="rb-preview-header">
                 <h2>{(resume.name || "Your Name").toUpperCase()}</h2>
+                {resume.title && (
+                  <p className="rb-preview-title">{resume.title}</p>
+                )}
                 <p className="rb-preview-contact">
                   {resume.location && (
                     <span className="rb-preview-contact-item">

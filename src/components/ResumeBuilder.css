@@ -437,6 +437,9 @@
   padding-bottom: 16px;
   border-bottom: none;
   margin-bottom: 20px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
 }
 
 .rb-preview-header h2 {
@@ -444,6 +447,10 @@
   font-weight: 800;
   color: #000000;
   margin: 0 0 4px;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .rb-preview-header p {
@@ -453,11 +460,25 @@
   text-align: center;
 }
 
+.rb-preview-title {
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  color: #000000 !important;
+  margin: 0 0 6px !important;
+  text-align: center;
+  line-height: 1.4;
+}
+
 .rb-preview-contact {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 4px 16px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .rb-preview-contact-item {
@@ -466,6 +487,11 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.5;
 }
 
 .rb-preview-icon {
@@ -933,14 +959,83 @@
 
   .rb-header {
     padding: 18px 16px 12px;
+    gap: 10px;
+  }
+
+  .rb-header-info {
+    min-width: 0;
+    flex: 1;
+    gap: 10px;
+  }
+
+  .rb-header-info > div {
+    min-width: 0;
   }
 
   .rb-header h2 {
     font-size: 1.1rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
+  .rb-header p {
+    font-size: 0.72rem;
+  }
+
+  /* FIX (mobile): steps bar was stacking/mixing icon above label and the
+     pill background was spilling outside names. Use a contained 2-col grid
+     so every chip is fully visible with icon + label in one row. */
   .rb-steps {
-    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 10px 12px;
+    overflow: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    scrollbar-width: none;
+  }
+
+  .rb-steps::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rb-step {
+    flex: none;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    padding: 7px 10px;
+    gap: 6px;
+    border-radius: 10px;
+    line-height: 1.2;
+  }
+
+  .rb-step-icon {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rb-step-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  /* Active/done pill background must stay clipped inside the chip */
+  .rb-step.active,
+  .rb-step.done {
+    overflow: hidden;
   }
 
   .rb-body {
@@ -983,11 +1078,65 @@
   }
 
   .rb-preview {
-    padding: 20px;
+    padding: 16px 14px;
+    overflow-x: hidden;
+    word-break: break-word;
+  }
+
+  /* FIX (mobile): keep resume top headline from mixing/overlapping.
+     Center, wrap and shrink the name + contact row on small screens. */
+  .rb-preview-header {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+  }
+
+  .rb-preview-header h2 {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+  }
+
+  .rb-preview-contact {
+    gap: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .rb-preview-contact-item {
+    font-size: 0.75rem;
+    max-width: 100%;
+  }
+
+  .rb-preview-icon {
+    flex-shrink: 0;
+  }
+
+  /* Skills grid: single readable column flow on narrow screens */
+  .rb-preview-skills-grid {
+    grid-template-columns: 110px auto 1fr;
+    gap: 4px 8px;
+    font-size: 0.78rem;
   }
 
   .rb-preview-item-header {
     flex-direction: column;
+    align-items: flex-start;
     gap: 2px;
+  }
+}
+
+@media (max-width: 420px) {
+  .rb-preview-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .rb-preview-contact {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .rb-preview-skills-grid {
+    grid-template-columns: 96px auto 1fr;
+    gap: 3px 6px;
   }
 }
