@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { interviewPrepTopics, prepStrategy } from "../data/interviewPrepData";
+import { Link } from "react-router-dom";
+
+import { interviewPrepTopics } from "../data/interviewPrepData";
 import { interviewPrepAnswers } from "../data/interviewPrepAnswers";
 import "./InterviewPrep.css";
 
@@ -135,32 +137,20 @@ function InterviewPrep() {
   }, [active, activeList.length, closePopup]);
   return (
     <div className="ip-page">
-      {/* Hero */}
-      <section className="ip-hero">
-        <span className="ip-hero-badge">Java Developer Interview Prep</span>
-        <h1 className="ip-hero-title">
-          🎯 Interview Prep — <span className="ip-accent">All Topics, One Page</span>
-        </h1>
-        <p className="ip-hero-sub">
-          Step-by-step, concept-wise preparation. Each topic has{" "}
-          <strong>20 important questions</strong> +{" "}
-          <strong>10 scenario-based questions</strong> — nothing skipped, nothing mixed.
-        </p>
-
-        {/* Prep strategy strip */}
-        <div className="ip-strategy">
-          {prepStrategy.map((s) => (
-            <div className="ip-strategy-card" key={s.label}>
-              <span className="ip-strategy-icon">{s.icon}</span>
-              <span className="ip-strategy-label">{s.label}</span>
-              <span className="ip-strategy-tip">{s.tip}</span>
-            </div>
-          ))}
+      <header className="ip-page-header">
+        <div className="ip-page-heading">
+          <span className="ip-page-kicker">Interview preparation</span>
+          <h1>Java Backend Interview Topics</h1>
+          <p>Click any question to open a clear, interview-ready answer.</p>
         </div>
-      </section>
+        <Link className="ip-back-link" to="/maang">
+          <span aria-hidden="true">←</span> Back to MAANG Preparation
+        </Link>
+      </header>
 
-      {/* Sticky step navigation */}
-      <nav className="ip-steps" aria-label="Prep steps">
+      {/* Compact topic navigation: the questions are the main content. */}
+      <nav className="ip-steps ip-steps-compact" aria-label="Interview topics">
+        <span className="ip-steps-label">Jump to topic</span>
         {interviewPrepTopics.map((t) => (
           <a key={t.id} href={`#ip-${t.id}`} className="ip-step-chip" style={{ "--step-color": t.color }}>
             <span className="ip-step-icon">{t.icon}</span>
@@ -168,6 +158,7 @@ function InterviewPrep() {
           </a>
         ))}
       </nav>
+
 
       {/* Topics — one section per step */}
       <div className="ip-topics">
