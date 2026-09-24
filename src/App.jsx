@@ -139,6 +139,7 @@ const Roadmap90Day = lazy(
 const JavaTopics = lazy(() => import("./topics/java/JavaTopics"));
 const JavaCourse = lazy(() => import("./topics/java/JavaCourse"));
 const JavaInterview = lazy(() => import("./topics/java/JavaInterview"));
+const InterviewPrep = lazy(() => import("./pages/InterviewPrep"));
 const JavaScriptTopics = lazy(
   () => import("./topics/javascript/JavaScriptTopics"),
 );
@@ -329,6 +330,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <MaangPreparation />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/maang/interview-prep"
+                  element={
+                    <RequireAuth>
+                      <InterviewPrep />
                     </RequireAuth>
                   }
                 />

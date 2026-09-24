@@ -16,6 +16,7 @@ import ColoredMaangText from "../components/ColoredMaangText";
 
 // Map MAANG sub-topics to their route paths (only the ones that exist)
 const subtopicRoutes = {
+  "🎯 Interview Prep - All Topics": "/maang/interview-prep",
   "📊 DSA Foundation": "/maang/basic-dsa",
   "🌳 Advanced DSAs": "/maang/advanced-dsa",
   "🔀 Graph Mastery": "/maang/graphs",
@@ -30,7 +31,9 @@ function MaangPreparation() {
   const maang = skills.find((s) => s.id === "maang") || {};
 
   const charColors = maang.charColors;
-  const subtopics = maang.subtopics || [];
+  // One simple entry card before DSA: all-topics interview prep
+  // (Java, SQL, Spring Boot, Microservices, Kafka, Reactive — 20+10 questions each).
+  const subtopics = ["🎯 Interview Prep - All Topics", ...(maang.subtopics || [])];
   const description =
     maang.description ||
     "Master DSA + System Design + Reactive + Agentic AI to crack top product-based companies";

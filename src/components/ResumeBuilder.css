@@ -29,10 +29,6 @@
   min-height: 400px;
 }
 
-.rb-page-card .rb-steps {
-  overflow-x: auto;
-}
-
 .rb-overlay {
   position: fixed;
   inset: 0;
@@ -136,21 +132,29 @@
   transform: rotate(90deg);
 }
 
-/* Steps */
+/* Steps — desktop/laptop: wrap into neat rows (no scroll, no cramping).
+   Mobile grid override lives in @media (max-width:768px) below and is untouched. */
 .rb-steps {
   display: flex;
-  gap: 4px;
-  padding: 16px 28px;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  gap: 6px;
+  row-gap: 8px;
+  padding: 14px 20px;
+  overflow: visible;
   border-bottom: 1px solid rgba(59, 130, 246, 0.1);
   scrollbar-width: thin;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .rb-step {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 10px;
   font-size: 0.75rem;
   color: #64748b;
@@ -158,6 +162,7 @@
   white-space: nowrap;
   transition: all 0.2s ease;
   border: 1px solid transparent;
+  line-height: 1.2;
 }
 
 .rb-step.active {
