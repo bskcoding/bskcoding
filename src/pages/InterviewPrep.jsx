@@ -139,9 +139,9 @@ function InterviewPrep() {
     <div className="ip-page">
       <header className="ip-page-header">
         <div className="ip-page-heading">
-          <span className="ip-page-kicker">Interview preparation</span>
-          <h1>Java Backend Interview Topics</h1>
-          <p>Click any question to open a clear, interview-ready answer.</p>
+          <span className="ip-page-eyebrow">Interview preparation</span>
+          <h1 className="ip-page-title">Java Backend Interview Topics</h1>
+          <p className="ip-page-subtitle">Click any question to open a clear, interview-ready answer.</p>
         </div>
         <Link className="ip-back-link" to="/maang">
           <span aria-hidden="true">←</span> Back to MAANG Preparation
@@ -173,13 +173,14 @@ function InterviewPrep() {
               <div className="ip-topic-heading">
                 <span className="ip-topic-step">{topic.step}</span>
                 <span className="ip-topic-icon">{topic.icon}</span>
-                <h2 className="ip-topic-title">{topic.title}</h2>
+                <div>
+                  <h2 className="ip-topic-title">{topic.title}</h2>
+                  <p className="ip-topic-count">
+                    {topic.important.length} important · {topic.scenarios.length} scenario-based
+                  </p>
+                </div>
               </div>
             </header>
-
-            <p className="ip-topic-count">
-              {topic.important.length} important · {topic.scenarios.length} scenario-based
-            </p>
 
             {/* 20 important concept questions */}
             <h3 className="ip-block-title">📘 20 Important Questions (concept-wise)</h3>
