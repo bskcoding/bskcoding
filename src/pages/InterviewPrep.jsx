@@ -243,12 +243,7 @@ function InterviewPrep() {
         ))}
       </div>
 
-      <footer className="ip-footer">
-        <p>🗺️ Flow: Producer → Topic → Partition → Consumer Group → Offset → Replication → Rebalancing → Retry → DLQ → Exactly Once</p>
-        <p>
-          🌐 <strong>BSK Coding:</strong> bskcoding.com
-        </p>
-      </footer>
+
 
       {/* Answer popup — white background */}
       {active && activeTopic && (
